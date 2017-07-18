@@ -18,8 +18,6 @@
 			get_template_part('parts/footer/code', 'bottom'); 
 			?>
 		</footer>
-
-		<?php get_template_part('parts/profiles/code', 'modal'); ?>
 	
 		<?php wp_footer(); ?>
 		

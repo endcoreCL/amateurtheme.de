@@ -1,0 +1,18 @@
+// ALIGNMENTS
+.alignleft { float: left; margin: 0 15px 10px 0; }
+.aligncenter { display: block; margin: 0 auto 10px auto; }
+.alignright { float: right; margin: 0 0 10px 15px; }
+.alignnone { float: none; display: block; margin: 0 0 10px 0; }
+p .alignleft { float: left; margin: 5px 15px 10px 0; }
+p .aligncenter { display: block; margin: 5px auto 10px auto; }
+p .alignright { float: right; margin: 5px 0 10px 15px; }
+p .alignnone { float: none; display: block; margin: 5px 0 10px 0; }
+
+// IMAGES
+img[class*="wp-image-"] { display: block; max-width: 100%; height: auto; }
+.wp-caption { max-width: 100%; width: auto !important; }
+.wp-caption-text { font-size: 0.875rem; margin: 5px 0 0 0; color: $gray-dark; font-style: italic; }
+.wp-caption img { height: auto; }
+.mfp-title { font-size: 0.875rem !important; }
+.wp-smiley { height: 16px; width: auto; max-width: 16px; }
+.wp-post-image { margin-bottom: 15px; }

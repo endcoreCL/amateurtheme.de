@@ -1,0 +1,36 @@
+/* FOOTER */
+
+// FOOTER
+#footer { font-size: 0.875rem; line-height: 20px; color: $gray; }
+#footer a { color: inherit; transition: $transition; }
+#footer a:hover,
+#footer a:focus { color: $primary; text-decoration: none; }
+
+// FOOTER: TOP
+#footer-top { background: $near-white; padding: 60px 0; text-align: center; }
+#footer-top .footer-top-inner { background: #fff; padding: 30px 50px; }
+#footer-top .widget { margin-top: 30px; }
+#footer-top .widget .h1 { font-weight: 400; font-size: 1.5rem; margin-top: 0; }
+#footer-top .list-social { margin: 0; }
+#footer-top .list-social li a:hover,
+#footer-top .list-social li a:focus { text-decoration: none; }
+#footer-top .list-social li a .fa { display: block; height: 2.25rem; line-height: 2.25rem; width: 2.25rem; text-align: center; }
+#footer-top .badget-5e .h1 { display: inline-block; position: relative; }
+#footer-top .badget-5e .h1:after { content: "5€"; line-height: 2.5rem; height: 2.5rem; width: 2.5rem; font-size: 1.25rem; background: $primary; color: #fff; border-radius: 50%; position: absolute; top: -2rem; right: -2rem; }
+@media (max-width: 767px) {
+	#footer-top { padding: 30px 0; }
+}
+
+// FOOTER: BOTTOM
+#footer-bottom { color: $gray-dark; padding: 60px 0; }
+#footer-bottom ul { margin: 5px 0; }
+#footer-bottom p { margin: 0; }
+#footer-bottom .footer-brand-logo { transition: $transition; }
+#footer-bottom .footer-brand-logo:hover,
+#footer-bottom .footer-brand-logo:focus { opacity: 0.75; }
+#footer-bottom .footer-brand-logo .logo-black { height: 30px; }
+@media (max-width: 767px) {
+	#footer-bottom { padding: 30px 0; }
+	#footer-bottom .footer-brand-logo { display: table; margin: 0 auto; }
+	#footer-bottom ul { margin: 10px 0 0 0; text-align: center; }
+}

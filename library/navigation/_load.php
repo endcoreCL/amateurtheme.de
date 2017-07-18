@@ -7,5 +7,5 @@
  * @category	_load
  */
  
-require_once(at_LIBRARY . '/navigation/walker.php');
-require_once(at_LIBRARY . '/navigation/menus.php');
+require_once(AT_LIBRARY . '/navigation/walker.php');
+require_once(AT_LIBRARY . '/navigation/menus.php');

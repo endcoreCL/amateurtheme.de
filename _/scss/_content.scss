@@ -1,0 +1,109 @@
+/* CONTENT */
+
+// CONTENT: MAIN
+#main,
+#page-builder .section { padding: 60px 0; }
+#page-builder .section:first-of-type { padding-top: 0; }
+#page-builder .section:last-of-type { padding-bottom: 0; }
+#page-builder .section.hr { padding: 0 !important; }
+#main > .container > #content > :first-child,
+#main > .container > .row > .col-sm-8 > #content > :first-child,
+#main > .container > .row > .col-sm-4 > #sidebar > :first-child,
+#page-builder > .section > .container > .inner > :first-child,
+.box > :first-child,
+.box .inner > :first-child { margin-top: 0; }
+.section .section-title { margin: 0 auto 50px auto; font-size: 2rem; max-width: 75%; text-align: center; }
+@media (max-width: 479px) {
+	#page-builder .section .section-title { font-size: 1.5rem; max-width: none; }
+}
+@media (max-width: 767px) {
+	#main { padding: 30px 0; }
+	#page-builder .section { padding: 30px 0; }
+	#page-builder .section:first-of-type { padding-top: 0; }
+	#page-builder .section:last-of-type { padding-bottom: 0; }
+	#page-builder .section .section-title { margin: 0 auto 30px auto; }
+}
+
+// CONTENT: INSTAGRAM
+.section.instagram-feed .image-holder { width: 100%; background-size: cover; background-position: center; }
+.section.instagram-feed .image-holder a { opacity: 0; transition: $transition; background: rgba($primary, 0.75); position: relative; height: 100%; width: 100%; display: block; }
+.section.instagram-feed .image-holder a:hover,
+.section.instagram-feed .image-holder a:focus { opacity: 1; }
+.section.instagram-feed .image-holder a .fa { transition: $transition; color: #fff; font-size: 1rem; position: absolute; left: 50%; top: 50%; transform: translateY(-50%) translateX(-50%); }
+.section.instagram-feed .image-holder a:hover .fa,
+.section.instagram-feed .image-holder a:focus .fa { font-size: 4rem; }
+@media (max-width: 479px) {
+	.section.instagram-feed .row .col-md-15:nth-child(1n+5) { display: none; }
+}
+@media (max-width: 991px) {
+	.section.instagram-feed .image-holder { margin: 15px 0; }
+}
+
+@media (min-width: 992px) {
+	.section.instagram-feed .row .col-md-15:nth-child(6) .image-holder { display: none; }
+}
+
+// CONTENT: PRODUCT CTA
+#page-builder .section.product-cta .inner { position: relative; background-color: $near-white; background-repeat: no-repeat; background-position: left 100px top 80px; padding: 50px; margin-bottom: 30px; }
+#page-builder .section.product-cta .circle { z-index: 9; background: $primary; color: #fff; border-radius: 50%; height: 6rem; width: 6rem; position: absolute; top: -2rem; left: -2rem; padding: 0.75rem 0; text-align: center; font-size: 0.875rem; }
+#page-builder .section.product-cta .circle span { font-size: 1.25rem; display: block; }
+#page-builder .section.product-cta .box { border: none; background: #fff; margin: 0; font-size: 1rem; }
+#page-builder .section.product-cta .box .list-icon { margin: 0; }
+#page-builder .section.product-cta .box .list-icon li { padding: 7px 0; }
+@media (max-width: 767px) {
+	#page-builder .section.product-cta .inner { background-size: 350px; background-position: top 20px right; padding: 30px; margin: 0 -15px 30px -15px; }
+	#page-builder .section.product-cta .box { margin: 160px 0 0 0; }
+}
+@media (max-width: 991px) {
+	#page-builder .section.product-cta .circle { top: -1rem; left: 1rem; }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+	#page-builder .section.product-cta .inner { background-position: left top 80px; padding: 30px; }
+}
+
+// CONTENT: COUNTDOWN
+#page-builder .section.sale-countdown .inner { background: #fff; padding: 30px 50px; }
+#page-builder .section.sale-countdown .section-title { margin-bottom: 10px; }
+#page-builder .section.sale-countdown .progress-bars { margin: 10px auto; }
+#page-builder .section.sale-countdown .progress-bars .progress { position: relative; overflow: visible; height: 35px; margin: 15px 0; background-color: #ececec; border-radius: 0; box-shadow: none; }
+#page-builder .section.sale-countdown .progress-bars .progress:before,
+#page-builder .section.sale-countdown .progress-bars .progress:after { content: ""; width: 0; height: 0; border-style: solid; position: absolute; }
+#page-builder .section.sale-countdown .progress-bars .progress:after { right: -35px; border-width: 35px 35px 0 0; border-color: #ececec transparent transparent transparent;}
+#page-builder .section.sale-countdown .progress-bars .progress-female:before { left: -35px; border-width: 0 0 35px 35px; border-color: transparent transparent $secondary transparent;}
+#page-builder .section.sale-countdown .progress-bars .progress-male:before { left: -35px; border-width: 0 0 35px 35px; border-color: transparent transparent $primary transparent;}
+#page-builder .section.sale-countdown .progress-bars .progress .progress-bar { min-width: 160px; position: relative; font-size: 1rem; box-shadow: none; transition: none; }
+#page-builder .section.sale-countdown .progress-bars .progress .progress-bar:after { content: ""; width: 0; height: 0; right: -35px; top: 0; border-style: solid; position: absolute; }
+#page-builder .section.sale-countdown .progress-bars .progress .progress-bar-danger { background-color: $secondary; }
+#page-builder .section.sale-countdown .progress-bars .progress .progress-bar-danger:after { border-width: 35px 35px 0 0; border-color: $secondary transparent transparent transparent; top: 0; }
+#page-builder .section.sale-countdown .progress-bars .progress .progress-bar-info { background-color: $primary; }
+#page-builder .section.sale-countdown .progress-bars .progress .progress-bar-info:after { border-width: 35px 35px 0 0; border-color: $primary transparent transparent transparent; }
+#page-builder .section.sale-countdown .progress-bars .progress .progress-type { color: #fff; position: absolute; left: 15px; top: 7px; text-transform: uppercase; }
+#page-builder .section.sale-countdown .progress-bars .progress .progress-completed { color: $primary; position: absolute; right: 15px; top: 5px; }
+#page-builder .section.sale-countdown .progress-bars .progress .fa { font-size: 1.125rem; }
+@media (max-width: 479px) {
+	#page-builder .section.sale-countdown .inner { padding: 30px 20px; }
+}
+@media (min-width: 1200px) {
+	#page-builder .section.sale-countdown .progress-bars { margin: 10px -75px; }
+}
+
+// SECTION: FITLIFEBOX
+.section.fitlifebox .box-inner { background: #f6f5f4; padding-bottom: 30px; margin-bottom: 15px; }
+.section.fitlifebox .box-inner .h2 { margin-top: 0; font-size: 1.75rem; }
+.section.fitlifebox .hint { font-size: 11px; color: $gray-light; display: block; text-align: center; }
+
+// SECTION: PARTNER
+.section.partner { padding: 0 !important; }
+.section.partner .inner { border-top: 1px solid #ececec; padding-top: 10px; border-bottom: 1px solid #ececec; padding-bottom: 10px; }
+.section.partner .list-partner { margin: 0; }
+.section.partner .list-partner li { padding: 0; }
+.section.partner .list-partner img { max-height: 80px; width: auto; margin: 0 15px;}
+
+// SECTION: PRICING TABLE
+.section.product-price-table .product { background: $near-white; text-align: center; padding: 10px; }
+.section.product-price-table .product.product-highlight { background: darken($near-white, 5%); }
+
+// SECTION FAQ
+.faq { text-align: center; font-size: 1.125rem; }
+.faq a { text-decoration: underline; }
+.faq p { margin: 0; }

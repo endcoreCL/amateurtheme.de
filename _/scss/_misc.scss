@@ -1,0 +1,12 @@
+/* MISC */
+
+// DIVIDER
+hr { margin-top: 20px; margin-bottom: 20px; border-color: $border; }
+.hr-xs { margin-top: 5px; margin-bottom: 5px; }
+.hr-sm { margin-top: 10px; margin-bottom: 10px; }
+.hr-md { margin-top: 20px; margin-bottom: 20px; }
+.hr-lg { margin-top: 50px; margin-bottom: 50px; }
+.hr-transparent { border-color: transparent; }
+@media (max-width: 991px) {
+	.hr-lg { margin-top: 30px; margin-bottom: 30px; }
+}

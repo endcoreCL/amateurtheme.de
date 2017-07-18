@@ -1,0 +1,62 @@
+/* FORMS */
+
+// FORMS
+.form-control,
+.woocommerce form .form-row input.input-text,
+.woocommerce form .form-row textarea,
+.woocommerce form .form-row select,
+.woocommerce input.input-text,
+.woocommerce .quantity .qty,
+.woocommerce .woocommerce-ordering select {
+	height: 40px; padding: 6px 12px; font-size: 1rem; line-height: 1.4;
+	color: $gray; background-color: #fff; border: 1px solid $border; border-radius: 0; box-shadow: none; transition: none; display: block; width: 100%; background-image: none;
+	&:focus {
+		color: $gray-dark; background-color: #fff; border-color: darken($border, 5%); box-shadow: none; outline: 0;
+	}
+}
+@mixin placeholder {
+	::-webkit-input-placeholder {@content}
+	:-moz-placeholder {@content}
+	::-moz-placeholder {@content}
+	:-ms-input-placeholder {@content}
+}
+@include placeholder {
+	font-style: italic;
+	color: $gray-light;
+	font-weight: 300;
+}
+
+// CUSTOM WOOCOMMERCE
+.woocommerce form .form-row textarea { height: 5rem; }
+.woocommerce .quantity .qty { width: 3rem; padding: 6px 6px 6px 12px; }
+.woocommerce #coupon_code { display: inline-block; width: auto; float: left; }
+.woocommerce .woocommerce-ordering { float: none; margin: 0; }
+
+// LABEL
+.control-label,
+.woocommerce form .form-row label { font-weight: 400; font-size: 0.875rem; text-align: left; line-height: 1.4; }
+.woocommerce form .form-row .required { color: $danger; font-weight: 600; }
+
+// GROUP
+.form-group,
+.woocommerce form .form-row { margin: 0 0 15px 0; padding: 0; position: relative; }
+
+
+// CONTACT FORM
+.form-control::-moz-placeholder { color: $gray-light; }
+.form-control:-ms-input-placeholder { color: $gray-light; }
+.form-control::-webkit-input-placeholder { color: $gray-light; }
+.form-control.wpcf7-not-valid { color: $danger; background-color: rgba($danger, 0.015); border-color: mix($danger, $border, 20%); }
+.form-control.wpcf7-not-valid:focus { color: $danger; background-color: #fff; border-color: darken(mix($danger, $border, 20%) ,5%); }
+.form-control.wpcf7-not-valid::-moz-placeholder { color: mix($danger, $gray-light, 20%); }
+.form-control.wpcf7-not-valid:-ms-input-placeholder { color: mix($danger, $gray-light, 20%); }
+.form-control.wpcf7-not-valid::-webkit-input-placeholder { color: mix($danger, $gray-light, 20%); }
+.control-label sup { color: $danger; }
+.wpcf7 .ajax-loader { display: none; }
+.wpcf7 .screen-reader-response { display: none; }
+.wpcf7 .wpcf7-not-valid-tip { display: block; font-size: 12px; text-align: right; position: absolute; right: 0; color: mix($danger, $gray-light, 50%); }
+.wpcf7-radio .wpcf7-list-item,
+.wpcf7-checkbox .wpcf7-list-item { margin-right: 10px; }
+.wpcf7-response-output { margin: 20px 0; padding: 15px; font-size: 0.875rem; }
+.wpcf7-response-output.wpcf7-validation-errors { color: $danger; background: rgba($danger, 0.015); }
+.wpcf7-response-output.wpcf7-mail-sent-ok { color: $success; background: rgba($success, 0.015); }

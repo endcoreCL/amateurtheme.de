@@ -7,6 +7,8 @@
  * @category	helper
  */
 
+require_once( AT_PLUGINS . '/scss/core/wp-sass.php' );
+
 if ( ! function_exists('at_load_theme_scripts') ) {
 	/**
 	 * load frontend scripts
@@ -27,6 +29,7 @@ if ( ! function_exists('at_load_theme_scripts') ) {
 
         /* Base CSS */
         wp_enqueue_style('theme', get_template_directory_uri() . '/style.css');
+        wp_enqueue_style('scss', get_stylesheet_directory_uri() . '/_/scss/style.scss');
 
         /* Bootstrap JS */
         if('1' == get_field('scripte_bootstrap_js', 'option')) {

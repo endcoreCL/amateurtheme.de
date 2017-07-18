@@ -7,5 +7,5 @@
  * @category	_load
  */
 
-require_once(at_LIBRARY . '/widgets/areas.php');
-require_once(at_LIBRARY . '/widgets/class.php');
+require_once(AT_LIBRARY . '/widgets/areas.php');
+require_once(AT_LIBRARY . '/widgets/class.php');

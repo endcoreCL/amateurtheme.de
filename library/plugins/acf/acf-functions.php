@@ -11,7 +11,7 @@ define( 'ACF_LITE' , false );
 
 add_filter('acf/settings/path', 'at_acf_settings_path');
 function at_acf_settings_path( $path ) {
-	$path = at_PLUGINS . '/acf/core/';
+	$path = AT_PLUGINS . '/acf/core/';
 	return $path;
 	
 }

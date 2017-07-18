@@ -1,0 +1,22 @@
+/* BLOG */
+
+// BLOG ARCHIVE
+.post-categories a { color: inherit; }
+.post-categories a:hover,
+.post-categories a:focus { color: $primary; }
+.post-meta { color: $gray-light; }
+.post-meta a { color: inherit; }
+.post-meta a:hover,
+.post-meta a:focus { color: $primary; }
+.post-large,
+.post-grid { margin-bottom: 30px; }
+.post-large h2,
+.post-grid h2 { margin: 0 0 10px 0; text-align: center; }
+.post-large h2 a,
+.post-grid h2 a { color: inherit; }
+.post-large h2 a:hover,
+.post-large h2 a:focus,
+.post-grid h2 a:hover,
+.post-grid h2 a:focus { color: $primary; text-decoration: none; }
+
+// BLOG SINGLE
