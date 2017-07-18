@@ -27,7 +27,6 @@ if ( !is_plugin_active( 'kirki/kirki.php' ) ) {
  */
 require_once(at_PLUGINS . '/kirki/kirki-functions.php');
 require_once(at_PLUGINS . '/kirki/kirki-customizer.php');
-#require_once(at_PLUGINS . '/kirki/kirki-css.php');
 require_once(at_PLUGINS . '/acf/field-type-autocomplete/acf-field-type-autocomplete.php');
 require_once(at_PLUGINS . '/acf/field-type-code/acf-code_area.php');
 require_once(at_PLUGINS . '/acf/field-type-selector/acf-field_selector.php');

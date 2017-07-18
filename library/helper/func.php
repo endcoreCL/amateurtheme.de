@@ -217,56 +217,6 @@ if ( ! function_exists('at_remove_recent_comment_style') ) {
 	}
 }
 
-if ( ! function_exists('at_set_network') ) {
-	/**
-	 * at_set_network function.
-	 *
-	 */
-	add_action('init', 'at_set_network');
-	function at_set_network() {
-		/*if (!isset($_COOKIE['curr_network'])) {
-			$networks = get_field('form_networks', 'options');
-			$prob = array();
-			$networks_prob = array();
-			$random = mt_rand(0, 1000);
-			$offset = 0;
-
-			$networks_prob['pornme'] = get_field('form_probability_pornme', 'option');
-			$networks_prob['lustagenten'] = get_field('form_probability_lustagenten', 'option');
-
-			if ($networks) {
-				foreach ($networks as $network) {
-					if ($networks_prob[$network] != "0" && $networks_prob[$network] != "")
-						$prob[$network] = $networks_prob[$network] / 100;
-				}
-			}
-
-			foreach ($prob as $key => $probability) {
-				$offset += $probability * 1000;
-				if ($random <= $offset) {
-					@setcookie("curr_network", $key, time() + (3600 * 12));
-					define('CURRENT_PORTAL', $key);
-					return $key;
-				}
-			}
-		} else {
-			define('CURRENT_PORTAL', $_COOKIE['curr_network']);
-		}*/
-
-		define(CURRENT_PORTAL, 'lustagenten');
-	}
-}
-
-if ( ! function_exists('at_get_network') ) {
-	/**
-	 * at_get_network function.
-	 *
-	 */
-	function at_get_network() {
-		return CURRENT_PORTAL;
-	}
-}
-
 if ( ! function_exists('at_ajaxurl') ) {
 	/**
 	 * at_ajaxurl function.

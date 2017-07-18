@@ -10,7 +10,6 @@
 add_filter( 'kirki/config', 'at_customizer_config' );
 function at_customizer_config() {
     $args = array(
-        'logo_image'   => 'https://datingtheme.io/cdn/customize.png',
         'url_path' => get_template_directory_uri() . '/library/plugins/kirki/core/',
         'i18n' => array(
             'background-color'      => esc_attr__( 'Hintergrundfarbe', 'amateurtheme' ),
@@ -105,24 +104,4 @@ function at_customizer_config() {
     );
 
     return $args;
-}
-
-add_action( 'customize_register', 'at_clean_customizer' );
-function at_clean_customizer( $wp_customize ) {
-    $wp_customize->remove_panel('widgets');
-    $wp_customize->remove_section('nav');
-    $wp_customize->remove_section('title_tagline');
-    $wp_customize->remove_section('static_front_page');
-}
-
-//add_action('wp_footer', 'at_kirki_preview_css');
-function at_kirki_preview_css() {
-    if(is_customize_preview()) {
-        echo '
-        <style>
-            .kirki-customizer-loading-wrapper {  background-image: url("' . get_template_directory_uri() . '/_/img/loading.gif") !important; }
-            .kirki-customizer-loading-wrapper .kirki-customizer-loading { background: none !important; width: 64px !important; height: 64px !important; margin: -32px !important; -webkit-animation: none !important; animation: none !important; }
-        </style>
-        ';
-    }
 }
