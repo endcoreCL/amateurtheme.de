@@ -1,0 +1,117 @@
+{
+    "key": "group_576416674a728",
+    "title": "Sidebar",
+    "fields": [
+        {
+            "key": "field_5764166ea39dc",
+            "label": "Verh\u00e4ltnis (Inhalt \/ Sidebar)",
+            "name": "page_allg_sidebar_size",
+            "type": "select",
+            "instructions": "Bestimme hier die Aufteilung von Inhalt und Sidebar.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "8_4": "8\/4",
+                "9_3": "9\/3"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_57641693a39dd",
+            "label": "Vorschau",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5764166ea39dc",
+                        "operator": "==",
+                        "value": "8_4"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "<img src=\"https:\/\/datingtheme.io\/cdn\/dt-content-8-4.jpg\" class=\"img-responsive\"\/>",
+            "new_lines": "",
+            "esc_html": 0
+        },
+        {
+            "key": "field_5764171da39de",
+            "label": "Vorschau",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_5764166ea39dc",
+                        "operator": "==",
+                        "value": "9_3"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "<img src=\"https:\/\/datingtheme.io\/cdn\/dt-content-9-3.jpg\" class=\"img-responsive\"\/>",
+            "new_lines": "",
+            "esc_html": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            },
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "templates\/sidebar-left.php"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            },
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "templates\/sidebar-right.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "side",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1466177367
+}

@@ -1,0 +1,1110 @@
+{
+    "key": "group_552bdb878e1a9",
+    "title": "Optionen - Blog",
+    "fields": [
+        {
+            "key": "field_552bdc4e91813",
+            "label": "Allgemein",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left"
+        },
+        {
+            "key": "field_552bddbab57b4",
+            "label": "Sidebar",
+            "name": "blog_home_sidebar",
+            "type": "select",
+            "instructions": "Soll die Sidebar im Blog angezeigt werden? Wenn ja, wo?",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "right": "Rechts",
+                "left": "Links",
+                "none": "Keine"
+            },
+            "default_value": {
+                "": ""
+            },
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_552bdcdf91814",
+            "label": "Aufbau der Beitr\u00e4ge",
+            "name": "blog_home_post_layout",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "small": "Thumbnail",
+                "large": "Fullwidth"
+            },
+            "default_value": {
+                "": ""
+            },
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_552bdd1b91815",
+            "label": "Vorschau",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_552bdcdf91814",
+                        "operator": "==",
+                        "value": "small"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "message": "<img src=\"https:\/\/www.datingtheme.io\/cdn\/dt-blog-two.jpg\" \/>",
+            "esc_html": 0
+        },
+        {
+            "key": "field_552bdd4391817",
+            "label": "Vorschau",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_552bdcdf91814",
+                        "operator": "==",
+                        "value": "large"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "message": "<img src=\"https:\/\/datingtheme.io\/cdn\/dt-blog-one.jpg\" \/>",
+            "esc_html": 0
+        },
+        {
+            "key": "field_5537d2d63bbef",
+            "label": "Platzhalter",
+            "name": "blog_placeholders",
+            "type": "true_false",
+            "instructions": "Wenn kein Artikelbild vorhanden ist, wird ein Platzhalter ausgegeben.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "anzeigen",
+            "default_value": 0
+        },
+        {
+            "key": "field_552bdd8cb6507",
+            "label": "L\u00e4nge des Auszugs",
+            "name": "blog_excerpt_length",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 55,
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": "",
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "key": "field_552bde2695cc1",
+            "label": "Kategorie Archive",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top"
+        },
+        {
+            "key": "field_552bde3595cc2",
+            "label": "Sidebar",
+            "name": "blog_category_sidebar",
+            "type": "select",
+            "instructions": "Soll die Sidebar in den Kategorie Archivseiten angezeigt werden? Wenn ja, wo?",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "right": "Rechts",
+                "left": "Links",
+                "none": "Keine"
+            },
+            "default_value": {
+                "": ""
+            },
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_552bde6a95cc3",
+            "label": "Aufbau der Beitr\u00e4ge",
+            "name": "blog_category_post_layout",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "small": "Thumbnail",
+                "large": "Fullwidth"
+            },
+            "default_value": {
+                "": ""
+            },
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_552bde8195cc4",
+            "label": "Vorschau",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_552bde6a95cc3",
+                        "operator": "==",
+                        "value": "small"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "message": "<img src=\"https:\/\/datingtheme.io\/cdn\/dt-blog-two.jpg\" \/>",
+            "esc_html": 0
+        },
+        {
+            "key": "field_552bde8e95cc5",
+            "label": "Vorschau",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_552bde6a95cc3",
+                        "operator": "==",
+                        "value": "large"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "message": "<img src=\"https:\/\/datingtheme.io\/cdn\/dt-blog-one.jpg\" \/>",
+            "esc_html": 0
+        },
+        {
+            "key": "field_552bdf09ce161",
+            "label": "Datums Archive",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top"
+        },
+        {
+            "key": "field_552bdf35ce162",
+            "label": "Sidebar",
+            "name": "blog_archive_sidebar",
+            "type": "select",
+            "instructions": "Soll die Sidebar in den Datum Archivseiten angezeigt werden? Wenn ja, wo?",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "right": "Rechts",
+                "left": "Links",
+                "none": "Keine"
+            },
+            "default_value": {
+                "": ""
+            },
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_552bdf70ce164",
+            "label": "Aufbau der Beitr\u00e4ge",
+            "name": "blog_archive_post_layout",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "small": "Thumbnail",
+                "large": "Fullwidth"
+            },
+            "default_value": {
+                "": ""
+            },
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_552bdfa5ce165",
+            "label": "Vorschau",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_552bdf70ce164",
+                        "operator": "==",
+                        "value": "small"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "message": "<img src=\"https:\/\/datingtheme.io\/cdn\/dt-blog-two.jpg\" \/>",
+            "esc_html": 0
+        },
+        {
+            "key": "field_552bdfb1ce166",
+            "label": "Vorschau",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_552bdf70ce164",
+                        "operator": "==",
+                        "value": "large"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "message": "<img src=\"https:\/\/datingtheme.io\/cdn\/dt-blog-one.jpg\" \/>",
+            "esc_html": 0
+        },
+        {
+            "key": "field_552bdfd04dd24",
+            "label": "Autoren Archive",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top"
+        },
+        {
+            "key": "field_552bdfdc4dd26",
+            "label": "Sidebar",
+            "name": "blog_author_sidebar",
+            "type": "select",
+            "instructions": "Soll die Sidebar in den Autoren Archivseiten angezeigt werden? Wenn ja, wo?",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "right": "Rechts",
+                "left": "Links",
+                "none": "Keine"
+            },
+            "default_value": {
+                "": ""
+            },
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_552bdfec4dd27",
+            "label": "Aufbau der Beitr\u00e4ge",
+            "name": "blog_author_post_layout",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "small": "Thumbnail",
+                "large": "Fullwidth"
+            },
+            "default_value": {
+                "": ""
+            },
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_552bdff84dd28",
+            "label": "Vorschau",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_552bdfec4dd27",
+                        "operator": "==",
+                        "value": "small"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "message": "<img src=\"https:\/\/datingtheme.io\/cdn\/dt-blog-two.jpg\" \/>",
+            "esc_html": 0
+        },
+        {
+            "key": "field_552be0054dd29",
+            "label": "Vorschau",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_552bdfec4dd27",
+                        "operator": "==",
+                        "value": "large"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "message": "<img src=\"https:\/\/datingtheme.io\/cdn\/dt-blog-one.jpg\" \/>",
+            "esc_html": 0
+        },
+        {
+            "key": "field_552be02e5a96e",
+            "label": "Schlagw\u00f6rter Archive",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top"
+        },
+        {
+            "key": "field_552be0c15a96f",
+            "label": "Sidebar",
+            "name": "blog_tag_sidebar",
+            "type": "select",
+            "instructions": "Soll die Sidebar in den Schlagw\u00f6rter Archivseiten angezeigt werden? Wenn ja, wo?",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "right": "Rechts",
+                "left": "Links",
+                "none": "Keine"
+            },
+            "default_value": {
+                "": ""
+            },
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_552be0d55a970",
+            "label": "Aufbau der Beitr\u00e4ge",
+            "name": "blog_tag_post_layout",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "small": "Thumbnail",
+                "large": "Fullwidth"
+            },
+            "default_value": {
+                "": ""
+            },
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_552be0e15a971",
+            "label": "Vorschau",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_552be0d55a970",
+                        "operator": "==",
+                        "value": "small"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "message": "<img src=\"https:\/\/datingtheme.io\/cdn\/dt-blog-two.jpg\" \/>",
+            "esc_html": 0
+        },
+        {
+            "key": "field_552be0ee5a972",
+            "label": "Vorschau",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_552be0d55a970",
+                        "operator": "==",
+                        "value": "large"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "message": "<img src=\"https:\/\/datingtheme.io\/cdn\/dt-blog-one.jpg\" \/>",
+            "esc_html": 0
+        },
+        {
+            "key": "field_552be1569add1",
+            "label": "Suche",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top"
+        },
+        {
+            "key": "field_552be1609add2",
+            "label": "Sidebar",
+            "name": "blog_search_sidebar",
+            "type": "select",
+            "instructions": "Soll die Sidebar auf der Suchseite angezeigt werden? Wenn ja, wo?",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "right": "Rechts",
+                "left": "Links",
+                "none": "Keine"
+            },
+            "default_value": {
+                "": ""
+            },
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_552be16c9add3",
+            "label": "Aufbau der Beitr\u00e4ge",
+            "name": "blog_search_post_layout",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "small": "Thumbnail",
+                "large": "Fullwidth"
+            },
+            "default_value": {
+                "": ""
+            },
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_552be1789add4",
+            "label": "Vorschau",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_552be16c9add3",
+                        "operator": "==",
+                        "value": "small"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "message": "<img src=\"https:\/\/datingtheme.io\/cdn\/dt-blog-two.jpg\" \/>",
+            "esc_html": 0
+        },
+        {
+            "key": "field_552be1829add5",
+            "label": "Vorschau",
+            "name": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_552be16c9add3",
+                        "operator": "==",
+                        "value": "large"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "message": "<img src=\"https:\/\/datingtheme.io\/cdn\/dt-blog-one.jpg\" \/>",
+            "esc_html": 0
+        },
+        {
+            "key": "field_552bdbbb91b50",
+            "label": "Single",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top"
+        },
+        {
+            "key": "field_552be1e69dbb2",
+            "label": "Sidebar",
+            "name": "blog_single_sidebar",
+            "type": "select",
+            "instructions": "Soll die Sidebar auf der Detailseite angezeigt werden? Wenn ja, wo?",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "right": "Rechts",
+                "left": "Links",
+                "none": "Keine"
+            },
+            "default_value": {
+                "": ""
+            },
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_552bdc2091b53",
+            "label": "Meta-Angaben",
+            "name": "blog_single_show_meta",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "anzeigen",
+            "default_value": 0
+        },
+        {
+            "key": "field_552bdbc691b51",
+            "label": "Authorenbox",
+            "name": "blog_single_show_authorbox",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "anzeigen",
+            "default_value": 0
+        },
+        {
+            "key": "field_552fe21c31244",
+            "label": "\u00c4hnliche Beitr\u00e4ge",
+            "name": "blog_single_show_related",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "anzeigen",
+            "default_value": 0
+        },
+        {
+            "key": "field_552fe2b731245",
+            "label": "Anzahl der Beitr\u00e4ge",
+            "name": "blog_single_related_numberposts",
+            "type": "number",
+            "instructions": "Wieviele Beitr\u00e4ge sollen angezeigt werden?",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_552fe21c31244",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "ml50",
+                "id": ""
+            },
+            "default_value": 3,
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": "",
+            "max": "",
+            "step": "",
+            "readonly": 0,
+            "disabled": 0
+        },
+        {
+            "key": "field_552fe3c131246",
+            "label": "Layout",
+            "name": "blog_single_related_layout",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_552fe21c31244",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "ml50",
+                "id": ""
+            },
+            "choices": {
+                "list": "Einfache Liste",
+                "grid": "Grid",
+                "small": "Thumbnail (List)"
+            },
+            "default_value": {
+                "": ""
+            },
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_552fe40c31247",
+            "label": "Auswahl einschr\u00e4nken",
+            "name": "blog_single_related_filter",
+            "type": "select",
+            "instructions": "Wie sollen die \u00c4hnlichen Beitr\u00e4ge gefiltert werden?",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_552fe21c31244",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "ml50",
+                "id": ""
+            },
+            "choices": {
+                "none": "kein Filter",
+                "cat": "nach Kategorie",
+                "tag": "nach Schlagw\u00f6rter",
+                "cat_tag": "nach Kategorie & Schlagw\u00f6rter"
+            },
+            "default_value": {
+                "": ""
+            },
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_552fe922e2829",
+            "label": "Sortierung",
+            "name": "blog_single_related_orderby",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_552fe21c31244",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": 45,
+                "class": "ml50",
+                "id": ""
+            },
+            "choices": {
+                "date": "Datum",
+                "title": "Titel",
+                "rand": "Zuf\u00e4llig"
+            },
+            "default_value": {
+                "": ""
+            },
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_552fe9bee282a",
+            "label": "Reihenfolge",
+            "name": "blog_single_related_order",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_552fe922e2829",
+                        "operator": "!=",
+                        "value": "rand"
+                    }
+                ],
+                [
+                    {
+                        "field": "field_552fe21c31244",
+                        "operator": "!=",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": 50,
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "DESC": "Absteigend",
+                "ASC": "Aufsteigend"
+            },
+            "default_value": {
+                "": ""
+            },
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        },
+        {
+            "key": "field_552feed92e0fe",
+            "label": "Artikel Navigation",
+            "name": "blog_single_show_postnav",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "anzeigen",
+            "default_value": 0
+        },
+        {
+            "key": "field_552ff0ada5d2d",
+            "label": "Auswahl einschr\u00e4nken",
+            "name": "blog_single_postnav_filter",
+            "type": "select",
+            "instructions": "Soll die Navigation auf bestimtme Beitr\u00e4ge beschr\u00e4nkt werden?",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_552feed92e0fe",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "ml50",
+                "id": ""
+            },
+            "choices": {
+                "none": "kein Filter",
+                "category": "nach Kategorien"
+            },
+            "default_value": {
+                "": ""
+            },
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 0,
+            "ajax": 0,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options-blog"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "modified": 1434446873,
+    "private": false
+}
