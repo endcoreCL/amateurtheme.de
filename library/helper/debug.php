@@ -40,7 +40,7 @@ if ( ! function_exists('at_load_debug_page') ) {
 	 */
 	add_action('admin_menu', 'at_load_debug_page');
 	function at_load_debug_page() {
-		add_menu_page('datingtheme.io Debug', 'Debug', 'administrator', 'at_debug', 'at_debug_page', 'dashicons-sos');
+		add_menu_page('Amateur Theme Debug', 'Debug', 'administrator', 'at_debug', 'at_debug_page', 'dashicons-sos');
 
 		function at_debug_page() {
 			$upload_dir = wp_upload_dir();

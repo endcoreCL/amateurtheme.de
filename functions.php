@@ -6,11 +6,13 @@
  * @version		1.0
  * @category	functions
  */
+global $wpdb;
 include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
 
 define( 'AT_LIBRARY', TEMPLATEPATH . '/library' );
 define( 'AT_HELPER', TEMPLATEPATH . '/library/helper' );
 define( 'AT_PLUGINS', TEMPLATEPATH . '/library/plugins' );
+define( 'AT_IMPORT', TEMPLATEPATH . '/library/import' );
 
 /*
  * Plugins
@@ -45,4 +47,10 @@ require_once(AT_LIBRARY . '/helper/_load.php');
 require_once(AT_LIBRARY . '/navigation/_load.php');
 require_once(AT_LIBRARY . '/widgets/_load.php');
 require_once(AT_LIBRARY . '/video/_load.php');
+
+/*
+ * Import
+ */
+define('AT_CRON_TABLE', $wpdb->prefix . 'at_import_cronjobs');
+require_once(AT_LIBRARY . '/import/_load.php');
 ?>
