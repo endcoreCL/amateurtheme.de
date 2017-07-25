@@ -57,8 +57,8 @@ if ( ! function_exists('at_load_debug_page') ) {
 
 			?>
 			<div class="wrap" id="datingtheme-page">
-				<h1>datingtheme.io Debug</h1>
-				<table class="datingtheme_debug_table widefat" cellspacing="0" id="status">
+				<h1>Amateur Theme Debug</h1>
+				<table class="datingtheme_debug_table widefat" cellspacing="0" id="status" style="margin-top: 15px;">
 					<thead>
 					<tr>
 						<th colspan="2" data-export-label="WordPress"><?php _e('WordPress', 'amateurtheme'); ?></th>
