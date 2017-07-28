@@ -200,10 +200,22 @@ function at_import_mydirtyhobby_panel() {
                                     </tfoot>
                                 </table>
                             </form>
+                        </div>
+                    </div>
 
-                            <hr>
-
-                            <button type="button" class="btn btn-at at-mdh-amateur-dropdown">Liste der Amateure aktualisieren/generieren</button>
+                    <div class="metabox-holder postbox no-padding-top">
+                        <h3 class="hndle"><span><?php _e('Hilfsmittel', 'amateurtheme'); ?></span></h3>
+                        <div class="inside">
+                            <div class="at-crawl-amateurs">
+                                <button type="button" data-action="crawl-amateurs" class="btn btn-at at-mdh-amateur-dropdown"><?php _e('Liste der Amateure aktualisieren/generieren', 'amateurtheme'); ?></button>
+                                <div class="status" style="display: none;">
+                                    <p>
+                                        <?php _e('Anzahl an Amateuren:', 'amateurtheme'); ?> <span class="total">0</span><br>
+                                        <?php _e('Aktuelle Position:', 'amateurtheme'); ?> <span class="offset">0</span><br>
+                                        <?php _e('Geschätzte Restzeit:', 'amateurtheme'); ?> <span class="time-remaining">0</span> <?php _e('Minute(n)', 'amateurtheme'); ?>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -212,24 +224,22 @@ function at_import_mydirtyhobby_panel() {
                     <div class="metabox-holder postbox no-padding-top">
                         <h3 class="hndle"><span><?php _e('Videos', 'amateurtheme'); ?></span></h3>
                         <div class="inside">
-                            <form method="post" id="vi-get-videos">
+                            <form method="post" id="at-get-videos">
                                 <table class="at-import-table">
                                     <tr>
                                         <td>
-                                            <select name="userid" id="userid" class="form-control">
+                                            <select name="u_id" id="u_id" class="form-control">
                                                 <option><?php _e('Amateur auswählen', 'amateurtheme'); ?></option>
                                                 <?php if ($amateure) : ?>
                                                     <?php foreach ($amateure as $item) : ?>
-                                                        <option
-                                                                value="<?php echo $item->userid; ?>"><?php echo $item->username; ?></option>
+                                                        <option value="<?php echo $item->u_id; ?>"><?php echo $item->name; ?></option>
                                                     <?php endforeach; ?>
                                                 <?php endif; ?>
                                             </select>
                                         </td>
 
                                         <td>
-                                            <button name="submit" type="submit" class="btn btn-at"
-                                                    style="float:left;"><?php _e('Videos abrufen', 'amateurtheme'); ?></button>
+                                            <button name="submit" type="submit" class="btn btn-at" style="float:left;"><?php _e('Videos abrufen', 'amateurtheme'); ?></button>
                                             <div class="spinner" style="display:inline;float:left;"></div>
                                             <div style="clear:both;"></div>
                                         </td>
@@ -243,11 +253,9 @@ function at_import_mydirtyhobby_panel() {
                         <form id="posts-filter" method="post">
                             <div class="tablenav top">
                                 <div class="alignleft actions bulkactions">
-                                    <label for="bulk-action-selector-bottom"
-                                           class="screen-reader-text"><?php _e('Mehrfachauswahl', 'amateurtheme'); ?></label>
+                                    <label for="bulk-action-selector-bottom" class="screen-reader-text"><?php _e('Mehrfachauswahl', 'amateurtheme'); ?></label>
                                     <select name="kategorie" id="kategorie">
-                                        <option value="-1"
-                                                selected="selected"><?php _e('Kategorie wählen', 'amateurtheme'); ?></option>
+                                        <option value="-1" selected="selected"><?php _e('Kategorie wählen', 'amateurtheme'); ?></option>
                                         <?php
                                         $video_kategorie = get_terms('video_kategorie', 'orderby=name&hide_empty=0');
                                         if ($video_kategorie) {
@@ -262,23 +270,22 @@ function at_import_mydirtyhobby_panel() {
                                     </select>
 
                                     <select name="darsteller" id="darsteller">
-                                        <option value="-1" selected="selected">Darsteller wählen</option>
+                                        <option value="-1" selected="selected"><?php _e('Darsteller wählen', 'amateurtheme'); ?></option>
                                         <?php
                                         $video_darsteller = get_terms('video_darsteller', 'orderby=name&hide_empty=0');
                                         if ($video_darsteller) {
                                             foreach ($video_darsteller as $darsteller) {
                                                 ?>
-                                                <option
-                                                        value="<?php echo $darsteller->slug; ?>"><?php echo $darsteller->name; ?></option>
+                                                <option value="<?php echo $darsteller->slug; ?>"><?php echo $darsteller->name; ?></option>
                                                 <?php
                                             }
                                         }
                                         ?>
                                     </select>
-                                    <button name="" class="start-import button">Ausgewählte Videos importieren</button>
+                                    <button name="" class="start-import button"><?php _e('Ausgewählte Videos importieren', 'amateurtheme'); ?></button>
                                 </div>
                                 <div class="tablenav-pages one-page">
-                                    <span class="displaying-num  video-count"><span>0</span> Videos</span>
+                                    <span class="displaying-num  video-count"><span>0</span> <?php _e('Videos', 'amateurtheme'); ?></span>
                                 </div>
                                 <div class="clear"></div>
                             </div>
@@ -295,27 +302,26 @@ function at_import_mydirtyhobby_panel() {
                                 <thead>
                                 <tr>
                                     <th scope="col" id="cb" class="manage-column column-cb check-column" style="">
-                                        <label class="screen-reader-text" for="cb-select-all-1">Alle auswählen</label><input
-                                                id="cb-select-all-1" type="checkbox">
+                                        <label class="screen-reader-text" for="cb-select-all-1"><?php _e('Beschreibung', 'amateurtheme'); ?></label>
+                                        <input id="cb-select-all-1" type="checkbox">
                                     </th>
                                     <th scope="col" id="image" class="manage-column column-image" style="">
-                                        <span>Vorschau</span>
+                                        <span><?php _e('Vorschau', 'amateurtheme'); ?></span>
                                     </th>
                                     <th scope="col" id="title" class="manage-column column-title" style="">
-                                        <span>Titel</span>
+                                        <span><?php _e('Titel', 'amateurtheme'); ?></span>
                                     </th>
                                     <th scope="col" id="duration" class="manage-column column-duration" style="">
-                                        <span>Länge</span>
+                                        <span><?php _e('Länge', 'amateurtheme'); ?></span>
                                     </th>
                                     <th scope="col" id="rating" class="manage-column column-duration" style="">
-                                        <span>Bewertung</span>
+                                        <span><?php _e('Bewertung', 'amateurtheme'); ?></span>
                                     </th>
-                                    <th scope="col" id="description" class="manage-column column-description"
-                                        style="display:none;">
-                                        <span>Beschreibung</span>
+                                    <th scope="col" id="description" class="manage-column column-description" style="display:none;">
+                                        <span><?php _e('Beschreibung', 'amateurtheme'); ?></span>
                                     </th>
                                     <th scope="col" id="time" class="manage-column column-time" style="">
-                                        <span>Datum</span>
+                                        <span><?php _e('Datum', 'amateurtheme'); ?></span>
                                     </th>
                                 </tr>
                                 </thead>
@@ -334,44 +340,41 @@ function at_import_mydirtyhobby_panel() {
                                 <tfoot>
                                 <tr>
                                     <th scope="col" id="cb" class="manage-column column-cb check-column" style="">
-                                        <label class="screen-reader-text" for="cb-select-all-1">Alle auswählen</label><input
-                                                id="cb-select-all-1" type="checkbox">
+                                        <label class="screen-reader-text" for="cb-select-all-1"><?php _e('Beschreibung', 'amateurtheme'); ?></label>
+                                        <input id="cb-select-all-1" type="checkbox">
                                     </th>
                                     <th scope="col" id="image" class="manage-column column-image" style="width:100px;">
-                                        <span>Vorschau</span>
+                                        <span><?php _e('Vorschau', 'amateurtheme'); ?></span>
                                     </th>
                                     <th scope="col" id="title" class="manage-column column-title" style="">
-                                        <span>Titel</span>
+                                        <span><?php _e('Titel', 'amateurtheme'); ?></span>
                                     </th>
                                     <th scope="col" id="duration" class="manage-column column-duration" style="">
-                                        <span>Länge</span>
+                                        <span><?php _e('Länge', 'amateurtheme'); ?></span>
                                     </th>
                                     <th scope="col" id="rating" class="manage-column column-duration" style="">
-                                        <span>Bewertung</span>
+                                        <span><?php _e('Bewertung', 'amateurtheme'); ?></span>
                                     </th>
-                                    <th scope="col" id="description" class="manage-column column-description"
-                                        style="display:none;">
-                                        <span>Beschreibung</span>
+                                    <th scope="col" id="description" class="manage-column column-description" style="display:none;">
+                                        <span><?php _e('Beschreibung', 'amateurtheme'); ?></span>
                                     </th>
                                     <th scope="col" id="time" class="manage-column column-time" style="">
-                                        <span>Datum</span>
+                                        <span><?php _e('Datum', 'amateurtheme'); ?></span>
                                     </th>
                                 </tr>
                                 </tfoot>
                             </table>
                             <div class="tablenav bottom">
                                 <div class="alignleft actions bulkactions">
-                                    <label for="bulk-action-selector-bottom"
-                                           class="screen-reader-text">Mehrfachauswahl</label>
+                                    <label for="bulk-action-selector-bottom" class="screen-reader-text"><?php _e('Mehrfachauswahl', 'amateurtheme'); ?></label>
                                     <select name="kategorie" id="kategorie">
-                                        <option value="-1" selected="selected">Kategorie wählen</option>
+                                        <option value="-1" selected="selected"><?php _e('Kategorie wählen', 'amateurtheme'); ?></option>
                                         <?php
-                                        //$video_kategorie = get_terms('video_kategorie', 'orderby=count&hide_empty=0');
-                                        if ($video_kategorie) {
-                                            foreach ($video_kategorie as $kategorie) {
+                                        $video_category = get_terms('video_category', 'orderby=name&hide_empty=0');
+                                        if ($video_category) {
+                                            foreach ($video_category as $term) {
                                                 ?>
-                                                <option
-                                                        value="<?php echo $kategorie->slug; ?>"><?php echo $kategorie->name; ?></option>
+                                                <option value="<?php echo $term->slug; ?>"><?php echo $term->name; ?></option>
                                                 <?php
                                             }
                                         }
@@ -379,23 +382,22 @@ function at_import_mydirtyhobby_panel() {
                                     </select>
 
                                     <select name="darsteller" id="darsteller">
-                                        <option value="-1" selected="selected">Darsteller wählen</option>
+                                        <option value="-1" selected="selected"><?php _e('Darsteller wählen', 'amateurtheme'); ?></option>
                                         <?php
-                                        //$video_darsteller = get_terms('video_darsteller', 'orderby=count&hide_empty=0');
-                                        if ($video_darsteller) {
-                                            foreach ($video_darsteller as $darsteller) {
+                                        $video_actor = get_terms('video_actor', 'orderby=name&hide_empty=0');
+                                        if ($video_actor) {
+                                            foreach ($video_actor as $term) {
                                                 ?>
-                                                <option
-                                                        value="<?php echo $darsteller->slug; ?>"><?php echo $darsteller->name; ?></option>
+                                                <option value="<?php echo $term->slug; ?>"><?php echo $term->name; ?></option>
                                                 <?php
                                             }
                                         }
                                         ?>
                                     </select>
-                                    <button name="" class="start-import button">Ausgewählte Videos importieren</button>
+                                    <button name="" class="start-import button"><?php _e('Ausgewählte Videos importieren', 'amateurtheme'); ?></button>
                                 </div>
                                 <div class="tablenav-pages one-page">
-                                    <span class="displaying-num  video-count"><span>0</span> Videos</span>
+                                    <span class="displaying-num  video-count"><span>0</span> <?php _e('Videos', 'amateurtheme'); ?></span>
                                 </div>
                                 <br class="clear">
                             </div>
@@ -695,125 +697,6 @@ function at_import_mydirtyhobby_panel() {
             getImportStatus();
         }, 10000);
 
-        /*
-         * USER
-         */
-        jQuery('#vi-new-user').submit(function (e) {
-            jQuery.get(ajaxurl + '?&action=vi_mdh_new_user', jQuery(this).serialize()).done(function (data) {
-                var response = JSON.parse(data);
-
-                if (response.status != 'ok') {
-                    jQuery('#vi-new-user').append('<p>Fehler: Der Amateur konnte nicht angelegt werden.</p>');
-                    return false;
-                } else {
-                    location.reload();
-                }
-            });
-
-            return false;
-        });
-
-        jQuery('#vi-new-user .delete-user').bind('click', function (e) {
-            var target = jQuery(this);
-            var userid = jQuery(this).attr('data-user-id');
-
-            jQuery.get(ajaxurl + '?&action=vi_mdh_delete_user', {userid: userid}).done(function (data) {
-                var response = JSON.parse(data);
-
-                if (response.status == 'ok') {
-                    jQuery(target).closest('tr').fadeOut();
-                }
-            });
-
-            e.preventDefault();
-        });
-
-        jQuery('#vi-new-user .import-user').bind('click', function (e) {
-            var target = jQuery(this);
-            var userid = jQuery(this).attr('data-user-id');
-            var import_status = jQuery(this).attr('data-import');
-
-            jQuery(this).after('<span class="spinner" style="visibility:initial"></span>');
-
-            jQuery.get(ajaxurl + '?&action=vi_mdh_import_user', {
-                userid: userid,
-                import_status: import_status
-            }).done(function (data) {
-                var response = JSON.parse(data);
-
-                if (response.status == 'ok') {
-                    location.reload();
-                }
-            });
-
-            e.preventDefault();
-        });
-
-        jQuery('#vi-new-user .scrape-user').bind('click', function (e) {
-            var target = jQuery(this);
-            var userid = jQuery(this).attr('data-user-id');
-            var username = jQuery(this).attr('data-username');
-
-            jQuery(this).after('<span class="spinner" style="visibility:initial"></span>');
-
-            jQuery.get(ajaxurl + '?&action=vi_mdh_scrape_user_videos', {
-                userid: userid,
-                username: username
-            }).done(function (data) {
-                var response = JSON.parse(data);
-
-                if (response.status == 'ok') {
-                    jQuery(target).closest('tr').find('.user-last-update .scrape').html(response.last_update);
-                    jQuery(target).closest('tr').find('.user-video-count').html(response.num);
-                    jQuery(target).closest('tr').find('.user-imported-count').html(response.imported);
-
-                    jQuery(target).closest('tr').find('.spinner').remove();
-                }
-            });
-
-            e.preventDefault();
-        });
-
-        jQuery('#vi-get-videos').submit(function (e) {
-            var loader = jQuery(this).find('.spinner');
-
-            if (loader.hasClass('is-active')) {
-                return;
-            }
-
-            loader.addClass('is-active');
-
-            jQuery.get(ajaxurl + '?&action=vi_mdh_user_get_videos', jQuery(this).serialize()).done(function (data) {
-                var target = jQuery('#videos table tbody');
-
-                if (data != "[]") {
-                    var items = JSON.parse(data);
-
-                    jQuery(target).html('');
-
-                    jQuery.each(items, function (i, item) {
-                        var html = '<tr id="video-' + item.id + '" class="video video-' + item.id + '">';
-                        html += '<th scope="row" class="check-column"><input type="checkbox" id="cb-select-' + item.id + '" name="video[]" value="' + item.id + '"></th>';
-                        html += '<td class="image"><img src="' + item.image + '" alt="" style="max-width:60px;"/></td>';
-                        html += '<td class="title">' + item.title + '</td>';
-                        html += '<td class="duration">' + item.duration + '</td>';
-                        html += '<td class="rating">' + item.rating + '</td>';
-                        html += '<td class="description" style="display:none;">' + item.description + '</td>';
-                        html += '<td class="time">' + item.time + '</td>';
-                        html += '</tr>';
-
-                        jQuery(target).append(html);
-                    });
-
-                    jQuery('.tablenav .video-count span').html(jQuery('#videos tbody tr').length);
-                } else {
-                    jQuery(target).html('<tr><th scope="row" class="check-column"><input type="checkbox" id="cb-select-0" name="video[]" value="0" disabled></th><td colspan="5">Es wurden keine (neuen) Videos gefunden.</td></tr>')
-                }
-            }).always(function () {
-                loader.removeClass('is-active');
-            });
-            e.preventDefault();
-        });
 
         jQuery('.start-import').bind('click', function (e) {
             var current_button = this;

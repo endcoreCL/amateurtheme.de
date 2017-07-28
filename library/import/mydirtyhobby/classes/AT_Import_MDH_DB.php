@@ -11,6 +11,7 @@ class AT_Import_MDH_DB {
         // tables
         global $wpdb;
         $this->table_amateurs = $wpdb->prefix . 'import_mdh_amateurs';
+        $this->table_videos = $wpdb->prefix . 'import_mdh_videos';
     }
 
     public function amateurs_dropdown() {

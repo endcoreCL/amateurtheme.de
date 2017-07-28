@@ -27,7 +27,7 @@ jQuery(document).ready(function (e) {
     });
 
     /**
-     * Add new amateur
+     * Add new cron
      */
     jQuery('#at-cronjobs').submit(function(e) {
         jQuery.get( ajaxurl + '?&action=at_import_cronjob_add', jQuery(this).serialize()).done(function( data ) {
@@ -76,4 +76,20 @@ jQuery(document).ready(function (e) {
 
         e.preventDefault();
     });
+
+    /**
+     * Function
+     * jQuery Queue
+     */
+    var ajaxQueue = jQuery({});
+    jQuery.ajaxQueue = function(ajaxOpts) {
+        var oldComplete = ajaxOpts.complete;
+        ajaxQueue.queue(function(next) {
+            ajaxOpts.complete = function() {
+                if (oldComplete) oldComplete.apply(this, arguments);
+                next();
+            };
+            jQuery.ajax(ajaxOpts);
+        });
+    };
 })

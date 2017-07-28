@@ -1,4 +1,24 @@
 <?php
+add_filter('cron_schedules','at_import_cron_schedules');
+function at_import_cron_schedules($schedules){
+    if(!isset($schedules["5min"])){
+        $schedules["5min"] = array(
+            'interval' => 5*60,
+            'display' => __('Once every 5 minutes'));
+    }
+    if(!isset($schedules["15min"])){
+        $schedules["15min"] = array(
+            'interval' => 15*60,
+            'display' => __('Once every 15 minutes'));
+    }
+    if(!isset($schedules["30min"])){
+        $schedules["30min"] = array(
+            'interval' => 30*60,
+            'display' => __('Once every 30 minutes'));
+    }
+    return $schedules;
+}
+
 
 /**
  * Function: at_import_menu
@@ -62,6 +82,8 @@ function at_import_cronjob_add() {
 
     echo wp_json_encode($message);
 
+    do_action('at_import_cronjob_add');
+
     exit;
 }
 
@@ -94,6 +116,8 @@ function at_import_cronjob_edit() {
 
     echo wp_json_encode($message);
 
+    do_action('at_import_cronjob_edit', $object_id, $field, $value);
+
     exit;
 }
 
@@ -120,6 +144,8 @@ function at_import_cronjob_delete() {
     $message['status'] = 'ok';
 
     echo wp_json_encode($message);
+
+    do_action('at_import_cronjob_delete', $id);
 
     exit;
 }

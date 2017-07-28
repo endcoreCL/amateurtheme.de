@@ -12,18 +12,25 @@ class AT_Import_MDH_Crawler {
 
     public function __construct() {
         $this->naffcode = get_option('at_mdh_naffcode');
-        $this->url = 'https://www.mydirtyhobby.com/api/amateurs/?naff=' . $this->naffcode;
+        $this->amateurs_url = 'https://www.mydirtyhobby.com/api/amateurs/?naff=' . $this->naffcode;
+        $this->videos_url = 'https://www.mydirtyhobby.com/api/amateurvideos/?naff=' . $this->naffcode;
 
         // tables
         global $wpdb;
-        $this->table_amateurs = $wpdb->prefix . 'import_mdh_amateurs';
+        $database = new AT_Import_MDH_DB();
+        $database->table_amateurs = $wpdb->prefix . 'import_mdh_amateurs';
+        $database->table_videos = $wpdb->prefix . 'import_mdh_videos';
     }
 
     function get($params = array()) {
-        $url = $this->url;
+        $url = $this->amateurs_url;
+
+        if($params['type'] == 'videos') {
+            $url = $this->videos_url;
+        }
 
         if(!empty($params)) {
-            $url = $this->url . '&'  . http_build_query($params);
+            $url = $url . '&'  . http_build_query($params);
         }
 
         $curl = curl_init();
@@ -42,12 +49,12 @@ class AT_Import_MDH_Crawler {
         return json_decode($response);
     }
 
-    function amateurs_total() {
-        $args = array(
-            'limit' => 1
-        );
-
+    function getTotal($args = array('limit' => 1)) {
         $data = $this->get($args);
+
+        error_log('getTotal');
+        error_log(print_r($args, true));
+        error_log(print_r($data, true));
 
         if($data) {
             return $data->total;
@@ -57,8 +64,11 @@ class AT_Import_MDH_Crawler {
     }
 
 
-    function amateurs_crawl($offset = 0) {
+    function crawlAmateurs($offset = 0) {
+        $message = array('status' => 'ok', 'next_offset' => 0, 'total' => 0);
+
         $args = array(
+            'type' => 'amateurs',
             'limit' => 100,
             'offset' => $offset
         );
@@ -66,17 +76,112 @@ class AT_Import_MDH_Crawler {
         $data = $this->get($args);
 
         if($data->items) {
+            $message['total'] = $data->total;
+
             global $wpdb;
 
             foreach($data->items as $item) {
+                $check = $wpdb->get_row('SELECT id FROM ' . $this->table_amateurs . ' WHERE uid = ' . $item->u_id);
+
+                if(!$check) {
+                    $wpdb->insert(
+                        $this->table_amateurs,
+                        array(
+                            'uid' => $item->u_id,
+                            'username' => $item->nick
+                        )
+                    );
+                }
+            }
+
+            $next_offset = $offset + 100;
+
+            if($next_offset > ($data->total + 100)) {
+                $next_offset = 0;
+            }
+
+            $message['next_offset'] = $next_offset;
+        } else {
+            $message['status'] = 'error';
+        }
+
+        return $message;
+    }
+
+    function getVideos($u_id, $offset = 0) {
+        $args = array(
+            'type' => 'videos',
+            'limit' => 100,
+            'offset' => $offset,
+            'amateurId' => $u_id
+        );
+
+        $data = $this->get($args);
+
+        error_log('getVideos');
+        error_log(print_r($data, true));
+
+        if(is_object($data) && isset($data->items)) {
+            return $data->items;
+        }
+    }
+
+    function saveVideos($data) {
+        global $wpdb;
+
+        if(!$data)
+            return false;
+
+        $status = array(
+            'created' => '',
+            'skipped' => '',
+            'total' => ''
+        );
+
+        $c = 0;
+        $s = 0;
+        $i = 0;
+
+        $wpdb->hide_errors();
+
+        foreach($data as $item) {
+            if($item['id'] && $item['link']) {
                 $wpdb->insert(
-                    $this->table_amateurs,
+                    $this->table_videos,
                     array(
-                        'uid' => $item->u_id,
-                        'username' => $item->nick
+                        'user_id' => $item['u_id'],
+                        'video_id' => $item['id'],
+                        'user_name' => $item['nick'],
+                        'preview' => json_encode(array('normal' => $item['image'], 'censored' => $item['image_sc'])),
+                        'title' => $item['title'],
+                        'duration' => $item['runtime'],
+                        'rating' => $item['rating'],
+                        'rating_count' => $item['rating_count'],
+                        'date' => $item['releasetime'],
+                        'description' => $item['description'],
+                        'link' => $item['url'],
+                        'language' => $item['language'],
+                        'tags' => json_encode($item['tags']),
+                        'categories' => json_encode($item['categories']),
+                        'imported' => '0'
                     )
                 );
+
+                if($wpdb->last_error) {
+                    $s++;
+
+                    $status['skipped'] = $s;
+                } else {
+                    $c++;
+
+                    $status['created'] = $c;
+                }
+
+                $i++;
+                $status['total'] = $i;
             }
         }
+
+        return json_encode($status);
     }
 }
