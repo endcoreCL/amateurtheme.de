@@ -22,19 +22,21 @@ jQuery(document).ready(function (e) {
         var uid = jQuery(this).val();
         var username = jQuery(this).find('option:selected').text();
 
-        jQuery('#at-cronjobs #uid').attr('value', uid);
-        jQuery('#at-cronjobs #username').attr('value', username);
+        jQuery('#amateurs form.at-cronjobs #uid').attr('value', uid);
+        jQuery('#amateurs form.at-cronjobs #username').attr('value', username);
     });
 
     /**
      * Add new cron
      */
-    jQuery('#at-cronjobs').submit(function(e) {
+    jQuery('form.at-cronjobs').submit(function(e) {
+        var form = jQuery(this);
+
         jQuery.get( ajaxurl + '?&action=at_import_cronjob_add', jQuery(this).serialize()).done(function( data ) {
             var response = JSON.parse(data);
 
             if(response.status != 'ok') {
-                jQuery('#at-cronjobs').append('<p>Fehler: Der Amateur konnte nicht angelegt werden.</p>');
+                jQuery(form).append('<p>Fehler: Der Cron konnte nicht angelegt werden.</p>');
                 return false;
             } else {
                 location.reload();

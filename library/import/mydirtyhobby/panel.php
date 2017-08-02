@@ -115,7 +115,7 @@ function at_import_mydirtyhobby_panel() {
                     <div class="metabox-holder postbox no-padding-top">
                         <h3 class="hndle"><span><?php _e('Amateure', 'amateurtheme'); ?></span></h3>
                         <div class="inside">
-                            <form method="post" id="at-cronjobs" class="form-inline">
+                            <form method="post" class="form-inline at-cronjobs">
                                 <table class="at-import-table">
                                     <thead>
                                     <tr>
@@ -144,22 +144,28 @@ function at_import_mydirtyhobby_panel() {
                                                 endif;
                                                 ?>
                                                 <tr>
-                                                    <td class="cron-username">
+                                                    <td class="cron-name">
                                                         <a href="#" class="username-edit" data-user-id="<?php echo $item->object_id; ?>">
                                                             <?php echo $item->name; ?>
                                                         </a>
                                                     </td>
                                                     <td class="cron-video-count">
-                                                        0
+                                                        <?php echo at_import_mdh_get_video_count($item->object_id); ?>
                                                     </td>
                                                     <td class="cron-video-imported">
-                                                        0
+                                                        <?php echo at_import_mdh_get_video_count($item->object_id, true); ?>
                                                     </td>
                                                     <td class="cron-last-update">
                                                         <?php echo $last_update; ?>
                                                     </td>
                                                     <td class="cron-action">
                                                         <a href="#" class="cron-scrape" data-user-id="<?php echo $item->id; ?>"><?php _e('aktualisieren', 'amateurtheme'); ?></a>
+                                                        |
+                                                        <?php if($item->scrape == 0) : ?>
+                                                            <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="scrape" data-value="1"><?php _e('Scrape aktivieren', 'amateurtheme'); ?></a>
+                                                        <?php else: ?>
+                                                            <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="scrape" data-value="0"><?php _e('Scrape deaktivieren', 'amateurtheme'); ?></a>
+                                                        <?php endif; ?>
                                                         |
                                                         <?php if($item->import == 0) : ?>
                                                             <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="import" data-value="1"><?php _e('Import aktivieren', 'amateurtheme'); ?></a>
@@ -230,11 +236,14 @@ function at_import_mydirtyhobby_panel() {
                                         <td>
                                             <select name="u_id" id="u_id" class="form-control">
                                                 <option><?php _e('Amateur auswählen', 'amateurtheme'); ?></option>
-                                                <?php if ($amateure) : ?>
-                                                    <?php foreach ($amateure as $item) : ?>
-                                                        <option value="<?php echo $item->u_id; ?>"><?php echo $item->name; ?></option>
-                                                    <?php endforeach; ?>
-                                                <?php endif; ?>
+                                                <?php
+                                                if ($amateure) :
+                                                    foreach ($amateure as $item) :
+                                                        ?>
+                                                        <option value="<?php echo $item->object_id; ?>"><?php echo $item->name; ?></option>
+                                                        <?php
+                                                    endforeach;
+                                                endif; ?>
                                             </select>
                                         </td>
 
@@ -249,34 +258,33 @@ function at_import_mydirtyhobby_panel() {
                         </div>
                     </div>
 
-                    <div id="videos">
+                    <div id="videos-wrapper">
                         <form id="posts-filter" method="post">
                             <div class="tablenav top">
                                 <div class="alignleft actions bulkactions">
                                     <label for="bulk-action-selector-bottom" class="screen-reader-text"><?php _e('Mehrfachauswahl', 'amateurtheme'); ?></label>
-                                    <select name="kategorie" id="kategorie">
+                                    <select name="video_category" id="video_category">
                                         <option value="-1" selected="selected"><?php _e('Kategorie wählen', 'amateurtheme'); ?></option>
                                         <?php
-                                        $video_kategorie = get_terms('video_kategorie', 'orderby=name&hide_empty=0');
-                                        if ($video_kategorie) {
-                                            foreach ($video_kategorie as $kategorie) {
+                                        $video_category = get_terms('video_category', 'orderby=name&hide_empty=0');
+                                        if ($video_category) {
+                                            foreach ($video_category as $term) {
                                                 ?>
-                                                <option
-                                                        value="<?php echo $kategorie->slug; ?>"><?php echo $kategorie->name; ?></option>
+                                                <option value="<?php echo $term->slug; ?>"><?php echo $term->name; ?></option>
                                                 <?php
                                             }
                                         }
                                         ?>
                                     </select>
 
-                                    <select name="darsteller" id="darsteller">
+                                    <select name="video_actor" id="video_actor">
                                         <option value="-1" selected="selected"><?php _e('Darsteller wählen', 'amateurtheme'); ?></option>
                                         <?php
-                                        $video_darsteller = get_terms('video_darsteller', 'orderby=name&hide_empty=0');
-                                        if ($video_darsteller) {
-                                            foreach ($video_darsteller as $darsteller) {
+                                        $video_actor = get_terms('video_actor', 'orderby=name&hide_empty=0');
+                                        if ($video_actor) {
+                                            foreach ($video_actor as $term) {
                                                 ?>
-                                                <option value="<?php echo $darsteller->slug; ?>"><?php echo $darsteller->name; ?></option>
+                                                <option value="<?php echo $term->slug; ?>"><?php echo $term->name; ?></option>
                                                 <?php
                                             }
                                         }
@@ -367,7 +375,7 @@ function at_import_mydirtyhobby_panel() {
                             <div class="tablenav bottom">
                                 <div class="alignleft actions bulkactions">
                                     <label for="bulk-action-selector-bottom" class="screen-reader-text"><?php _e('Mehrfachauswahl', 'amateurtheme'); ?></label>
-                                    <select name="kategorie" id="kategorie">
+                                    <select name="video_category" id="video_category">
                                         <option value="-1" selected="selected"><?php _e('Kategorie wählen', 'amateurtheme'); ?></option>
                                         <?php
                                         $video_category = get_terms('video_category', 'orderby=name&hide_empty=0');
@@ -381,7 +389,7 @@ function at_import_mydirtyhobby_panel() {
                                         ?>
                                     </select>
 
-                                    <select name="darsteller" id="darsteller">
+                                    <select name="video_actor" id="video_actor">
                                         <option value="-1" selected="selected"><?php _e('Darsteller wählen', 'amateurtheme'); ?></option>
                                         <?php
                                         $video_actor = get_terms('video_actor', 'orderby=name&hide_empty=0');
@@ -538,77 +546,79 @@ function at_import_mydirtyhobby_panel() {
                 <div id="categories" class="at-import-tab">
                     <div class="update-nag" style="display:block;margin-bottom:10px;margin-top:0px;margin-right:0;">
                         <p>
-                            <strong>Vorsicht:</strong>
+                            <strong><?php _e('Vorsicht:', 'amateurtheme'); ?></strong>
                         </p>
 
                         <p>
-                            Der Kategorie Import ist nur für leistungsstarke Server geeignet! Bitte genieße dieses Feature
-                            mit Vorsicht.
+                            <?php _e('Der Kategorie Import ist nur für leistungsstarke Server geeignet! Bitte genieße dieses Feature
+                            mit Vorsicht', 'amateurtheme'); ?>
                         </p>
                     </div>
 
                     <div class="metabox-holder postbox no-padding-top">
-                        <h3 class="hndle"><span>Kategorien</span></h3>
+                        <h3 class="hndle"><span><?php _e('Kategorien', 'amateurtheme'); ?></span></h3>
 
                         <div class="inside">
-                            <form method="post" id="vi-new-cat" class="form-inline">
+                            <form method="post" class="form-inline at-cronjobs">
                                 <table class="at-import-table">
                                     <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Videos (gesamt)</th>
-                                        <th>Importierte Videos</th>
-                                        <th>Zuletzt akutalisiert</th>
-                                        <th>Aktion</th>
+                                        <th><?php _e('ID', 'amateurtheme'); ?></th>
+                                        <th><?php _e('Name', 'amateurtheme'); ?></th>
+                                        <th><?php _e('Videos (gesamt)', 'amateurtheme'); ?></th>
+                                        <th><?php _e('Importierte Videos', 'amateurtheme'); ?></th>
+                                        <th><?php _e('Zuletzt akutalisiert', 'amateurtheme'); ?></th>
+                                        <th><?php _e('Aktion', 'amateurtheme'); ?></th>
                                     </tr>
                                     </thead>
 
                                     <tbody>
-                                    <?php if ($categories) : ?>
-                                        <?php foreach ($categories as $item) :
-                                            // last_update
-                                            $last_update = new DateTime($item->last_update);
-                                            if (checkdate($last_update->format('m'), $last_update->format('d'), $last_update->format('Y'))) :
-                                                $last_update = new DateTime($item->last_update);
+                                    <?php
+                                    $args = array(
+                                        'network' => 'mydirtyhobby',
+                                        'type' => 'category'
+                                    );
+                                    $categories = $cronjobs->get($args);
+                                    if ($categories) :
+                                        foreach ($categories as $item) :
+                                            $last_update = new DateTime($item->last_activity);
+                                            if(checkdate($last_update->format('m'), $last_update->format('d'), $last_update->format('Y'))) :
                                                 $last_update = $last_update->format('d.m.Y H:i:s');
                                             else :
                                                 $last_update = '-';
                                             endif;
-
-                                            // last_update_scrape
-                                            $last_update_scrape = new DateTime($item->last_update_scrape);
-                                            if (checkdate($last_update_scrape->format('m'), $last_update_scrape->format('d'), $last_update_scrape->format('Y'))) :
-                                                $last_update_scrape = new DateTime($item->last_update_scrape);
-                                                $last_update_scrape = $last_update_scrape->format('d.m.Y H:i:s');
-                                            else :
-                                                $last_update_scrape = '-';
-                                            endif;
                                             ?>
                                             <tr>
-                                                <td><?php echo $item->slug; ?></td>
-                                                <td><?php echo $item->name; ?></td>
-                                                <td class="cat-video-count"><?php echo $item->count; ?></td>
-                                                <td class="cat-imported-count"><?php echo $item->imported; ?></td>
-                                                <td class="cat-last-update"><?php echo '<small style="color:blue">Scrape: ' . $last_update_scrape . '</small><br><small style="color:green">Import: ' . $last_update . '</small>'; ?></td>
-                                                <td>
-                                                    <?php if ($item->scrape == 0) : ?>
-                                                        <a href="#" class="scrape-cat" data-cat="<?php echo $item->slug; ?>"
-                                                           data-scrape="1">Scrapen aktivieren</a>
+                                                <td class="cron-name">
+                                                    <a href="#" class="username-edit" data-user-id="<?php echo $item->object_id; ?>">
+                                                        <?php echo $item->name; ?>
+                                                    </a>
+                                                </td>
+                                                <td class="cron-video-count">
+                                                    <?php echo at_import_mdh_get_video_count($item->object_id); ?>
+                                                </td>
+                                                <td class="cron-video-imported">
+                                                    <?php echo at_import_mdh_get_video_count($item->object_id, true); ?>
+                                                </td>
+                                                <td class="cron-last-update">
+                                                    <?php echo $last_update; ?>
+                                                </td>
+                                                <td class="cron-action">
+                                                    <a href="#" class="cron-scrape" data-user-id="<?php echo $item->id; ?>"><?php _e('aktualisieren', 'amateurtheme'); ?></a>
+                                                    |
+                                                    <?php if($item->scrape == 0) : ?>
+                                                        <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="scrape" data-value="1"><?php _e('Scrape aktivieren', 'amateurtheme'); ?></a>
                                                     <?php else: ?>
-                                                        <a href="#" class="scrape-cat" data-cat="<?php echo $item->slug; ?>"
-                                                           data-scrape="0">Scrapen deaktivieren</a>
+                                                        <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="scrape" data-value="0"><?php _e('Scrape deaktivieren', 'amateurtheme'); ?></a>
                                                     <?php endif; ?>
                                                     |
-                                                    <?php if ($item->import == 0) : ?>
-                                                        <a href="#" class="import-cat" data-cat="<?php echo $item->slug; ?>"
-                                                           data-import="1">Import aktivieren</a>
+                                                    <?php if($item->import == 0) : ?>
+                                                        <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="import" data-value="1"><?php _e('Import aktivieren', 'amateurtheme'); ?></a>
                                                     <?php else: ?>
-                                                        <a href="#" class="import-cat" data-cat="<?php echo $item->slug; ?>"
-                                                           data-import="0">Import deaktivieren</a>
+                                                        <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="import" data-value="0"><?php _e('Import deaktivieren', 'amateurtheme'); ?></a>
                                                     <?php endif; ?>
                                                     |
-                                                    <a href="#" class="delete-cat" data-slug="<?php echo $item->slug; ?>">löschen</a>
+                                                    <a href="#" class="cron-delete" data-id="<?php echo $item->id; ?>"><?php _e('löschen', 'amateurtheme'); ?></a>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>
@@ -618,13 +628,12 @@ function at_import_mydirtyhobby_panel() {
 
                                     <tfoot>
                                     <tr>
-                                        <td><input name="catslug" id="catslug" class="form-control" placeholder="ID"/> <a
-                                                    href="#" id="new-catslug-help"><i class="fa fa-question-circle"></i></a</td>
-                                        <td><input name="catname" id="catname" class="form-control"
-                                                   placeholder="Name der Kategorie"/></td>
+                                        <td><input name="catid" id="catid" class="form-control" placeholder="ID"/> <a href="#" id="new-catslug-help"><i class="fa fa-question-circle"></i></a</td>
+                                        <td><input name="catname" id="catname" class="form-control" placeholder="Name der Kategorie"/></td>
                                         <td colspan="4">
-                                            <button name="submit" type="submit" class="btn btn-at">Kategorie hinzufügen
-                                            </button>
+                                            <input type="hidden" name="network" value="mydirtyhobby" />
+                                            <input type="hidden" name="type" value="category" />
+                                            <button name="submit" type="submit" class="btn btn-at"><?php _e('Kategorie hinzufügen', 'amateurtheme'); ?></button>
                                         </td>
                                     </tr>
                                     </tfoot>
@@ -663,28 +672,10 @@ function at_import_mydirtyhobby_panel() {
         </div>
         </div>
     <script type="text/javascript">
-        jQuery(document).ready(function () {
-            // checkConnection
-           // checkConnection();
-        });
-
-        /*
-         * CHECK CONNECTION
-         */
-        var checkConnection = function () {
-            jQuery.get(ajaxurl + '?&action=vi_mdh_topitems_get_videos', jQuery(this).serialize()).done(function (data) {
-                var result = JSON.parse(data);
-                var resultContainer = jQuery('#checkConnection');
-
-                if (result.status == 'too many connections') {
-                    resultContainer.append('<div class="error"><p>Die Verbindung zu MyDirtyHobby wurde aufgrund zu vieler Verbindungen gesperrt. Bitte wende dich an den Support von MyDirtyHobby.</p></div>');
-                }
-            })
-        };
 
         /*
          * IMPORT STATUS
-         */
+
         var getImportStatus = function () {
             jQuery.get(ajaxurl + '?&action=vi_mdh_get_current_import_status').done(function (data) {
                 if (data) {
@@ -695,69 +686,9 @@ function at_import_mydirtyhobby_panel() {
 
         window.setInterval(function () {
             getImportStatus();
-        }, 10000);
+        }, 10000); */
 
 
-        jQuery('.start-import').bind('click', function (e) {
-            var current_button = this;
-            var max_videos = jQuery('#videos tbody tr:not(.success)').find('input[type="checkbox"]:checked').length;
-            var ajax_loader = jQuery('.ajax-loader');
-            var i = 1;
-
-            if (max_videos != "0") {
-                jQuery(ajax_loader).addClass('active').find('p').html('Importiere Video <span class="current">1</span> von ' + max_videos);
-
-                jQuery('#videos tbody tr').find('input[type="checkbox"]:checked').each(function () {
-                    var current = jQuery(this).closest('tr');
-
-                    var kategorie = jQuery(current_button).parent().find('#kategorie option:selected').val();
-                    var darsteller = jQuery(current_button).parent().find('#darsteller option:selected').val();
-
-                    var id = jQuery(this).val();
-                    var image = jQuery(current).find('.image img').attr('src');
-                    var title = jQuery(current).find('.title').html();
-                    var duration = jQuery(current).find('.duration').html();
-                    var rating = jQuery(current).find('.rating').html();
-                    var description = jQuery(current).find('.description').html();
-                    var time = jQuery(current).find('.time').html();
-
-                    var video = {
-                        id: id,
-                        image: image,
-                        title: title,
-                        duration: duration,
-                        rating: rating,
-                        description: description,
-                        time: time,
-                        kategorie: kategorie,
-                        darsteller: darsteller
-                    };
-
-                    var xhr = jQuery.post(ajaxurl + '?action=vi_mdh_import_video', video).done(function (data) {
-                        if (data != "error") {
-                            jQuery('table tr#video-' + data).addClass('success');
-                            jQuery('table tr#video-' + data).find('input[type=checkbox]').attr('checked', false).attr('disabled', true);
-                        } else {
-                            jQuery('table tr#video-' + data).addClass('error');
-                        }
-                    }).success(function () {
-                        var procentual = (100 / max_videos) * i;
-                        var procentual_fixed = procentual.toFixed(2);
-                        jQuery(ajax_loader).find('.current').html(i);
-                        jQuery(ajax_loader).find('.progress-bar').css('width', procentual + '%').html(procentual_fixed + '%');
-
-                        if (i >= max_videos) {
-                            jQuery(ajax_loader).removeClass('active');
-                        }
-
-                        i++;
-                    });
-
-                });
-            }
-
-            e.preventDefault();
-        });
 
         /*
          * TOP VIDEOS

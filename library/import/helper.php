@@ -57,23 +57,37 @@ function at_import_cronjob_add() {
         'status' => 'error'
     );
 
-    $uid = (isset($_GET['uid']) ? $_GET['uid'] : '');
-    $username = (isset($_GET['username']) ? $_GET['username'] : '');
     $network = (isset($_GET['network']) ? $_GET['network'] : '');
     $type = (isset($_GET['type']) ? $_GET['type'] : '');
 
-    if($uid == '' || $username == '' || $network == '' || $type == '') {
+    if($network == '' || $type == '') {
         echo wp_json_encode($message);
         exit;
     }
 
-    $args = array(
-        'object_id' => $uid,
-        'username' => $username,
-        'alias' => $username,
-        'network' => $network,
-        'type' => $type
-    );
+    if($type == 'user') {
+        $uid = (isset($_GET['uid']) ? $_GET['uid'] : '');
+        $username = (isset($_GET['username']) ? $_GET['username'] : '');
+
+        $args = array(
+            'object_id' => $uid,
+            'name' => $username,
+            'alias' => $username,
+            'network' => $network,
+            'type' => $type
+        );
+    } else if($type == 'category') {
+        $catid = (isset($_GET['catid']) ? $_GET['catid'] : '');
+        $catname = (isset($_GET['catname']) ? $_GET['catname'] : '');
+
+        $args = array(
+            'object_id' => $catid,
+            'name' => $catname,
+            'alias' => $catname,
+            'network' => $network,
+            'type' => $type
+        );
+    }
 
     $cron = new AT_Import_Cron();
     $cron->add($args);

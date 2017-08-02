@@ -17,12 +17,13 @@ class AT_Import_Cron {
             return false;
         }
 
+
         $wpdb->insert(
             AT_CRON_TABLE,
             array(
                 'object_id' => $args['object_id'],
                 'network' => $args['network'],
-                'name' => $args['username'],
+                'name' => $args['name'],
                 'alias' => $args['alias'],
                 'type' => $args['type'],
                 'processing' => 0

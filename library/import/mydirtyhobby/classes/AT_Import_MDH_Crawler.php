@@ -17,9 +17,7 @@ class AT_Import_MDH_Crawler {
 
         // tables
         global $wpdb;
-        $database = new AT_Import_MDH_DB();
-        $database->table_amateurs = $wpdb->prefix . 'import_mdh_amateurs';
-        $database->table_videos = $wpdb->prefix . 'import_mdh_videos';
+        $this->database = new AT_Import_MDH_DB();
     }
 
     function get($params = array()) {
@@ -32,7 +30,7 @@ class AT_Import_MDH_Crawler {
         if(!empty($params)) {
             $url = $url . '&'  . http_build_query($params);
         }
-
+        
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 1);
@@ -51,10 +49,6 @@ class AT_Import_MDH_Crawler {
 
     function getTotal($args = array('limit' => 1)) {
         $data = $this->get($args);
-
-        error_log('getTotal');
-        error_log(print_r($args, true));
-        error_log(print_r($data, true));
 
         if($data) {
             return $data->total;
@@ -80,12 +74,13 @@ class AT_Import_MDH_Crawler {
 
             global $wpdb;
 
+
             foreach($data->items as $item) {
-                $check = $wpdb->get_row('SELECT id FROM ' . $this->table_amateurs . ' WHERE uid = ' . $item->u_id);
+                $check = $wpdb->get_row('SELECT id FROM ' . $this->database->table_amateurs . ' WHERE uid = ' . $item->u_id);
 
                 if(!$check) {
                     $wpdb->insert(
-                        $this->table_amateurs,
+                        $this->database->table_amateurs,
                         array(
                             'uid' => $item->u_id,
                             'username' => $item->nick
@@ -118,8 +113,8 @@ class AT_Import_MDH_Crawler {
 
         $data = $this->get($args);
 
-        error_log('getVideos');
-        error_log(print_r($data, true));
+        //error_log('getVideos');
+        //error_log(print_r($data, true));
 
         if(is_object($data) && isset($data->items)) {
             return $data->items;
@@ -145,35 +140,41 @@ class AT_Import_MDH_Crawler {
         $wpdb->hide_errors();
 
         foreach($data as $item) {
-            if($item['id'] && $item['link']) {
+            if($item->id && $item->url) {
+                $check = $wpdb->get_row( 'SELECT id FROM ' . $this->database->table_videos . ' WHERE video_id = ' . $item->id);
+
+                if($check) {
+                    $s++;
+                    $status['skipped'] = $s;
+                    continue;
+                }
+
                 $wpdb->insert(
-                    $this->table_videos,
+                    $this->database->table_videos,
                     array(
-                        'user_id' => $item['u_id'],
-                        'video_id' => $item['id'],
-                        'user_name' => $item['nick'],
-                        'preview' => json_encode(array('normal' => $item['image'], 'censored' => $item['image_sc'])),
-                        'title' => $item['title'],
-                        'duration' => $item['runtime'],
-                        'rating' => $item['rating'],
-                        'rating_count' => $item['rating_count'],
-                        'date' => $item['releasetime'],
-                        'description' => $item['description'],
-                        'link' => $item['url'],
-                        'language' => $item['language'],
-                        'tags' => json_encode($item['tags']),
-                        'categories' => json_encode($item['categories']),
+                        'user_id' => $item->u_id,
+                        'video_id' => $item->id,
+                        'user_name' => $item->nick,
+                        'preview' => json_encode(array('normal' => $item->image, 'censored' => $item->image_sc)),
+                        'title' => $item->title,
+                        'duration' => $item->runtime,
+                        'rating' => $item->rating,
+                        'rating_count' => $item->rating_count,
+                        'date' => $item->releasetime,
+                        'description' => $item->description,
+                        'link' => $item->url,
+                        'language' => $item->language,
+                        'tags' => json_encode($item->tags),
+                        'categories' => json_encode($item->categories),
                         'imported' => '0'
                     )
                 );
 
                 if($wpdb->last_error) {
                     $s++;
-
                     $status['skipped'] = $s;
                 } else {
                     $c++;
-
                     $status['created'] = $c;
                 }
 
