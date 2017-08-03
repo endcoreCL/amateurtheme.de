@@ -29,7 +29,7 @@ function at_import_mdh_get_videos() {
     }
 
     $import = new AT_Import_MDH_Crawler();
-    $response = $import->getVideos($u_id);
+    $response = $import->getAmateurVideos($u_id);
 
     if($response) {
         foreach($response as $item) {
@@ -181,20 +181,6 @@ function at_import_mdh_check_if_video_exists($video_id) {
     if($unique_user_video != '0') {
         return false;
     }
-
-    /*$unique_cat_video = $wpdb->get_var(
-        $wpdb->prepare("
-			SELECT count(id)
-			FROM $vi_mdh_cat_videos vid
-			WHERE videoid = '%s'
-			AND imported = '1'",
-            $video_id
-        )
-    );
-
-    if($unique_cat_video != '0') {
-        return false;
-    }*/
 
     $unique_post = $wpdb->get_var(
         $wpdb->prepare("

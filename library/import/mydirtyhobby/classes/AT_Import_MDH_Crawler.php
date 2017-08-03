@@ -103,7 +103,7 @@ class AT_Import_MDH_Crawler {
         return $message;
     }
 
-    function getVideos($u_id, $offset = 0) {
+    function getAmateurVideos($u_id, $offset = 0) {
         $args = array(
             'type' => 'videos',
             'limit' => 100,

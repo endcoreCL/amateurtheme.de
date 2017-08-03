@@ -80,7 +80,7 @@ function at_import_mdh_scrape_videos_cronjob($id) {
             $num_pages = ceil($total / 100);
 
             for($i=0; $i<=$num_pages; $i++) {
-                $videos = $import->getVideos($u_id, $i * 100);
+                $videos = $import->getAmateurVideos($u_id, $i * 100);
                 $data = json_decode($import->saveVideos($videos), TRUE);
 
                 if($data['created']) {
