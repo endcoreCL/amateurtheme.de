@@ -89,7 +89,7 @@ function at_import_mdh_database_tables() {
         $sql = "CREATE TABLE " . $database->table_videos . " (
             id int(11) NOT NULL AUTO_INCREMENT,
             tag text,
-            object_id int(25),
+            object_id varchar(25),
             object_name text,
             video_id int(25),
             preview text,
