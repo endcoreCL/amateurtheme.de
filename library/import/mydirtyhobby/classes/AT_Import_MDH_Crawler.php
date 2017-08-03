@@ -13,7 +13,8 @@ class AT_Import_MDH_Crawler {
     public function __construct() {
         $this->naffcode = get_option('at_mdh_naffcode');
         $this->amateurs_url = 'https://www.mydirtyhobby.com/api/amateurs/?naff=' . $this->naffcode;
-        $this->videos_url = 'https://www.mydirtyhobby.com/api/amateurvideos/?naff=' . $this->naffcode;
+        $this->amateur_videos_url = 'https://www.mydirtyhobby.com/api/amateurvideos/?naff=' . $this->naffcode;
+        $this->category_videos_url = 'https://www.mydirtyhobby.com/api/categoryvideos/?naff=' . $this->naffcode;
 
         // tables
         global $wpdb;
@@ -24,8 +25,14 @@ class AT_Import_MDH_Crawler {
         $url = $this->amateurs_url;
 
         if($params['type'] == 'videos') {
-            $url = $this->videos_url;
+            $url = $this->amateur_videos_url;
         }
+        
+        if($params['type'] == 'category') {
+            $url = $this->category_videos_url;
+        }
+
+        unset($params['type']);
 
         if(!empty($params)) {
             $url = $url . '&'  . http_build_query($params);
@@ -121,7 +128,22 @@ class AT_Import_MDH_Crawler {
         }
     }
 
-    function saveVideos($data) {
+    function getCategoryVideos($c_id, $offset = 0) {
+        $args = array(
+            'type' => 'category',
+            'limit' => 100,
+            'offset' => $offset,
+            'categoryId' => $c_id
+        );
+
+        $data = $this->get($args);
+
+        if(is_object($data) && isset($data->items)) {
+            return $data->items;
+        }
+    }
+
+    function saveVideos($data, $source_id = '') {
         global $wpdb;
 
         if(!$data)
@@ -152,6 +174,7 @@ class AT_Import_MDH_Crawler {
                 $wpdb->insert(
                     $this->database->table_videos,
                     array(
+                        'source_id' => $source_id,
                         'object_id' => $item->u_id,
                         'video_id' => $item->id,
                         'object_name' => $item->nick,

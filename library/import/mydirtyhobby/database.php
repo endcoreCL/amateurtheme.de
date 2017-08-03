@@ -88,7 +88,7 @@ function at_import_mdh_database_tables() {
     if ($wpdb->get_var("show tables like '" . $database->table_videos . "'") != $database->table_videos) {
         $sql = "CREATE TABLE " . $database->table_videos . " (
             id int(11) NOT NULL AUTO_INCREMENT,
-            tag text,
+            source_id varchar(25),
             object_id varchar(25),
             object_name text,
             video_id int(25),

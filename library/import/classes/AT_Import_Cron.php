@@ -17,7 +17,6 @@ class AT_Import_Cron {
             return false;
         }
 
-
         $wpdb->insert(
             AT_CRON_TABLE,
             array(
@@ -27,6 +26,14 @@ class AT_Import_Cron {
                 'alias' => $args['alias'],
                 'type' => $args['type'],
                 'processing' => 0
+            ),
+            array(
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%d'
             )
         );
 

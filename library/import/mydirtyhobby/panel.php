@@ -561,7 +561,6 @@ function at_import_mydirtyhobby_panel() {
                                 <table class="at-import-table">
                                     <thead>
                                     <tr>
-                                        <th><?php _e('ID', 'amateurtheme'); ?></th>
                                         <th><?php _e('Name', 'amateurtheme'); ?></th>
                                         <th><?php _e('Videos (gesamt)', 'amateurtheme'); ?></th>
                                         <th><?php _e('Importierte Videos', 'amateurtheme'); ?></th>

@@ -85,8 +85,6 @@ function at_mdh_import_video() {
      */
     $unique = at_import_mdh_check_if_video_exists($id);
 
-    error_log('Database Table: ' . $database->table_videos);
-
     if($unique) {
         $args = array(
             'post_title' => $title,
@@ -140,17 +138,43 @@ function at_mdh_import_video() {
     die();
 }
 
+add_action('wp_ajax_at_import_mdh_get_category_videos', 'at_import_mdh_get_category_videos');
+function at_import_mdh_get_category_videos() {
+    $c_id = (isset($_GET['c_id']) ? $_GET['c_id'] : false);
 
+    if(!$c_id) {
+        echo json_encode(array('status', 'error'));
+        exit;
+    }
 
-function at_import_mdh_get_video_count($u_id, $imported = false) {
+    $import = new AT_Import_MDH_Crawler();
+    $response = $import->getCategoryVideos($c_id);
+
+    if($response) {
+        foreach($response as $item) {
+            $item->imported = "false";
+
+            $unique = at_import_mdh_check_if_video_exists($item->id);
+
+            if(!$unique) {
+                $item->imported = "true";
+            }
+        }
+    }
+
+    echo json_encode($response);
+    exit;
+}
+
+function at_import_mdh_get_video_count($source_id, $imported = false) {
     global $wpdb;
 
     $database = new AT_Import_MDH_DB();
 
     if($imported) {
-        $result = $wpdb->get_row('SELECT COUNT(object_id) as count FROM ' . $database->table_videos . ' WHERE object_id = ' . $u_id . ' AND imported = 1');
+        $result = $wpdb->get_row('SELECT COUNT(source_id) as count FROM ' . $database->table_videos . ' WHERE source_id = "' . $source_id . '" AND imported = 1');
     } else {
-        $result = $wpdb->get_row('SELECT COUNT(object_id) as count FROM ' . $database->table_videos . ' WHERE object_id = ' . $u_id);
+        $result = $wpdb->get_row('SELECT COUNT(source_id) as count FROM ' . $database->table_videos . ' WHERE source_id = "' . $source_id . '"');
     }
 
     if($result) {

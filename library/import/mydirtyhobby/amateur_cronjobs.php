@@ -3,15 +3,15 @@
  * Function: at_import_mdh_cronjob_initiate
  * Create cronjob for every active amateur
  */
-add_action('at_import_cronjob_edit', 'at_import_mdh_cronjob_initiate', 10, 3);
-function at_import_mdh_cronjob_initiate($id, $field, $value) {
+add_action('at_import_cronjob_edit', 'at_import_mdh_amateur_cronjob_initiate', 10, 3);
+function at_import_mdh_amateur_cronjob_initiate($id, $field, $value) {
     if($field == 'scrape') {
         global $wpdb;
 
         $cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
 
         if($cron) {
-            if($cron->network == 'mydirtyhobby') {
+            if($cron->network == 'mydirtyhobby' && $cron->type == 'user') {
                 if($value == '1') {
                     if (! wp_next_scheduled ( 'at_import_mdh_scrape_videos_cronjob', array($id) )) {
                         wp_schedule_event(time(), 'daily', 'at_import_mdh_scrape_videos_cronjob', array($id));
@@ -29,7 +29,7 @@ function at_import_mdh_cronjob_initiate($id, $field, $value) {
         $cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
 
         if($cron) {
-            if($cron->network == 'mydirtyhobby') {
+            if($cron->network == 'mydirtyhobby' && $cron->type == 'user') {
                 if($value == '1') {
                     if (! wp_next_scheduled ( 'at_import_mdh_import_videos_cronjob', array($id) )) {
                         wp_schedule_event(time(), '30min', 'at_import_mdh_import_videos_cronjob', array($id));
@@ -81,7 +81,7 @@ function at_import_mdh_scrape_videos_cronjob($id) {
 
             for($i=0; $i<=$num_pages; $i++) {
                 $videos = $import->getAmateurVideos($u_id, $i * 100);
-                $data = json_decode($import->saveVideos($videos), TRUE);
+                $data = json_decode($import->saveVideos($videos, $u_id), TRUE);
 
                 if($data['created']) {
                     $results['created'] = $results['created'] + $data['created'];
