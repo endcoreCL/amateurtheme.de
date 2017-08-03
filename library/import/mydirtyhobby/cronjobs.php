@@ -133,7 +133,7 @@ function at_import_mdh_import_videos_cronjob($id) {
 
         $u_id = $cron->object_id;
         $database = new AT_Import_MDH_DB();
-        $videos = $wpdb->get_results('SELECT * FROM ' . $database->table_videos . ' WHERE user_id = '. $u_id . ' AND imported != 1 LIMIT 0,50');
+        $videos = $wpdb->get_results('SELECT * FROM ' . $database->table_videos . ' WHERE object_id = '. $u_id . ' AND imported != 1 LIMIT 0,50');
 
         if($videos) {
             foreach($videos as $video) {

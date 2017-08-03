@@ -148,9 +148,9 @@ function at_import_mdh_get_video_count($u_id, $imported = false) {
     $database = new AT_Import_MDH_DB();
 
     if($imported) {
-        $result = $wpdb->get_row('SELECT COUNT(user_id) as count FROM ' . $database->table_videos . ' WHERE user_id = ' . $u_id . ' AND imported = 1');
+        $result = $wpdb->get_row('SELECT COUNT(object_id) as count FROM ' . $database->table_videos . ' WHERE object_id = ' . $u_id . ' AND imported = 1');
     } else {
-        $result = $wpdb->get_row('SELECT COUNT(user_id) as count FROM ' . $database->table_videos . ' WHERE user_id = ' . $u_id);
+        $result = $wpdb->get_row('SELECT COUNT(object_id) as count FROM ' . $database->table_videos . ' WHERE object_id = ' . $u_id);
     }
 
     if($result) {

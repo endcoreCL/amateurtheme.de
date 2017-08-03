@@ -152,9 +152,9 @@ class AT_Import_MDH_Crawler {
                 $wpdb->insert(
                     $this->database->table_videos,
                     array(
-                        'user_id' => $item->u_id,
+                        'object_id' => $item->u_id,
                         'video_id' => $item->id,
-                        'user_name' => $item->nick,
+                        'object_name' => $item->nick,
                         'preview' => json_encode(array('normal' => $item->image, 'censored' => $item->image_sc)),
                         'title' => $item->title,
                         'duration' => $item->runtime,
