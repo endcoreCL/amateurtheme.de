@@ -56,6 +56,7 @@ function at_import_mydirtyhobby_panel() {
                 <a class="nav-tab" id="amateurs-tab" href="#top#amateurs"><?php _e('Amateure', 'amateurtheme'); ?></a>
                 <a class="nav-tab" id="videos-tab" href="#top#videos"><?php _e('Videos', 'amateurtheme'); ?></a>
                 <a class="nav-tab" id="categories-tab" href="#top#categories"><?php _e('Kategorien', 'amateurtheme'); ?></a>
+                <a class="nav-tab" id="apilog-tab" href="#top#apilog"><?php _e('API Log', 'amateurtheme'); ?></a>
             </h2>
 
             <div class="at-import-tabs-content">
@@ -636,33 +637,48 @@ function at_import_mydirtyhobby_panel() {
                             </form>
                         </div>
                     </div>
-                    <div class="info" style="display:block;margin-bottom:10px;margin-top:0px;margin-right:0;">
-                        <p>
-                            <strong>Hinweise:</strong>
-                        </p>
+                </div>
 
-                        <p>
-                            <?php date_default_timezone_set('Europe/Berlin');
-                            $timestamp = wp_next_scheduled('mdh_scrape_cat_videos'); ?>
-                            Die Videos einer Kategorie werden stetig automatisch aktualisiert, das passiert jede halbe
-                            Stunde. Vorraussetzung hierfür ist, das für die Kategorie das Scrapen aktiviert wurde.<br><br>
-                            Nächster Start am: <strong><?php echo date('d.m.Y', $timestamp); ?></strong> um
-                            <strong><?php echo date('H:i:s', $timestamp); ?> Uhr</strong>
-                        </p>
-                        <hr>
-                        <p>
-                            <?php $timestamp = wp_next_scheduled('mdh_import_cat_video'); ?>
-                            Sobald du den Import aktivierst, werden alle verfügbaren Videos <u>automatisch</u> in die
-                            WordPress Datenbank geschrieben. Ein Script hierfür läuft automatisch alle 10 Minuten.<br><br>
-                            Nächster Start am: <strong><?php echo date('d.m.Y', $timestamp); ?></strong> um
-                            <strong><?php echo date('H:i:s', $timestamp); ?> Uhr</strong>
-                        </p>
-                        <hr>
-                        <p>
-                            Aktuelle Serverzeit: <strong><?php echo date('d.m.Y H:i:s'); ?> Uhr</strong>
-                        </p>
+                <!-- START: API Log Tab-->
+                <div id="apilog" class="at-api-tab">
+                    <div id="at-import-settings" class="metabox-holder postbox">
+                        <h3 class="hndle"><span><?php _e('API Log', 'amateurtheme'); ?></span></h3>
+                        <div class="inside">
+                            <p><?php _e('Hier werden dir die letzten 200 Einträge der API log angezeigt.', 'amateurtheme'); ?></p>
+                            <p><a href="" class="clear-api-log button" data-type="mdh"><?php _e('Log löschen', 'amateurtheme'); ?></a></p>
+                            <table class="apilog">
+                                <thead>
+                                <tr>
+                                    <th><?php _e('Datum', 'amateurtheme') ?></th>
+                                    <th><?php _e('Typ', 'amateurtheme') ?></th>
+                                    <th><?php _e('Nachricht', 'amateurtheme') ?></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                $log = get_option('at_mdh_api_log');
+                                if($log) {
+                                    $log = array_reverse($log);
+
+                                    foreach($log as $item) {
+                                        ?>
+                                        <tr>
+                                            <td><?php echo date('d.m.Y H:i:s', $item['time']); ?></td>
+                                            <td>
+                                                <?php echo $item['post_id']; ?>
+                                            </td>
+                                            <td><?php echo $item['msg']; ?></td>
+                                        </tr>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
+                <!-- END: API Log Tab-->
             </div>
         </div>
         </div>

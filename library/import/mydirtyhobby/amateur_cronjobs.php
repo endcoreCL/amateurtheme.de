@@ -244,5 +244,7 @@ function at_import_mdh_import_videos_cronjob($id) {
     error_log(print_r($results, true));
     error_log('Cron ' . $id . ' stopped');
 
+    at_write_api_log('mdh', $cron->name, 'Total: ' . $results['total'] . ', Imported: ' . $results['created'] . ' Skipped: ' . $results['skipped']);
+
     echo json_encode($results);
 }

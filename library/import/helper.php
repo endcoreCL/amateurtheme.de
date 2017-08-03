@@ -189,3 +189,50 @@ function at_import_untag_video_as_imported($post_id) {
         );
     }
 }
+
+if ( ! function_exists( 'at_write_api_log' ) ) {
+    /**
+     * at_write_api_log function.
+     *
+     * @param  string $type
+     * @param  int $post_id
+     * @param  string $msg
+     * @return null
+     */
+    function at_write_api_log($type, $post_id, $msg) {
+        if (!$type)
+            return;
+
+        if (!$post_id)
+            return;
+
+        $log = (is_array(get_option('at_' . $type . '_api_log')) ? get_option('at_' . $type . '_api_log') : array());
+        $log[] = array('time' => time(), 'post_id' => $post_id, 'msg' => $msg);
+
+        // limit log to 200 items
+        $log = array_reverse($log);
+        $log = array_slice($log, 0, 200);
+        $log = array_reverse($log);
+
+        update_option('at_' . $type . '_api_log', $log);
+    }
+}
+
+if ( ! function_exists( 'at_delete_api_log' ) ) {
+    /**
+     * at_delete_api_log function.
+     *
+     */
+    add_action('wp_ajax_at_api_clear_log', 'at_delete_api_log');
+    function at_delete_api_log() {
+        $type = (isset($_GET['type']) ? $_GET['type'] : '');
+
+        update_option('at_' . $type . '_api_log', array());
+
+        $status = array('status' => 'success');
+
+        echo json_encode($status);
+
+        exit();
+    }
+}

@@ -79,6 +79,34 @@ jQuery(document).ready(function (e) {
         e.preventDefault();
     });
 
+    // clear API Log
+    jQuery('.clear-api-log').click(function(e) {
+        var btn = jQuery(this);
+        var type = jQuery(this).data('type');
+        var hash = jQuery(this).data('hash');
+
+        jQuery(btn).attr('disabled', true).append(' <i class="fa fa-circle-o-notch fa-spin"></i>');
+
+        jQuery.ajax({
+            url: ajaxurl,
+            dataType: 'json',
+            type: 'GET',
+            data: "action=at_api_clear_log&type=" + type,
+            success: function(data){
+                jQuery(btn).attr('disabled', false).find('i').remove();
+
+                if(data['status'] == 'success') {
+                    jQuery('table.apilog tbody').html('');
+                }
+            },
+            error: function() {
+                jQuery(btn).attr('disabled', false).find('i').remove();
+            }
+        });
+
+        e.preventDefault();
+    });
+
     /**
      * Function
      * jQuery Queue
