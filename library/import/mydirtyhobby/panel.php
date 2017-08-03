@@ -159,8 +159,6 @@ function at_import_mydirtyhobby_panel() {
                                                         <?php echo $last_update; ?>
                                                     </td>
                                                     <td class="cron-action">
-                                                        <a href="#" class="cron-scrape" data-user-id="<?php echo $item->id; ?>"><?php _e('aktualisieren', 'amateurtheme'); ?></a>
-                                                        |
                                                         <?php if($item->scrape == 0) : ?>
                                                             <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="scrape" data-value="1"><?php _e('Scrape aktivieren', 'amateurtheme'); ?></a>
                                                         <?php else: ?>
@@ -604,8 +602,6 @@ function at_import_mydirtyhobby_panel() {
                                                     <?php echo $last_update; ?>
                                                 </td>
                                                 <td class="cron-action">
-                                                    <a href="#" class="cron-scrape" data-user-id="<?php echo $item->id; ?>"><?php _e('aktualisieren', 'amateurtheme'); ?></a>
-                                                    |
                                                     <?php if($item->scrape == 0) : ?>
                                                         <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="scrape" data-value="1"><?php _e('Scrape aktivieren', 'amateurtheme'); ?></a>
                                                     <?php else: ?>
