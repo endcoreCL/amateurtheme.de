@@ -9,6 +9,7 @@
 
 // Classes
 require_once(AT_IMPORT . '/classes/AT_Import_Cron.php');
+require_once(AT_IMPORT . '/classes/AT_Import_Video.php');
 
 // General
 require_once(AT_IMPORT . '/database.php');

@@ -128,18 +128,15 @@ function at_import_mdh_import_videos_cronjob($id) {
     $results = array('created' => 0, 'skipped' => 0, 'total' => 0, 'last_updated' => '');
 
     if($cron) {
-        $admin = $wpdb->get_results("SELECT * from $wpdb->users LIMIT 0,1");
-        $post_author = $admin[0]->ID;
-
-        $u_id = $cron->object_id;
         $database = new AT_Import_MDH_DB();
-        $videos = $wpdb->get_results('SELECT * FROM ' . $database->table_videos . ' WHERE object_id = '. $u_id . ' AND imported != 1 LIMIT 0,50');
+        $videos = $wpdb->get_results('SELECT * FROM ' . $database->table_videos . ' WHERE object_id = ' . $cron->object_id . ' AND imported != 1 LIMIT 0,50');
 
         if($videos) {
-            foreach($videos as $video) {
-                $unique = at_import_mdh_check_if_video_exists($video->video_id);
+            foreach ($videos as $item) {
+                $video = new AT_Import_Video($item->video_id);
 
-                if($unique) {
+                if ($video) {
+                    // update cron table (processing)
                     $wpdb->update(
                         AT_CRON_TABLE,
                         array(
@@ -150,50 +147,54 @@ function at_import_mdh_import_videos_cronjob($id) {
                         )
                     );
 
-                    $args = array(
-                        'post_title' => $video->title,
-                        'post_status' => (get_option('at_mdh_post_status') ? get_option('at_mdh_post_status') : 'publish'),
-                        'post_author' => $post_author,
-                        'post_type' => 'video',
-                    );
+                    $post_id = $video->insert();
 
-                    if(get_option('at_mdh_video_description') == '1') {
-                        $args['post_content'] = $video->description;
-                    }
+                    if ($post_id) {
+                        // fields
+                        $fields = at_import_mdh_prepare_video_fields($item->video_id);
+                        if ($fields) {
+                            $video->set_fields($fields);
+                        }
 
-                    $post_id = wp_insert_post($args);
-
-                    if($post_id) {
-                        add_post_meta($post_id, 'video_format', 'link');
-                        add_post_meta($post_id, 'video_link', 'http://in.mydirtyhobby.com/track/' . get_option('at_mdh_naffcode') . '/?ac=user&ac2=previewvideo&uv_id=' . $video->video_id);
-                        add_post_meta($post_id, 'video_dauer', $video->duration);
-                        add_post_meta($post_id, 'video_bewertung', $video->rating);
-                        add_post_meta($post_id, 'video_aufrufe', '0');
-                        add_post_meta($post_id, 'video_src', 'mdh');
-                        add_post_meta($post_id, 'video_unique_id', $video->video_id);
-
-
-                        $image = '';
-                        if($video->preview) {
-                            $preview  = json_decode($video->preview);
+                        // thumbnail
+                        if ($item->preview) {
+                            $preview = json_decode($item->preview);
                             $image = $preview->normal;
+
+                            if ($image) {
+                                $video->set_thumbnail($image);
+                            }
                         }
 
-                        if($image) {
-                            at_attach_external_image($image, $post_id, true, $post_id.'-vorschau', array('post_title' => $video->title));
+                        // category
+                        $categories = json_decode($item->categories);
+                        if ($categories) {
+                            foreach ($categories as $cat) {
+                                if ($cat->name) {
+                                    $video->set_term('video_category', $cat->name);
+                                }
+                            }
                         }
 
-                        //if($video_category != "-1") wp_set_object_terms($video_id, $video_category, 'video_category');
-                        //if($video_actor != "-1") wp_set_object_terms($video_id, $video_actor, 'video_actor');
-
-                        $wpdb->query(
-                            "UPDATE $database->table_videos SET imported = '1' WHERE video_id = $video->video_id"
-                        );
+                        // actor
+                        $video->set_term('video_actor', $item->object_name);
 
                         $results['created'] += 1;
                         $results['total'] += 1;
                         $results['last_activity'] = date("d.m.Y H:i:s");
 
+                        // update video item as imported
+                        $wpdb->update(
+                            $database->table_videos,
+                            array(
+                                'imported' => 1
+                            ),
+                            array(
+                                'video_id' => $item->video_id
+                            )
+                        );
+
+                        // update cron table (processing)
                         $wpdb->update(
                             AT_CRON_TABLE,
                             array(
@@ -205,17 +206,23 @@ function at_import_mdh_import_videos_cronjob($id) {
                         );
                     }
                 } else {
+                    // video already exist
                     $results['skipped'] += 1;
                     $results['total'] += 1;
 
-                    $wpdb->query(
-                        "UPDATE $database->table_videos SET imported = '1' WHERE video_id = $video->video_id"
+                    // update video item as imported
+                    $wpdb->update(
+                        $database->table_videos,
+                        array(
+                            'imported' => 1
+                        ),
+                        array(
+                            'video_id' => $item->video_id
+                        )
                     );
                 }
             }
         }
-
-
 
         $wpdb->update(
             AT_CRON_TABLE,
@@ -224,7 +231,7 @@ function at_import_mdh_import_videos_cronjob($id) {
                 'last_activity' => date("Y-m-d H:i:s")
             ),
             array(
-                'object_id' => $u_id
+                'object_id' => $cron->object_id
             )
         );
     }

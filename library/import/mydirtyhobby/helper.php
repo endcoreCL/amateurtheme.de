@@ -51,89 +51,90 @@ add_action("wp_ajax_at_mdh_import_video", "at_mdh_import_video");
 function at_mdh_import_video() {
     global $wpdb;
 
-    if ( !function_exists( 'ini_get' ) || !ini_get( 'safe_mode' ) ) {
-        set_time_limit( 0 );
-    }
+    error_log(print_r($_POST, true));
 
     $database = new AT_Import_MDH_DB();
-
-    // set import var to prevent multiple imports at the same time
-    update_option('mdh_import_running', '1');
-
     $results = '';
-    $id = $_POST['id'];
-    $image = $_POST['image'];
-    $title = $_POST['title'];
-    $duration = str_replace('min', '', trim($_POST['duration']));
-    $rating = round(($_POST['rating']/2)*2)/2;
-    $time = $_POST['time'];
-    $description = $_POST['description'];
-
-    if(!$date = date_create_from_format('d.m.Y', $time)) {
-        $date = date_create_from_format('d.m.y', date('d.m.y'));
-    }
-    $date = $date->format('Ymd');
-
+    $video_id = $_POST['id'];
     $video_category = $_POST['video_category'];
     $video_actor = $_POST['video_actor'];
 
-    $admin = $wpdb->get_results("SELECT * from $wpdb->users LIMIT 0,1");
-    $post_author = $admin[0]->ID;
+    $video = new AT_Import_Video($video_id);
 
-    /*
-     * CHECK IF VIDEO IS ALREADY IMPORTED
-     */
-    $unique = at_import_mdh_check_if_video_exists($id);
+    if($video) {
+        $post_id = $video->insert();
 
-    if($unique) {
-        $args = array(
-            'post_title' => $title,
-            'post_status' => (get_option('at_mdh_post_status') ? get_option('at_mdh_post_status') : 'publish'),
-            'post_author' => $post_author,
-            'post_type' => 'video',
-        );
+        if($post_id) {
+            $item = $wpdb->get_row('SELECT * FROM ' . $database->table_videos . ' WHERE video_id = ' . $video_id);
 
-        if(get_option('at_mdh_video_description') == '1') {
-            $args['post_content'] = $description;
-        }
+            if($item) {
+                // fields
+                $fields = at_import_mdh_prepare_video_fields($video_id);
+                if($fields) {
+                    $video->set_fields($fields);
+                }
 
-        $video_id = wp_insert_post($args);
+                // thumbnail
+                if($item->preview) {
+                    $preview  = json_decode($item->preview);
+                    $image = $preview->normal;
 
-        if($video_id) {
-            add_post_meta($video_id, 'video_format', 'link');
-            add_post_meta($video_id, 'video_link', 'http://in.mydirtyhobby.com/track/' . get_option('at_mdh_naffcode') . '/?ac=user&ac2=previewvideo&uv_id=' . $id);
-            add_post_meta($video_id, 'video_dauer', $duration);
-            add_post_meta($video_id, 'video_bewertung', $rating);
-            add_post_meta($video_id, 'video_aufrufe', '0');
-            add_post_meta($video_id, 'video_src', 'mdh');
-            add_post_meta($video_id, 'video_unique_id', $id);
+                    if($image) {
+                        $video->set_thumbnail($image);
+                    }
+                }
 
-            if($image) {
-                $att_id = at_attach_external_image($image, $video_id, true, $video_id.'-vorschau', array('post_title' => $title));
+                // category
+                if($video_category != '-1' && $video_category != '') {
+                    $video->set_term('video_category', $video_category);
+                } else {
+                    $categories = json_decode($item->categories);
+                    if($categories) {
+                        foreach ($categories as $cat) {
+                            if ($cat->name) {
+                                $video->set_term('video_category', $cat->name);
+                            }
+                        }
+                    }
+                }
+
+                // actor
+                if($video_actor != '-1' && $video_actor != '') {
+                    $video->set_term('video_actor', $video_actor);
+                } else {
+                    $video->set_term('video_actor', $item->object_name);
+                }
+
+                // update video item as imported
+                $wpdb->update(
+                    $database->table_videos,
+                    array(
+                        'imported' => 1
+                    ),
+                    array(
+                        'video_id' => $video_id
+                    )
+                );
             }
 
-            if($video_category != "-1") wp_set_object_terms($video_id, $video_category, 'video_category');
-            if($video_actor != "-1") wp_set_object_terms($video_id, $video_actor, 'video_actor');
-
-            $results = $id;
-
-            $wpdb->query(
-                "UPDATE $database->table_videos SET imported = '1' WHERE video_id = $id"
-            );
-
-        } else {
-            $results = 'error';
+            $results = $video_id;
         }
     } else {
-        $wpdb->query(
-            "UPDATE $database->table_videos SET imported = '1' WHERE video_id = $id"
+        // video already exist, update video as imported
+        $wpdb->update(
+            $database->table_videos,
+            array(
+                'imported' => 1
+            ),
+            array(
+                'video_id' => $video_id
+            )
         );
+
+        $results = 'error';
     }
 
     echo $results;
-
-    // set import var to prevent multiple imports at the same time
-    update_option('mdh_import_running', '0');
 
     die();
 }
@@ -222,4 +223,39 @@ function at_import_mdh_check_if_video_exists($video_id) {
     }
 
     return true;
+}
+
+function at_import_mdh_prepare_video_fields($video_id) {
+    global $wpdb;
+    $database = new AT_Import_MDH_DB();
+    $video = $wpdb->get_row('SELECT * FROM ' . $database->table_videos . ' WHERE video_id = ' . $video_id);
+    if($video) {
+        // format duration
+        $raw_duration = $video->duration;
+        $duration = gmdate("H:i:s", str_replace('.', '', $raw_duration));
+
+        // format date
+        $raw_date = $video->date;
+        $date = date('Ymd', strtotime($raw_date));
+
+        // format rating
+        $raw_rating = $video->rating;
+        $rating = $rating = round(($raw_rating/2)*2)/2;
+
+        $fields = array(
+            'duration' => $duration,
+            'views' => 0,
+            'date' => $date,
+            'rating' => $rating,
+            'rating_count' => $video->rating_count,
+            'url' => $video->link,
+            'source' => 'mdh',
+            'language' => $video->language,
+            'unique_id' => $video_id
+        );
+
+        return $fields;
+    }
+
+    return false;
 }

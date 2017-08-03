@@ -63,35 +63,23 @@ jQuery(document).ready(function (e) {
             jQuery('#videos-wrapper tbody tr').find('input[type="checkbox"]:checked').each(function () {
                 var current = jQuery(this).closest('tr');
 
+                var id = jQuery(this).val();
                 var video_category = jQuery(current_button).parent().find('#video_category option:selected').val();
                 var video_actor = jQuery(current_button).parent().find('#video_actor option:selected').val();
 
-                var id = jQuery(this).val();
-                var image = jQuery(current).find('.image img').attr('src');
-                var title = jQuery(current).find('.title').html();
-                var duration = jQuery(current).find('.duration').html();
-                var rating = jQuery(current).find('.rating').html();
-                var description = jQuery(current).find('.description').html();
-                var time = jQuery(current).find('.time').html();
-
                 var video = {
                     id: id,
-                    image: image,
-                    title: title,
-                    duration: duration,
-                    rating: rating,
-                    description: description,
-                    time: time,
                     video_category: video_category,
                     video_actor: video_actor
                 };
 
                 var xhr = jQuery.post(ajaxurl + '?action=at_mdh_import_video', video).done(function (data) {
                     if (data != "error") {
-                        jQuery('table tr#video-' + data).addClass('success');
-                        jQuery('table tr#video-' + data).find('input[type=checkbox]').attr('checked', false).attr('disabled', true);
+                        jQuery('#videos-wrapper table tr#video-' + data).addClass('success');
+                        jQuery('#videos-wrapper table tr#video-' + data).find('input[type=checkbox]').attr('checked', false).attr('disabled', true);
                     } else {
-                        jQuery('table tr#video-' + data).addClass('error');
+                        jQuery('#videos-wrapper table tr#video-' + data).addClass('error');
+                        jQuery(ajax_loader).removeClass('active');
                     }
                 }).success(function () {
                     var procentual = (100 / max_videos) * i;
@@ -104,8 +92,9 @@ jQuery(document).ready(function (e) {
                     }
 
                     i++;
+                }).error(function() {
+                    jQuery(ajax_loader).removeClass('active');
                 });
-
             });
         }
 

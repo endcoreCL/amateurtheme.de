@@ -7,7 +7,6 @@
  * Time: 15:23
  */
 class AT_Import_Cron {
-
     public function add($args) {
         global $wpdb;
 
