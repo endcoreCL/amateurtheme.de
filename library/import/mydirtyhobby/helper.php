@@ -77,7 +77,11 @@ function at_mdh_import_video() {
                 // thumbnail
                 if($item->preview) {
                     $preview  = json_decode($item->preview);
-                    $image = $preview->normal;
+                    $image = $preview->censored;
+
+                    if(get_option('at_mdh_fsk18') == '1') {
+                        $image = $preview->normal;
+                    }
 
                     if($image) {
                         $video->set_thumbnail($image);

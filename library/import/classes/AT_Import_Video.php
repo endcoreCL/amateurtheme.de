@@ -76,6 +76,6 @@ class AT_Import_Video {
     }
 
     public function set_term($taxonomy, $value) {
-        wp_set_object_terms($this->post_id, $value, $taxonomy);
+        wp_set_object_terms($this->post_id, $value, $taxonomy, true);
     }
 }

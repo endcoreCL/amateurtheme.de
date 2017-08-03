@@ -129,7 +129,7 @@ function at_import_mdh_import_videos_cronjob($id) {
 
     if($cron) {
         $database = new AT_Import_MDH_DB();
-        $videos = $wpdb->get_results('SELECT * FROM ' . $database->table_videos . ' WHERE object_id = ' . $cron->object_id . ' AND imported != 1 LIMIT 0,50');
+        $videos = $wpdb->get_results('SELECT * FROM ' . $database->table_videos . ' WHERE source_id = "' . $cron->object_id . '" AND imported != 1 LIMIT 0,50');
 
         if($videos) {
             foreach ($videos as $item) {
@@ -159,7 +159,11 @@ function at_import_mdh_import_videos_cronjob($id) {
                         // thumbnail
                         if ($item->preview) {
                             $preview = json_decode($item->preview);
-                            $image = $preview->normal;
+                            $image = $preview->censored;
+
+                            if(get_option('at_mdh_fsk18') == '1') {
+                                $image = $preview->normal;
+                            }
 
                             if ($image) {
                                 $video->set_thumbnail($image);
