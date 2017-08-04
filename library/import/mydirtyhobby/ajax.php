@@ -56,6 +56,35 @@ if ( ! function_exists( 'at_import_mdh_get_videos' ) ) {
     }
 }
 
+if ( ! function_exists( 'at_import_mdh_get_top_videos' ) ) {
+    /**
+     * at_import_mdh_get_top_videos function
+     *
+     */
+    add_action('wp_ajax_at_import_mdh_get_top_videos', 'at_import_mdh_get_top_videos');
+    function at_import_mdh_get_top_videos() {
+        $import = new AT_Import_MDH_Crawler();
+        $response = $import->getTopVideos();
+
+        if ($response) {
+            $import->saveVideos($response);
+
+            foreach ($response as $item) {
+                $item->imported = "false";
+
+                $unique = at_import_mdh_check_if_video_exists($item->id);
+
+                if (!$unique) {
+                    $item->imported = "true";
+                }
+            }
+        }
+
+        echo json_encode($response);
+        exit;
+    }
+}
+
 if ( ! function_exists( 'at_mdh_import_video' ) ) {
     /**
      * at_mdh_import_video function
@@ -73,7 +102,7 @@ if ( ! function_exists( 'at_mdh_import_video' ) ) {
 
         $video = new AT_Import_Video($video_id);
 
-        if ($video) {
+        if ($video->unique) {
             $post_id = $video->insert();
 
             if ($post_id) {

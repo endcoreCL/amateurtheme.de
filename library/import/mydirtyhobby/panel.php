@@ -21,10 +21,6 @@ function at_import_mydirtyhobby_panel() {
                         }
                     }
                 }
-            } else if ('reset' == $_REQUEST['action']) {
-                foreach ($options as $value) {
-                    delete_option($value['id']);
-                }
             }
         endif;
     endif;
@@ -55,11 +51,13 @@ function at_import_mydirtyhobby_panel() {
                 <a class="nav-tab nav-tab-active" id="settings-tab" href="#top#settings"><?php _e('Einstellungen', 'amateurtheme'); ?></a>
                 <a class="nav-tab" id="amateurs-tab" href="#top#amateurs"><?php _e('Amateure', 'amateurtheme'); ?></a>
                 <a class="nav-tab" id="videos-tab" href="#top#videos"><?php _e('Videos', 'amateurtheme'); ?></a>
+                <a class="nav-tab" id="topvideos-tab" href="#top#topvideos"><?php _e('Top Videos', 'amateurtheme'); ?></a>
                 <a class="nav-tab" id="categories-tab" href="#top#categories"><?php _e('Kategorien', 'amateurtheme'); ?></a>
                 <a class="nav-tab" id="apilog-tab" href="#top#apilog"><?php _e('API Log', 'amateurtheme'); ?></a>
             </h2>
 
             <div class="at-import-tabs-content">
+                <!-- START: Settings Tab-->
                 <div id="settings" class="at-import-tab active">
                     <div class="metabox-holder postbox no-padding-top">
                         <h3 class="hndle"><span><?php _e('Einstellungen', 'amateurtheme'); ?></span></h3>
@@ -111,7 +109,9 @@ function at_import_mydirtyhobby_panel() {
                         </p>
                     </div>
                 </div>
+                <!-- END: Settings Tab-->
 
+                <!-- START: Amateurs Tab-->
                 <div id="amateurs" class="at-import-tab">
                     <div class="metabox-holder postbox no-padding-top">
                         <h3 class="hndle"><span><?php _e('Amateure', 'amateurtheme'); ?></span></h3>
@@ -224,7 +224,9 @@ function at_import_mydirtyhobby_panel() {
                         </div>
                     </div>
                 </div>
+                <!-- END: Amateurs Tab-->
 
+                <!-- START: Videos Tab-->
                 <div id="videos" class="at-import-tab">
                     <div class="metabox-holder postbox no-padding-top">
                         <h3 class="hndle"><span><?php _e('Videos', 'amateurtheme'); ?></span></h3>
@@ -413,27 +415,54 @@ function at_import_mydirtyhobby_panel() {
                         <div class="clear"></div>
                     </div>
                 </div>
+                <!-- END: Videos Tab-->
 
-                <div id="topvids" class="at-import-tab">
+                <!-- START: Top Videos Tab-->
+                <div id="topvideos" class="at-import-tab">
                     <div class="metabox-holder postbox no-padding-top">
                         <h3 class="hndle"><span>TOP Videos</span></h3>
                         <div class="inside">
-                            <form method="post" id="vi-get-top-videos">
-                                <button name="submit" type="submit" class="btn btn-at" style="float:left;">Videos abrufen
-                                </button>
+                            <form method="post" id="at-get-top-videos">
+                                <button name="submit" type="submit" class="btn btn-at" style="float:left;"><?php _e('Videos abrufen', 'amateurtheme'); ?></button>
                                 <div class="spinner" style="display:inline;float:left;"></div>
                                 <div style="clear:both;"></div>
                             </form>
                         </div>
                     </div>
 
-                    <div id="topvideos">
+                    <div id="top-videos-wrapper">
                         <form id="posts-filter" method="post">
                             <div class="tablenav top">
                                 <div class="alignleft actions bulkactions">
-                                    <label for="bulk-action-selector-bottom"
-                                           class="screen-reader-text">Mehrfachauswahl</label>
-                                    <button name="" class="start-top-import button">Ausgewählte Videos importieren</button>
+                                    <label for="bulk-action-selector-bottom" class="screen-reader-text"><?php _e('Mehrfachauswahl', 'amateurtheme'); ?></label>
+                                    <select name="video_category" id="video_category">
+                                        <option value="-1" selected="selected"><?php _e('Kategorie wählen', 'amateurtheme'); ?></option>
+                                        <?php
+                                        $video_category = get_terms('video_category', 'orderby=name&hide_empty=0');
+                                        if ($video_category) {
+                                            foreach ($video_category as $term) {
+                                                ?>
+                                                <option value="<?php echo $term->slug; ?>"><?php echo $term->name; ?></option>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+
+                                    <select name="video_actor" id="video_actor">
+                                        <option value="-1" selected="selected"><?php _e('Darsteller wählen', 'amateurtheme'); ?></option>
+                                        <?php
+                                        $video_actor = get_terms('video_actor', 'orderby=name&hide_empty=0');
+                                        if ($video_actor) {
+                                            foreach ($video_actor as $term) {
+                                                ?>
+                                                <option value="<?php echo $term->slug; ?>"><?php echo $term->name; ?></option>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                    <button name="" class="start-import button"><?php _e('Ausgewählte Videos importieren', 'amateurtheme'); ?></button>
                                 </div>
                                 <div class="tablenav-pages one-page">
                                     <span class="displaying-num  video-count"><span>0</span> Videos</span>
@@ -444,8 +473,7 @@ function at_import_mydirtyhobby_panel() {
                                 <colgroup>
                                     <col width="">
                                     <col width="10%">
-                                    <col width="20%">
-                                    <col width="40%">
+                                    <col width="60%">
                                     <col width="10%">
                                     <col width="10%">
                                     <col width="10%">
@@ -454,30 +482,26 @@ function at_import_mydirtyhobby_panel() {
                                 <thead>
                                 <tr>
                                     <th scope="col" id="cb" class="manage-column column-cb check-column" style="">
-                                        <label class="screen-reader-text" for="cb-select-all-1">Alle auswählen</label><input
-                                                id="cb-select-all-1" type="checkbox">
+                                        <label class="screen-reader-text" for="cb-select-all-1"><?php _e('Beschreibung', 'amateurtheme'); ?></label>
+                                        <input id="cb-select-all-1" type="checkbox">
                                     </th>
                                     <th scope="col" id="image" class="manage-column column-image" style="">
-                                        <span>Vorschau</span>
-                                    </th>
-                                    <th scope="col" id="amateur" class="manage-column column-amateur" style="">
-                                        <span>Amateur</span>
+                                        <span><?php _e('Vorschau', 'amateurtheme'); ?></span>
                                     </th>
                                     <th scope="col" id="title" class="manage-column column-title" style="">
-                                        <span>Titel</span>
+                                        <span><?php _e('Titel', 'amateurtheme'); ?></span>
                                     </th>
                                     <th scope="col" id="duration" class="manage-column column-duration" style="">
-                                        <span>Länge</span>
+                                        <span><?php _e('Länge', 'amateurtheme'); ?></span>
                                     </th>
                                     <th scope="col" id="rating" class="manage-column column-duration" style="">
-                                        <span>Bewertung</span>
+                                        <span><?php _e('Bewertung', 'amateurtheme'); ?></span>
                                     </th>
-                                    <th scope="col" id="description" class="manage-column column-description"
-                                        style="display:none;">
-                                        <span>Beschreibung</span>
+                                    <th scope="col" id="description" class="manage-column column-description" style="display:none;">
+                                        <span><?php _e('Beschreibung', 'amateurtheme'); ?></span>
                                     </th>
                                     <th scope="col" id="time" class="manage-column column-time" style="">
-                                        <span>Datum</span>
+                                        <span><?php _e('Datum', 'amateurtheme'); ?></span>
                                     </th>
                                 </tr>
                                 </thead>
@@ -490,46 +514,67 @@ function at_import_mydirtyhobby_panel() {
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td></td>
                                 </tr>
                                 </tbody>
 
                                 <tfoot>
                                 <tr>
                                     <th scope="col" id="cb" class="manage-column column-cb check-column" style="">
-                                        <label class="screen-reader-text" for="cb-select-all-1">Alle auswählen</label><input
-                                                id="cb-select-all-1" type="checkbox">
+                                        <label class="screen-reader-text" for="cb-select-all-1"><?php _e('Beschreibung', 'amateurtheme'); ?></label>
+                                        <input id="cb-select-all-1" type="checkbox">
                                     </th>
                                     <th scope="col" id="image" class="manage-column column-image" style="width:100px;">
-                                        <span>Vorschau</span>
-                                    </th>
-                                    <th scope="col" id="amateur" class="manage-column column-amateur" style="">
-                                        <span>Amateur</span>
+                                        <span><?php _e('Vorschau', 'amateurtheme'); ?></span>
                                     </th>
                                     <th scope="col" id="title" class="manage-column column-title" style="">
-                                        <span>Titel</span>
+                                        <span><?php _e('Titel', 'amateurtheme'); ?></span>
                                     </th>
                                     <th scope="col" id="duration" class="manage-column column-duration" style="">
-                                        <span>Länge</span>
+                                        <span><?php _e('Länge', 'amateurtheme'); ?></span>
                                     </th>
                                     <th scope="col" id="rating" class="manage-column column-duration" style="">
-                                        <span>Bewertung</span>
+                                        <span><?php _e('Bewertung', 'amateurtheme'); ?></span>
                                     </th>
-                                    <th scope="col" id="description" class="manage-column column-description"
-                                        style="display:none;">
-                                        <span>Beschreibung</span>
+                                    <th scope="col" id="description" class="manage-column column-description" style="display:none;">
+                                        <span><?php _e('Beschreibung', 'amateurtheme'); ?></span>
                                     </th>
                                     <th scope="col" id="time" class="manage-column column-time" style="">
-                                        <span>Datum</span>
+                                        <span><?php _e('Datum', 'amateurtheme'); ?></span>
                                     </th>
                                 </tr>
                                 </tfoot>
                             </table>
                             <div class="tablenav bottom">
                                 <div class="alignleft actions bulkactions">
-                                    <label for="bulk-action-selector-bottom"
-                                           class="screen-reader-text">Mehrfachauswahl</label>
-                                    <button name="" class="start-top-import button">Ausgewählte Videos importieren</button>
+                                    <label for="bulk-action-selector-bottom" class="screen-reader-text"><?php _e('Mehrfachauswahl', 'amateurtheme'); ?></label>
+                                    <select name="video_category" id="video_category">
+                                        <option value="-1" selected="selected"><?php _e('Kategorie wählen', 'amateurtheme'); ?></option>
+                                        <?php
+                                        $video_category = get_terms('video_category', 'orderby=name&hide_empty=0');
+                                        if ($video_category) {
+                                            foreach ($video_category as $term) {
+                                                ?>
+                                                <option value="<?php echo $term->slug; ?>"><?php echo $term->name; ?></option>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+
+                                    <select name="video_actor" id="video_actor">
+                                        <option value="-1" selected="selected"><?php _e('Darsteller wählen', 'amateurtheme'); ?></option>
+                                        <?php
+                                        $video_actor = get_terms('video_actor', 'orderby=name&hide_empty=0');
+                                        if ($video_actor) {
+                                            foreach ($video_actor as $term) {
+                                                ?>
+                                                <option value="<?php echo $term->slug; ?>"><?php echo $term->name; ?></option>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                    <button name="" class="start-import button"><?php _e('Ausgewählte Videos importieren', 'amateurtheme'); ?></button>
                                 </div>
                                 <div class="tablenav-pages one-page">
                                     <span class="displaying-num  video-count"><span>0</span> Videos</span>
@@ -541,7 +586,9 @@ function at_import_mydirtyhobby_panel() {
                         <div class="clear"></div>
                     </div>
                 </div>
+                <!-- END: Top Videos Tab-->
 
+                <!-- START: Categories Tab-->
                 <div id="categories" class="at-import-tab">
                     <div class="update-nag" style="display:block;margin-bottom:10px;margin-top:0px;margin-right:0;">
                         <p>
@@ -638,9 +685,10 @@ function at_import_mydirtyhobby_panel() {
                         </div>
                     </div>
                 </div>
+                <!-- END: Categories Tab-->
 
                 <!-- START: API Log Tab-->
-                <div id="apilog" class="at-api-tab">
+                <div id="apilog" class="at-import-tab">
                     <div id="at-import-settings" class="metabox-holder postbox">
                         <h3 class="hndle"><span><?php _e('API Log', 'amateurtheme'); ?></span></h3>
                         <div class="inside">
@@ -681,219 +729,6 @@ function at_import_mydirtyhobby_panel() {
                 <!-- END: API Log Tab-->
             </div>
         </div>
-        </div>
-    <script type="text/javascript">
-
-        /*
-         * IMPORT STATUS
-
-        var getImportStatus = function () {
-            jQuery.get(ajaxurl + '?&action=vi_mdh_get_current_import_status').done(function (data) {
-                if (data) {
-                    jQuery('#importStatus').html(data);
-                }
-            });
-        }
-
-        window.setInterval(function () {
-            getImportStatus();
-        }, 10000); */
-
-
-
-        /*
-         * TOP VIDEOS
-         */
-        jQuery('#vi-get-top-videos').submit(function (e) {
-            var loader = jQuery(this).find('.spinner');
-
-            if (loader.hasClass('is-active')) {
-                return;
-            }
-
-            loader.addClass('is-active');
-
-            jQuery.get(ajaxurl + '?&action=vi_mdh_topitems_get_videos', jQuery(this).serialize()).done(function (data) {
-                var target = jQuery('#topvideos table tbody');
-
-                if (data != "[]") {
-                    var json = JSON.parse(data);
-
-                    if (json.status == 'error') {
-                        jQuery(target).html('<tr class="error"><th scope="row" class="check-column"><input type="checkbox" id="cb-select-0" name="video[]" value="0" disabled></th><td colspan="6">FEHLER: Die Verbindung zu MDH konnte nicht hergestellt werden.</td></tr>')
-                    } else if (json.status == 'too many connections') {
-                        jQuery(target).html('<tr class="error"><th scope="row" class="check-column"><input type="checkbox" id="cb-select-0" name="video[]" value="0" disabled></th><td colspan="6">FEHLER: Die Verbindung zu MDH wurde aufgrund zu vieler Verbindung temporär gesperrt. Bitte warte einen Moment oder wende dich an den Support von MyDirtyHobby.</td></tr>')
-                    } else {
-                        var total = json.total;
-                        var items = json.items;
-
-                        jQuery(target).html('');
-
-                        jQuery.each(items, function (i, item) {
-                            if (item.imported == 'true') {
-                                var html = '<tr id="video-' + item.id + '" class="video video-' + item.id + ' success imported">';
-                                html += '<th scope="row" class="check-column"><input type="checkbox" id="cb-select-' + item.id + '" name="video[]" value="' + item.id + '" disabled></th>';
-                            } else {
-                                var html = '<tr id="video-' + item.id + '" class="video video-' + item.id + '">';
-                                html += '<th scope="row" class="check-column"><input type="checkbox" id="cb-select-' + item.id + '" name="video[]" value="' + item.id + '"></th>';
-                            }
-
-                            html += '<td class="image"><img src="' + item.image + '" alt="" style="max-width:60px;"/></td>';
-                            html += '<td class="amateur">' + item.username + '</td>';
-                            html += '<td class="title">' + item.title + '</td>';
-                            html += '<td class="duration">' + item.duration + '</td>';
-                            html += '<td class="rating">' + item.rating + '</td>';
-                            html += '<td class="description" style="display:none;">' + item.description + '</td>';
-                            html += '<td class="time">' + item.time + '</td>';
-                            html += '</tr>';
-
-                            jQuery(target).append(html);
-                        });
-
-                        jQuery('.tablenav .video-count span').html(total);
-                    }
-                } else {
-                    jQuery(target).html('<tr><th scope="row" class="check-column"><input type="checkbox" id="cb-select-0" name="video[]" value="0" disabled></th><td colspan="6">Es wurden keine (neuen) Videos gefunden.</td></tr>')
-                }
-            }).always(function () {
-                loader.removeClass('is-active');
-            });
-            e.preventDefault();
-        });
-
-        jQuery('.start-top-import').bind('click', function (e) {
-            var current_button = this;
-            var max_videos = jQuery('#topvideos tbody tr:not(.success)').find('input[type="checkbox"]:checked').length;
-            var ajax_loader = jQuery('.ajax-loader');
-            var i = 1;
-
-            if (max_videos != "0") {
-                jQuery(ajax_loader).addClass('active').find('p').html('Importiere Video <span class="current">1</span> von ' + max_videos);
-
-                jQuery('#topvideos tbody tr').find('input[type="checkbox"]:checked').each(function () {
-                    var current = jQuery(this).closest('tr');
-
-                    var id = jQuery(this).val();
-                    var image = jQuery(current).find('.image img').attr('src');
-                    var darsteller = jQuery(current).find('.amateur').html();
-                    var title = jQuery(current).find('.title').html();
-                    var duration = jQuery(current).find('.duration').html();
-                    var rating = jQuery(current).find('.rating').html();
-                    var description = jQuery(current).find('.description').html();
-                    var time = jQuery(current).find('.time').html();
-
-                    var video = {
-                        id: id,
-                        image: image,
-                        title: title,
-                        duration: duration,
-                        rating: rating,
-                        description: description,
-                        time: time,
-                        kategorie: '-1',
-                        darsteller: darsteller
-                    };
-
-                    var xhr = jQuery.post(ajaxurl + '?action=vi_mdh_import_video', video).done(function (data) {
-                        if (data != "error") {
-                            jQuery('#topvideos table tr#video-' + data).addClass('success');
-                            jQuery('#topvideos table tr#video-' + data).find('input[type=checkbox]').attr('checked', false).attr('disabled', true);
-                        } else {
-                            jQuery('#topvideos table tr#video-' + data).addClass('error');
-                        }
-                    }).success(function () {
-                        var procentual = (100 / max_videos) * i;
-                        var procentual_fixed = procentual.toFixed(2);
-                        jQuery(ajax_loader).find('.current').html(i);
-                        jQuery(ajax_loader).find('.progress-bar').css('width', procentual + '%').html(procentual_fixed + '%');
-
-                        if (i >= max_videos) {
-                            jQuery(ajax_loader).removeClass('active');
-                        }
-
-                        i++;
-                    });
-
-                });
-            }
-
-            e.preventDefault();
-        });
-
-        /*
-         * KATEGORIEN
-         */
-        jQuery('#vi-new-cat').submit(function (e) {
-            jQuery.get(ajaxurl + '?&action=vi_mdh_new_cat', jQuery(this).serialize()).done(function (data) {
-                var response = JSON.parse(data);
-
-                if (response.status != 'ok') {
-                    jQuery('#vi-new-cat').append('<p>Fehler: Die Kategorie konnte nicht angelegt werden.</p>');
-                    return false;
-                } else {
-                    location.reload();
-                }
-            });
-
-            return false;
-        });
-
-        jQuery('#vi-new-cat .delete-cat').bind('click', function (e) {
-            var target = jQuery(this);
-            var catslug = jQuery(this).attr('data-slug');
-
-            jQuery.get(ajaxurl + '?&action=vi_mdh_delete_cat', {catslug: catslug}).done(function (data) {
-                var response = JSON.parse(data);
-
-                if (response.status == 'ok') {
-                    jQuery(target).closest('tr').fadeOut();
-                }
-            });
-
-            e.preventDefault();
-        });
-
-        jQuery('#vi-new-cat .scrape-cat').bind('click', function (e) {
-            var target = jQuery(this);
-            var catslug = jQuery(this).attr('data-cat');
-            var scrape = jQuery(this).attr('data-scrape');
-
-            jQuery(this).after('<span class="spinner" style="visibility:initial"></span>');
-
-            jQuery.get(ajaxurl + '?&action=vi_mdh_scrape_cat', {
-                catslug: catslug,
-                scrape: scrape
-            }).done(function (data) {
-                var response = JSON.parse(data);
-
-                if (response.status == 'ok') {
-                    location.reload();
-                }
-            });
-
-            e.preventDefault();
-        });
-
-        jQuery('#vi-new-cat .import-cat').bind('click', function (e) {
-            var target = jQuery(this);
-            var catslug = jQuery(this).attr('data-cat');
-            var import_status = jQuery(this).attr('data-import');
-
-            jQuery(this).after('<span class="spinner" style="display:block"></span>');
-
-            jQuery.get(ajaxurl + '?&action=vi_mdh_import_cat', {
-                catslug: catslug,
-                import_status: import_status
-            }).done(function (data) {
-                var response = JSON.parse(data);
-
-                if (response.status == 'ok') {
-                    location.reload();
-                }
-            });
-
-            e.preventDefault();
-        });
-    </script>
+    </div>
     <?php
 }

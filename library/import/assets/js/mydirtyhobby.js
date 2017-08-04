@@ -1,7 +1,7 @@
 jQuery(document).ready(function (e) {
-    // checkConnection
-    checkConnection();
-
+    /**
+     * Amateurs: Crawl amateurs
+     */
     jQuery('[data-action="crawl-amateurs"]').on('click', function() {
         jQuery(this).after('<span class="spinner at-crawl-amateurs-spinner" style="visibility:initial;float:none;margin-top:-3px"></span>');
 
@@ -15,6 +15,9 @@ jQuery(document).ready(function (e) {
         at_crawl_amateurs('0');
     });
 
+    /**
+     * Videos: Get videos
+     */
     jQuery('form#at-get-videos').on('submit', function(e) {
         var loader = jQuery(this).find('.spinner');
 
@@ -37,7 +40,7 @@ jQuery(document).ready(function (e) {
                     jQuery(target).append(html);
                 });
 
-                jQuery('.tablenav .video-count span').html(jQuery('#videos-wrapper tbody tr').length);
+                jQuery('#videos-wrapper .tablenav .video-count span').html(jQuery('#videos-wrapper tbody tr').length);
             } else {
                 jQuery(target).html('<tr><th scope="row" class="check-column"><input type="checkbox" id="cb-select-0" name="video[]" value="0" disabled></th><td colspan="5">Es wurden keine (neuen) Videos gefunden.</td></tr>')
             }
@@ -49,18 +52,55 @@ jQuery(document).ready(function (e) {
     });
 
     /**
-     * Video import
+     * Videos: Get top videos
      */
-    jQuery('#videos-wrapper .start-import').bind('click', function (e) {
+    jQuery('form#at-get-top-videos').on('submit', function(e) {
+        var loader = jQuery(this).find('.spinner');
+
+        if (loader.hasClass('is-active')) {
+            return;
+        }
+
+        loader.addClass('is-active');
+
+        jQuery.get(ajaxurl + '?&action=at_import_mdh_get_top_videos', jQuery(this).serialize()).done(function (data) {
+            var target = jQuery('#top-videos-wrapper table tbody');
+
+            if (data != "[]") {
+                var items = JSON.parse(data);
+
+                jQuery(target).html('');
+
+                jQuery.each(items, function (i, item) {
+                    var html = at_get_videos_html(item);
+                    jQuery(target).append(html);
+                });
+
+                jQuery('#top-videos-wrapper .tablenav .video-count span').html(jQuery('#top-videos-wrapper tbody tr').length);
+            } else {
+                jQuery(target).html('<tr><th scope="row" class="check-column"><input type="checkbox" id="cb-select-0" name="video[]" value="0" disabled></th><td colspan="5">Es wurden keine (neuen) Videos gefunden.</td></tr>')
+            }
+        }).always(function () {
+            loader.removeClass('is-active');
+        });
+
+        e.preventDefault();
+    });
+
+    /**
+     * Videos: Start import
+     */
+    jQuery('.start-import').bind('click', function (e) {
+        var wrapper = jQuery(this).closest('div[id*="videos-wrapper"]');
         var current_button = this;
-        var max_videos = jQuery('#videos-wrapper tbody tr:not(.success)').find('input[type="checkbox"]:checked').length;
+        var max_videos = jQuery(wrapper).find('tbody tr:not(.success) input[type="checkbox"]:checked').length;
         var ajax_loader = jQuery('.ajax-loader');
         var i = 1;
 
         if (max_videos != "0") {
             jQuery(ajax_loader).addClass('active').find('p').html('Importiere Video <span class="current">1</span> von ' + max_videos);
 
-            jQuery('#videos-wrapper tbody tr').find('input[type="checkbox"]:checked').each(function () {
+            jQuery(wrapper).find('tbody tr input[type="checkbox"]:checked').each(function () {
                 var current = jQuery(this).closest('tr');
 
                 var id = jQuery(this).val();
@@ -75,10 +115,10 @@ jQuery(document).ready(function (e) {
 
                 var xhr = jQuery.post(ajaxurl + '?action=at_mdh_import_video', video).done(function (data) {
                     if (data != "error") {
-                        jQuery('#videos-wrapper table tr#video-' + data).addClass('success');
-                        jQuery('#videos-wrapper table tr#video-' + data).find('input[type=checkbox]').attr('checked', false).attr('disabled', true);
+                        jQuery(wrapper).find('table tr#video-' + data).addClass('success');
+                        jQuery(wrapper).find('table tr#video-' + data +' input[type=checkbox]').attr('checked', false).attr('disabled', true);
                     } else {
-                        jQuery('#videos-wrapper table tr#video-' + data).addClass('error');
+                        jQuery(wrapper).find('table tr#video-' + data).addClass('error');
                         jQuery(ajax_loader).removeClass('active');
                     }
                 }).success(function () {
@@ -100,23 +140,7 @@ jQuery(document).ready(function (e) {
 
         e.preventDefault();
     });
-
 });
-
-/*
- * CHECK CONNECTION
- */
-var checkConnection = function () {
-    /*jQuery.get(ajaxurl + '?&action=vi_mdh_topitems_get_videos', jQuery(this).serialize()).done(function (data) {
-        var result = JSON.parse(data);
-        var resultContainer = jQuery('#checkConnection');
-
-        if (result.status == 'too many connections') {
-            resultContainer.append('<div class="error"><p>Die Verbindung zu MyDirtyHobby wurde aufgrund zu vieler Verbindungen gesperrt. Bitte wende dich an den Support von MyDirtyHobby.</p></div>');
-        }
-    })*/
-};
-
 
 /**
  * Amateur crawl

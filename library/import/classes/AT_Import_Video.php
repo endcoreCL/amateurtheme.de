@@ -7,18 +7,20 @@
  * Time: 11:17
  */
 class AT_Import_Video {
-    var $video_id = '';
-    var $post_id = '';
+    var $video_id = false;
+    var $post_id = false;
+    var $unique = true;
 
     public function __construct($id) {
         if(!$this->unique($id)) {
-            return false;
+            $this->unique = false;
         }
 
         $this->video_id = $id;
 
-        return true;
+        $this->unique = true;
     }
+
 
     public function unique($id) {
         $unique = at_import_mdh_check_if_video_exists($id);
@@ -34,16 +36,17 @@ class AT_Import_Video {
         global $wpdb;
 
         $database = new AT_Import_MDH_DB();
+
         $video = $wpdb->get_row('SELECT * FROM ' . $database->table_videos . ' WHERE video_id = ' .$this->video_id);
 
         if($video) {
             $args = array(
                 'post_title' => $video->title,
                 'post_status' => (get_option('at_mdh_post_status') ? get_option('at_mdh_post_status') : 'publish'),
-                'post_type' => 'video',
+                'post_type' => 'video'
             );
 
-            if(get_option('at_mdh_video_description') == '1') {
+            if (get_option('at_mdh_video_description') == '1') {
                 $args['post_content'] = $video->description;
             }
 
@@ -52,7 +55,7 @@ class AT_Import_Video {
             return $this->post_id;
         }
 
-       return false;
+        return false;
     }
 
     public function set_fields($args = array()) {

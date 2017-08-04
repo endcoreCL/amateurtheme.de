@@ -14,6 +14,7 @@ class AT_Import_MDH_Crawler {
         $this->amateurs_url = 'https://www.mydirtyhobby.com/api/amateurs/?naff=' . $this->naffcode;
         $this->amateur_videos_url = 'https://www.mydirtyhobby.com/api/amateurvideos/?naff=' . $this->naffcode;
         $this->category_videos_url = 'https://www.mydirtyhobby.com/api/categoryvideos/?naff=' . $this->naffcode;
+        $this->top_videos_url = 'https://www.mydirtyhobby.com/api/topvideos/?naff=' . $this->naffcode;
 
         // tables
         global $wpdb;
@@ -31,7 +32,19 @@ class AT_Import_MDH_Crawler {
             $url = $this->category_videos_url;
         }
 
+        if($params['type'] == 'top-videos') {
+            $url = $this->top_videos_url;
+        }
+
         unset($params['type']);
+
+        // set default language
+        if(!isset($params['language'])) {
+            /**
+             * @TODO: Set language per option panel
+             */
+            $params['language'] = 'de';
+        }
 
         if(!empty($params)) {
             $url = $url . '&'  . http_build_query($params);
@@ -112,15 +125,27 @@ class AT_Import_MDH_Crawler {
     function getAmateurVideos($u_id, $offset = 0) {
         $args = array(
             'type' => 'videos',
-            'limit' => 100,
+            'limit' => 200,
             'offset' => $offset,
             'amateurId' => $u_id
         );
 
         $data = $this->get($args);
 
-        //error_log('getVideos');
-        //error_log(print_r($data, true));
+        if(is_object($data) && isset($data->items)) {
+            return $data->items;
+        }
+    }
+
+    function getTopVideos() {
+        $args = array(
+            'type' => 'top-videos',
+            'limit' => 200,
+        );
+
+        $data = $this->get($args);
+
+        error_log(print_r($data, true));
 
         if(is_object($data) && isset($data->items)) {
             return $data->items;
