@@ -27,6 +27,7 @@ function at_import_cron_schedules($schedules){
 add_action('admin_menu', 'at_import_menu');
 function at_import_menu() {
     add_menu_page('at_import', __('Import', 'amateurtheme'), 'administrator', 'at_import', "at_import", "dashicons-smiley");
+    add_submenu_page( 'at_import', __('Big7', 'amateurtheme'), __('Big7', 'amateurtheme'), 'administrator', 'at_import_big7_panel', 'at_import_big7_panel');
     add_submenu_page( 'at_import', __('MyDirtyHobby', 'amateurtheme'), __('MyDirtyHobby', 'amateurtheme'), 'administrator', 'at_import_mydirtyhobby_panel', 'at_import_mydirtyhobby_panel');
 }
 
@@ -39,12 +40,12 @@ function at_import_menu_scripts($page) {
     if(strpos($page, 'at_import_') === false) return;
 
     // CSS
-    wp_enqueue_style( 'at-import-panel', get_template_directory_uri() . '/library/import/assets/css/panel.css', false, '1.0');
-    wp_enqueue_style( 'at-select2', get_template_directory_uri() . '/library/import/assets/css/select2.min.css', false, '1.0');
+    wp_enqueue_style( 'at-import-panel', get_template_directory_uri() . '/library/import/_assets/css/panel.css', false, '1.0');
+    wp_enqueue_style( 'at-select2', get_template_directory_uri() . '/library/import/_assets/css/select2.min.css', false, '1.0');
 
     // JS
-    wp_enqueue_script( 'at-import-panel', get_template_directory_uri() . '/library/import/assets/js/panel.js');
-    wp_enqueue_script( 'at-select2', get_template_directory_uri() . '/library/import/assets/js/select2.full.min.js');
+    wp_enqueue_script( 'at-import-panel', get_template_directory_uri() . '/library/import/_assets/js/panel.js');
+    wp_enqueue_script( 'at-select2', get_template_directory_uri() . '/library/import/_assets/js/select2.full.min.js');
 }
 
 /**
@@ -234,5 +235,51 @@ if ( ! function_exists( 'at_delete_api_log' ) ) {
         echo json_encode($status);
 
         exit();
+    }
+}
+
+if ( ! function_exists( 'at_import_check_if_video_exists' ) ) {
+    /**
+     * at_import_check_if_video_exists
+     *
+     * @param $video_id
+     * @return bool
+     */
+    function at_import_check_if_video_exists($video_id) {
+        global $wpdb;
+
+        $database = new AT_Import_MDH_DB();
+
+        $unique_user_video = $wpdb->get_var(
+            $wpdb->prepare
+            ("
+			  SELECT count(id)
+			  FROM $database->table_videos
+			  WHERE video_id = '%s'
+			  AND imported = '1'",
+                    $video_id
+            )
+        );
+
+        if ($unique_user_video != '0') {
+            return false;
+        }
+
+        $unique_post = $wpdb->get_var(
+            $wpdb->prepare("
+			SELECT count(id)
+			FROM $wpdb->posts wpo, $wpdb->postmeta wpm
+			WHERE wpo.ID = wpm.post_id
+			AND wpm.meta_key = 'video_unique_id'
+			AND wpm.meta_value = '%s'",
+                $video_id
+            )
+        );
+
+        if ($unique_post != '0') {
+            return false;
+        }
+
+        return true;
     }
 }

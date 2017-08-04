@@ -28,9 +28,9 @@ if ( ! class_exists( 'Kirki_Init' ) ) {
 		}
 
 		/**
-		 * Properly set the Kirki URL for assets.
+		 * Properly set the Kirki URL for _assets.
 		 * Determines if Kirki is installed as a plugin, in a child theme, or a parent theme
-		 * and then does some calculations to get the proper URL for its CSS & JS assets.
+		 * and then does some calculations to get the proper URL for its CSS & JS _assets.
 		 */
 		public function set_url() {
 

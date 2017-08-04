@@ -16,7 +16,7 @@ $pie-default-approach: relative !default;
 
 // The location of your PIE behavior file
 // This should be root-relative to your web server
-// relative assets don't work. It is recommended that
+// relative _assets don't work. It is recommended that
 // you set this yourself.
 $pie-behavior: stylesheet-url("PIE.htc") !default;
 

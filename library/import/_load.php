@@ -1,6 +1,6 @@
 <?php
-/*
- * Laden der Hilfsfunktionen
+/**
+ * Loading import helper functions
  *
  * @author		Christian Lang
  * @version		1.0
@@ -8,8 +8,8 @@
  */
 
 // Classes
-require_once(AT_IMPORT . '/classes/AT_Import_Cron.php');
-require_once(AT_IMPORT . '/classes/AT_Import_Video.php');
+require_once(AT_IMPORT . '/_classes/AT_Import_Cron.php');
+require_once(AT_IMPORT . '/_classes/AT_Import_Video.php');
 
 // General
 require_once(AT_IMPORT . '/database.php');
@@ -17,3 +17,4 @@ require_once(AT_IMPORT . '/helper.php');
 
 // APIs
 require_once(AT_IMPORT . '/mydirtyhobby/_load.php');
+require_once(AT_IMPORT . '/big7/_load.php');

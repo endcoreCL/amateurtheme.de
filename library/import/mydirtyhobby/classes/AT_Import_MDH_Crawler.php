@@ -6,9 +6,6 @@
  * Time: 12:08
  */
 class AT_Import_MDH_Crawler {
-    public $naffcode;
-    public $url;
-
     public function __construct() {
         $this->naffcode = get_option('at_mdh_naffcode');
         $this->amateurs_url = 'https://www.mydirtyhobby.com/api/amateurs/?naff=' . $this->naffcode;

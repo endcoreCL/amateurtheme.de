@@ -16,7 +16,7 @@ if ( ! function_exists( 'at_import_mdh_scripts' ) ) {
     function at_import_mdh_scripts($page) {
         if (strpos($page, 'at_import_mydirtyhobby') === false) return;
 
-        wp_enqueue_script('at-mydirtyhobby', get_template_directory_uri() . '/library/import/assets/js/mydirtyhobby.js');
+        wp_enqueue_script('at-mydirtyhobby', get_template_directory_uri() . '/library/import/_assets/js/mydirtyhobby.js');
     }
 }
 
@@ -44,51 +44,6 @@ if ( ! function_exists( 'at_import_mdh_get_video_count' ) ) {
         }
 
         return '0';
-    }
-}
-
-if ( ! function_exists( 'at_import_mdh_check_if_video_exists' ) ) {
-    /**
-     * at_import_mdh_check_if_video_exists
-     *
-     * @param $video_id
-     * @return bool
-     */
-    function at_import_mdh_check_if_video_exists($video_id) {
-        global $wpdb;
-
-        $database = new AT_Import_MDH_DB();
-
-        $unique_user_video = $wpdb->get_var(
-            $wpdb->prepare("
-			SELECT count(id)
-			FROM $database->table_videos
-			WHERE video_id = '%s'
-			AND imported = '1'",
-                $video_id
-            )
-        );
-
-        if ($unique_user_video != '0') {
-            return false;
-        }
-
-        $unique_post = $wpdb->get_var(
-            $wpdb->prepare("
-			SELECT count(id)
-			FROM $wpdb->posts wpo, $wpdb->postmeta wpm
-			WHERE wpo.ID = wpm.post_id
-			AND wpm.meta_key = 'video_unique_id'
-			AND wpm.meta_value = '%s'",
-                $video_id
-            )
-        );
-
-        if ($unique_post != '0') {
-            return false;
-        }
-
-        return true;
     }
 }
 

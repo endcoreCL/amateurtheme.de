@@ -120,7 +120,7 @@ if ( ! class_exists( 'Kirki_Styles_Customizer' ) ) {
 		 * @access public
 		 */
 		public function customizer_styles() {
-			wp_enqueue_style( 'kirki-customizer-css', trailingslashit( Kirki::$url ) . 'assets/css/customizer.css', null );
+			wp_enqueue_style( 'kirki-customizer-css', trailingslashit( Kirki::$url ) . '_assets/css/customizer.css', null );
 			wp_add_inline_style( 'kirki-customizer-css', $this->custom_css() );
 		}
 
@@ -223,7 +223,7 @@ if ( ! class_exists( 'Kirki_Styles_Customizer' ) ) {
 
 			// Include the width CSS if necessary.
 			if ( isset( $config['width'] ) ) {
-				$path = wp_normalize_path( Kirki::$path . '/assets/css/customizer-dynamic-css-width.php' );
+				$path = wp_normalize_path( Kirki::$path . '/_assets/css/customizer-dynamic-css-width.php' );
 				$styles .= include $path;
 
 				// Replace width placeholder with actual value.
@@ -232,12 +232,12 @@ if ( ! class_exists( 'Kirki_Styles_Customizer' ) ) {
 
 			// Include the color modifications CSS if necessary.
 			if ( false !== $this->color_back && false !== $this->color_font ) {
-				$path = wp_normalize_path( Kirki::$path . '/assets/css/customizer-dynamic-css-colors.php' );
+				$path = wp_normalize_path( Kirki::$path . '/_assets/css/customizer-dynamic-css-colors.php' );
 				$styles .= include $path;
 			}
 
 			// Include generic CSS for controls.
-			$path = wp_normalize_path( Kirki::$path . '/assets/css/customizer-dynamic-css.php' );
+			$path = wp_normalize_path( Kirki::$path . '/_assets/css/customizer-dynamic-css.php' );
 			$styles .= include $path;
 
 			return $styles;

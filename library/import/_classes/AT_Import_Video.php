@@ -23,7 +23,7 @@ class AT_Import_Video {
 
 
     public function unique($id) {
-        $unique = at_import_mdh_check_if_video_exists($id);
+        $unique = at_import_check_if_video_exists($id);
 
         if($unique) {
             return true;
@@ -32,28 +32,27 @@ class AT_Import_Video {
         return false;
     }
 
-    public function insert() {
+    public function insert($title, $description) {
         global $wpdb;
+
+        if(!$title) return false;
 
         $database = new AT_Import_MDH_DB();
 
-        $video = $wpdb->get_row('SELECT * FROM ' . $database->table_videos . ' WHERE video_id = ' .$this->video_id);
+        $args = array(
+            'post_title' => $title,
+            'post_status' => (get_option('at_mdh_post_status') ? get_option('at_mdh_post_status') : 'publish'),
+            'post_type' => 'video',
+            'post_content' => $description
+        );
 
-        if($video) {
-            $args = array(
-                'post_title' => $video->title,
-                'post_status' => (get_option('at_mdh_post_status') ? get_option('at_mdh_post_status') : 'publish'),
-                'post_type' => 'video'
-            );
-
-            if (get_option('at_mdh_video_description') == '1') {
-                $args['post_content'] = $video->description;
-            }
-
-            $this->post_id = wp_insert_post($args);
-
-            return $this->post_id;
+        if (get_option('at_mdh_video_description') == '1') {
+            $args['post_content'] = $video->description;
         }
+
+        $this->post_id = wp_insert_post($args);
+
+        return $this->post_id;
 
         return false;
     }

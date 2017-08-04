@@ -160,7 +160,7 @@ if ( ! function_exists( 'at_import_mdh_import_videos_cronjob' ) ) {
                             )
                         );
 
-                        $post_id = $video->insert();
+                        $post_id = $video->insert($item->title, $item->description);
 
                         if ($post_id) {
                             // fields

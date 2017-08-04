@@ -43,7 +43,7 @@ if ( ! function_exists( 'at_import_mdh_get_videos' ) ) {
             foreach ($response as $item) {
                 $item->imported = "false";
 
-                $unique = at_import_mdh_check_if_video_exists($item->id);
+                $unique = at_import_check_if_video_exists($item->id);
 
                 if (!$unique) {
                     $item->imported = "true";
@@ -72,7 +72,7 @@ if ( ! function_exists( 'at_import_mdh_get_top_videos' ) ) {
             foreach ($response as $item) {
                 $item->imported = "false";
 
-                $unique = at_import_mdh_check_if_video_exists($item->id);
+                $unique = at_import_check_if_video_exists($item->id);
 
                 if (!$unique) {
                     $item->imported = "true";
@@ -103,12 +103,12 @@ if ( ! function_exists( 'at_mdh_import_video' ) ) {
         $video = new AT_Import_Video($video_id);
 
         if ($video->unique) {
-            $post_id = $video->insert();
+            $item = $wpdb->get_row('SELECT * FROM ' . $database->table_videos . ' WHERE video_id = ' . $video_id);
 
-            if ($post_id) {
-                $item = $wpdb->get_row('SELECT * FROM ' . $database->table_videos . ' WHERE video_id = ' . $video_id);
+            if ($item) {
+                $post_id = $video->insert($item->title, $item->description);
 
-                if ($item) {
+                if ($post_id) {
                     // fields
                     $fields = at_import_mdh_prepare_video_fields($video_id);
                     if ($fields) {
@@ -206,7 +206,7 @@ if ( ! function_exists( 'at_import_mdh_get_category_videos' ) ) {
             foreach ($response as $item) {
                 $item->imported = "false";
 
-                $unique = at_import_mdh_check_if_video_exists($item->id);
+                $unique = at_import_check_if_video_exists($item->id);
 
                 if (!$unique) {
                     $item->imported = "true";
