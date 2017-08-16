@@ -142,8 +142,6 @@ class AT_Import_MDH_Crawler {
 
         $data = $this->get($args);
 
-        error_log(print_r($data, true));
-
         if(is_object($data) && isset($data->items)) {
             return $data->items;
         }

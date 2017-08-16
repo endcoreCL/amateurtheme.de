@@ -136,9 +136,13 @@ if ( ! function_exists( 'at_import_mdh_import_videos_cronjob' ) ) {
      */
     add_action('at_import_mdh_import_videos_cronjob', 'at_import_mdh_import_videos_cronjob');
     function at_import_mdh_import_videos_cronjob($id) {
+        set_time_limit(120); // try to set time limit to 120 seconds
+
         global $wpdb;
         $cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
         $results = array('created' => 0, 'skipped' => 0, 'total' => 0, 'last_updated' => '');
+
+        error_log('Started cronjob (MDH, ' . $id . ')');
 
         if ($cron) {
             $database = new AT_Import_MDH_DB();
@@ -178,7 +182,7 @@ if ( ! function_exists( 'at_import_mdh_import_videos_cronjob' ) ) {
                                     $image = $preview->normal;
                                 }
 
-                                if ($image) {
+                                if (is_string($image)) {
                                     $video->set_thumbnail($image);
                                 }
                             }
@@ -194,7 +198,7 @@ if ( ! function_exists( 'at_import_mdh_import_videos_cronjob' ) ) {
                             }
 
                             // actor
-                            $video->set_term('video_actor', $item->object_name);
+                            $video->set_term('video_actor', $item->object_name, 'mdh', $cron->object_id);
 
                             $results['created'] += 1;
                             $results['total'] += 1;
@@ -252,6 +256,10 @@ if ( ! function_exists( 'at_import_mdh_import_videos_cronjob' ) ) {
                 )
             );
         }
+
+        error_log(print_r($results,true));
+
+        error_log('Stoped cronjob (MDH, ' . $id . ')');
 
         at_write_api_log('mdh', $cron->name, 'Total: ' . $results['total'] . ', Imported: ' . $results['created'] . ' Skipped: ' . $results['skipped']);
 

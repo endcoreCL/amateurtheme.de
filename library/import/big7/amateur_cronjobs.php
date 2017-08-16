@@ -41,11 +41,13 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
      */
     add_action('at_import_big7_import_videos_cronjob', 'at_import_big7_import_videos_cronjob');
     function at_import_big7_import_videos_cronjob($id) {
+        set_time_limit(120); // try to set time limit to 120 seconds
+
         global $wpdb;
         $cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
         $results = array('created' => 0, 'skipped' => 0, 'total' => 0, 'last_updated' => '');
 
-        error_log('Started cronjob (' . $id . ')');
+        error_log('Started cronjob (BIG7, ' . $id . ')');
 
         if ($cron) {
             $import = new AT_Import_Big7_Crawler();
@@ -97,13 +99,13 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
                             if ($categories) {
                                 foreach ($categories as $cat) {
                                     if ($cat['name']) {
-                                        $video->set_term('video_category', $cat['name']);
+                                        $video->set_term('video_category', $item['name']);
                                     }
                                 }
                             }
 
                             // actor
-                            $video->set_term('video_actor', $actor);
+                            $video->set_term('video_actor', $actor, 'big7', $cron->object_id);
 
                             $results['created'] += 1;
                             $results['total'] += 1;
@@ -128,6 +130,48 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
                 }
             }
 
+            // check autor data
+            $actor_need_update = $wpdb->get_var('SELECT term_id FROM cp_termmeta WHERE meta_key = "actor_id" AND meta_value = "' . $cron->object_id . '" AND (SELECT term_id FROM cp_termmeta WHERE meta_key="actor_last_updated" AND meta_value < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 30 DAY)))');
+            if($actor_need_update) {
+                error_log(print_r($actor_need_update, true));
+                $post_id = 'video_actor_' . $actor_need_update;
+
+                // image
+                if($image = (isset($videos['foto']['large']) ? $videos['foto']['large'] : '')) {
+                    error_log($image);
+                    $att_id = at_attach_external_image($image, null, false, $videos['nickname_sc'] . '-preview');
+                    error_log(print_r($att_id, true));
+                    if($att_id) {
+                        update_field('actor_image', $att_id, $post_id);
+                    }
+                }
+
+                // gender
+                if($gender = $videos['geschlecht']) {
+                    if($gender == 'ts') {
+                        $gender_decoded = 'Transexuell';
+                    } else if($gender == 'w') {
+                        $gender_decoded = 'Weiblich';
+                    } else {
+                        $gender_decoded = 'Männlich';
+                    }
+
+                    update_field('actor_gender', $gender_decoded, $post_id);
+                }
+
+                // plz
+                if($zipcode = $videos['plz']) {
+                    update_field('actor_zipcode', $zipcode, $post_id);
+                }
+
+                // link
+                if($link = $videos['link']) {
+                    update_field('actor_profile_url', $link, $post_id);
+                }
+
+                update_field('actor_last_updated', time(), $post_id);
+            }
+
             $wpdb->update(
                 AT_CRON_TABLE,
                 array(
@@ -142,7 +186,7 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
 
         error_log(print_r($results,true));
 
-        error_log('Stoped cronjob (' . $id . ')');
+        error_log('Stoped cronjob (BIG7, ' . $id . ')');
 
         at_write_api_log('big7', $cron->name, 'Total: ' . $results['total'] . ', Imported: ' . $results['created'] . ' Skipped: ' . $results['skipped']);
 

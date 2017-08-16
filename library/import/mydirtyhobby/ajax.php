@@ -99,6 +99,7 @@ if ( ! function_exists( 'at_mdh_import_video' ) ) {
         $video_id = $_POST['id'];
         $video_category = $_POST['video_category'];
         $video_actor = $_POST['video_actor'];
+        $video_actor_id = $_POST['video_actor_id'];
 
         $video = new AT_Import_Video($video_id);
 
@@ -145,9 +146,9 @@ if ( ! function_exists( 'at_mdh_import_video' ) ) {
 
                     // actor
                     if ($video_actor != '-1' && $video_actor != '') {
-                        $video->set_term('video_actor', $video_actor);
+                        $video->set_term('video_actor', $video_actor, 'mdh', $video_actor_id);
                     } else {
-                        $video->set_term('video_actor', $item->object_name);
+                        $video->set_term('video_actor', $item->object_name, 'mdh', $item->object_id);
                     }
 
                     // update video item as imported

@@ -47,7 +47,7 @@ class AT_Import_Video {
         );
 
         if (get_option('at_mdh_video_description') == '1') {
-            $args['post_content'] = $video->description;
+            $args['post_content'] = $description;
         }
 
         $this->post_id = wp_insert_post($args);
@@ -77,7 +77,22 @@ class AT_Import_Video {
         return false;
     }
 
-    public function set_term($taxonomy, $value) {
-        wp_set_object_terms($this->post_id, $value, $taxonomy, true);
+    public function set_term($taxonomy, $value, $source = 0, $id = 0) {
+        $terms = wp_set_object_terms($this->post_id, $value, $taxonomy, true);
+
+        if($taxonomy == 'video_actor') {
+            if ($terms) {
+                foreach ($terms as $term) {
+                    $post_id = $taxonomy . '_' . $term;
+                    $actor_id = get_field('actor_id', $post_id);
+
+                    if (!$actor_id) {
+                        update_field('actor_source', $source, $post_id);
+                        update_field('actor_id', $id, $post_id);
+                        update_field('actor_last_updated', time(), $post_id);
+                    }
+                }
+            }
+        }
     }
 }

@@ -253,7 +253,7 @@ if ( ! function_exists( 'at_attach_external_image' ) ) {
      * @return boolean
      */
     function at_attach_external_image($url = null, $post_id = null, $thumb = null, $filename = null, $post_data = array()) {
-        if (!$url || !$post_id) return new WP_Error('missing', "Need a valid URL and post ID...");
+        if (!$url) return new WP_Error('missing', "Need a valid URL and post ID...");
         require_once(ABSPATH . 'wp-admin/includes/file.php');
         require_once(ABSPATH . 'wp-admin/includes/media.php');
         require_once(ABSPATH . 'wp-admin/includes/image.php');
@@ -304,9 +304,11 @@ if ( ! function_exists( 'at_attach_external_image' ) ) {
             $post_data['post_title'] = basename($url_filename, "." . $url_type['ext']);         // just use the original filename (no extension)
         }
 
-        // make sure gets tied to parent
-        if (empty($post_data['post_parent'])) {
-            $post_data['post_parent'] = $post_id;
+        if($post_id) {
+            // make sure gets tied to parent
+            if (empty($post_data['post_parent'])) {
+                $post_data['post_parent'] = $post_id;
+            }
         }
 
         // do the validation and storage stuff
