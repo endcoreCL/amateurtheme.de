@@ -156,7 +156,7 @@ function at_import_big7_panel() {
                                                     <?php echo $amateur_details['anz_videos']; ?>
                                                 </td>
                                                 <td class="cron-video-imported">
-                                                    0
+                                                    <?php echo at_import_big7_get_video_count($item->object_id); ?>
                                                 </td>
                                                 <td class="cron-last-update">
                                                     <?php echo $last_update; ?>

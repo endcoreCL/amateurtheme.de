@@ -45,6 +45,13 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
 
         global $wpdb;
         $cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
+
+        if(!$cron) {
+            wp_clear_scheduled_hook('at_import_big7_import_videos_cronjob', array($id));
+            error_log('Cron ' . $id . ' deleted');
+            exit;
+        }
+
         $results = array('created' => 0, 'skipped' => 0, 'total' => 0, 'last_updated' => '');
 
         error_log('Started cronjob (BIG7, ' . $id . ')');
@@ -61,7 +68,7 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
 
                     $video = new AT_Import_Video($unique_id);
 
-                    if ($video) {
+                    if ($video->unique) {
                         // update cron table (processing)
                         $wpdb->update(
                             AT_CRON_TABLE,
@@ -112,15 +119,7 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
                             $results['last_activity'] = date("d.m.Y H:i:s");
 
                             // update cron table (processing)
-                            $wpdb->update(
-                                AT_CRON_TABLE,
-                                array(
-                                    'processing' => 0,
-                                ),
-                                array(
-                                    'id' => $id
-                                )
-                            );
+                            $wpdb->query('UPDATE ' . AT_CRON_TABLE . ' SET processing = 0, created = created+1, last_activity = "' . date("Y-m-d H:i:s") . '" WHERE id = "' . $id . '"');
                         }
                     } else {
                         // video already exist
@@ -133,14 +132,11 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
             // check autor data
             $actor_need_update = $wpdb->get_var('SELECT term_id FROM cp_termmeta WHERE meta_key = "actor_id" AND meta_value = "' . $cron->object_id . '" AND (SELECT term_id FROM cp_termmeta WHERE meta_key="actor_last_updated" AND meta_value < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 30 DAY)))');
             if($actor_need_update) {
-                error_log(print_r($actor_need_update, true));
                 $post_id = 'video_actor_' . $actor_need_update;
 
                 // image
                 if($image = (isset($videos['foto']['large']) ? $videos['foto']['large'] : '')) {
-                    error_log($image);
                     $att_id = at_attach_external_image($image, null, false, $videos['nickname_sc'] . '-preview');
-                    error_log(print_r($att_id, true));
                     if($att_id) {
                         update_field('actor_image', $att_id, $post_id);
                     }
@@ -176,7 +172,7 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
                 AT_CRON_TABLE,
                 array(
                     'processing' => 0,
-                    'last_activity' => date("Y-m-d H:i:s")
+                    'last_activity' => date("Y-m-d H:i:s"),
                 ),
                 array(
                     'object_id' => $cron->object_id

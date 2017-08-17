@@ -12,16 +12,10 @@ class AT_Import_Video {
     var $unique = true;
 
     public function __construct($id) {
-        if(!$this->unique($id)) {
-            $this->unique = false;
-        }
-
+        $this->unique = $this->unique($id);
         $this->video_id = $id;
-
-        $this->unique = true;
     }
-
-
+    
     public function unique($id) {
         $unique = at_import_check_if_video_exists($id);
 
@@ -33,11 +27,7 @@ class AT_Import_Video {
     }
 
     public function insert($title, $description) {
-        global $wpdb;
-
         if(!$title) return false;
-
-        $database = new AT_Import_MDH_DB();
 
         $args = array(
             'post_title' => $title,
@@ -89,7 +79,6 @@ class AT_Import_Video {
                     if (!$actor_id) {
                         update_field('actor_source', $source, $post_id);
                         update_field('actor_id', $id, $post_id);
-                        update_field('actor_last_updated', time(), $post_id);
                     }
                 }
             }

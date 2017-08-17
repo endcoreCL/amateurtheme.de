@@ -59,3 +59,27 @@ if ( ! function_exists( 'at_import_big7_prepare_video_fields' ) ) {
         return false;
     }
 }
+
+if ( ! function_exists( 'at_import_big7_get_video_count' ) ) {
+    /**
+     * at_import_big7_get_video_count
+     *
+     * @param $source_id
+     * @param bool $imported
+     * @return string
+     */
+    function at_import_big7_get_video_count($source_id) {
+        global $wpdb;
+
+        $term = $wpdb->get_var('SELECT term_id FROM ' . $wpdb->termmeta . ' WHERE meta_value = "' . $source_id . '"');
+
+        if($term) {
+            $item = get_term_by('id', $term, 'video_actor');
+            if($item) {
+                return $item->count;
+            }
+        }
+
+        return '0';
+    }
+}

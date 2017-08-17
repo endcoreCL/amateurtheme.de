@@ -248,35 +248,18 @@ if ( ! function_exists( 'at_import_check_if_video_exists' ) ) {
     function at_import_check_if_video_exists($video_id) {
         global $wpdb;
 
-        $database = new AT_Import_MDH_DB();
-
-        $unique_user_video = $wpdb->get_var(
-            $wpdb->prepare
-            ("
-			  SELECT count(id)
-			  FROM $database->table_videos
-			  WHERE video_id = '%s'
-			  AND imported = '1'",
-                    $video_id
-            )
-        );
-
-        if ($unique_user_video != '0') {
-            return false;
-        }
-
         $unique_post = $wpdb->get_var(
             $wpdb->prepare("
-			SELECT count(id)
-			FROM $wpdb->posts wpo, $wpdb->postmeta wpm
-			WHERE wpo.ID = wpm.post_id
-			AND wpm.meta_key = 'video_unique_id'
-			AND wpm.meta_value = '%s'",
+			SELECT count(meta_id)
+			FROM $wpdb->postmeta wpm
+			WHERE wpm.meta_value = '%s'",
                 $video_id
             )
         );
 
-        if ($unique_post != '0') {
+        error_log(print_r($unique_post, true));
+
+        if ($unique_post > 0) {
             return false;
         }
 

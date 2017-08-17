@@ -61,6 +61,13 @@ if ( ! function_exists( 'at_import_mdh_scrape_videos_cronjob' ) ) {
     function at_import_mdh_scrape_videos_cronjob($id) {
         global $wpdb;
         $cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
+
+        if(!$cron) {
+            wp_clear_scheduled_hook('at_import_mdh_scrape_videos_cronjob', array($id));
+            error_log('Cron ' . $id . ' deleted');
+            exit;
+        }
+
         $results = array('created' => 0, 'skipped' => 0, 'total' => 0, 'last_updated' => '');
 
         if ($cron) {
@@ -140,6 +147,13 @@ if ( ! function_exists( 'at_import_mdh_import_videos_cronjob' ) ) {
 
         global $wpdb;
         $cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
+
+        if(!$cron) {
+            wp_clear_scheduled_hook('at_import_mdh_import_videos_cronjob', array($id));
+            error_log('Cron ' . $id . ' deleted');
+            exit;
+        }
+
         $results = array('created' => 0, 'skipped' => 0, 'total' => 0, 'last_updated' => '');
 
         error_log('Started cronjob (MDH, ' . $id . ')');
@@ -152,7 +166,7 @@ if ( ! function_exists( 'at_import_mdh_import_videos_cronjob' ) ) {
                 foreach ($videos as $item) {
                     $video = new AT_Import_Video($item->video_id);
 
-                    if ($video) {
+                    if ($video->unique) {
                         // update cron table (processing)
                         $wpdb->update(
                             AT_CRON_TABLE,
