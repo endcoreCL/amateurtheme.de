@@ -6,3 +6,5 @@ Author: amateurtheme.de
 Author URI: https://www.amateurtheme.de/
 Version: 1.0.0
 */
+
+.video-grid a img { height: 150px; width: auto; }

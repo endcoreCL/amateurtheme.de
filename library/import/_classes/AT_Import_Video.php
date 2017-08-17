@@ -15,7 +15,7 @@ class AT_Import_Video {
         $this->unique = $this->unique($id);
         $this->video_id = $id;
     }
-    
+
     public function unique($id) {
         $unique = at_import_check_if_video_exists($id);
 
