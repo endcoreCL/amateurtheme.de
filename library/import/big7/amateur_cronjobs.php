@@ -145,19 +145,24 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
                 // gender
                 if($gender = $videos['geschlecht']) {
                     if($gender == 'ts') {
-                        $gender_decoded = 'Transexuell';
+                        $gender_decoded = __('Transexuell', 'amateurtheme');
                     } else if($gender == 'w') {
-                        $gender_decoded = 'Weiblich';
+                        $gender_decoded = __('Weiblich', 'amateurtheme');
                     } else {
-                        $gender_decoded = 'Männlich';
+                        $gender_decoded = __('Männlich', 'amateurtheme');
                     }
 
                     update_field('actor_gender', $gender_decoded, $post_id);
                 }
 
-                // plz
+                // zipcode
                 if($zipcode = $videos['plz']) {
                     update_field('actor_zipcode', $zipcode, $post_id);
+                }
+
+                // city
+                if($ort = $videos['ort']) {
+                    update_field('actor_city', $ort, $post_id);
                 }
 
                 // link
