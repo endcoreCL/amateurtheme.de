@@ -62,6 +62,8 @@ if ( ! function_exists( 'at_import_mdh_scrape_videos_cronjob' ) ) {
         global $wpdb;
         $cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
 
+        error_log(print_r($cron, true));
+
         if(!$cron) {
             wp_clear_scheduled_hook('at_import_mdh_scrape_videos_cronjob', array($id));
             error_log('Cron ' . $id . ' deleted');
@@ -256,6 +258,122 @@ if ( ! function_exists( 'at_import_mdh_import_videos_cronjob' ) ) {
                             )
                         );
                     }
+                }
+            }
+
+            // check autor data
+            $actor_need_update = $wpdb->get_var('SELECT term_id FROM cp_termmeta WHERE meta_key = "actor_id" AND meta_value = "' . $cron->object_id . '" AND (SELECT term_id FROM cp_termmeta WHERE meta_key="actor_last_updated" AND meta_value < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 30 DAY)))');
+            if($actor_need_update) {
+                $crawl = new AT_Import_MDH_Crawler();
+                $amateur = $crawl->getAmateurDetails($cron->object_id);
+
+                if ($amateur) {
+                    $amateur = $amateur[0];
+
+                    error_log(print_r($amateur, true));
+
+                    $post_id = 'video_actor_' . $actor_need_update;
+
+                    // image
+                    if ($image = (isset($amateur->images->bild1) ? $amateur->images->bild1 : '')) {
+                        $att_id = at_attach_external_image($image, null, false, $amateur->nick . '-preview');
+                        if ($att_id) {
+                            update_field('actor_image', $att_id, $post_id);
+                        }
+                    }
+
+                    // gender
+                    if ($gender = $amateur->gender) {
+                        if ($gender == 'T') {
+                            $gender_decoded = __('Transexuell', 'amateurtheme');
+                        } else if ($gender == 'F') {
+                            $gender_decoded = __('Weiblich', 'amateurtheme');
+                        } else {
+                            $gender_decoded = __('Männlich', 'amateurtheme');
+                        }
+
+                        update_field('actor_gender', $gender_decoded, $post_id);
+                    }
+
+                    // zipcode
+                    if ($zipcode = $amateur->plz) {
+                        update_field('actor_zipcode', $zipcode, $post_id);
+                    }
+
+                    // link
+                    if ($link = $amateur->url) {
+                        update_field('actor_profile_url', $link, $post_id);
+                    }
+
+                    // groesse
+                    if($size = $amateur->groesse) {
+                        update_field('actor_size', $size/100 . 'm', $post_id);
+                    }
+
+                    // haare
+                    if($haircolor = $amateur->haare) {
+                        update_field('actor_haircolor', $haircolor, $post_id);
+                    }
+
+                    // intimrasur
+                    update_field('actor_shave', ($amateur->rasintim == 1 ? __('Ja', 'amateurtheme') : __('Nein', 'amateurtheme')), $post_id);
+
+                    // beruf
+                    if($job = $amateur->beruf) {
+                        update_field('actor_job', $job, $post_id);
+                    }
+
+                    // suche
+                    if($suche = $amateur->suche) {
+                        update_field('actor_search', implode(', ', $suche), $post_id);
+                    }
+
+                    // für
+                    if($search_for = $amateur->interesse) {
+                        update_field('actor_search', implode(', ', $search_for), $post_id);
+                    }
+
+                    // alter
+                    if($age = $amateur->u_alter) {
+                        update_field('actor_age', $age, $post_id);
+                    }
+
+                    // augenfarbe
+                    if($eyecolor = $amateur->augen) {
+                        update_field('actor_eyecolor', $eyecolor, $post_id);
+                    }
+
+                    // sternzeichen
+                    if($star_sign = $amateur->sternzeichen) {
+                        update_field('actor_star_sign', $star_sign, $post_id);
+                    }
+
+                    // gewicht
+                    if($gewicht = $amateur->gewicht) {
+                        update_field('actor_weight', $gewicht . 'kg', $post_id);
+                    }
+
+                    // körpchengroesse
+                    if($kg = $amateur->k_umfang) {
+                        update_field('actor_breast_size', $kg . ($amateur->k_schale ? $amateur->k_schale : ''), $post_id);
+                    }
+
+                    // familien status
+                    if($relationship_status = $amateur->famst) {
+                        update_field('actor_relationship_status', $relationship_status, $post_id);
+                    }
+
+                    // sex orientation
+                    if($sex_orientation = $amateur->sexor) {
+                        update_field('actor_sex_orientation', $sex_orientation, $post_id);
+                    }
+
+                    // erscheinungsbild
+                    if($aussehen = $amateur->aussehen) {
+                        update_field('actor_bodystyle', implode(', ', $aussehen), $post_id);
+                    }
+
+                    //update_field('actor_last_updated', time(), $post_id);
                 }
             }
 

@@ -79,7 +79,7 @@ class AT_Import_Video {
                     if (!$actor_id) {
                         update_field('actor_source', $source, $post_id);
                         update_field('actor_id', $id, $post_id);
-                        update_field('actor_last_update', strtotime('19700101'), $post_id);
+                        update_field('actor_last_updated', strtotime('19700101'), $post_id);
                     }
                 }
             }

@@ -257,8 +257,6 @@ if ( ! function_exists( 'at_import_check_if_video_exists' ) ) {
             )
         );
 
-        error_log(print_r($unique_post, true));
-
         if ($unique_post > 0) {
             return false;
         }

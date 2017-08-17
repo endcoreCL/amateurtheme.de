@@ -51,6 +51,7 @@ class AT_Import_MDH_Crawler {
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 1);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curl, CURLOPT_ENCODING ,"");
 
         $response = curl_exec($curl);
 
@@ -119,6 +120,21 @@ class AT_Import_MDH_Crawler {
         return $message;
     }
 
+    function getAmateurDetails($u_id) {
+        $args = array(
+            'type' => 'amateurs',
+            'amateurId' => $u_id
+        );
+
+        $data = $this->get($args);
+
+        if(is_object($data) && isset($data->items)) {
+            return $data->items;
+        }
+
+        return false;
+    }
+
     function getAmateurVideos($u_id, $offset = 0) {
         $args = array(
             'type' => 'videos',
@@ -132,6 +148,8 @@ class AT_Import_MDH_Crawler {
         if(is_object($data) && isset($data->items)) {
             return $data->items;
         }
+
+        return false;
     }
 
     function getTopVideos() {
@@ -145,6 +163,8 @@ class AT_Import_MDH_Crawler {
         if(is_object($data) && isset($data->items)) {
             return $data->items;
         }
+
+        return false;
     }
 
     function getCategoryVideos($c_id, $offset = 0) {
@@ -160,6 +180,8 @@ class AT_Import_MDH_Crawler {
         if(is_object($data) && isset($data->items)) {
             return $data->items;
         }
+
+        return false;
     }
 
     function saveVideos($data, $source_id = '') {
