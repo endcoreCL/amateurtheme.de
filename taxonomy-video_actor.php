@@ -19,7 +19,7 @@ $actor = new AT_Video_Actor($term_id);
                             <?php
                             $actor_image = $actor->image();
                             if ($actor_image) {
-                                echo '<img src="' . $actor_image['url'] . '" alt="' . $actor_image['alt'] . '" class="img-responsive" />';
+                                echo '<img src="' . $actor_image['url'] . '" alt="' . $actor_image['alt'] . '" class="img-fluid" />';
                             }
                             ?>
                         </div>
