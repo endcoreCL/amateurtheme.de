@@ -64,6 +64,8 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
                 $actor = $videos['nickname'];
 
                 foreach ($videos['videos'] as $item) {
+                    at_error_log(json_encode($item));
+
                     $unique_id = md5($item['name']);
 
                     $video = new AT_Import_Video($unique_id);
