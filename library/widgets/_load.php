@@ -8,3 +8,4 @@
  */
 
 require_once('areas.php');
+require_once('video_terms.php');
