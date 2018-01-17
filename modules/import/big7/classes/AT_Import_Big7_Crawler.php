@@ -50,8 +50,12 @@ class AT_Import_Big7_Crawler {
 
     function read($filename = 'videos.json', $filter = array()) {
         $json_data = file_get_contents($this->folder . '/' . $filename);
+        $data = '';
 
         if($json_data) {
+            /**
+             * What about small Webspaces?
+             */
             $data = json_decode($json_data, true);
 
             if($filter) {
@@ -103,6 +107,10 @@ class AT_Import_Big7_Crawler {
             unset($data[0]['videos']);
         }
 
-        return $data[0];
+        if(isset($data[0])) {
+            return $data[0];
+        }
+
+        return false;
     }
 }
