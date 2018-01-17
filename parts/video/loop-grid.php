@@ -24,10 +24,10 @@
                 <?php echo $video->title(); ?>
             </a>
             <ul class="list-inline">
-                <li class="video-views">
+                <li class="list-inline-item video-views">
                     <i class="fa fa-eye"  aria-hidden="true"></i> <?php echo $video->views(); ?>
                 </li>
-                <li class="video-rating">
+                <li class="list-inline-item video-rating">
                     <i class="fa fa-star" aria-hidden="true"></i> <?php echo $video->rating(); ?>
                 </li>
             </ul>

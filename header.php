@@ -1,55 +1,40 @@
-<!DOCTYPE html>
-<html <?php language_attributes(); ?>>
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title><?php wp_title(); ?></title>
-		<?php wp_head(); ?>
-	</head>
-	
-	<body <?php body_class(); ?>>
-		<!--[if lt IE 8]>
-			<p class="browserupgrade"><i class="glyphicon glyphicon-warning-sign"></i> 
-				Sie verwenden einen <strong>veralteten</strong> Internet-Browser. Bitte laden Sie sich eine aktuelle Version von <a href="http://browsehappy.com/" target="_blank" rel="nofollow">browsehappy.com</a> um die Seite fehlerfrei zu verwenden.
-			</p>
-		<![endif]-->
-		
-		<a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
-		<div id="<?php echo at_get_wrapper_id(); ?>">
-			<?php 
-			if(at_get_topbar())
-				get_template_part('parts/topbar/col', '6-6'); 
-			?>
-			
-			<header id="header" class="<?php echo at_get_section_layout_class('header', true); ?>" role="banner">
-				<?php
-				get_template_part('parts/header/col', at_header_structure());
-				?>
-			</header>
-			
-			<?php 
-			if(at_teaser_hide() != "1" && !is_page_template('templates/page-builder.php')) {
-				global $indicator, $arrows, $interval, $fade, $images;
-				$indicator = get_field('teaser_indicator');
-				$arrows = get_field('teaser_arrows');
-				$fade = get_field('teaser_fade');
-				$interval = get_field('teaser_interval');
-				$images = get_field('teaser_image');
-				
-				get_template_part('parts/teaser/code', 'teaser'); 
-			}
-			?>
-			
-			<?php if ( function_exists('yoast_breadcrumb') && ('after_nav' == get_field('design_breadcrumbs_pos', 'option'))) {
-				?>
-				<section id="breadcrumbs" class="<?php echo at_get_section_layout_class('breadcrumbs'); ?>">
-					<div class="container">
-						<?php
-						yoast_breadcrumb('<p>','</p>');
-						?>
-					</div>
-				</section>
-				<?php
-			}
-?>
+<?php do_action('xcore_init'); ?>
+<!doctype html>
+<html lang="en">
+    <head>
+        <title><?php wp_title(); ?></title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <?php wp_head(); ?>
+    </head>
+    <body>
+        <?php do_action('xcore_after_body'); ?>
+
+        <header>
+            <div class="container">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <a class="navbar-brand" href="#"><?php bloginfo('name'); ?></a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                        <?php
+                        wp_nav_menu(
+                            array(
+                                'menu' => 'main',
+                                'theme_location' => 'navigation_main',
+                                'container'       => 'div',
+                                'container_id'    => 'bs4navbar',
+                                'container_class' => 'collapse navbar-collapse',
+                                'menu_id'         => false,
+                                'menu_class'      => 'navbar-nav mr-auto',
+                                'depth'           => 4,
+                                'fallback_cb'     => 'xcore_nav_walker::fallback',
+                                'walker'          => new xcore_nav_walker()
+                            )
+                        );
+                        ?>
+                </nav>
+            </div>
+        </header>
+

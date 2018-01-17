@@ -9,7 +9,7 @@ $term_id = $queried_object->term_id;
 $actor = new AT_Video_Actor($term_id);
 ?>
 
-<div id="main" class="<?php echo at_get_section_layout_class('content'); ?>">
+<div id="main">
     <div class="container">
         <div id="content">
             <?php if(!is_paged()) { ?>
