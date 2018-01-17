@@ -27,6 +27,7 @@ require_once(XCORE_PLUGINS . '/acf/field-type-code/acf-code-field.php');
  */
 require_once(XCORE_LIBRARY . '/helper/_load.php');
 require_once(XCORE_LIBRARY . '/navigation/_load.php');
+require_once(XCORE_LIBRARY . '/widgets/_load.php');
 
 /**
  * Modules
