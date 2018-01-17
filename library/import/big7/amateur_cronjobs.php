@@ -138,7 +138,7 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
                 $actor_image = get_field('actor_image', $post_id);
                 if(!$actor_image) {
                     if ($image = (isset($videos['foto']['large']) ? $videos['foto']['large'] : '')) {
-                        $att_id = at_attach_external_image($image, null, false, $videos['nickname_sc'] . '-preview');
+                        $att_id = at_attach_external_image($image, null, false, $videos['nickname_sc'] . '-preview', array('post_title' => $videos['nickname_sc']));
                         if ($att_id) {
                             update_field('actor_image', $att_id, $post_id);
                         }
