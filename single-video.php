@@ -18,7 +18,7 @@ $video = new AT_Video(get_the_ID());
                                 if($external_url) {
                                     ?>
                                     <a href="<?php echo $external_url; ?>" title="<?php $video->title(); ?>" target="_blank" rel="nofollow">
-                                        <?php echo $video->thumbnail(); ?>
+                                        <?php echo $video->thumbnail('full', array('class' => 'img-fluid', 'style' => 'width: 100%; height: auto;')); ?>
                                     </a>
                                     <?php
                                 } else {
