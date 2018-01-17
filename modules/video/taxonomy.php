@@ -27,7 +27,7 @@ function video_taxonomies() {
         'video',
         array(
             'label' => __('Schlagwörter', 'xcore'),
-            'rewrite' => array( 'slug' =>  'tag', 'with_front' => true, 'hierarchical' => true),
+            'rewrite' => array( 'slug' =>  'tags', 'with_front' => true, 'hierarchical' => true),
             'hierarchical' => true,
             'query_var' => true,
             'sort' => true,
