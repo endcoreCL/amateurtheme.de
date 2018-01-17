@@ -7,4 +7,10 @@ Author URI: https://www.amateurtheme.de/
 Version: 1.0.0
 */
 
-.video-grid a img { height: 150px; width: auto; }
+.video-grid { margin-bottom: 30px; }
+.video-grid .video-thumb-container { position: relative; }
+.video-grid .video-thumb-container .video-duration { position: absolute; bottom: 0; background: #000; color: #fff; font-size: 0.7rem; padding: 2px 5px; }
+.video-grid .video-thumb-container img { margin-bottom: 5px; height: 165px /* fix height */; }
+.video-grid .video-info .video-title { display: block; height: 40px;font-size: 0.85rem; }
+.video-grid .video-info ul { margin: 0; }
+.video-grid .video-info ul li { font-size: 0.85rem; }
