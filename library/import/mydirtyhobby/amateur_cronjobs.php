@@ -62,11 +62,11 @@ if ( ! function_exists( 'at_import_mdh_scrape_videos_cronjob' ) ) {
         global $wpdb;
         $cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
 
-        error_log(print_r($cron, true));
+        at_error_log(print_r($cron, true));
 
         if(!$cron) {
             wp_clear_scheduled_hook('at_import_mdh_scrape_videos_cronjob', array($id));
-            error_log('Cron ' . $id . ' deleted');
+            at_error_log('Cron ' . $id . ' deleted');
             exit;
         }
 
@@ -152,13 +152,13 @@ if ( ! function_exists( 'at_import_mdh_import_videos_cronjob' ) ) {
 
         if(!$cron) {
             wp_clear_scheduled_hook('at_import_mdh_import_videos_cronjob', array($id));
-            error_log('Cron ' . $id . ' deleted');
+            at_error_log('Cron ' . $id . ' deleted');
             exit;
         }
 
         $results = array('created' => 0, 'skipped' => 0, 'total' => 0, 'last_updated' => '');
 
-        error_log('Started cronjob (MDH, ' . $id . ')');
+        at_error_log('Started cronjob (MDH, ' . $id . ')');
 
         if ($cron) {
             $database = new AT_Import_MDH_DB();
@@ -270,15 +270,18 @@ if ( ! function_exists( 'at_import_mdh_import_videos_cronjob' ) ) {
                 if ($amateur) {
                     $amateur = $amateur[0];
 
-                    error_log(print_r($amateur, true));
+                    at_error_log(print_r($amateur, true));
 
                     $post_id = 'video_actor_' . $actor_need_update;
 
                     // image
-                    if ($image = (isset($amateur->images->bild1) ? $amateur->images->bild1 : '')) {
-                        $att_id = at_attach_external_image($image, null, false, $amateur->nick . '-preview');
-                        if ($att_id) {
-                            update_field('actor_image', $att_id, $post_id);
+                    $actor_image = get_field('actor_image', $post_id);
+                    if(!$actor_image) {
+                        if ($image = (isset($amateur->images->bild1) ? $amateur->images->bild1 : '')) {
+                            $att_id = at_attach_external_image($image, null, false, $amateur->nick . '-preview', array('post_title' => $amateur->nick));
+                            if ($att_id) {
+                                update_field('actor_image', $att_id, $post_id);
+                            }
                         }
                     }
 
@@ -389,9 +392,9 @@ if ( ! function_exists( 'at_import_mdh_import_videos_cronjob' ) ) {
             );
         }
 
-        error_log(print_r($results,true));
+        at_error_log(print_r($results,true));
 
-        error_log('Stoped cronjob (MDH, ' . $id . ')');
+        at_error_log('Stoped cronjob (MDH, ' . $id . ')');
 
         at_write_api_log('mdh', $cron->name, 'Total: ' . $results['total'] . ', Imported: ' . $results['created'] . ' Skipped: ' . $results['skipped']);
 
