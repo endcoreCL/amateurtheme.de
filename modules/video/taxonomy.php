@@ -23,6 +23,19 @@ function video_taxonomies() {
     );
 
     register_taxonomy(
+        'video_tags',
+        'video',
+        array(
+            'label' => __('Schlagwörter', 'xcore'),
+            'rewrite' => array( 'slug' =>  'tag', 'with_front' => true, 'hierarchical' => true),
+            'hierarchical' => true,
+            'query_var' => true,
+            'sort' => true,
+            'public' => true,
+        )
+    );
+
+    register_taxonomy(
         'video_actor',
         'video',
         array(
