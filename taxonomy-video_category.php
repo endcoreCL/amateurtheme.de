@@ -22,6 +22,21 @@ $term_id = $queried_object->term_id;
                     <h1><?php single_term_title(); ?></h1>
 
                     <?php
+                    // related tags
+                    $args = array(
+                        'hide_empty' => true,
+                        'number' => 10,
+                        'name__like' => single_term_title(false, '')
+                    );
+                    $tags = get_terms('video_tags', $args);
+                    if($tags) {
+                        echo '<ul class="list-inline list-related-tags">';
+                            foreach($tags as $tag) {
+                                echo '<li class="list-inline-item term term-' . $tag->term_id . '"><a href="' . get_term_link($tag) . '" title="' . $tag->name . '""><span class="badge badge-default">' . $tag->name . '</span></a></li>';
+                            }
+                        echo '</ul>';
+                    }
+
                     $description = term_description();
                     if ($description && !is_paged()) {
                         echo '<div class="category-description">' . $description . '</div>';
