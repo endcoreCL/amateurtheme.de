@@ -213,6 +213,14 @@ if ( ! function_exists( 'at_import_mdh_import_videos_cronjob' ) ) {
                                 }
                             }
 
+                            // tags
+                            $tags = json_decode($item->tags);
+                            if ($tags) {
+                                foreach ($tags as $tag) {
+                                    $video->set_term('video_tags', $tag);
+                                }
+                            }
+
                             // actor
                             $video->set_term('video_actor', $item->object_name, 'mdh', $cron->object_id);
 
