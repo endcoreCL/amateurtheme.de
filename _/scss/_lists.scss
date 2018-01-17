@@ -1,7 +1,0 @@
-/* LISTS */
-
-// LISTS
-.list-icon { list-style: none; }
-.list-icon li { position: relative; }
-.list-icon li:before { font-family: 'Pe-icon-7-stroke', sans-serif; position: absolute; width: 25px; text-align: center; font-size: 1.5rem; top: 0; left: -35px; }
-.list-icon.list-icon-check-o li:before { content: "\e66c"; color: $primary; }

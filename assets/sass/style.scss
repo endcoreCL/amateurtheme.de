@@ -1,0 +1,30 @@
+/*
+Theme Name: Amateur Theme
+Theme URI: http://endcore.com
+Description: Legen... wait for it... Dary!
+Author: endcore Medienagentur
+Author URI: http://endcore.com
+Version: 1.0
+*/
+
+// VARIABLES
+@import "_variables";
+
+// BOOTSTRAP		| 2017-10-19 | 4.0.0-beta.2 | https://github.com/twbs/bootstrap
+@import "bootstrap/bootstrap";
+
+// FONT AWESOME		| 2017-12-01 | 5.0.0 | https://github.com/FortAwesome/Font-Awesome-Pro
+@import "fontawesome/fa-brands";
+@import "fontawesome/fa-light";
+@import "fontawesome/fa-regular";
+@import "fontawesome/fa-solid";
+@import "fontawesome/fontawesome";
+
+// SIMPLELIGHTBOX	| 2017-11-23 | 1.12 | https://github.com/andreknieriem/simplelightbox
+@import "simplelightbox/simplelightbox";
+
+// ANIMATE.CSS		| 2016-06-06 | 3.5.2 | https://github.com/andreknieriem/simplelightbox
+@import "animate/animate";
+
+// AMATEURTHEME
+@import "amateurtheme/at";
