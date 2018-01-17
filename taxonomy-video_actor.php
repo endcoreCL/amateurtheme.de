@@ -85,12 +85,22 @@ $actor = new AT_Video_Actor($term_id);
                     </table>
                 </div>
                 <?php
+            } else {
+                // paged
+                ?>
+                <h1><?php single_term_title(); ?> Videos</h1>
+                <?php
             }
             ?>
 
             <div class="actor-videos">
-                <h2><?php _e('Videos', 'amateurtheme'); ?></h2>
                 <?php
+                if(!is_paged()) {
+                    ?>
+                    <h2><?php _e('Videos', 'amateurtheme'); ?></h2>
+                    <?php
+                }
+
                 if (have_posts()) :
                     echo '<div class="row">';
                         while (have_posts()) : the_post();
