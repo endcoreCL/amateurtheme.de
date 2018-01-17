@@ -19,7 +19,7 @@ class at_video_terms_widget extends WP_Widget {
         $count = get_field('widget_video_terms_count', 'widget_' . $args['widget_id']);
 
         $args = array(
-            'hide_empty' => false,
+            'hide_empty' => true,
             'number' => $limit,
             'orderby' => $orderby,
             'order' => $order
