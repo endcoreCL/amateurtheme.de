@@ -7,6 +7,7 @@
  * @category	_load
  */
 
+require_once(AT_LIBRARY . '/video/_classes/AT_Video.php');
 require_once(AT_LIBRARY . '/video/_classes/AT_Video_Actor.php');
 
 require_once(AT_LIBRARY . '/video/helper.php');
