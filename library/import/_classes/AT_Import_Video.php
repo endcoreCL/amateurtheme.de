@@ -58,7 +58,9 @@ class AT_Import_Video {
     }
 
     public function set_thumbnail($url) {
-        $att_id = at_attach_external_image($url, $this->post_id, true, $this->video_id.'-preview', array('post_title' => get_the_title($this->post_id)));
+        $title = get_the_title($this->post_id);
+
+        $att_id = at_attach_external_image($url, $this->post_id, true, $title . '-preview', array('post_title' => $title));
 
         if($att_id) {
             return true;
