@@ -35,6 +35,20 @@ if ( ! function_exists('at_debug') ) {
 	}
 }
 
+if ( ! function_exists('at_error_log') ) {
+    /**
+     * at_error_log function.
+     *
+     * @param  arraa $var
+     * @return string
+     */
+    function at_error_log($var) {
+        if(WP_DEBUG_LOG) {
+            error_log($var);
+        }
+    }
+}
+
 if ( ! function_exists('at_post_thumbnail') ) {
 	/**
 	 * at_post_thumbnail function.
