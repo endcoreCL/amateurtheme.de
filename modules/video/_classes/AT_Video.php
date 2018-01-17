@@ -19,6 +19,26 @@ class AT_Video
         return get_permalink($this->id);
     }
 
+    public function external_url() {
+        $external_url = $this->field('url');
+
+        if($external_url) {
+            return $external_url;
+        }
+
+        return false;
+    }
+
+    public function thumbnail($size = 'full', $args = array('class' => 'img-fluid')) {
+        $thumbnail = get_the_post_thumbnail($this->id, $size, $args);
+
+        if($thumbnail) {
+            return $thumbnail;
+        }
+
+        return false;
+    }
+
     public function duration() {
         $duration = $this->field('duration');
 

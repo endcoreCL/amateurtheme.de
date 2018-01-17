@@ -1,5 +1,5 @@
 <?php global $post; $video = new AT_Video($post->ID); ?>
-<div class="col-xxs12 col-xs-6 col-md-4 col-md-4 col-lg-3">
+<div class="col-xxs12 col-xs-6 col-md-4 col-md-3 col-lg-2">
     <article <?php post_class('video-grid'); ?>>
         <div class="video-thumb-container">
             <a href="<?php echo $video->permalink(); ?>" title="<?php echo $video->title(); ?>">
