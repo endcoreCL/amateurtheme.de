@@ -106,7 +106,7 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
                             if ($categories) {
                                 foreach ($categories as $cat) {
                                     if ($cat['name']) {
-                                        $video->set_term('video_category', $item['name']);
+                                        $video->set_term('video_category', $cat['name']);
                                     }
                                 }
                             }
