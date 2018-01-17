@@ -14,7 +14,7 @@ function video_taxonomies() {
         'video',
         array(
             'label' => __('Kategorie', 'xcore'),
-            'rewrite' => array( 'slug' =>  'video-kategorie', 'with_front' => true, 'hierarchical' => true),
+            'rewrite' => array( 'slug' =>  'kategorie', 'with_front' => true, 'hierarchical' => true),
             'hierarchical' => true,
             'query_var' => true,
             'sort' => true,
@@ -27,7 +27,7 @@ function video_taxonomies() {
         'video',
         array(
             'label' => __('Darsteller', 'xcore'),
-            'rewrite' => array( 'slug' =>  'video-darsteller', 'with_front' => true, 'hierarchical' => true),
+            'rewrite' => array( 'slug' =>  'darsteller', 'with_front' => true, 'hierarchical' => true),
             'hierarchical' => true,
             'query_var' => true,
             'sort' => true,
