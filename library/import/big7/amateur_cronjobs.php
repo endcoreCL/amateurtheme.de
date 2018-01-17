@@ -48,13 +48,13 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
 
         if(!$cron) {
             wp_clear_scheduled_hook('at_import_big7_import_videos_cronjob', array($id));
-            error_log('Cron ' . $id . ' deleted');
+            at_error_log('Cron ' . $id . ' deleted');
             exit;
         }
 
         $results = array('created' => 0, 'skipped' => 0, 'total' => 0, 'last_updated' => '');
 
-        error_log('Started cronjob (BIG7, ' . $id . ')');
+        at_error_log('Started cronjob (BIG7, ' . $id . ')');
 
         if ($cron) {
             $import = new AT_Import_Big7_Crawler();
@@ -135,10 +135,13 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
                 $post_id = 'video_actor_' . $actor_need_update;
 
                 // image
-                if($image = (isset($videos['foto']['large']) ? $videos['foto']['large'] : '')) {
-                    $att_id = at_attach_external_image($image, null, false, $videos['nickname_sc'] . '-preview');
-                    if($att_id) {
-                        update_field('actor_image', $att_id, $post_id);
+                $actor_image = get_field('actor_image', $post_id);
+                if(!$actor_image) {
+                    if ($image = (isset($videos['foto']['large']) ? $videos['foto']['large'] : '')) {
+                        $att_id = at_attach_external_image($image, null, false, $videos['nickname_sc'] . '-preview');
+                        if ($att_id) {
+                            update_field('actor_image', $att_id, $post_id);
+                        }
                     }
                 }
 
@@ -185,9 +188,9 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
             );
         }
 
-        error_log(print_r($results,true));
+        at_error_log(print_r($results,true));
 
-        error_log('Stoped cronjob (BIG7, ' . $id . ')');
+        at_error_log('Stoped cronjob (BIG7, ' . $id . ')');
 
         at_write_api_log('big7', $cron->name, 'Total: ' . $results['total'] . ', Imported: ' . $results['created'] . ' Skipped: ' . $results['skipped']);
 
