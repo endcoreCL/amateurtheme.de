@@ -12,20 +12,4 @@ class AT_Import_MDH_DB {
         $this->table_amateurs = $wpdb->prefix . 'import_mdh_amateurs';
         $this->table_videos = $wpdb->prefix . 'import_mdh_videos';
     }
-
-    public function amateurs_dropdown() {
-        global $wpdb;
-
-        $amateurs = $wpdb->get_results('SELECT * FROM ' . $this->table_amateurs);
-
-        $output = '';
-
-        if($amateurs) {
-            foreach($amateurs as $item) {
-                $output .= '<option value="' . $item->uid . '">' . $item->username . '</option>';
-            }
-        }
-
-        return $output;
-    }
 }

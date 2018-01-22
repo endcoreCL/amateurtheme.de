@@ -89,3 +89,32 @@ if ( ! function_exists( 'at_import_mdh_prepare_video_fields' ) ) {
         return false;
     }
 }
+
+add_action('wp_ajax_at_mdh_amateurs', 'at_import_mdh_amateurs_select');
+function at_import_mdh_amateurs_select() {
+    global $wpdb;
+
+    $databse = new AT_Import_MDH_DB();
+
+    $q = (isset($_GET['q']) ? $_GET['q'] : false);
+
+    if(!$q) {
+        die();
+    }
+
+    $limit = 500;
+
+    $output = array();
+
+    $items = $wpdb->get_results('SELECT * FROM ' . $databse->table_amateurs . ' WHERE username LIKE "%' . $q . '%" LIMIT 0,' . $limit);
+
+    if($items) {
+        foreach($items as $item) {
+            $output[] = array($item->uid, $item->username);
+        }
+    }
+
+    echo json_encode($output);
+
+    die();
+}

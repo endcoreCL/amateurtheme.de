@@ -25,7 +25,6 @@ function at_import_mydirtyhobby_panel() {
         endif;
     endif;
 
-    $database = new AT_Import_MDH_DB();
     $cronjobs = new AT_Import_Cron();
     ?>
 
@@ -184,17 +183,9 @@ function at_import_mydirtyhobby_panel() {
                                     <tfoot>
                                     <tr>
                                         <td colspan="6">
-                                            <?php
-                                            $amateurs_dropdown = $database->amateurs_dropdown();
-                                            if($amateurs_dropdown) {
-                                                ?>
-                                                <select name="amateur" class="form-control at-amateur-select">
-                                                    <option value=""><?php _e('Amateur auswählen', 'amateurtheme'); ?></option>
-                                                    <?php echo $amateurs_dropdown; ?>
-                                                </select>
-                                                <?php
-                                            }
-                                            ?>
+                                            <select name="amateur" class="form-control at-amateur-select">
+                                                <option value=""><?php _e('Amateur auswählen', 'amateurtheme'); ?></option>
+                                            </select>
                                             <input type="text" name="uid" id="uid" class="form-control" placeholder="<?php _e('User ID', 'amateurtheme'); ?>"/>
                                             <input type="text" name="username" id="username" class="form-control" placeholder="<?php _e('Username', 'amateurtheme'); ?>"/>
                                             <input type="hidden" name="network" value="mydirtyhobby" />
