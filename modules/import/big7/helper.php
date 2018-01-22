@@ -83,3 +83,7 @@ if ( ! function_exists( 'at_import_big7_get_video_count' ) ) {
         return '0';
     }
 }
+
+function at_import_json_process($item) {
+    print_r($item);
+}

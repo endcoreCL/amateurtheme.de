@@ -270,7 +270,7 @@ if ( ! function_exists( 'at_import_mdh_import_videos_cronjob' ) ) {
             }
 
             // check autor data
-            $actor_need_update = $wpdb->get_var('SELECT term_id FROM cp_termmeta WHERE meta_key = "actor_id" AND meta_value = "' . $cron->object_id . '" AND (SELECT term_id FROM cp_termmeta WHERE meta_key="actor_last_updated" AND meta_value < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 30 DAY)))');
+            $actor_need_update = $wpdb->get_var('SELECT term_id FROM cp_termmeta WHERE meta_key = "actor_id" AND meta_value = "' . $cron->object_id . '" AND (SELECT term_id FROM cp_termmeta WHERE meta_key="actor_last_updated" AND meta_value < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 30 DAY)) LIMIT 0,1)');
             if($actor_need_update) {
                 $crawl = new AT_Import_MDH_Crawler();
                 $amateur = $crawl->getAmateurDetails($cron->object_id);

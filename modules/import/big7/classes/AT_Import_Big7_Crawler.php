@@ -14,10 +14,12 @@ class AT_Import_Big7_Crawler {
         $this->wmb = get_option('at_big7_wmb');
         $this->videos = 'http://cash.big7.com/xml_export.php?wmb=' . $this->wmb . '&security_key=c6aafc209e9593997dd949a85e15d49a&file=all_amateurs_videos&format=json&dl';
         $this->amateure = 'http://cash.big7.com/xml_export.php?wmb=' . $this->wmb . '&security_key=c6aafc209e9593997dd949a85e15d49a&file=all_amateurs&format=json&dl';
+
+        $this->json_result = array();
     }
 
-    function json_process($item) {
-        return $item;
+    function json_callback($item) {
+        $this->json_result[] = $item;
     }
 
     function get($params = array()) {
@@ -53,33 +55,35 @@ class AT_Import_Big7_Crawler {
     }
 
     function read($filename = 'videos.json', $filter = array()) {
-        try {
-            // $json_data = file_get_contents($this->folder . '/' . $filename);
-            $parser = new \JsonCollectionParser\Parser();
-            $parser->parse($this->folder . '/'. $filename, 'json_process');
-        } catch(Exception $e) {
+        if(!file_exists($this->folder . '/' . $filename)) {
             /**
-             * No file found, try to save it
+             * Try to get the file from Big7 directly
              */
-            $file = str_replace('.json', '', $this->amateure);
-            $json_data = file_get_contents($file);
+            if($filename == 'videos.json') {
+                $data = file_get_contents($this->videos);
+            } else {
+                $data = file_get_contents($this->amateure);
+            }
 
-            if($json_data) {
-                $this->save($json_data, $filename);
+            if($data) {
+                $this->save($data, $filename);
             }
         }
+
+        $parser = new \JsonCollectionParser\Parser();
+        $parser->parse($this->folder . '/' . $filename, [$this, 'json_callback'], true);
+
+        $json_data = $this->json_result;
 
         if($json_data) {
             /**
              * @TODO: What about small Webspaces?
              */
-            $data = json_decode($json_data, true);
-
             if($filter) {
                 $filtered_data = array();
 
                 foreach($filter as $key => $value) {
-                    foreach($data as $k => $v) {
+                    foreach($json_data as $k => $v) {
                         if($v[$key] == $value) {
                             $filtered_data[] = $v;
                         }
@@ -89,9 +93,9 @@ class AT_Import_Big7_Crawler {
                 return $filtered_data;
             }
 
-            return $data;
+            return $json_data;
         }
-        
+
         return false;
     }
 

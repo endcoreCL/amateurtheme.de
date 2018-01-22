@@ -43,6 +43,8 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
     function at_import_big7_import_videos_cronjob($id) {
         set_time_limit(120); // try to set time limit to 120 seconds
 
+        $id = 48;
+
         global $wpdb;
         $cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
 
@@ -64,8 +66,6 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
                 $actor = $videos['nickname'];
 
                 foreach ($videos['videos'] as $item) {
-                    at_error_log(json_encode($item));
-
                     $unique_id = md5($item['name']);
 
                     $video = new AT_Import_Video($unique_id);
@@ -132,7 +132,7 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
             }
 
             // check autor data
-            $actor_need_update = $wpdb->get_var('SELECT term_id FROM cp_termmeta WHERE meta_key = "actor_id" AND meta_value = "' . $cron->object_id . '" AND (SELECT term_id FROM cp_termmeta WHERE meta_key="actor_last_updated" AND meta_value < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 30 DAY)))');
+            $actor_need_update = $wpdb->get_var('SELECT term_id FROM cp_termmeta WHERE meta_key = "actor_id" AND meta_value = "' . $cron->object_id . '" AND (SELECT term_id FROM cp_termmeta WHERE meta_key="actor_last_updated" AND meta_value < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 30 DAY)) LIMIT 0,1)');
             if($actor_need_update) {
                 $post_id = 'video_actor_' . $actor_need_update;
 
