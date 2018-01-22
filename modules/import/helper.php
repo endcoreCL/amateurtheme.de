@@ -40,12 +40,12 @@ function at_import_menu_scripts($page) {
     if(strpos($page, 'at_import_') === false) return;
 
     // CSS
-    wp_enqueue_style( 'at-import-panel', get_template_directory_uri() . '/library/import/_assets/css/panel.css', false, '1.0');
-    wp_enqueue_style( 'at-select2', get_template_directory_uri() . '/library/import/_assets/css/select2.min.css', false, '1.0');
+    wp_enqueue_style( 'at-import-panel', get_template_directory_uri() . '/modules/import/_assets/css/panel.css', false, '1.0');
+    wp_enqueue_style( 'at-select2', get_template_directory_uri() . '/modules/import/_assets/css/select2.min.css', false, '1.0');
 
     // JS
-    wp_enqueue_script( 'at-import-panel', get_template_directory_uri() . '/library/import/_assets/js/panel.js');
-    wp_enqueue_script( 'at-select2', get_template_directory_uri() . '/library/import/_assets/js/select2.full.min.js');
+    wp_enqueue_script( 'at-import-panel', get_template_directory_uri() . '/modules/import/_assets/js/panel.js');
+    wp_enqueue_script( 'at-select2', get_template_directory_uri() . '/modules/import/_assets/js/select2.full.min.js');
 }
 
 /**

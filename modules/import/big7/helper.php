@@ -14,9 +14,9 @@ if ( ! function_exists( 'at_import_big7_scripts' ) ) {
      */
     add_action('admin_enqueue_scripts', 'at_import_big7_scripts');
     function at_import_big7_scripts($page) {
-        if (strpos($page, 'at_import_mydirtyhobby') === false) return;
+        if (strpos($page, 'at_import_big7') === false) return;
 
-        wp_enqueue_script('at-mydirtyhobby', get_template_directory_uri() . '/library/import/_assets/js/big7.js');
+        wp_enqueue_script('at-big7', get_template_directory_uri() . '/modules/import/_assets/js/big7.js');
     }
 }
 

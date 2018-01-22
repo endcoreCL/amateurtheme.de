@@ -27,6 +27,7 @@ function at_import_big7_panel() {
 
     $import = new AT_Import_Big7_Crawler();
     $cronjobs = new AT_Import_Cron();
+    $amateurs = $import->getAmateurs();
     ?>
 
     <div class="ajax-loader">
@@ -144,7 +145,14 @@ function at_import_big7_panel() {
                                                 $last_update = '-';
                                             endif;
 
-                                            $amateur_details = $import->getAmateur($item->object_id);
+                                            $amateur_videos = 0;
+                                            if($amateurs) {
+                                                foreach($amateurs as $c) {
+                                                    if($c['u_id'] == $item->object_id) {
+                                                        $amateur_videos = $c['videos'];
+                                                    }
+                                                }
+                                            }
                                             ?>
                                             <tr>
                                                 <td class="cron-name">
@@ -153,7 +161,7 @@ function at_import_big7_panel() {
                                                     </a>
                                                 </td>
                                                 <td class="cron-video-count">
-                                                    <?php echo $amateur_details['anz_videos']; ?>
+                                                    <?php echo $amateur_videos; ?>
                                                 </td>
                                                 <td class="cron-video-imported">
                                                     <?php echo at_import_big7_get_video_count($item->object_id); ?>
@@ -181,7 +189,7 @@ function at_import_big7_panel() {
                                     <tr>
                                         <td colspan="6">
                                             <?php
-                                            $amateurs = $import->getAmateurs();
+
                                             if($amateurs) {
                                                 ?>
                                                 <select name="amateur" class="form-control at-amateur-select">

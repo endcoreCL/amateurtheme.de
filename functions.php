@@ -21,6 +21,7 @@ require_once(XCORE_PLUGINS . '/scssphp/_load.php');
 require_once(XCORE_PLUGINS . '/mobile-detect/Mobile_Detect.php');
 require_once(XCORE_PLUGINS . '/acf/core/acf.php');
 require_once(XCORE_PLUGINS . '/acf/field-type-code/acf-code-field.php');
+require_once(XCORE_PLUGINS . '/jsonreader/autoload.php');
 
 /**
  * Framework

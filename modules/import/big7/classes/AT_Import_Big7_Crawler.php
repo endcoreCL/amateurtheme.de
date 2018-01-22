@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Created by PhpStorm.
  * User: christianlang
@@ -14,6 +13,11 @@ class AT_Import_Big7_Crawler {
 
         $this->wmb = get_option('at_big7_wmb');
         $this->videos = 'http://cash.big7.com/xml_export.php?wmb=' . $this->wmb . '&security_key=c6aafc209e9593997dd949a85e15d49a&file=all_amateurs_videos&format=json&dl';
+        $this->amateure = 'http://cash.big7.com/xml_export.php?wmb=' . $this->wmb . '&security_key=c6aafc209e9593997dd949a85e15d49a&file=all_amateurs&format=json&dl';
+    }
+
+    function json_process($item) {
+        return $item;
     }
 
     function get($params = array()) {
@@ -49,12 +53,25 @@ class AT_Import_Big7_Crawler {
     }
 
     function read($filename = 'videos.json', $filter = array()) {
-        $json_data = file_get_contents($this->folder . '/' . $filename);
-        $data = '';
+        try {
+            // $json_data = file_get_contents($this->folder . '/' . $filename);
+            $parser = new \JsonCollectionParser\Parser();
+            $parser->parse($this->folder . '/'. $filename, 'json_process');
+        } catch(Exception $e) {
+            /**
+             * No file found, try to save it
+             */
+            $file = str_replace('.json', '', $this->amateure);
+            $json_data = file_get_contents($file);
+
+            if($json_data) {
+                $this->save($json_data, $filename);
+            }
+        }
 
         if($json_data) {
             /**
-             * What about small Webspaces?
+             * @TODO: What about small Webspaces?
              */
             $data = json_decode($json_data, true);
 
@@ -79,13 +96,13 @@ class AT_Import_Big7_Crawler {
     }
 
     function getAmateurs() {
-        $data = $this->read('videos.json');
+        $data = $this->read('amateure.json');
 
         if($data) {
             $amateurs = array();
 
             foreach($data as $k => $v) {
-                if(!isset($v['anz_videos']) || $v['anz_videos'] === 0) continue;
+                if(!isset($v['anz_videos']) || $v['anz_videos'] === 0 || $v['anz_videos'] == '0') continue;
 
                 $amateurs[] = array(
                     'u_id' => $v['u_id'],
