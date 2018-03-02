@@ -22,3 +22,27 @@ if ( ! function_exists('at_video_taxonomy_args') ) {
         return $query;
     }
 }
+
+if ( ! function_exists('at_video_set_post_view') ) {
+	/**
+	 * function to set video views
+	 */
+	add_action( 'xcore_init', 'at_video_set_post_view' );
+	function at_video_set_post_view() {
+		if ( ! is_singular( 'video' ) ) {
+			return;
+		}
+
+		$post_id = get_the_ID();
+
+		$views = get_field( 'video_views', $post_id );
+
+		if ( $views ) {
+			$views += 1;
+		} else {
+			$views = 1;
+		}
+
+		update_field( 'video_views', $views, $post_id );
+	}
+}
