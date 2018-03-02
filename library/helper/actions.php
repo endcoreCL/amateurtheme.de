@@ -7,31 +7,49 @@
  * @category	helper
  */
 
+add_action( 'xcore_init', 'xcore_global_vars' );
+function xcore_global_vars() {
+	global $xcore_layout;
+	$xcore_layout = new xCORE_Layout();
+}
+
 /**
- * Ist fuer deine Sicherheit...!
- * @src 		http://www.smashingmagazine.com/2010/07/01/10-useful-wordpress-security-tweaks/
+ * Remove unsued meta
+ *
  */
 remove_action('wp_head', 'wp_generator');
 
 /**
- * Entferne überflüssiges CSS von WP
+ * Remove unused CSS
  */
 add_action( 'widgets_init', 'xcore_remove_recent_comment_style' );
 function xcore_remove_recent_comment_style() {
-    global $wp_widget_factory;
-    remove_action('wp_head', array( $wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style' ));
+	global $wp_widget_factory;
+	remove_action('wp_head', array( $wp_widget_factory->widgets['WP_Widget_Recent_Comments'], 'recent_comments_style' ));
 }
 
 /**
- * AJAX_URL definieren
+ * Define AJAX_URL in frontend
  */
 add_action('wp_head', 'xcore_ajaxurl');
 function xcore_ajaxurl() {
-    ?>
+	?>
     <script type="text/javascript">
         var ajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
     </script>
-    <?php
+	<?php
+}
+
+/**
+ * Define Variables in backend
+ */
+add_action('admin_head', 'xcore_backend_js_vars');
+function xcore_backend_js_vars() {
+	?>
+    <script type="text/javascript">
+        var template_directory_uri = '<?php echo get_template_directory_uri(); ?>';
+    </script>
+	<?php
 }
 
 /**
@@ -39,15 +57,15 @@ function xcore_ajaxurl() {
  */
 add_action('wp_head', 'xcore_custom_css');
 function xcore_custom_css() {
-    $custom_css = get_field('customizing_css', 'options');
+	$custom_css = get_field('customizing_css', 'options');
 
-    if($custom_css) {
-        ?>
+	if($custom_css) {
+		?>
         <style>
             <?php echo $custom_css; ?>
         </style>
-        <?php
-    }
+		<?php
+	}
 }
 
 /**
@@ -55,11 +73,11 @@ function xcore_custom_css() {
  */
 add_action('wp_head', 'xcore_custom_code_header');
 function xcore_custom_code_header() {
-    $code = get_field('customizing_code_header', 'options');
+	$code = get_field('customizing_code_header', 'options');
 
-    if($code) {
-        echo $code;
-    }
+	if($code) {
+		echo $code;
+	}
 }
 
 /**
@@ -67,11 +85,11 @@ function xcore_custom_code_header() {
  */
 add_action('wp_footer', 'xcore_custom_code_footer');
 function xcore_custom_code_footer() {
-    $code = get_field('customizing_code_footer', 'options');
+	$code = get_field('customizing_code_footer', 'options');
 
-    if($code) {
-        echo $code;
-    }
+	if($code) {
+		echo $code;
+	}
 }
 
 /**
@@ -79,13 +97,13 @@ function xcore_custom_code_footer() {
  */
 add_action('wp_head', 'xcore_ga_tracking');
 function xcore_ga_tracking() {
-    $ga_id = get_field('tracking_ga', 'options');
+	$ga_id = get_field('tracking_ga', 'options');
 
-    if($ga_id) {
-        ?>
+	if($ga_id) {
+		?>
         <script type="text/javascript">
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
             })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
@@ -93,8 +111,8 @@ function xcore_ga_tracking() {
             ga('set', 'anonymizeIp', true);
             ga('send', 'pageview');
         </script>
-        <?php
-    }
+		<?php
+	}
 }
 
 /**
@@ -102,31 +120,31 @@ function xcore_ga_tracking() {
  */
 add_action('wp_head', 'xcore_gtm_tracking');
 function xcore_gtm_tracking() {
-    $gtm_id = get_field('tracking_gtm', 'options');
+	$gtm_id = get_field('tracking_gtm', 'options');
 
-    if($gtm_id) {
-        ?>
+	if($gtm_id) {
+		?>
         <!-- Google Tag Manager -->
         <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','<?php echo $gtm_id; ?>');</script>
         <!-- End Google Tag Manager -->
-        <?php
-    }
+		<?php
+	}
 }
 add_action('xcore_after_body', 'xcore_gtm_tracking_additional');
 function xcore_gtm_tracking_additional() {
-    $gtm_id = get_field('tracking_gtm', 'options');
+	$gtm_id = get_field('tracking_gtm', 'options');
 
-    if($gtm_id) {
-        ?>
+	if($gtm_id) {
+		?>
         <!-- Google Tag Manager (noscript) -->
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo $gtm_id; ?>" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- End Google Tag Manager (noscript) -->
-        <?php
-    }
+		<?php
+	}
 }
 
 /**
@@ -134,10 +152,10 @@ function xcore_gtm_tracking_additional() {
  */
 add_action('wp_head', 'xcore_fb_pixel_tracking');
 function xcore_fb_pixel_tracking() {
-    $fb = get_field('tracking_fb', 'options');
+	$fb = get_field('tracking_fb', 'options');
 
-    if(isset($fb['id']) && $fb['id'] != '') {
-        ?>
+	if(isset($fb['id']) && $fb['id'] != '') {
+		?>
         <!-- Facebook Pixel Code -->
         <script>
             !function(f,b,e,v,n,t,s)
@@ -153,6 +171,6 @@ function xcore_fb_pixel_tracking() {
         </script>
         <noscript><img height="1" width="1" src="https://www.facebook.com/tr?id=829996753848170&ev=PageView&noscript=1"/></noscript>
         <!-- End Facebook Pixel Code -->
-        <?php
-    }
+		<?php
+	}
 }

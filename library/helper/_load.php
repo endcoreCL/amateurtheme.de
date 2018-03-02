@@ -7,6 +7,9 @@
  * @category	_load
  */
 
+require_once(XCORE_HELPER . '/classes/xCORE_Parser.php');
+require_once(XCORE_HELPER . '/classes/xCORE_Layout.php');
+
 require_once(XCORE_HELPER . '/scripts.php');
 require_once(XCORE_HELPER . '/actions.php');
 require_once(XCORE_HELPER . '/filter.php');

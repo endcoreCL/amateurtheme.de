@@ -39,22 +39,19 @@ function at_import_mydirtyhobby_panel() {
     </div>
 
     <div class="wrap" id="at-import-page-wrap">
-        <h1><?php _e('Import &rsaquo; MyDirtyHobby', 'amateurtheme'); ?></h1>
+		<div id="at-import-page-header">
+			<h1><?php _e('Import &rsaquo; MyDirtyHobby', 'amateurtheme'); ?></h1>
+			<h2 class="nav-tab-wrapper at-import-tabs-nav">
+				<a class="nav-tab nav-tab-active" id="settings-tab" href="#top#settings"><?php _e('Einstellungen', 'amateurtheme'); ?></a>
+				<a class="nav-tab" id="amateurs-tab" href="#top#amateurs"><?php _e('Amateure', 'amateurtheme'); ?></a>
+				<a class="nav-tab" id="videos-tab" href="#top#videos"><?php _e('Videos', 'amateurtheme'); ?></a>
+				<a class="nav-tab" id="topvideos-tab" href="#top#topvideos"><?php _e('Top Videos', 'amateurtheme'); ?></a>
+				<a class="nav-tab" id="categories-tab" href="#top#categories"><?php _e('Kategorien', 'amateurtheme'); ?></a>
+				<a class="nav-tab" id="apilog-tab" href="#top#apilog"><?php _e('API Log', 'amateurtheme'); ?></a>
+			</h2>
+		</div>
 
-        <div id="checkConnection"></div>
-
-        <div id="importStatus"></div>
-
-        <div id="at-import-tabs">
-            <h2 class="nav-tab-wrapper at-import-tabs-nav">
-                <a class="nav-tab nav-tab-active" id="settings-tab" href="#top#settings"><?php _e('Einstellungen', 'amateurtheme'); ?></a>
-                <a class="nav-tab" id="amateurs-tab" href="#top#amateurs"><?php _e('Amateure', 'amateurtheme'); ?></a>
-                <a class="nav-tab" id="videos-tab" href="#top#videos"><?php _e('Videos', 'amateurtheme'); ?></a>
-                <a class="nav-tab" id="topvideos-tab" href="#top#topvideos"><?php _e('Top Videos', 'amateurtheme'); ?></a>
-                <a class="nav-tab" id="categories-tab" href="#top#categories"><?php _e('Kategorien', 'amateurtheme'); ?></a>
-                <a class="nav-tab" id="apilog-tab" href="#top#apilog"><?php _e('API Log', 'amateurtheme'); ?></a>
-            </h2>
-
+		<div id="at-import-tabs">
             <div class="at-import-tabs-content">
                 <!-- START: Settings Tab-->
                 <div id="settings" class="at-import-tab active">
@@ -116,7 +113,7 @@ function at_import_mydirtyhobby_panel() {
                         <h3 class="hndle"><span><?php _e('Amateure', 'amateurtheme'); ?></span></h3>
                         <div class="inside">
                             <form method="post" class="form-inline at-cronjobs">
-                                <table class="at-import-table">
+                                <table class="at-table at-import-table">
                                     <thead>
                                     <tr>
                                         <th><?php _e('User', 'amateurtheme'); ?></th>
@@ -223,7 +220,7 @@ function at_import_mydirtyhobby_panel() {
                         <h3 class="hndle"><span><?php _e('Videos', 'amateurtheme'); ?></span></h3>
                         <div class="inside">
                             <form method="post" id="at-get-videos">
-                                <table class="at-import-table">
+                                <table class="at-table at-import-table">
                                     <tr>
                                         <td>
                                             <select name="u_id" id="u_id" class="form-control">
@@ -597,7 +594,7 @@ function at_import_mydirtyhobby_panel() {
 
                         <div class="inside">
                             <form method="post" class="form-inline at-cronjobs">
-                                <table class="at-import-table">
+                                <table class="at-table at-import-table">
                                     <thead>
                                     <tr>
                                         <th><?php _e('Name', 'amateurtheme'); ?></th>
@@ -685,7 +682,7 @@ function at_import_mydirtyhobby_panel() {
                         <div class="inside">
                             <p><?php _e('Hier werden dir die letzten 200 Einträge der API log angezeigt.', 'amateurtheme'); ?></p>
                             <p><a href="" class="clear-api-log button" data-type="mdh"><?php _e('Log löschen', 'amateurtheme'); ?></a></p>
-                            <table class="apilog">
+                            <table class="at-table apilog">
                                 <thead>
                                 <tr>
                                     <th><?php _e('Datum', 'amateurtheme') ?></th>

@@ -16,7 +16,7 @@ if ( ! function_exists( 'at_import_mdh_scripts' ) ) {
     function at_import_mdh_scripts($page) {
         if (strpos($page, 'at_import_mydirtyhobby') === false) return;
 
-        wp_enqueue_script('at-mydirtyhobby', get_template_directory_uri() . '/library/import/_assets/js/mydirtyhobby.js');
+        wp_enqueue_script('at-mydirtyhobby', get_template_directory_uri() . '/modules/import/_assets/js/mydirtyhobby.js');
     }
 }
 
