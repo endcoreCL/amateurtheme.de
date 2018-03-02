@@ -3159,29 +3159,11 @@ var acf;
 		
 	acf.layout = acf.model.extend({
 		
-		active: 0,
-		
 		actions: {
-			'prepare 99': 	'prepare',
 			'refresh 99': 	'refresh'
 		},
 		
-		prepare: function(){
-			
-			// vars
-			this.active = 1;
-			
-			
-			// render
-			this.refresh();
-			
-		},
-		
 		refresh: function( $el ){ 
-			
-			// bail early if not yet active
-			if( !this.active ) return;
-			
 			
 			// defaults
 			$el = $el || $('body');
@@ -3386,7 +3368,7 @@ var acf;
 			
 			
 			// reset fields
-			$fields.removeClass('acf-r0 acf-c0').css({'min-height': 0});
+			$fields.removeClass('-r0 -c0').css({'min-height': 0});
 			
 			
 			// loop
@@ -3431,11 +3413,11 @@ var acf;
 				// add classes
 				if( this_top == 0 ) {
 					
-					$el.addClass('acf-r0');
+					$el.addClass('-r0');
 					
 				} else if( cell == 0 ) {
 					
-					$el.addClass('acf-c0');
+					$el.addClass('-c0');
 					
 				}
 				
@@ -3526,6 +3508,7 @@ var acf;
 		actions: {
 			'ready':	'ready',
 			'change':	'on',
+			'submit':	'off'
 		},
 		
 		ready: function(){
@@ -4103,6 +4086,65 @@ var acf;
 	};
 	
 	
+	/**
+	*  acf.lock
+	*
+	*  Creates a lock on an element
+	*
+	*  @date	22/2/18
+	*  @since	5.6.9
+	*
+	*  @param	type $var Description. Default.
+	*  @return	type Description.
+	*/
+	
+	acf.lock = function( $el, type, key ){
+		var locks = getLocks( $el, type );
+		var i = locks.indexOf(key);
+		if( i < 0 ) {
+			locks.push( key );
+			setLocks( $el, type, locks );
+		}
+	};
+	
+	acf.unlock = function( $el, type, key ){
+		var locks = getLocks( $el, type );
+		var i = locks.indexOf(key);
+		if( i > -1 ) {
+			locks.splice(i, 1);
+			setLocks( $el, type, locks );
+		}
+	};
+	
+	acf.isLocked = function( $el, type ){
+		return ( getLocks( $el, type ).length > 0 );
+	};
+	
+	var getLocks = function( $el, type ){
+		return $el.data('acf-lock-'+type) || [];
+	};
+	
+	var setLocks = function( $el, type, locks ){
+		$el.data('acf-lock-'+type, locks);
+	}
+	
+/*
+	$(document).ready(function(){
+		
+		var $el = $('#page_template');
+		
+		console.log( 'isLocked', acf.isLocked($el, 'visible') );
+		console.log( 'getLocks', getLocks($el, 'visible') );
+		
+		console.log( 'lock', acf.lock($el, 'visible', 'me') );
+		console.log( 'getLocks', getLocks($el, 'visible') );
+		console.log( 'isLocked', acf.isLocked($el, 'visible') );
+		
+		console.log( 'unlock', acf.unlock($el, 'visible', 'me') );
+		console.log( 'isLocked', acf.isLocked($el, 'visible') );
+		
+	});
+*/
 	
 	/*
 	*  Sortable
@@ -4358,6 +4400,8 @@ var acf;
 			// bail early if not active
 			if( !this.active ) return;
 			
+			// bail early if not for post
+			if( acf.get('screen') !== 'post' ) return;
 			
 			// bail early if no ajax
 			if( !acf.get('ajax') ) return;
@@ -4895,8 +4939,9 @@ var acf;
 
 (function($, undefined){
 	
-	// vars
-	var hidden = 'hidden-by-conditional-logic';
+	// constants
+	var CLASS = 'hidden-by-conditional-logic';
+	var CONTEXT = 'conditional_logic';
 	
 	// model
 	var conditionalLogic = acf.conditional_logic = acf.model.extend({
@@ -5113,11 +5158,20 @@ var acf;
 			// reset scope
 			this.$parent = false;
 			
+			
+			// find siblings
+			var selector = acf.get_selector( target );
+			var $targets = $trigger.siblings( selector );
+			
+			// return if found
+			if( $targets.length ) {
+				this.$parent = $trigger.parent();
+				return $targets;
+			}
+			
+			
 			// find all targets
 			var $targets = acf.get_fields(target, false, true);
-			
-			// bail early if nothing found
-			if( !$targets.length ) return false;
 			
 			// refine scope if more than 1 found
 			if( $targets.length > 1 ) {
@@ -5288,22 +5342,34 @@ var acf;
 		*  @return	$post_id (int)
 		*/
 		
-		showField: function( $field ){
+		showField: function( $field, lockKey ){
+//console.log('showField', lockKey, $field.data('name'), $field.data('type') );
+			// defaults
+			lockKey = lockKey || 'default';
 			
-			// bail ealry if not hidden
-			//if( !$field.hasClass(hidden) ) return;
+			// bail early if field is not locked (does not need to be unlocked)
+			if( !acf.isLocked($field, CONTEXT) ) {
+//console.log('- not locked, no need to show');
+				return false;
+			}
 			
-			// vars
-			var key = $field.data('key');
+			// unlock
+			acf.unlock($field, CONTEXT, lockKey);
+			
+			// bail early if field is still locked (by another field)
+			if( acf.isLocked($field, CONTEXT) ) {
+//console.log('- is still locked, cant show', acf.getLocks($field, CONTEXT));
+				return false;
+			}
 			
 			// remove class
-			$field.removeClass(hidden);
+			$field.removeClass( CLASS );
 			
 			// enable
-			acf.enable_form( $field, 'condition-'+key );
+			acf.enable_form( $field, CONTEXT );
 			
 			// action for 3rd party customization
-			acf.do_action('show_field', $field, 'conditional_logic' );
+			acf.do_action('show_field', $field, CONTEXT );
 			
 		},
 		
@@ -5321,22 +5387,31 @@ var acf;
 		*  @return	$post_id (int)
 		*/
 		
-		hideField : function( $field ){
-			
-			// bail ealry if hidden
-			//if( $field.hasClass(hidden) ) return;
+		hideField: function( $field, lockKey ){
+//console.log('hideField', lockKey, $field.data('name'), $field.data('type') );
+			// defaults
+			lockKey = lockKey || 'default';
 			
 			// vars
-			var key = $field.data('key');
+			var isLocked = acf.isLocked($field, CONTEXT);
+			
+			// unlock
+			acf.lock($field, CONTEXT, lockKey);
+			
+			// bail early if field is already locked (by another field)
+			if( isLocked ) {
+//console.log('- is already locked');
+				return false;
+			}
 			
 			// add class
-			$field.addClass( hidden );
+			$field.addClass( CLASS );
 			
 			// disable
-			acf.disable_form( $field, 'condition-'+key );
+			acf.disable_form( $field, CONTEXT );
 						
 			// action for 3rd party customization
-			acf.do_action('hide_field', $field, 'conditional_logic' );
+			acf.do_action('hide_field', $field, CONTEXT );
 			
 		},
 				
@@ -9283,8 +9358,8 @@ var acf;
 		$input: null,
 		
 		events: {
-			'input input': '_change',
-			'change input': '_change'
+			'input input': 'onInput',
+			'change input': 'onChange'
 		},
 		
 		focus: function(){
@@ -9296,30 +9371,22 @@ var acf;
 			
 		},
 		
-		_change: function( e ){
-			
-			// get value from changed element
-			var val = e.$el.val();
-			var type = e.$el.attr('type');
-			
-			
-			// allow for cleared value
-			val = val || 0;
-			
-			
-			// update sibling
-			if( type === 'range' ) {
-				
-				this.$input.val( val );
-				
-			} else {
-				
-				this.$range.val( val );
-				
-			}
-						
-		}
+		setValue: function( val ){
+			this.$input.val( val );
+			this.$range.val( val );
+		},
 		
+		onInput: function( e ){
+			this.setValue( e.$el.val() );
+		},
+		
+		onChange: function( e ){
+			this.setValue( e.$el.val() );
+			
+			if( e.$el.attr('type') == 'number' ) {
+				this.$range.trigger('change');
+			}
+		}
 	});
 	
 })(jQuery);
@@ -11639,7 +11706,7 @@ var acf;
 (function($){
 	
 	// vars
-	var hidden = 'hidden-by-conditional-logic';
+	var CLASS = 'hidden-by-conditional-logic';
 	var groupIndex = 0;
 	var tabIndex = 0;
 	
@@ -11658,6 +11725,14 @@ var acf;
 	*/
 	
 	var tabs = acf.model.extend({
+		
+		$fields: [],
+		
+		actions: {
+			'prepare 15': 	'initialize',
+			'append 15': 	'initialize',
+			'refresh 15': 	'refresh'
+		},
 		
 		events: {
 			'click .acf-tab-button': '_click'
@@ -11753,17 +11828,50 @@ var acf;
 			
 		},
 		
+		addTab: function( $field ){
+			this.$fields.push( $field );
+		},
+		
+		initialize: function(){
+			
+			// bail ealry if no fields
+			if( !this.$fields.length ) return;	
+			
+			// loop
+			for( var i = 0; i < this.$fields.length; i++) {
+				this.createTab( this.$fields[ i ] );
+			}
+			
+			// reset
+			this.$fields = [];
+			
+		},
+			
 		createTab: function( $field ){
 			
+			// bail early if is cell
+			if( $field.is('td') ) return false;
+			
+			
 			// vars
+			var $label = $field.children('.acf-label');
+			var $input = $field.children('.acf-input');	
 			var $wrap = this.getWrap( $field );
 			var $button = $field.find('.acf-tab-button');
 			var settings = $button.data();
+			var open = false;
+			
+			
+			// remove
+			$field.hide();
+			$label.remove();
+			$input.remove();
 			
 			
 			// create wrap
 			if( !$wrap.exists() || settings.endpoint ) {
 				$wrap = this.createTabWrap( $field, settings );
+				open = true;
 			}
 			
 			
@@ -11771,14 +11879,8 @@ var acf;
 			var $tab = $('<li></li>').append( $button );
 			
 			
-			// index
-			tabIndex++;
-			
-			
-			// active
-			var order = acf.getPreference('this.tabs') || [];
-			var index = order[ groupIndex-1 ] || 0;
-			if( index == tabIndex-1 ) {
+			// open
+			if( open ) {
 				$tab.addClass('active');
 				this.open( $field );
 			} else {
@@ -11792,6 +11894,17 @@ var acf;
 			
 			// append
 			$wrap.find('ul').append( $tab );
+			
+			
+			// toggle active tab
+			// previous attempts to integrate with above 'open' variable were uncessefull
+			// this separate toggle logic ensures the tab exists
+			tabIndex++;
+			var order = acf.getPreference('this.tabs') || [];
+			var index = order[ groupIndex-1 ] || 0;
+			if( index == tabIndex-1 && !open ) {
+				this.toggle( $button );
+			}
 			
 			
 			// return
@@ -11831,6 +11944,34 @@ var acf;
 			// return
 			return $wrap;
 			
+		},
+		
+		refresh: function( $el ){
+			
+			// loop
+			$('.acf-tab-wrap', $el).each(function(){
+				
+				// vars
+				var $wrap = $(this);
+				
+				
+				// fix left aligned min-height
+				if( $wrap.hasClass('-left') ) {
+					
+					// vars
+					var $parent = $wrap.parent();
+					var attribute = $parent.is('td') ? 'height' : 'min-height';
+					
+					// find height (minus 1 for border-bottom)
+					var height = $wrap.position().top + $wrap.children('ul').outerHeight(true) - 1;
+					
+					// add css
+					$parent.css(attribute, height);
+					
+				}
+						
+			});
+			
 		}
 		
 	});
@@ -11868,24 +12009,8 @@ var acf;
 		
 		initialize: function(){
 			
-			// vars
-			var $field = this.$field;
-			var $label = $field.children('.acf-label');
-			var $input = $field.children('.acf-input');	
-			
-			
-			// bail early if is cell
-			if( $field.is('td') ) return;
-			
-			
 			// add tab
-			var $tab = tabs.createTab( $field );
-			
-			
-			// remove
-			$field.hide();
-			$label.remove();
-			$input.remove();
+			tabs.addTab( this.$field );
 			
 		},
 		
@@ -11901,24 +12026,23 @@ var acf;
 			var $tab = tabs.getTab( $wrap, key );
 			var $li = $tab.parent();
 			
-			
 			// bail early if $group does not exist (clone field)
 			if( !$wrap.exists() ) return;
 			
 			
 			// hide li
-			$li.addClass(hidden);
+			$li.addClass( CLASS );
 			
 				
 			// hide fields
 			tabs.getFields( $field ).each(function(){
-				acf.conditional_logic.hide_field( $(this) );
+				acf.conditional_logic.hide_field( $(this), key );
 			});
 			
 			
 			// select other tab if active
 			if( $li.hasClass('active') ) {
-				$wrap.find('a:visible').first().trigger('click');
+				$wrap.find('li:not(.'+CLASS+'):first a').trigger('click');
 			}
 			
 		},
@@ -11941,18 +12065,18 @@ var acf;
 			
 			
 			// show li
-			$li.removeClass(hidden);
+			$li.removeClass( CLASS );
 			
 			
 			// hide fields
 			tabs.getFields( $field ).each(function(){
-				acf.conditional_logic.show_field( $(this) );
+				acf.conditional_logic.show_field( $(this), key );
 			});
 			
 			
 			// select tab if no other active
 			var $active = $li.siblings('.active');
-			if( !$active.exists() || $active.hasClass(hidden) ) {
+			if( !$active.exists() || $active.hasClass(CLASS) ) {
 				tabs.toggle( $tab );
 			}
 			
@@ -13499,11 +13623,6 @@ var acf;
 				
 			}
 			
-			
-			// action for 3rd party
-			acf.do_action('validation_failure');
-			
-			
 			// set valid (prevents fetch_complete from runing)
 			this.valid = false;
 			
@@ -13514,6 +13633,10 @@ var acf;
 			
 			// display errors
 			this.display_errors( json.errors, $form );
+			
+			
+			// action
+			acf.do_action('validation_failure');
 			
 		},
 		

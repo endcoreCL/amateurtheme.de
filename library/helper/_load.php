@@ -9,6 +9,7 @@
 
 require_once(XCORE_HELPER . '/classes/xCORE_Parser.php');
 require_once(XCORE_HELPER . '/classes/xCORE_Layout.php');
+require_once(XCORE_HELPER . '/classes/xCORE_Custom_CSS.php');
 
 require_once(XCORE_HELPER . '/scripts.php');
 require_once(XCORE_HELPER . '/actions.php');

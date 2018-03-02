@@ -158,8 +158,8 @@ class acf_form_widget {
 			
 			// render post data
 			acf_form_data(array( 
-				'post_id'		=> $post_id, 
-				'nonce'			=> 'widget',
+				'screen'		=> 'widget',
+				'post_id'		=> $post_id,
 				'widget_id'		=> 'widget-' . $widget->id_base,
 				'widget_number'	=> $widget->number,
 				'widget_prefix'	=> $prefix
@@ -185,7 +185,7 @@ class acf_form_widget {
 				
 				
 				// render
-				acf_render_fields( $post_id, $fields, 'div', $field_group['instruction_placement'] );
+				acf_render_fields( $fields, $post_id, 'div', $field_group['instruction_placement'] );
 				
 			}
 			
@@ -261,20 +261,25 @@ class acf_form_widget {
 <script type="text/javascript">
 (function($) {
 	
-	 acf.add_filter('get_fields', function( $fields ){
-	 	
-	 	// widgets
-	 	$fields = $fields.not('#available-widgets .acf-field');
-	 	
-	 	
-	 	// customizer
-	 	$fields = $fields.not('.widget-tpl .acf-field');
-	 	
-	 	
-	 	// return
-	 	return $fields;
-	 	
-    });
+	// vars
+	acf.update('post_id', 'widgets');
+	
+	
+	// restrict get fields
+	acf.add_filter('get_fields', function( $fields ){
+	
+		// widgets
+		$fields = $fields.not('#available-widgets .acf-field');
+		
+		
+		// customizer
+		$fields = $fields.not('.widget-tpl .acf-field');
+		
+		
+		// return
+		return $fields;
+		
+	});
 	
 	
 	$('#widgets-right').on('click', '.widget-control-save', function( e ){
@@ -357,10 +362,6 @@ class acf_form_widget {
 		
 		// unlock form
 		acf.validation.toggle( $widget, 'unlock' );
-		
-		
-		// submit
-		acf.do_action('submit', $widget );
 		
 	});
 		

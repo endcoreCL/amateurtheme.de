@@ -1,3 +1,29 @@
+.img-fluid { height: auto; max-width: 100%; display: block; }
+
+/* @TODO Design Panel fixen */
+
+.acf-field.hide-headline > .acf-label { display: none; }
+.acf-field.is-headline { background: #f9f9f9; }
+.acf-field.is-headline > .acf-label { margin: 0; }
+.acf-field.is-headline > .acf-label label { margin: 0; font-size: 16px; }
+
+
+/* DISABLED LABELS FROM TOPBAR REPEATER */
+.acf-repeater .acf-table .acf-row .acf-field .acf-label {background: #fff; padding: 0 5px; position: absolute; top: -10px; right: 10px; margin: 0; font-size: 12px; font-weight: 400 !important; color: #999; }
+.acf-repeater .acf-table .acf-row .acf-field .acf-label label {  margin: 0 !important;  }
+.acf-repeater .acf-table .acf-row:not(:first-of-type) .acf-field .acf-label { display: none !important; }
+
+
+
+
+
+
+
+
+
+
+
+
 /* HEADER */
 body[class*="import_page_at_import_"] #wpcontent { padding: 0; background: #fff; }
 body[class*="import_page_at_import_"] #wpfooter { display: none; }
