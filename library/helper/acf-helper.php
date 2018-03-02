@@ -8,6 +8,7 @@
  */
 
 define( 'ACF_LITE' , false );
+define( 'ACFGFS_API_KEY', 'AIzaSyBOkk5G9qoAGJ21lNVVANdAqT0JmIrbHcI' );
 
 add_filter('acf/settings/path', 'xcore_acf_settings_path');
 function xcore_acf_settings_path( $path ) {

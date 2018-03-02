@@ -1,21 +1,22 @@
-// BOOTSTRAP https://getbootstrap.com/docs/4.0/getting-started/theming/
+body {
+	// can't use $body-bg since it's used as variable on more places
+	background-color: #fff;
+	font-style: $at-font-style-base;
+	// can't use $body-color since it's used as variable on more places
+	color: $at-font-color-base;
+}
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+	font-style: $at-headings-font-style;
+}
+
+
 //$enable-gradients: true;
-//$theme-colors: (
-//		"primary":		#c01313,
-//		"secondary":	#6f7479,
-//		"success":		#7ab317,
-//		"info":			#19aece,
-//		"warning":		#f3961d,
-//		"danger":		#c01313,
-//		"light":		#f0f0f0,
-//		"dark":			#101820
-//);
-//$body-bg: #f0f0f0;
-//$body-color: #6f7479;
-//
+//body { color: $gray-100; }
+//$body-color: $gray-700;
 
 // FONT AWESOME
 $fa-font-path: "assets/fonts";
+
 
 //// SIMPLELIGHTBOX
 //$sl-overlay-background: #f00;

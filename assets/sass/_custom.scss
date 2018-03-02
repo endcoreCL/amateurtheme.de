@@ -1,0 +1,28 @@
+$white:         #ffffff;
+$gray-100:      #f8f9fa;
+$gray-200:      darken($gray-100, 5%);
+$gray-300:      #dee2e6;
+$gray-400:      darken($gray-300, 5%);
+$gray-500:      darken($gray-300, 20%);
+$gray-600:      #939ba2;
+$gray-700:      #6c757d;
+$gray-800:      #343a40;
+$gray-900:      darken($gray-800, 5%);
+$black:         darken($gray-800, 10%);
+
+$primary:       #d21446;
+$secondary:     #3282dc;
+$success:       #5ab428;
+$info:          #3282dc;
+$warning:       #eaa91c;
+$danger:        #d21446;
+$light:         $gray-100;
+$dark:          $gray-800;
+
+$headings-font-family: 'Montserrat';
+$headings-font-weight: 300italic;
+$at-headings-font-style: italic;
+$font-family-base: 'Montserrat';
+$font-weight-normal: 400;
+$at-font-style-base: normal;
+			

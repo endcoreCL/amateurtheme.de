@@ -25,7 +25,8 @@ class xCORE_Custom_SCSS {
 		if($acf_fields) {
 			// filter for needed fields
 			$catch = array(
-				'colors_'
+				'colors_',
+                'typography_'
 			);
 
 			foreach($acf_fields as $k => $v) {
@@ -46,41 +47,66 @@ class xCORE_Custom_SCSS {
 		return $fields;
 	}
 
-	public function generate_scss() {
-		$output = '';
+	public function font_weight($font) {
+	    $weight = $font['variants'];
+		$weight = preg_replace('/[A-Za-z]+/', '', $weight);
 
-		if($this->fields) {
-			// catch blocks
-			$output .= $this->generate_scss_catch_block('grays');
-			$output .= $this->generate_scss_catch_block('theme-colors');
+	    if($weight == 'regular' || $weight == '') {
+	        $weight = 400;
+        }
 
-			foreach($this->fields as $k => $v) {
-				$output .= '$' . $k . ': ' . $v . ';' . "\n";
-			}
+        return $weight;
+    }
+
+	public function font_style($font) {
+		$style = $font['variants'];
+		$style = preg_replace('/[0-9]+/', '', $style);
+
+		if($style == 'regular' || $style == '') {
+			return 'normal';
 		}
 
-		$this->write($output);
+		return $style;
 	}
 
-	public function generate_scss_catch_block($block = '') {
-		$output = '';
+	public function generate_scss() {
+		ob_start();
+		if($this->fields) {
+			?>
+$white:         #ffffff;
+$gray-100:      <?php echo $this->fields['grays_gray-100']; ?>;
+$gray-200:      darken($gray-100, 5%);
+$gray-300:      <?php echo $this->fields['grays_gray-300']; ?>;
+$gray-400:      darken($gray-300, 5%);
+$gray-500:      darken($gray-300, 20%);
+$gray-600:      <?php echo $this->fields['grays_gray-600']; ?>;
+$gray-700:      <?php echo $this->fields['grays_gray-700']; ?>;
+$gray-800:      <?php echo $this->fields['grays_gray-800']; ?>;
+$gray-900:      darken($gray-800, 5%);
+$black:         darken($gray-800, 10%);
 
-		// catch block items
-		$grays_header = '$' . $block . ': () !default;' . "\n" . '$' . $block . ': map-merge((' . "\n";
-		foreach($this->fields as $k => $v) {
-			if(strpos($k, $block) !== false) {
-				$output .= '"' . str_replace($block . '_', '', $k) . '": ' . $v . ',' . "\n";
-				unset($this->fields[$k]);
-			}
+$primary:       <?php echo $this->fields['theme-colors_primary']; ?>;
+$secondary:     <?php echo $this->fields['theme-colors_secondary']; ?>;
+$success:       <?php echo $this->fields['theme-colors_success']; ?>;
+$info:          <?php echo $this->fields['theme-colors_info']; ?>;
+$warning:       <?php echo $this->fields['theme-colors_warning']; ?>;
+$danger:        <?php echo $this->fields['theme-colors_danger']; ?>;
+$light:         $gray-100;
+$dark:          $gray-800;
+
+$headings-font-family: '<?php echo $this->fields['font_headlines']['font']; ?>';
+$headings-font-weight: <?php echo $this->font_weight($this->fields['font_headlines']); ?>;
+$headings-color: <?php echo $this->fields['color_headlines']; ?>;
+$at-headings-font-style: <?php echo $this->font_style($this->fields['font_headlines']); ?>;
+$font-family-base: '<?php echo $this->fields['font_paragraphs']['font']; ?>';
+$font-weight-normal: <?php echo $this->font_weight($this->fields['font_paragraphs']); ?>;
+$at-font-color-base: <?php echo $this->fields['color_paragraphs']; ?>;
+$at-font-style-base: <?php echo $this->font_style($this->fields['font_paragraphs']); ?>;
+			<?php
 		}
-		$grays_footer = '), $' . $block . ');' . "\n";
+		$output = ob_get_clean();
 
-		// merge block
-		if($output) {
-			$output = $grays_header . $output . $grays_footer;
-		}
-
-		return $output;
+		$this->write($output);
 	}
 
 	public function write($content) {
