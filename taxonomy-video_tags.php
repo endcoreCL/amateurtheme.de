@@ -24,18 +24,19 @@ $term_id = $queried_object->term_id;
                     <?php
                     $description = term_description();
                     if ($description && !is_paged()) {
-                        echo '<div class="category-description">' . $description . '</div>';
+                        echo '<div class="video-tag-description">' . $description . '</div>';
                     }
                     ?>
 
-                    <div class="category-videos">
+                    <div id="video-list" class="video-tag">
                         <?php
                         if (have_posts()) :
-                            echo '<div class="row">';
+                            echo '<div class="card-columns">';
                             while (have_posts()) : the_post();
                                 get_template_part('parts/video/loop', 'grid');
                             endwhile;
                             echo '</div>';
+	                        echo '<div class="divider"></div>';
                             echo at_pagination(3);
                         endif;
                         ?>

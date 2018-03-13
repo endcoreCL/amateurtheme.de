@@ -25,44 +25,30 @@ $actor_profile_url = $actor->url();
             <div class="col-10">
                 <div id="content">
                     <?php if(!is_paged()) { ?>
-                        <div class="actor-header">
-                            <?php if($actor_image) { ?>
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <?php echo '<img src="' . $actor_image['url'] . '" alt="' . $actor_image['alt'] . '" class="img-fluid" />'; ?>
-                                    </div>
+                        <div class="video-actor-header">
+							<h1><?php single_term_title(); ?></h1>
+                            <?php
 
-                                    <div class="col-sm-8">
-                                        <h1><?php single_term_title(); ?></h1>
+                            if($actor_image) {
+                            	echo '<img src="' . $actor_image['url'] . '" alt="' . $actor_image['alt'] . '" class="alignright img-fluid">';
+                            }
 
-                                        <?php
-                                        if ($actor_description) {
-                                            echo '<div class="actor-description"><h3>' . __('Über mich', 'amateurtheme') . '</h3>' . $actor_description . '</div>';
-                                        }
+							if ($actor_description) {
+								echo '<div class="video-actor-description">' . $actor_description . '</div>';
+							}
 
-                                        if ($actor_profile_url) {
-                                            echo '<p><a href="' . $actor_profile_url . '" target="_blank" rel="nofollow" class="btn btn-at">' . __('zum Profil', 'amateurtheme') . '</a></p>';
-                                        }
-                                        ?>
-                                    </div>
-                                </div>
-                            <?php } else { ?>
-                                <h1><?php single_term_title(); ?></h1>
+							if ($actor_profile_url) {
+								echo '<p><a href="' . $actor_profile_url . '" target="_blank" rel="nofollow" class="btn btn-primary">' . __('zum Profil', 'amateurtheme') . '</a></p>';
+							}
 
-                                <?php
-                                if ($actor_description) {
-                                    echo '<div class="actor-description"><h3>' . __('Über mich', 'amateurtheme') . '</h3>' . $actor_description . '</div>';
-                                }
-
-                                if ($actor_profile_url) {
-                                    echo '<p><a href="' . $actor_profile_url . '" target="_blank" rel="nofollow" class="btn btn-at">' . __('zum Profil', 'amateurtheme') . '</a></p>';
-                                }
-                                ?>
-                            <?php } ?>
+							?>
                         </div>
 
-                        <div class="actor-details">
+						<div class="divider"></div>
+
+                        <div class="video-actor-details">
                             <?php
+                            echo '<h2>' . __('Details', 'amateurtheme') . '</h2>';
                             $fields = array(
                                 __('Geschlecht', 'amateurtheme') => 'gender',
                                 __('Körpergröße', 'amateurtheme') => 'size',
@@ -88,21 +74,32 @@ $actor_profile_url = $actor->url();
                                 __('Alkohol', 'amateurtheme') => 'alcohol'
                             );
                             ?>
-                            <table class="table table-details">
-                                <tr>
-                                    <?php
-                                    $i=0;
-                                    foreach($fields as $k => $v) {
-                                        if($i%2==0 && $i!=0) echo '</tr><tr>';
+                            <table class="table table-bordered table-details">
+								<colgroup>
+									<col style="width: 20%">
+									<col style="width: 30%">
+									<col style="width: 20%">
+									<col style="width: 30%">
+								</colgroup>
+								<tbody>
+									<tr>
+										<?php
+										$i=0;
+										foreach($fields as $k => $v) {
+											if($i%2==0 && $i!=0) echo '</tr><tr>';
 
-                                        echo '<td class="row-label">' . $k . '</td><td class="row-value">' . $actor->field($v) . '</td>';
+											echo '<td class="td-label">' . $k . '</td><td class="td-value">' . $actor->field($v) . '</td>';
 
-                                        $i++;
-                                    }
-                                    ?>
-                                </tr>
+											$i++;
+										}
+										?>
+									</tr>
+								</tbody>
                             </table>
                         </div>
+
+						<div class="divider"></div>
+
                         <?php
                     } else {
                         // paged
@@ -112,7 +109,7 @@ $actor_profile_url = $actor->url();
                     }
                     ?>
 
-                    <div class="actor-videos">
+					<div id="video-list" class="video-actor">
                         <?php
                         if(!is_paged()) {
                             ?>
@@ -121,15 +118,17 @@ $actor_profile_url = $actor->url();
                         }
 
                         if (have_posts()) :
-                            echo '<div class="row">';
+                            echo '<div class="card-columns">';
                             while (have_posts()) : the_post();
                                 get_template_part('parts/video/loop', 'grid');
                             endwhile;
                             echo '</div>';
+                            echo '<div class="divider"></div>';
                             echo at_pagination(3);
                         endif;
                         ?>
                     </div>
+
                 </div>
             </div>
         </div>
