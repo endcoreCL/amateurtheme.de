@@ -170,3 +170,65 @@ function xcore_rmhtml_comment_display( $comment_to_display ) {
     $comment_to_display = str_replace( '&apos;', "'", $comment_to_display );
     return $comment_to_display;
 }
+
+/**
+ * WordPress Search by Taxonomie Terms
+ */
+add_filter('posts_where', 'at_search_in_terms_where');
+function at_search_in_terms_where($where){
+	global $wpdb;
+
+	if ( !is_admin() && is_search() ) {
+		$where .= "OR (t.name LIKE '%" . get_search_query() . "%' AND {$wpdb->posts} . post_status = 'publish')";
+	}
+
+	return $where;
+}
+
+add_filter('posts_join', 'at_search_in_terms_join');
+function at_search_in_terms_join($join){
+	global $wpdb;
+
+	if ( !is_admin() && is_search() ) {
+		$join .= "LEFT JOIN {$wpdb->term_relationships} tr ON {$wpdb->posts}.ID = tr.object_id INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id=tr.term_taxonomy_id INNER JOIN {$wpdb->terms} t ON t.term_id = tt.term_id";
+	}
+
+	return $join;
+}
+
+add_filter('posts_groupby', 'at_search_in_terms_groupby');
+function at_search_in_terms_groupby($groupby){
+	global $wpdb;
+
+	if ( !is_admin() && is_search() ) {
+		// we need to group on post ID
+		$groupby_id = "{$wpdb->posts} . ID";
+		if ( ! is_search() || strpos( $groupby, $groupby_id ) !== false ) {
+			return $groupby;
+		}
+
+		// groupby was empty, use ours
+		if ( ! strlen( trim( $groupby ) ) ) {
+			return $groupby_id;
+		}
+
+		// wasn't empty, append ours
+		return $groupby . ", " . $groupby_id;
+	}
+
+	return $groupby;
+}
+
+/**
+ * WordPress Search default post type
+ */
+add_filter('pre_get_posts', 'at_search_defaults');
+function at_search_defaults($query) {
+    if ($query->is_search && !is_admin() && !isset($_GET['post_type'])) {
+	    $query->set('post_type', 'video');
+    }
+
+	return $query;
+}
+
+
