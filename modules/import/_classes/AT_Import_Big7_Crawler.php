@@ -127,18 +127,24 @@ class AT_Import_Big7_Crawler {
         return false;
     }
 
-    function getAmateur($id, $videos = false) {
-        $data = $this->read('videos.json', array('u_id' => $id));
+    function getAmateur($uid) {
+	    global $wpdb;
 
-        if($data && !$videos) {
-            unset($data[0]['videos']);
-        }
+	    $database = new AT_Import_Big7_DB();
 
-        if(isset($data[0])) {
-            return $data[0];
-        }
+	    $data = $wpdb->get_results(
+		    "
+    		SELECT * FROM {$database->table_amateurs}
+    	  	WHERE uid = {$uid}
+    		",
+		    OBJECT
+	    );
 
-        return false;
+	    if($data) {
+		    return $data[0];
+	    }
+
+	    return false;
     }
 
     function getVideos($uid) {
@@ -150,7 +156,8 @@ class AT_Import_Big7_Crawler {
     		"
     		SELECT * FROM {$database->table_videos}
     	  	WHERE uid = {$uid}
-    		"
+    		",
+		    OBJECT
 	    );
 
     	if($data) {
