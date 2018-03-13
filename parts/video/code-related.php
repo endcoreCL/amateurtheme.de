@@ -28,12 +28,12 @@ if($video_category) {
 $related = new WP_Query($args);
 
 if($related->have_posts()) {
-    echo '<div class="video-related">';
-        echo '<div class="row">';
+    echo '<div id="video-list" class="video-related">';
+        echo '<div class="card-columns">';
             while($related->have_posts()) {
                 $related->the_post();
 
-                get_template_part('parts/video/loop', 'grid-small');
+                get_template_part('parts/video/loop', 'grid');
             }
         echo '</div>';
     echo '</div>';
