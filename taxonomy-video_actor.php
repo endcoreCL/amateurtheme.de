@@ -28,7 +28,6 @@ $actor_profile_url = $actor->url();
                         <div class="video-actor-header">
 							<h1><?php single_term_title(); ?></h1>
                             <?php
-
                             if($actor_image) {
                             	echo '<img src="' . $actor_image['url'] . '" alt="' . $actor_image['alt'] . '" class="alignright img-fluid">';
                             }
@@ -119,12 +118,12 @@ $actor_profile_url = $actor->url();
 
                         if (have_posts()) :
                             echo '<div class="card-columns">';
-                            while (have_posts()) : the_post();
-                                get_template_part('parts/video/loop', 'grid');
-                            endwhile;
+                                while (have_posts()) : the_post();
+                                    get_template_part('parts/video/loop', 'grid');
+                                endwhile;
                             echo '</div>';
                             echo '<div class="divider"></div>';
-                            echo at_pagination(3);
+                            echo at_pagination();
                         endif;
                         ?>
                     </div>

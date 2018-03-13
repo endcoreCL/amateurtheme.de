@@ -37,7 +37,7 @@ $term_id = $queried_object->term_id;
                             endwhile;
                             echo '</div>';
 	                        echo '<div class="divider"></div>';
-                            echo at_pagination(3);
+                            echo at_pagination();
                         endif;
                         ?>
                     </div>
