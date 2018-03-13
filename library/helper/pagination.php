@@ -8,7 +8,7 @@
  */
 
 
-function at_pagination($pages = '', $range = 2) {
+function at_pagination($pages = '', $range = 3) {
     $showitems = ($range * 2) + 1;
     global $paged;
 
