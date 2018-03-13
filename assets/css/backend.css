@@ -13,17 +13,6 @@
 .acf-repeater .acf-table .acf-row .acf-field .acf-label label {  margin: 0 !important;  }
 .acf-repeater .acf-table .acf-row:not(:first-of-type) .acf-field .acf-label { display: none !important; }
 
-
-
-
-
-
-
-
-
-
-
-
 /* HEADER */
 body[class*="import_page_at_import_"] #wpcontent { padding: 0; background: #fff; }
 body[class*="import_page_at_import_"] #wpfooter { display: none; }
@@ -81,6 +70,7 @@ body[class*="import_page_at_import_"] #wpcontent #at-import-page-wrap #checkConn
 body[class*="import_page_at_import_"] #wpcontent #at-import-page-wrap #importStatus { margin: 0 30px; }
 body[class*="import_page_at_import_"] #wpcontent #at-import-page-wrap #at-import-tabs { margin: 0 30px; }
 
+.success { background: rgba(90, 180, 40, 0.33); }
 
 /*
 #at-import-page-wrap .at-import-tabs-content .at-import-tab { display: none; }

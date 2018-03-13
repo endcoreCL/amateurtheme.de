@@ -1,2 +1,15 @@
+$near-white: $gray-100;
+$border: $gray-200;
+$gray-light: $gray-600;
+$gray: $gray-700;
+$gray-dark: $gray-800;
+
+@import "basics";
+@import "type";
 //@import "_test";
 //@import "_video";
+
+@import "videos";
+
+@import "content";
+@import "sidebar";
