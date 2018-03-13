@@ -41,7 +41,7 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
      */
     add_action('at_import_big7_import_videos_cronjob', 'at_import_big7_import_videos_cronjob');
     function at_import_big7_import_videos_cronjob($id) {
-        set_time_limit(120); // try to set time limit to 120 seconds
+        set_time_limit(180); // try to set time limit to 120 seconds
 
         global $wpdb;
         $cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
@@ -52,13 +52,19 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
             exit;
         }
 
-        $results = array('created' => 0, 'skipped' => 0, 'total' => 0, 'last_updated' => '');
+        $results = array('created' => 0, 'skipped' => 0, 'total' => 0, 'last_updated' => '', 'last_pos' => $cron->last_pos);
 
         at_error_log('Started cronjob (BIG7, ' . $id . ')');
 
         if ($cron) {
             $import = new AT_Import_Big7_Crawler();
-            $videos = $import->getVideos($cron->object_id);
+
+            if($cron->type == 'user') {
+	            $videos = $import->getVideos($cron->object_id);
+            } else {
+            	$import_limit = apply_filters('at_import_category_limit', 200);
+	            $videos = $import->getVideosByCategory($cron->name, ($cron->last_pos ? $cron->last_pos : 0), $import_limit);
+            }
 
             if ($videos) {
                 $actor = $cron->name;
@@ -116,6 +122,7 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
 
                             $results['created'] += 1;
                             $results['total'] += 1;
+	                        $results['last_pos'] += 1;
                             $results['last_activity'] = date("d.m.Y H:i:s");
 
                             // update cron table (processing)
@@ -126,6 +133,7 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
 	                    error_log($item->title);
                         $results['skipped'] += 1;
                         $results['total'] += 1;
+	                    $results['last_pos'] += 1;
                     }
                 }
             }
@@ -137,8 +145,6 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
             if($actor_need_update) {
             	// get actor data
 	            $actor = $import->getAmateur($cron->object_id);
-
-	            at_error_log(print_r($actor, true));
 
 	            if($actor) {
 		            $post_id = 'video_actor_' . $actor_need_update;
@@ -233,6 +239,7 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
                 array(
                     'processing' => 0,
                     'last_activity' => date("Y-m-d H:i:s"),
+	                'last_pos' => $results['last_pos']
                 ),
                 array(
                     'object_id' => $cron->object_id

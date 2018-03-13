@@ -101,31 +101,6 @@ class AT_Import_Big7_Crawler {
         return false;
     }
 
-    function getAmateurs($filter = true) {
-        $data = $this->read('amateure.json');
-
-        if($data) {
-            if($filter) {
-	            $amateurs = array();
-
-	            foreach($data as $k => $v) {
-		            if(!isset($v['anz_videos']) || $v['anz_videos'] === 0 || $v['anz_videos'] == '0') continue;
-
-		            $amateurs[] = array(
-			            'u_id' => $v['u_id'],
-			            'nickname' => $v['nickname'],
-			            'videos' => $v['anz_videos']
-		            );
-	            }
-
-	            return $amateurs;
-            }
-
-            return $data;
-        }
-
-        return false;
-    }
 
     function getAmateur($uid) {
 	    global $wpdb;
@@ -147,16 +122,37 @@ class AT_Import_Big7_Crawler {
 	    return false;
     }
 
-    function getVideos($uid) {
+	function getVideos($uid) {
+		global $wpdb;
+
+		$database = new AT_Import_Big7_DB();
+
+		$data = $wpdb->get_results(
+			"
+    		SELECT * FROM {$database->table_videos}
+    	  	WHERE uid = {$uid}
+    		",
+			OBJECT
+		);
+
+		if($data) {
+			return $data;
+		}
+
+		return false;
+	}
+
+    function getVideosByCategory($category, $offset = 0, $limit = 100) {
     	global $wpdb;
 
     	$database = new AT_Import_Big7_DB();
 
-    	$data = $wpdb->get_results(
-    		"
-    		SELECT * FROM {$database->table_videos}
-    	  	WHERE uid = {$uid}
-    		",
+	    $data = $wpdb->get_results(
+		    "
+            SELECT * FROM {$database->table_videos}
+            WHERE categories LIKE '%{$category}%'
+            LIMIT {$offset}, {$limit}
+            ",
 		    OBJECT
 	    );
 

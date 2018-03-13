@@ -46,6 +46,17 @@ jQuery(document).ready(function (e) {
     });
 
     /**
+     * Categories: Select
+     */
+    jQuery('.at-category-select').on('change', function (evt) {
+        var uid = jQuery(this).val();
+        var username = jQuery(this).find('option:selected').text();
+
+        jQuery('#categories form.at-cronjobs input[name="catid"]').attr('value', uid);
+        jQuery('#categories form.at-cronjobs input[name="catname"]').attr('value', username);
+    });
+
+    /**
      * Videos: Get videos
      */
     jQuery('form#at-get-videos').on('submit', function(e) {
