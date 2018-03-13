@@ -70,6 +70,8 @@ class AT_Import_Big7_Crawler {
             }
         }
 
+	    set_time_limit(0);
+
         $parser = new \JsonCollectionParser\Parser();
         $parser->parse($this->folder . '/' . $filename, [$this, 'json_callback'], true);
 
@@ -99,23 +101,27 @@ class AT_Import_Big7_Crawler {
         return false;
     }
 
-    function getAmateurs() {
+    function getAmateurs($filter = true) {
         $data = $this->read('amateure.json');
 
         if($data) {
-            $amateurs = array();
+            if($filter) {
+	            $amateurs = array();
 
-            foreach($data as $k => $v) {
-                if(!isset($v['anz_videos']) || $v['anz_videos'] === 0 || $v['anz_videos'] == '0') continue;
+	            foreach($data as $k => $v) {
+		            if(!isset($v['anz_videos']) || $v['anz_videos'] === 0 || $v['anz_videos'] == '0') continue;
 
-                $amateurs[] = array(
-                    'u_id' => $v['u_id'],
-                    'nickname' => $v['nickname'],
-                    'videos' => $v['anz_videos']
-                );
+		            $amateurs[] = array(
+			            'u_id' => $v['u_id'],
+			            'nickname' => $v['nickname'],
+			            'videos' => $v['anz_videos']
+		            );
+	            }
+
+	            return $amateurs;
             }
 
-            return $amateurs;
+            return $data;
         }
 
         return false;
@@ -133,5 +139,44 @@ class AT_Import_Big7_Crawler {
         }
 
         return false;
+    }
+
+    function getVideos($uid) {
+    	global $wpdb;
+
+    	$database = new AT_Import_Big7_DB();
+
+    	$data = $wpdb->get_results(
+    		"
+    		SELECT * FROM {$database->table_videos}
+    	  	WHERE uid = {$uid}
+    		"
+	    );
+
+    	if($data) {
+    		return $data;
+	    }
+
+	    return false;
+    }
+
+	function jsonAmateurs() {
+		$data = $this->read('amateure.json');
+
+		if($data) {
+			return $data;
+		}
+
+		return false;
+	}
+
+    function jsonVideos() {
+	    $data = $this->read('videos.json');
+
+	    if($data) {
+	    	return $data;
+	    }
+
+	    return false;
     }
 }

@@ -43,8 +43,6 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
     function at_import_big7_import_videos_cronjob($id) {
         set_time_limit(120); // try to set time limit to 120 seconds
 
-        $id = 48;
-
         global $wpdb;
         $cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
 
@@ -60,15 +58,15 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
 
         if ($cron) {
             $import = new AT_Import_Big7_Crawler();
-            $videos = $import->getAmateur($cron->object_id, true);
+            $videos = $import->getVideos($cron->object_id);
 
-            if ($videos['videos']) {
-                $actor = $videos['nickname'];
+            if ($videos) {
+                $actor = $cron->name;
 
-                foreach ($videos['videos'] as $item) {
-                    $unique_id = md5($item['name']);
+                foreach ($videos as $item) {
+                    $video_id = $item->video_id;
 
-                    $video = new AT_Import_Video($unique_id);
+                    $video = new AT_Import_Video($video_id);
 
                     if ($video->unique) {
                         // update cron table (processing)
@@ -82,8 +80,8 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
                             )
                         );
 
-                        $title = (get_option('at_big7_fsk18') == 1 ? $item['name'] : $item['name_sc']);
-                        $description = (get_option('at_big7_fsk18') == 1 ? $item['beschreibung'] : $item['beschreibung_sc']);
+                        $title = (get_option('at_big7_fsk18') == 1 ? $item->title : $item->title_sc);
+                        $description = (get_option('at_big7_fsk18') == 1 ? $item->description : $item->description_sc);
 
                         if(get_option('at_big7_video_description') != '1') {
                             $description = '';
@@ -99,16 +97,16 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
                             }
 
                             // thumbnail
-                            if ($item['vorschaubild_hc']) {
-                                $video->set_thumbnail($item['vorschaubild_hc']);
+                            if ($item->preview) {
+                                $video->set_thumbnail($item->preview);
                             }
 
                             // category
-                            $categories = $item['kategorien'];
-                            if ($categories) {
+                            $categories = explode(',', $item->categories);
+                            if (is_array($categories)) {
                                 foreach ($categories as $cat) {
-                                    if ($cat['name']) {
-                                        $video->set_term('video_category', $cat['name']);
+                                    if ($cat) {
+                                        $video->set_term('video_category', $cat);
                                     }
                                 }
                             }
@@ -125,6 +123,7 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
                         }
                     } else {
                         // video already exist
+	                    error_log($item->title);
                         $results['skipped'] += 1;
                         $results['total'] += 1;
                     }

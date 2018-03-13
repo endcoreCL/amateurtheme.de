@@ -8,8 +8,8 @@
  */
 
 // Classes
-require_once('classes/AT_Import_MDH_Crawler.php');
-require_once('classes/AT_Import_MDH_DB.php');
+require_once(XCORE_MODULES . '/import/_classes/AT_Import_MDH_Crawler.php');
+require_once(XCORE_MODULES . '/import/_classes/AT_Import_MDH_DB.php');
 
 // General
 require_once('database.php');

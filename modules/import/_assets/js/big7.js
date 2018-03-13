@@ -10,7 +10,7 @@ jQuery(document).ready(function (e) {
             data: function (params) {
                 return {
                     q: params.term,
-                    action: 'at_mdh_amateurs'
+                    action: 'at_big7_amateurs'
                 };
             },
             processResults: function( data ) {
@@ -57,7 +57,7 @@ jQuery(document).ready(function (e) {
 
         loader.addClass('is-active');
 
-        jQuery.get(ajaxurl + '?&action=at_import_mdh_get_videos', jQuery(this).serialize()).done(function (data) {
+        jQuery.get(ajaxurl + '?&action=at_import_big7_get_videos', jQuery(this).serialize()).done(function (data) {
             var target = jQuery('#videos-wrapper table tbody');
 
             if (data != "[]") {
@@ -71,42 +71,6 @@ jQuery(document).ready(function (e) {
                 });
 
                 jQuery('#videos-wrapper .tablenav .video-count span').html(jQuery('#videos-wrapper tbody tr').length);
-            } else {
-                jQuery(target).html('<tr><th scope="row" class="check-column"><input type="checkbox" id="cb-select-0" name="video[]" value="0" disabled></th><td colspan="5">Es wurden keine (neuen) Videos gefunden.</td></tr>')
-            }
-        }).always(function () {
-            loader.removeClass('is-active');
-        });
-
-        e.preventDefault();
-    });
-
-    /**
-     * Videos: Get top videos
-     */
-    jQuery('form#at-get-top-videos').on('submit', function(e) {
-        var loader = jQuery(this).find('.spinner');
-
-        if (loader.hasClass('is-active')) {
-            return;
-        }
-
-        loader.addClass('is-active');
-
-        jQuery.get(ajaxurl + '?&action=at_import_mdh_get_top_videos', jQuery(this).serialize()).done(function (data) {
-            var target = jQuery('#top-videos-wrapper table tbody');
-
-            if (data != "[]") {
-                var items = JSON.parse(data);
-
-                jQuery(target).html('');
-
-                jQuery.each(items, function (i, item) {
-                    var html = at_get_videos_html(item);
-                    jQuery(target).append(html);
-                });
-
-                jQuery('#top-videos-wrapper .tablenav .video-count span').html(jQuery('#top-videos-wrapper tbody tr').length);
             } else {
                 jQuery(target).html('<tr><th scope="row" class="check-column"><input type="checkbox" id="cb-select-0" name="video[]" value="0" disabled></th><td colspan="5">Es wurden keine (neuen) Videos gefunden.</td></tr>')
             }
@@ -226,19 +190,19 @@ var at_crawl_amateurs = function(next_offset) {
  */
 var at_get_videos_html = function(item) {
     if (item.imported == 'true') {
-        var html = '<tr id="video-' + item.id + '" class="video video-' + item.id + ' success imported">';
-        html += '<th scope="row" class="check-column"><input type="checkbox" id="cb-select-' + item.id + '" name="video[]" value="' + item.id + '" disabled></th>';
+        var html = '<tr id="video-' + item.video_id + '" class="video video-' + item.video_id + ' success imported">';
+        html += '<th scope="row" class="check-column"><input type="checkbox" id="cb-select-' + item.video_id + '" name="video[]" value="' + item.id + '" disabled></th>';
     } else {
-        var html = '<tr id="video-' + item.id + '" class="video video-' + item.id + '">';
-        html += '<th scope="row" class="check-column"><input type="checkbox" id="cb-select-' + item.id + '" name="video[]" value="' + item.id + '"></th>';
+        var html = '<tr id="video-' + item.video_id + '" class="video video-' + item.video_id + '">';
+        html += '<th scope="row" class="check-column"><input type="checkbox" id="cb-select-' + item.video_id + '" name="video[]" value="' + item.id + '"></th>';
     }
 
-    html += '<td class="image"><img src="' + item.image + '" alt="" style="max-width:60px;"/></td>';
+    html += '<td class="image"><img src="' + item.preview + '" alt="" style="max-width:60px;"/></td>';
     html += '<td class="title">' + item.title + '</td>';
-    html += '<td class="duration">' + item.runtime + '</td>';
+    html += '<td class="duration">' + item.duration + '</td>';
     html += '<td class="rating">' + item.rating + '</td>';
     html += '<td class="description" style="display:none;">' + item.description + '</td>';
-    html += '<td class="time">' + item.releasetime + '</td>';
+    html += '<td class="time">' + item.date + '</td>';
     html += '</tr>';
 
     return html;

@@ -1,6 +1,6 @@
 <?php
 /**
- * Loading mydirtyhobby mydirtyhobby database helper functions
+ * Loading mydirtyhobby database helper functions
  *
  * @author		Christian Lang
  * @version		1.0

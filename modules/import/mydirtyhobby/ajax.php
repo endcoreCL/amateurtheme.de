@@ -207,7 +207,7 @@ if ( ! function_exists( 'at_import_mdh_get_category_videos' ) ) {
             foreach ($response as $item) {
                 $item->imported = "false";
 
-                $unique = at_import_check_if_video_exists($item->id);
+                $unique = at_import_check_if_video_exists($item->video_id);
 
                 if (!$unique) {
                     $item->imported = "true";
@@ -218,4 +218,33 @@ if ( ! function_exists( 'at_import_mdh_get_category_videos' ) ) {
         echo json_encode($response);
         exit;
     }
+}
+
+add_action('wp_ajax_at_mdh_amateurs', 'at_import_mdh_amateurs_select');
+function at_import_mdh_amateurs_select() {
+	global $wpdb;
+
+	$database = new AT_Import_MDH_DB();
+
+	$q = (isset($_GET['q']) ? $_GET['q'] : false);
+
+	if(!$q) {
+		die();
+	}
+
+	$limit = 500;
+
+	$output = array();
+
+	$items = $wpdb->get_results('SELECT * FROM ' . $database->table_amateurs . ' WHERE username LIKE "%' . $q . '%" LIMIT 0,' . $limit);
+
+	if($items) {
+		foreach($items as $item) {
+			$output[] = array($item->uid, $item->username);
+		}
+	}
+
+	echo json_encode($output);
+
+	die();
 }

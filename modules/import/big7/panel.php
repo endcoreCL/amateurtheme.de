@@ -27,7 +27,6 @@ function at_import_big7_panel() {
 
     $import = new AT_Import_Big7_Crawler();
     $cronjobs = new AT_Import_Cron();
-    $amateurs = $import->getAmateurs();
     ?>
 
     <div class="ajax-loader">
@@ -47,7 +46,6 @@ function at_import_big7_panel() {
 				<a class="nav-tab nav-tab-active" id="settings-tab" href="#top#settings"><?php _e('Einstellungen', 'amateurtheme'); ?></a>
 				<a class="nav-tab" id="amateurs-tab" href="#top#amateurs"><?php _e('Amateure', 'amateurtheme'); ?></a>
 				<a class="nav-tab" id="videos-tab" href="#top#videos"><?php _e('Videos', 'amateurtheme'); ?></a>
-				<a class="nav-tab" id="topvideos-tab" href="#top#topvideos"><?php _e('Top Videos', 'amateurtheme'); ?></a>
 				<a class="nav-tab" id="categories-tab" href="#top#categories"><?php _e('Kategorien', 'amateurtheme'); ?></a>
 				<a class="nav-tab" id="apilog-tab" href="#top#apilog"><?php _e('API Log', 'amateurtheme'); ?></a>
 			</h2>
@@ -141,15 +139,6 @@ function at_import_big7_panel() {
                                             else :
                                                 $last_update = '-';
                                             endif;
-
-                                            $amateur_videos = 0;
-                                            if($amateurs) {
-                                                foreach($amateurs as $c) {
-                                                    if($c['u_id'] == $item->object_id) {
-                                                        $amateur_videos = $c['videos'];
-                                                    }
-                                                }
-                                            }
                                             ?>
                                             <tr>
                                                 <td class="cron-name">
@@ -158,10 +147,10 @@ function at_import_big7_panel() {
                                                     </a>
                                                 </td>
                                                 <td class="cron-video-count">
-                                                    <?php echo $amateur_videos; ?>
+	                                                <?php echo at_import_big7_get_video_count($item->object_id); ?>
                                                 </td>
                                                 <td class="cron-video-imported">
-                                                    <?php echo at_import_big7_get_video_count($item->object_id); ?>
+                                                    <?php echo at_import_big7_get_imported_video_count($item->object_id); ?>
                                                 </td>
                                                 <td class="cron-last-update">
                                                     <?php echo $last_update; ?>
@@ -185,23 +174,9 @@ function at_import_big7_panel() {
                                     <tfoot>
                                     <tr>
                                         <td colspan="6">
-                                            <?php
-
-                                            if($amateurs) {
-                                                ?>
-                                                <select name="amateur" class="form-control at-amateur-select">
-                                                    <option value=""><?php _e('Amateur auswählen', 'amateurtheme'); ?></option>
-                                                    <?php
-                                                    foreach($amateurs as $amateur) {
-                                                        ?>
-                                                        <option value="<?php echo $amateur['u_id']; ?>"><?php echo $amateur['nickname'] ?></option>
-                                                        <?php
-                                                    }
-                                                    ?>
-                                                </select>
-                                                <?php
-                                            }
-                                            ?>
+                                            <select name="amateur" class="form-control at-amateur-select">
+                                                <option value=""><?php _e('Amateur auswählen', 'amateurtheme'); ?></option>
+                                            </select>
                                             <input type="text" name="uid" id="uid" class="form-control" placeholder="<?php _e('User ID', 'amateurtheme'); ?>"/>
                                             <input type="text" name="username" id="username" class="form-control" placeholder="<?php _e('Username', 'amateurtheme'); ?>"/>
                                             <input type="hidden" name="network" value="big7" />
@@ -407,177 +382,6 @@ function at_import_big7_panel() {
                     </div>
                 </div>
                 <!-- END: Videos Tab-->
-
-                <!-- START: Top Videos Tab-->
-                <div id="topvideos" class="at-import-tab">
-                    <div class="metabox-holder postbox no-padding-top">
-                        <h3 class="hndle"><span>TOP Videos</span></h3>
-                        <div class="inside">
-                            <form method="post" id="at-get-top-videos">
-                                <button name="submit" type="submit" class="btn btn-at" style="float:left;"><?php _e('Videos abrufen', 'amateurtheme'); ?></button>
-                                <div class="spinner" style="display:inline;float:left;"></div>
-                                <div style="clear:both;"></div>
-                            </form>
-                        </div>
-                    </div>
-
-                    <div id="top-videos-wrapper">
-                        <form id="posts-filter" method="post">
-                            <div class="tablenav top">
-                                <div class="alignleft actions bulkactions">
-                                    <label for="bulk-action-selector-bottom" class="screen-reader-text"><?php _e('Mehrfachauswahl', 'amateurtheme'); ?></label>
-                                    <select name="video_category" id="video_category">
-                                        <option value="-1" selected="selected"><?php _e('Kategorie wählen', 'amateurtheme'); ?></option>
-                                        <?php
-                                        $video_category = get_terms('video_category', 'orderby=name&hide_empty=0');
-                                        if ($video_category) {
-                                            foreach ($video_category as $term) {
-                                                ?>
-                                                <option value="<?php echo $term->slug; ?>"><?php echo $term->name; ?></option>
-                                                <?php
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-
-                                    <select name="video_actor" id="video_actor">
-                                        <option value="-1" selected="selected"><?php _e('Darsteller wählen', 'amateurtheme'); ?></option>
-                                        <?php
-                                        $video_actor = get_terms('video_actor', 'orderby=name&hide_empty=0');
-                                        if ($video_actor) {
-                                            foreach ($video_actor as $term) {
-                                                ?>
-                                                <option value="<?php echo $term->slug; ?>"><?php echo $term->name; ?></option>
-                                                <?php
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-                                    <button name="" class="start-import button"><?php _e('Ausgewählte Videos importieren', 'amateurtheme'); ?></button>
-                                </div>
-                                <div class="tablenav-pages one-page">
-                                    <span class="displaying-num  video-count"><span>0</span> Videos</span>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-                            <table class="wp-list-table widefat fixed videos">
-                                <colgroup>
-                                    <col width="">
-                                    <col width="10%">
-                                    <col width="60%">
-                                    <col width="10%">
-                                    <col width="10%">
-                                    <col width="10%">
-                                </colgroup>
-
-                                <thead>
-                                <tr>
-                                    <th scope="col" id="cb" class="manage-column column-cb check-column" style="">
-                                        <label class="screen-reader-text" for="cb-select-all-1"><?php _e('Beschreibung', 'amateurtheme'); ?></label>
-                                        <input id="cb-select-all-1" type="checkbox">
-                                    </th>
-                                    <th scope="col" id="image" class="manage-column column-image" style="">
-                                        <span><?php _e('Vorschau', 'amateurtheme'); ?></span>
-                                    </th>
-                                    <th scope="col" id="title" class="manage-column column-title" style="">
-                                        <span><?php _e('Titel', 'amateurtheme'); ?></span>
-                                    </th>
-                                    <th scope="col" id="duration" class="manage-column column-duration" style="">
-                                        <span><?php _e('Länge', 'amateurtheme'); ?></span>
-                                    </th>
-                                    <th scope="col" id="rating" class="manage-column column-duration" style="">
-                                        <span><?php _e('Bewertung', 'amateurtheme'); ?></span>
-                                    </th>
-                                    <th scope="col" id="description" class="manage-column column-description" style="display:none;">
-                                        <span><?php _e('Beschreibung', 'amateurtheme'); ?></span>
-                                    </th>
-                                    <th scope="col" id="time" class="manage-column column-time" style="">
-                                        <span><?php _e('Datum', 'amateurtheme'); ?></span>
-                                    </th>
-                                </tr>
-                                </thead>
-
-                                <tbody id="the-list">
-                                <tr>
-                                    <td>-</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                </tbody>
-
-                                <tfoot>
-                                <tr>
-                                    <th scope="col" id="cb" class="manage-column column-cb check-column" style="">
-                                        <label class="screen-reader-text" for="cb-select-all-1"><?php _e('Beschreibung', 'amateurtheme'); ?></label>
-                                        <input id="cb-select-all-1" type="checkbox">
-                                    </th>
-                                    <th scope="col" id="image" class="manage-column column-image" style="width:100px;">
-                                        <span><?php _e('Vorschau', 'amateurtheme'); ?></span>
-                                    </th>
-                                    <th scope="col" id="title" class="manage-column column-title" style="">
-                                        <span><?php _e('Titel', 'amateurtheme'); ?></span>
-                                    </th>
-                                    <th scope="col" id="duration" class="manage-column column-duration" style="">
-                                        <span><?php _e('Länge', 'amateurtheme'); ?></span>
-                                    </th>
-                                    <th scope="col" id="rating" class="manage-column column-duration" style="">
-                                        <span><?php _e('Bewertung', 'amateurtheme'); ?></span>
-                                    </th>
-                                    <th scope="col" id="description" class="manage-column column-description" style="display:none;">
-                                        <span><?php _e('Beschreibung', 'amateurtheme'); ?></span>
-                                    </th>
-                                    <th scope="col" id="time" class="manage-column column-time" style="">
-                                        <span><?php _e('Datum', 'amateurtheme'); ?></span>
-                                    </th>
-                                </tr>
-                                </tfoot>
-                            </table>
-                            <div class="tablenav bottom">
-                                <div class="alignleft actions bulkactions">
-                                    <label for="bulk-action-selector-bottom" class="screen-reader-text"><?php _e('Mehrfachauswahl', 'amateurtheme'); ?></label>
-                                    <select name="video_category" id="video_category">
-                                        <option value="-1" selected="selected"><?php _e('Kategorie wählen', 'amateurtheme'); ?></option>
-                                        <?php
-                                        $video_category = get_terms('video_category', 'orderby=name&hide_empty=0');
-                                        if ($video_category) {
-                                            foreach ($video_category as $term) {
-                                                ?>
-                                                <option value="<?php echo $term->slug; ?>"><?php echo $term->name; ?></option>
-                                                <?php
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-
-                                    <select name="video_actor" id="video_actor">
-                                        <option value="-1" selected="selected"><?php _e('Darsteller wählen', 'amateurtheme'); ?></option>
-                                        <?php
-                                        $video_actor = get_terms('video_actor', 'orderby=name&hide_empty=0');
-                                        if ($video_actor) {
-                                            foreach ($video_actor as $term) {
-                                                ?>
-                                                <option value="<?php echo $term->slug; ?>"><?php echo $term->name; ?></option>
-                                                <?php
-                                            }
-                                        }
-                                        ?>
-                                    </select>
-                                    <button name="" class="start-import button"><?php _e('Ausgewählte Videos importieren', 'amateurtheme'); ?></button>
-                                </div>
-                                <div class="tablenav-pages one-page">
-                                    <span class="displaying-num  video-count"><span>0</span> Videos</span>
-                                </div>
-                                <br class="clear">
-                            </div>
-                            <div class="clear"></div>
-                        </form>
-                        <div class="clear"></div>
-                    </div>
-                </div>
-                <!-- END: Top Videos Tab-->
 
                 <!-- START: Categories Tab-->
                 <div id="categories" class="at-import-tab">

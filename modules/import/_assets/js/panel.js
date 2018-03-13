@@ -14,36 +14,6 @@ jQuery(document).ready(function (e) {
     var a = window.location.hash.replace("#top#", "");
     ("" == a || "#_=_" == a) && (a = jQuery(".at-import-tabs-content .at-import-tab").attr("id")), jQuery('.at-import-tabs-nav a').removeClass('nav-tab-active'), jQuery('.at-import-tabs-content .at-import-tab').removeClass('active'), jQuery("#" + a).addClass("active"), jQuery("#" + a + "-tab").addClass("nav-tab-active");
 
-    /**
-     * Get amateur select
-     */
-    jQuery('.at-amateur-select').select2({
-        ajax: {
-            url: ajaxurl,
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-                return {
-                    q: params.term,
-                    action: 'at_mdh_amateurs'
-                };
-            },
-            processResults: function( data ) {
-                var options = [];
-                if ( data ) {
-                    jQuery.each( data, function( index, text ) {
-                        options.push( { id: text[0], text: text[1]  } );
-                    });
-                }
-                return {
-                    results: options
-                };
-            },
-            cache: true
-        },
-        minimumInputLength: 2
-    });
-
     jQuery('.at-amateur-select').on('select2:select', function (evt) {
         var uid = jQuery(this).val();
         var username = jQuery(this).find('option:selected').text();
