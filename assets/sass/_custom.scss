@@ -30,19 +30,18 @@ $enable-transitions:    true ;
 // VARIABLES: FONTS (BASE)
 $font-family-base:      'Open Sans';
 $font-weight-normal:    400;
-$line-height-base:      1.5;
-$at-font-color-base:    #6c757d;
+$line-height-base:      1.75 ;
+$at-font-color-base:    #c6b6d3;
 $at-font-style-base:    normal;
 
 // VARIABLES: FONTS (HEADLINES)
 $headings-font-family:      'Open Sans';
 $headings-font-weight:      700;
-$headings-line-height:      1.25;
-$headings-color:            #343a40;
+$headings-line-height:      1.25 ;
+$headings-color:            #c255d6;
 $at-headings-font-style:    normal;
 
 // VARIABLES: CUSTOM
 $at-body-bg:    #e9ecef ;
 $box-shadow:	0 5px 15px rgba($gray-800, 0.15);
-$transition:	all 0.25s;
-$border-radius:	5px;
+$transition:	all 0.25s; $border-radius:	5px;  

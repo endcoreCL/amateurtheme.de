@@ -5,7 +5,6 @@
 	@extend .py-3;
 }
 
-
 // ALIGNMENT
 .alignleft { float: left; margin: 0 1rem 1rem 0; }
 .aligncenter { display: block; margin: 0 auto 1rem auto; }
@@ -17,8 +16,6 @@
 @include media-breakpoint-only(sm) {
 	.alignleft, .aligncenter, .alignright, .alignnone { margin: 0 auto 1rem auto; display: block; float: none; clear: both; }
 }
-
-
 
 // WORDPRESS STUFF
 .wp-smiley { height: 16px; width: auto; max-width: 16px; }

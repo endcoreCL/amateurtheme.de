@@ -36,7 +36,7 @@ p.empty { padding: 0; margin: 0; line-height: 0; }
 img[class*="wp-image-"],
 img[class*="attachment-"] { max-width: 100%; height: auto; display: block; }
 hr { border-color: $border; margin: 1rem auto; }
-a {
+a:not(.btn):not(.dropdown-item) {
 	color: $primary; transition: $transition;
 	&:hover, &:focus, &:active, &:active:hover, &:active:focus { color: $gray-dark; outline: none; }
 }

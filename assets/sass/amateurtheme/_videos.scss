@@ -14,7 +14,7 @@
 #video-list .card-video-grid > a:focus img { opacity: 0.25; }
 #video-list .card-video-grid .card-body { padding: 1rem; }
 #video-list .card-video-grid .card-title { font-size: 1rem; min-height: 2.5rem; }
-#video-list .card-video-grid .card-title a { color: $gray-dark; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+#video-list .card-video-grid .card-title a { color: $headings-color; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 #video-list .card-video-grid .card-title a:hover,
 #video-list .card-video-grid .card-title a:focus { color: $primary; text-decoration: none; }
 #video-list .card-video-grid .list-meta { margin: 0; font-size: 0.875rem; color: $gray-light; }
