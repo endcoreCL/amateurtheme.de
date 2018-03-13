@@ -43,7 +43,7 @@
 							echo '</div>';
 						}
 
-						echo at_pagination( 3 );
+						echo at_pagination();
 					else :
 						echo '<p>' . __('Deine Suche ergab keine Treffer.', 'amateurtheme') . '</p>';
 					endif;
