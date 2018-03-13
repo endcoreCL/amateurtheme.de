@@ -1,0 +1,42 @@
+/* TYPE.SCSS */
+
+@include media-breakpoint-only(xs) {
+	html { font-size: 14px; }
+}
+@include media-breakpoint-only(sm) {
+	html { font-size: 14px; }
+}
+@include media-breakpoint-only(md) {
+	html { font-size: 15px; }
+}
+@include media-breakpoint-only(lg) {
+	html { font-size: 15px; }
+}
+@include media-breakpoint-only(xl) {
+	html { font-size: 16px; }
+}
+
+body {
+	background-color: $at-body-bg; // can't use $body-bg because it's used as a variable in multiple places
+	font-style: $at-font-style-base; // $font-style-base has not been considered in bootstrap yet
+	color: $at-font-color-base; // can't use $body-color because it is used as a variable in multiple places.
+	line-height: 1.75;
+	font-size: 1rem;
+}
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+	font-style: $at-headings-font-style; // $headings-font-style has not been considered in bootstrap yet
+	line-height: 1.25;
+	margin: 0 0 1rem 0;
+}
+::selection { color: $white; background: $primary; text-shadow: none; }
+::-moz-selection { color: $white; background: $primary; text-shadow: none; }
+p, ol, ul, table, blockquote, .alert { margin: 0 0 1rem 0; }
+p.empty { padding: 0; margin: 0; line-height: 0; }
+img[class*="wp-image-"],
+img[class*="attachment-"] { max-width: 100%; height: auto; display: block; }
+hr { border-color: $border; margin: 1rem auto; }
+a {
+	color: $primary; transition: $transition;
+	&:hover, &:focus, &:active, &:active:hover, &:active:focus { color: $gray-dark; outline: none; }
+}

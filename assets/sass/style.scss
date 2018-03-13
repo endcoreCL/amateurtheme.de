@@ -10,13 +10,11 @@ Version: 1.0
 // CUSTOM
 @import "_custom";
 
-// VARIABLES
-@import "_variables";
-
 // BOOTSTRAP		| 2018-01-18 | 4.0.0 | https://github.com/twbs/bootstrap/releases
 @import "bootstrap/bootstrap";
 
 // FONT AWESOME		| 2018-03-01 | 5.0.8 | https://github.com/FortAwesome/Font-Awesome/releases
+$fa-font-path: "assets/fonts";
 @import "fontawesome/fa-brands";
 @import "fontawesome/fa-regular";
 @import "fontawesome/fa-solid";
