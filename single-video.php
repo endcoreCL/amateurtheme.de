@@ -11,7 +11,7 @@ $video = new AT_Video(get_the_ID());
             <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
                 <div class="video-summary">
                     <div class="row">
-                        <div class="col-9">
+                        <div class="col-10">
                             <div class="video-thumb-container">
                                 <?php
                                 $external_url = $video->external_url();
@@ -30,7 +30,7 @@ $video = new AT_Video(get_the_ID());
                             <div class="video-info">
                                 <h1><?php echo $video->title(); ?></h1>
 
-                                <ul class="list-inline">
+                                <ul class="list-inline list-meta">
                                     <li class="list-inline-item video-views">
                                         <i class="fa fa-eye"  aria-hidden="true"></i> <?php echo $video->views(); ?>
                                     </li>
@@ -41,11 +41,11 @@ $video = new AT_Video(get_the_ID());
 
                                 <hr>
 
-                                <?php echo get_the_term_list(get_the_ID(), 'video_category', '<span class="badge badge-default">', '</span> <span class="badge badge-default">', '</span>'); ?>
+                                <?php echo get_the_term_list(get_the_ID(), 'video_category', '<span class="badge badge-dark">', '</span> <span class="badge badge-dark">', '</span>'); ?>
                             </div>
                         </div>
 
-                        <div class="col-3">
+                        <div class="col-2">
                             <?php get_sidebar(); ?>
                         </div>
                     </div>
