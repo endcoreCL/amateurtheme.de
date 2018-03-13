@@ -403,72 +403,80 @@ function at_import_big7_panel() {
                             <form method="post" class="form-inline at-cronjobs">
                                 <table class="at-table at-import-table">
                                     <thead>
-                                    <tr>
-                                        <th><?php _e('Name', 'amateurtheme'); ?></th>
-                                        <th><?php _e('Videos (gesamt)', 'amateurtheme'); ?></th>
-                                        <th><?php _e('Importierte Videos', 'amateurtheme'); ?></th>
-                                        <th><?php _e('Zuletzt akutalisiert', 'amateurtheme'); ?></th>
-                                        <th><?php _e('Aktion', 'amateurtheme'); ?></th>
-                                    </tr>
+                                        <tr>
+                                            <th><?php _e('Name', 'amateurtheme'); ?></th>
+                                            <th><?php _e('Videos (gesamt)', 'amateurtheme'); ?></th>
+                                            <th><?php _e('Importierte Videos', 'amateurtheme'); ?></th>
+                                            <th><?php _e('Zuletzt akutalisiert', 'amateurtheme'); ?></th>
+                                            <th><?php _e('Aktion', 'amateurtheme'); ?></th>
+                                        </tr>
                                     </thead>
 
                                     <tbody>
-                                    <?php
-                                    $args = array(
-                                        'network' => 'big7',
-                                        'type' => 'category'
-                                    );
-                                    $categories = $cronjobs->get($args);
-                                    if ($categories) :
-                                        foreach ($categories as $item) :
-                                            $last_update = new DateTime($item->last_activity);
-                                            if(checkdate($last_update->format('m'), $last_update->format('d'), $last_update->format('Y'))) :
-                                                $last_update = $last_update->format('d.m.Y H:i:s');
-                                            else :
-                                                $last_update = '-';
-                                            endif;
-                                            ?>
-                                            <tr>
-                                                <td class="cron-name">
-                                                    <a href="#" class="username-edit" data-user-id="<?php echo $item->object_id; ?>">
-                                                        <?php echo $item->name; ?>
-                                                    </a>
-                                                </td>
-                                                <td class="cron-video-count">
-                                                    <?php echo at_import_big7_get_video_count($item->object_id); ?>
-                                                </td>
-                                                <td class="cron-video-imported">
-                                                    <?php echo at_import_big7_get_video_count($item->object_id, true); ?>
-                                                </td>
-                                                <td class="cron-last-update">
-                                                    <?php echo $last_update; ?>
-                                                </td>
-                                                <td class="cron-action">
-                                                    <?php if($item->scrape == 0) : ?>
-                                                        <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="scrape" data-value="1"><?php _e('Scrape aktivieren', 'amateurtheme'); ?></a>
-                                                    <?php else: ?>
-                                                        <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="scrape" data-value="0"><?php _e('Scrape deaktivieren', 'amateurtheme'); ?></a>
-                                                    <?php endif; ?>
-                                                    |
-                                                    <?php if($item->import == 0) : ?>
-                                                        <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="import" data-value="1"><?php _e('Import aktivieren', 'amateurtheme'); ?></a>
-                                                    <?php else: ?>
-                                                        <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="import" data-value="0"><?php _e('Import deaktivieren', 'amateurtheme'); ?></a>
-                                                    <?php endif; ?>
-                                                    |
-                                                    <a href="#" class="cron-delete" data-id="<?php echo $item->id; ?>"><?php _e('löschen', 'amateurtheme'); ?></a>
-                                                </td>
-                                            </tr>
-                                        <?php endforeach; ?>
-
-                                    <?php endif; ?>
+                                        <?php
+                                        $args = array(
+                                            'network' => 'big7',
+                                            'type' => 'category'
+                                        );
+                                        $categories = $cronjobs->get($args);
+                                        if ($categories) :
+                                            foreach ($categories as $item) :
+                                                $last_update = new DateTime($item->last_activity);
+                                                if(checkdate($last_update->format('m'), $last_update->format('d'), $last_update->format('Y'))) :
+                                                    $last_update = $last_update->format('d.m.Y H:i:s');
+                                                else :
+                                                    $last_update = '-';
+                                                endif;
+                                                ?>
+                                                <tr>
+                                                    <td class="cron-name">
+                                                        <a href="#" class="username-edit" data-user-id="<?php echo $item->object_id; ?>">
+                                                            <?php echo $item->name; ?>
+                                                        </a>
+                                                    </td>
+                                                    <td class="cron-video-count">
+                                                        <?php echo at_import_big7_get_category_video_count($item->name); ?>
+                                                    </td>
+                                                    <td class="cron-video-imported">
+                                                        <?php echo at_import_big7_get_category_imported_video_count($item->name); ?>
+                                                    </td>
+                                                    <td class="cron-last-update">
+                                                        <?php echo $last_update; ?>
+                                                    </td>
+                                                    <td class="cron-action">
+                                                        <?php if($item->import == 0) : ?>
+                                                            <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="import" data-value="1"><?php _e('Import aktivieren', 'amateurtheme'); ?></a>
+                                                        <?php else: ?>
+                                                            <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="import" data-value="0"><?php _e('Import deaktivieren', 'amateurtheme'); ?></a>
+                                                        <?php endif; ?>
+                                                        |
+                                                        <a href="#" class="cron-delete" data-id="<?php echo $item->id; ?>"><?php _e('löschen', 'amateurtheme'); ?></a>
+                                                    </td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
                                     </tbody>
 
                                     <tfoot>
                                     <tr>
-                                        <td><input name="catid" id="catid" class="form-control" placeholder="ID"/> <a href="#" id="new-catslug-help"><i class="fa fa-question-circle"></i></a</td>
-                                        <td><input name="catname" id="catname" class="form-control" placeholder="Name der Kategorie"/></td>
-                                        <td colspan="4">
+                                        <td>
+                                            <select name="category" class="form-control at-category-select">
+                                                <option value=""><?php _e('Kategorie auswählen', 'amateurtheme'); ?></option>
+                                                <?php
+                                                $categories = at_import_big7_get_categories();
+                                                if($categories) {
+                                                    foreach($categories as $k => $v) {
+                                                        if($v == 'Alle') continue;
+
+                                                        ?><option value="<?php echo $k; ?>"><?php echo $v; ?></option><?php
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                        </td>
+                                        <td colspan="5">
+                                            <input type="hidden" name="catid" value="" />
+                                            <input type="hidden" name="catname" value="" />
                                             <input type="hidden" name="network" value="big7" />
                                             <input type="hidden" name="type" value="category" />
                                             <button name="submit" type="submit" class="btn btn-at"><?php _e('Kategorie hinzufügen', 'amateurtheme'); ?></button>
@@ -491,31 +499,31 @@ function at_import_big7_panel() {
                             <p><a href="" class="clear-api-log button" data-type="big7"><?php _e('Log löschen', 'amateurtheme'); ?></a></p>
                             <table class="at-table apilog">
                                 <thead>
-                                <tr>
-                                    <th><?php _e('Datum', 'amateurtheme') ?></th>
-                                    <th><?php _e('Typ', 'amateurtheme') ?></th>
-                                    <th><?php _e('Nachricht', 'amateurtheme') ?></th>
-                                </tr>
+                                    <tr>
+                                        <th><?php _e('Datum', 'amateurtheme') ?></th>
+                                        <th><?php _e('Typ', 'amateurtheme') ?></th>
+                                        <th><?php _e('Nachricht', 'amateurtheme') ?></th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <?php
-                                $log = get_option('at_big7_api_log');
-                                if($log) {
-                                    $log = array_reverse($log);
+                                    <?php
+                                    $log = get_option('at_big7_api_log');
+                                    if($log) {
+                                        $log = array_reverse($log);
 
-                                    foreach($log as $item) {
-                                        ?>
-                                        <tr>
-                                            <td><?php echo date('d.m.Y H:i:s', $item['time']); ?></td>
-                                            <td>
-                                                <?php echo $item['post_id']; ?>
-                                            </td>
-                                            <td><?php echo $item['msg']; ?></td>
-                                        </tr>
-                                        <?php
+                                        foreach($log as $item) {
+                                            ?>
+                                            <tr>
+                                                <td><?php echo date('d.m.Y H:i:s', $item['time']); ?></td>
+                                                <td>
+                                                    <?php echo $item['post_id']; ?>
+                                                </td>
+                                                <td><?php echo $item['msg']; ?></td>
+                                            </tr>
+                                            <?php
+                                        }
                                     }
-                                }
-                                ?>
+                                    ?>
                                 </tbody>
                             </table>
                         </div>

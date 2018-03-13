@@ -107,6 +107,84 @@ if ( ! function_exists( 'at_import_big7_get_imported_video_count' ) ) {
     }
 }
 
+if ( ! function_exists( 'at_import_big7_get_category_video_count' ) ) {
+	/**
+	 * at_import_big7_get_video_category_count
+	 *
+	 * @param $source_id
+	 * @param bool $imported
+	 * @return string
+	 */
+	function at_import_big7_get_category_video_count($category) {
+		global $wpdb;
+
+		$database = new AT_Import_Big7_DB();
+
+		$videos = $wpdb->get_var('SELECT COUNT(id) as count FROM ' . $database->table_videos . ' WHERE categories LIKE "%' . $category . '%"');
+
+		if($videos) {
+			return $videos;
+		}
+
+		return '0';
+	}
+}
+
+if ( ! function_exists( 'at_import_big7_get_category_imported_video_count' ) ) {
+	/**
+	 * at_import_big7_get_category_imported_video_count
+	 *
+	 * @param $source_id
+	 * @param bool $imported
+	 * @return string
+	 */
+	function at_import_big7_get_category_imported_video_count($category) {
+		global $wpdb;
+
+		$term = get_term_by('name', $category, 'video_actor');
+
+		if($term) {
+			return $term->count;
+		}
+
+		return '0';
+	}
+}
+
+function at_import_big7_get_categories() {
+	global $wpdb;
+
+	$database = new AT_Import_Big7_DB();
+
+	$data = $wpdb->get_var(
+		"
+		SELECT
+		  GROUP_CONCAT( DISTINCT SUBSTRING_INDEX(SUBSTRING_INDEX(categories, ',', n.digit+1), ',', -1)) categories
+		FROM
+		  " . $database->table_videos . "
+		  INNER JOIN
+		  (SELECT 0 digit UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3  UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6) n
+		  ON LENGTH(REPLACE(categories, ',' , '')) <= LENGTH(categories)-n.digit
+		"
+	);
+
+	if($data) {
+		$items = explode(',', $data);
+		$results = array();
+
+		if($items) {
+			foreach($items as $item) {
+				$unique = substr(base_convert(md5($item), 16, 10) , -10);
+				$results[$unique] = $item;
+			}
+		}
+
+		return $results;
+	}
+
+	return false;
+}
+
 function at_import_json_process($item) {
     print_r($item);
 }
