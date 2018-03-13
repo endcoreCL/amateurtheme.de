@@ -1,3 +1,27 @@
 /* SIDEBAR */
 
 #sidebar .h1 { font-size: 1rem; color: $gray-light; }
+
+#sidebar .widget_term_list > ul > li {
+	border-bottom: 1px solid $border; position: relative;
+	a {
+		color: $gray; display: block; padding: 0.25rem 2rem 0.25rem 0;
+		.badge {
+			position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+		}
+		&:hover, &:focus {
+			color: $primary; text-decoration: none;
+			.badge {
+				background: $primary; color: $white;
+			}
+		}
+	}
+	&.active {
+		a {
+			color: $primary; text-decoration: none;
+			.badge {
+				background: $primary; color: $white;
+			}
+		}
+	}
+}

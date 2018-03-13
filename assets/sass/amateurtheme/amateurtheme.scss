@@ -3,12 +3,13 @@ $border: $gray-200;
 $gray-light: $gray-600;
 $gray: $gray-700;
 $gray-dark: $gray-800;
+$link-hover-color: $gray-dark;
 
 @import "basics";
 @import "type";
-//@import "_test";
-//@import "_video";
 @import "header";
-@import "videos";
 @import "content";
+ @import "videos";
 @import "sidebar";
+//@import "footer";
+

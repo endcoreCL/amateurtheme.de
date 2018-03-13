@@ -17,3 +17,4 @@ require_once('helper.php');
 require_once('ajax.php');
 require_once('panel.php');
 require_once('amateur_cronjobs.php');
+require_once('category_cronjobs.php');
