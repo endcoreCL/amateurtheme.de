@@ -13,104 +13,68 @@ class xCORE_Layout {
         $this->template_path = get_template_directory();
     }
 
-    /**
-     * Function to locate templates
-     *
-     * @param $template_name
-     * @return mixed
-     */
-    private function locate_template( $template_name ) {
-        $template = locate_template(
-            array(
-                trailingslashit( $this->template_path ) . $template_name,
-                $template_name,
-            )
-        );
+    public function logo() {
+        $logo = get_field('design_general_logo', 'options');
 
-        return $template;
+        if($logo) {
+            return '<img src="' . $logo['url'] . '"' . ($logo['width'] ? ' width="' . $logo['width'] . '"' : '') . ($logo['height'] ? ' height="' . $logo['height'] . '"' : '') . ' alt="' . $logo['alt'] . '" title="' . $logo['title'] . '" class="img-responsive at-logo" />';
+	    }
+
+	    return get_bloginfo('name');
     }
 
-    /**
-     * Function to get template
-     *
-     * @param $template_name
-     * @param array $args
-     */
-    private function get_template($template_name, $args = array()) {
-        if ( ! empty( $args ) && is_array( $args ) ) {
-            extract( $args ); // @codingStandardsIgnoreLine
-        }
+    public function navbar_pos() {
+	    $nav_pos = (get_field('design_header_nav_pos', 'options') ? get_field('design_header_nav_pos', 'options') : 'top');
 
-        $located = $this->locate_template( $template_name );
-
-        if ( ! file_exists( $located ) ) {
-            return;
-        }
-
-
-        include $located;
+	    return $nav_pos;
     }
 
-    /**
-     * Function to get template as html
-     *
-     * @param $template_name
-     * @param array $args
-     * @return string
-     */
-    private function get_template_html($template_name, $args = array()) {
-        ob_start();
-        $this->get_template($template_name, $args);
-        return ob_get_clean();
+    public function navbar_wrapper_classes() {
+    	$classes = array('navbar');
+
+    	$navbar_color = (get_field('design_header_nav_bg', 'options') ? get_field('design_header_nav_bg', 'options') : 'dark');
+    	if($navbar_color) {
+    		switch($navbar_color) {
+			    case 'bright':
+			    	$classes[] = 'navbar-light';
+				    $classes[] = 'bg-light';
+				    break;
+
+			    case 'dark':
+			    	$classes[] = 'navbar-dark';
+			    	$classes[] = 'bg-dark';
+			    	break;
+		    }
+	    }
+
+	    $navbar_trigger = (get_field('design_header_trigger_mobile_nav', 'options') ? get_field('design_header_trigger_mobile_nav', 'options') : 'sm');
+	    if($navbar_trigger) {
+		    $classes[] = 'navbar-expand-' . $navbar_trigger;
+	    }
+
+	    return implode(' ', $classes);
     }
 
-    public function option($type = '', $field = '', $default = false) {
-        $value = get_field('design_' . $type . '_' . $field, 'options');
+    public function navbar_classes() {
+	    $classes = array('navbar-nav');
 
-        if($value) {
-            return $value;
-        }
+	    $navbar_align = get_field('design_header_nav_align', 'options');
+	    if($navbar_align) {
+		    switch($navbar_align) {
+			    case 'left':
+				    $classes[] = 'mr-auto';
+				    break;
 
-        return $default;
-    }
+			    case 'center':
+				    $classes[] = 'mx-auto';
+				    break;
 
-    public function wrapper_class($type = '', $field, $default = '') {
-        $value = $this->option($type, $field, $default);
+			    case 'right':
+				    $classes[] = 'ml-auto';
+				    break;
+		    }
+	    }
 
-        if($value == 'fixed') {
-            return 'wrapped';
-        }
-
-        return false;
-    }
-
-    public function container_class($type = '', $field, $default = '') {
-        $value = $this->option($type, $field, $default);
-
-        if($value && $value == 'fluid') {
-            return 'container-fluid';
-        }
-
-        return 'container';
-    }
-
-    /**
-     * Function to get topbar layout
-     *
-     * @param bool $output
-     * @return bool|string
-     */
-    public function topbar($output = true) {
-        $layout = get_field('design_layout_topbar_style', 'options');
-
-        if($layout) {
-            if($output) {
-                return $this->get_template_html($layout);
-            } else {
-                return true;
-            }
-        }
-
-        return false;
+	    return implode(' ', $classes);
     }
 }
