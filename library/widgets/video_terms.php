@@ -37,7 +37,7 @@ class at_video_terms_widget extends WP_Widget {
             echo '<ul class="list-unstyled">';
 
             foreach($terms as $term) {
-                echo '<li class="term term-' . $term->term_id . '"><a href="' . get_term_link($term) . '">' . $term->name . ($count ? ' <span class="badge badge-primary term-count">' . $term->count . '</span>' : '') . '</a></li>';
+                echo '<li class="term term-' . $term->term_id . '"><a href="' . get_term_link($term) . '">' . $term->name . ($count ? ' <span class="badge badge-light term-count">' . $term->count . '</span>' : '') . '</a></li>';
             }
 
             echo '</ul>';
