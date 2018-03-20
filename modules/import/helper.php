@@ -188,6 +188,36 @@ function at_import_untag_video_as_imported($post_id) {
     }
 }
 
+add_action('before_delete_post', 'at_import_remove_media_when_deleted');
+function at_import_remove_media_when_deleted($post_id) {
+	global $post_type;
+	if ( $post_type != 'video' ) return;
+
+	if( has_post_thumbnail($post_id)) {
+		$attachment_id = get_post_thumbnail_id($post_id);
+
+		if ( empty ( get_posts( array( 'post_type' => 'any', 'post_status' => 'any', 'fields' => 'ids', 'no_found_rows' => true, 'posts_per_page' => -1, 'meta_key' => '_thumbnail_id', 'meta_value' => $attachment_id, 'post__not_in' => array( $post_id ) ) ) ) ) {
+			$attachment_urls = array( wp_get_attachment_url( $attachment_id ) );
+			foreach ( get_intermediate_image_sizes() as $size ) {
+				$intermediate = image_get_intermediate_size( $attachment_id, $size );
+				if ( $intermediate ) {
+					$attachment_urls[] = $intermediate['url'];
+				}
+			}
+
+			$used = array();
+			foreach ( $attachment_urls as $attachment_url ) {
+				$used = array_merge( $used, get_posts( array( 'post_type' => 'any', 'post_status' => 'any', 'fields' => 'ids', 'no_found_rows' => true, 'posts_per_page' => -1, 's' => $attachment_url, 'post__not_in' => array( $post_id ) ) ) );
+			}
+
+			if ( empty( $used ) ) {
+				wp_delete_attachment($attachment_id, true);
+			}
+		}
+	}
+}
+
+
 if ( ! function_exists( 'at_write_api_log' ) ) {
     /**
      * at_write_api_log function.

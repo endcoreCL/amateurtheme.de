@@ -119,6 +119,25 @@ class AT_Import_Big7_Crawler {
 	    return false;
     }
 
+	function getAmateurName($uid) {
+		global $wpdb;
+
+		$database = new AT_Import_Big7_DB();
+
+		$data = $wpdb->get_var(
+			"
+    		SELECT username FROM {$database->table_amateurs}
+    	  	WHERE uid = {$uid}
+    		"
+		);
+
+		if($data) {
+			return $data;
+		}
+
+		return false;
+	}
+
 	function getVideos($uid) {
 		global $wpdb;
 
