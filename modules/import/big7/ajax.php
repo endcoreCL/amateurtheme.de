@@ -44,31 +44,37 @@ if ( ! function_exists( 'at_import_big7_get_videos' ) ) {
 	}
 }
 
-add_action('wp_ajax_at_big7_amateurs', 'at_import_big7_amateurs_select');
-function at_import_big7_amateurs_select() {
-	global $wpdb;
+if ( ! function_exists( 'at_import_big7_amateurs_select' ) ) {
+	/**
+	 * at_import_big7_amateurs_select function
+	 *
+	 */
+	add_action('wp_ajax_at_big7_amateurs', 'at_import_big7_amateurs_select');
+	function at_import_big7_amateurs_select() {
+		global $wpdb;
 
-	$database = new AT_Import_Big7_DB();
+		$database = new AT_Import_Big7_DB();
 
-	$q = (isset($_GET['q']) ? $_GET['q'] : false);
+		$q = (isset($_GET['q']) ? $_GET['q'] : false);
 
-	if(!$q) {
+		if(!$q) {
+			die();
+		}
+
+		$limit = 500;
+
+		$output = array();
+
+		$items = $wpdb->get_results('SELECT * FROM ' . $database->table_amateurs . ' WHERE username LIKE "%' . $q . '%" LIMIT 0,' . $limit);
+
+		if($items) {
+			foreach($items as $item) {
+				$output[] = array($item->uid, $item->username);
+			}
+		}
+
+		echo json_encode($output);
+
 		die();
 	}
-
-	$limit = 500;
-
-	$output = array();
-
-	$items = $wpdb->get_results('SELECT * FROM ' . $database->table_amateurs . ' WHERE username LIKE "%' . $q . '%" LIMIT 0,' . $limit);
-
-	if($items) {
-		foreach($items as $item) {
-			$output[] = array($item->uid, $item->username);
-		}
-	}
-
-	echo json_encode($output);
-
-	die();
 }
