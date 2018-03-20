@@ -25,7 +25,6 @@ function at_import_big7_panel() {
         endif;
     endif;
 
-    $import = new AT_Import_Big7_Crawler();
     $cronjobs = new AT_Import_Cron();
     ?>
 
