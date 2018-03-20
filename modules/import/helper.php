@@ -153,14 +153,14 @@ function at_import_cronjob_delete() {
         exit;
     }
 
+	do_action('at_import_cronjob_delete', $id);
+
     $cron = new AT_Import_Cron();
     $cron->delete($id);
 
     $message['status'] = 'ok';
 
     echo wp_json_encode($message);
-
-    do_action('at_import_cronjob_delete', $id);
 
     exit;
 }
@@ -174,9 +174,6 @@ function at_import_untag_video_as_imported($post_id) {
 
     $database = new AT_Import_MDH_DB();
     $video_id = get_post_meta($post_id, 'video_unique_id', true);
-
-    error_log('Trash: ' . $post_id);
-    error_log($video_id);
 
     if($video_id) {
         $wpdb->update(
