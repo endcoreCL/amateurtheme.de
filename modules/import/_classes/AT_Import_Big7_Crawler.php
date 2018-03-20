@@ -78,9 +78,6 @@ class AT_Import_Big7_Crawler {
         $json_data = $this->json_result;
 
         if($json_data) {
-            /**
-             * @TODO: What about small Webspaces?
-             */
             if($filter) {
                 $filtered_data = array();
 
