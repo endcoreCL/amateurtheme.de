@@ -136,6 +136,7 @@ if ( ! function_exists( 'at_import_big7_database_tables' ) ) {
                 uid int(11),
                 video_id varchar(255),
                 preview text,
+                preview_sc text,
                 preview_webm text,
                 preview_mp4 text,
                 title varchar(255),
