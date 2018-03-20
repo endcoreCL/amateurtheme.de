@@ -20,7 +20,7 @@ if ( ! function_exists( 'at_import_big7_amateur_cronjob_initiate' ) ) {
             $cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
 
             if ($cron) {
-                if ($cron->network == 'big7' && $cron->type == 'user') {
+                if ($cron->network == 'big7') {
                     if ($value == '1') {
                         if (!wp_next_scheduled('at_import_big7_import_videos_cronjob', array($id))) {
                             wp_schedule_event(time(), '30min', 'at_import_big7_import_videos_cronjob', array($id));
@@ -63,6 +63,18 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
 	            $videos = $import->getVideos($cron->object_id);
             } else {
             	$import_limit = apply_filters('at_import_category_limit', 200);
+
+            	// check max videos
+	            $total_videos_query = $import->getVideosByCategory($cron->name, 0, 999999);
+	            if($total_videos_query) {
+	            	$total_videos = count($total_videos_query);
+
+	            	if($cron->last_pos >= $total_videos) {
+	            		$cron->last_pos = 0;
+	            		$results['last_pos'] = 0;
+		            }
+	            }
+
 	            $videos = $import->getVideosByCategory($cron->name, ($cron->last_pos ? $cron->last_pos : 0), $import_limit);
             }
 
@@ -130,7 +142,6 @@ if ( ! function_exists( 'at_import_big7_import_videos_cronjob' ) ) {
                         }
                     } else {
                         // video already exist
-	                    error_log($item->title);
                         $results['skipped'] += 1;
                         $results['total'] += 1;
 	                    $results['last_pos'] += 1;
