@@ -146,20 +146,26 @@ function at_import_pornme_panel() {
                                                     </a>
                                                 </td>
                                                 <td class="cron-video-count">
-	                                                <?php echo at_import_pornme_get_video_count($item->object_id); ?>
+	                                                <?php //echo at_import_pornme_get_video_count($item->object_id); ?>
                                                 </td>
                                                 <td class="cron-video-imported">
-                                                    <?php echo at_import_pornme_get_imported_video_count($item->object_id); ?>
+                                                    <?php //echo at_import_pornme_get_imported_video_count($item->object_id); ?>
                                                 </td>
                                                 <td class="cron-last-update">
                                                     <?php echo $last_update; ?>
                                                 </td>
                                                 <td class="cron-action">
-                                                    <?php if($item->import == 0) : ?>
+		                                            <?php if($item->scrape == 0) : ?>
+                                                        <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="scrape" data-value="1"><?php _e('Scrape aktivieren', 'amateurtheme'); ?></a>
+		                                            <?php else: ?>
+                                                        <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="scrape" data-value="0"><?php _e('Scrape deaktivieren', 'amateurtheme'); ?></a>
+		                                            <?php endif; ?>
+                                                    |
+		                                            <?php if($item->import == 0) : ?>
                                                         <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="import" data-value="1"><?php _e('Import aktivieren', 'amateurtheme'); ?></a>
-                                                    <?php else: ?>
+		                                            <?php else: ?>
                                                         <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="import" data-value="0"><?php _e('Import deaktivieren', 'amateurtheme'); ?></a>
-                                                    <?php endif; ?>
+		                                            <?php endif; ?>
                                                     |
                                                     <a href="#" class="cron-delete" data-id="<?php echo $item->id; ?>"><?php _e('löschen', 'amateurtheme'); ?></a>
                                                 </td>
@@ -434,10 +440,10 @@ function at_import_pornme_panel() {
                                                         </a>
                                                     </td>
                                                     <td class="cron-video-count">
-                                                        <?php echo at_import_pornme_get_category_video_count($item->name); ?>
+                                                        <?php //echo at_import_pornme_get_category_video_count($item->name); ?>
                                                     </td>
                                                     <td class="cron-video-imported">
-                                                        <?php echo at_import_pornme_get_category_imported_video_count($item->name); ?>
+                                                        <?php //echo at_import_pornme_get_category_imported_video_count($item->name); ?>
                                                     </td>
                                                     <td class="cron-last-update">
                                                         <?php echo $last_update; ?>
@@ -462,7 +468,7 @@ function at_import_pornme_panel() {
                                             <select name="category" class="form-control at-category-select">
                                                 <option value=""><?php _e('Kategorie auswählen', 'amateurtheme'); ?></option>
                                                 <?php
-                                                $categories = at_import_pornme_get_categories();
+                                                //$categories = at_import_pornme_get_categories();
                                                 if($categories) {
                                                     foreach($categories as $k => $v) {
                                                         if($v == 'Alle') continue;

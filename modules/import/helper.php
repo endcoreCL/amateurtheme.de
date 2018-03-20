@@ -16,6 +16,11 @@ function at_import_cron_schedules($schedules){
             'interval' => 30*60,
             'display' => __('Once every 30 minutes'));
     }
+	if(!isset($schedules["weekly"])){
+		$schedules["weekly"] = array(
+			'interval' => ((60*60) * 24) *7,
+			'display' => __('Once every week'));
+	}
     return $schedules;
 }
 
