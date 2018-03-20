@@ -52,6 +52,26 @@ if ( ! function_exists( 'at_import_mdh_amateur_cronjob_initiate' ) ) {
     }
 }
 
+if ( ! function_exists( 'at_import_mdh_amateur_cronjob_delete' ) ) {
+	/**
+	 * at_import_mdh_amateur_cronjob_delete function
+	 *
+	 */
+	add_action('at_import_cronjob_delete', 'at_import_mdh_amateur_cronjob_delete', 10, 1);
+	function at_import_mdh_amateur_cronjob_delete($id) {
+		global $wpdb;
+
+		$cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
+
+		if ($cron) {
+			if ($cron->network == 'mydirtyhobby' && $cron->type == 'user') {
+				wp_clear_scheduled_hook('at_import_mdh_import_videos_cronjob', array($id));
+				wp_clear_scheduled_hook('at_import_mdh_scrape_videos_cronjob', array($id));
+			}
+		}
+	}
+}
+
 if ( ! function_exists( 'at_import_mdh_scrape_videos_cronjob' ) ) {
     /**
      * at_import_mdh_scrape_videos_cronjob function
