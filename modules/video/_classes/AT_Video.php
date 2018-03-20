@@ -39,6 +39,26 @@ class AT_Video
         return false;
     }
 
+    public function thumbnail_url($size = 'full') {
+    	$thumbnail = get_the_post_thumbnail_url($this->id, $size);
+
+    	if($thumbnail) {
+    		return $thumbnail;
+	    }
+
+	    return false;
+    }
+
+    public function preview_video($format = 'webm') {
+    	$video = $this->field('preview_' . $format);
+
+    	if($video && $video != '-') {
+    		return $video;
+	    }
+
+	    return false;
+    }
+
     public function duration() {
         $duration = $this->field('duration');
 
