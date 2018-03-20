@@ -15,6 +15,18 @@ class AT_Import_Big7_DB {
 		// ajax
 		add_action('wp_ajax_at_import_big7_db_amateur', array( &$this, 'generateAmateurDB' ));
 		add_action('wp_ajax_at_import_big7_db_video', array( &$this, 'generateVideoDB' ));
+
+		// initiate cronjob func
+		add_action('at_import_big7_generate_amateur_db', array( &$this, 'generateAmateurDB' ));
+		add_action('at_import_big7_generate_video_db', array( &$this, 'generateVideoDB' ));
+
+		// initiate cronjob
+		if (!wp_next_scheduled('at_import_big7_generate_amateur_db')) {
+			wp_schedule_event(time(), 'daily', 'at_import_big7_generate_amateur_db');
+		}
+		if (!wp_next_scheduled('at_import_big7_generate_video_db')) {
+			wp_schedule_event(time(), 'daily', 'at_import_big7_generate_video_db');
+		}
 	}
 
 	public function generateAmateurDB() {
