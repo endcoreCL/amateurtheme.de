@@ -50,6 +50,8 @@ if ( ! function_exists( 'at_import_big7_prepare_video_fields' ) ) {
                 'url' => $data->link,
                 'source' => 'big7',
                 'language' => 'de',
+                'preview_webm' => $data->preview_webm,
+                'preview_mp4' => $data->preview_mp4,
                 'unique_id' => $data->video_id
             );
 
@@ -151,40 +153,54 @@ if ( ! function_exists( 'at_import_big7_get_category_imported_video_count' ) ) {
 	}
 }
 
-function at_import_big7_get_categories() {
-	global $wpdb;
+if( ! function_exists( 'at_import_big7_get_categories' ) ) {
+	/**
+	 * at_import_big7_get_categories
+	 *
+	 * @return array|bool
+	 */
+	function at_import_big7_get_categories() {
+		global $wpdb;
 
-	$database = new AT_Import_Big7_DB();
+		$database = new AT_Import_Big7_DB();
 
-	$data = $wpdb->get_var(
-		"
-		SELECT
-		  GROUP_CONCAT( DISTINCT SUBSTRING_INDEX(SUBSTRING_INDEX(categories, ',', n.digit+1), ',', -1)) categories
-		FROM
-		  " . $database->table_videos . "
-		  INNER JOIN
-		  (SELECT 0 digit UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3  UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6) n
-		  ON LENGTH(REPLACE(categories, ',' , '')) <= LENGTH(categories)-n.digit
-		"
-	);
+		$data = $wpdb->get_var(
+			"
+			SELECT
+			  GROUP_CONCAT( DISTINCT SUBSTRING_INDEX(SUBSTRING_INDEX(categories, ',', n.digit+1), ',', -1)) categories
+			FROM
+			  " . $database->table_videos . "
+			  INNER JOIN
+			  (SELECT 0 digit UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3  UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6) n
+			  ON LENGTH(REPLACE(categories, ',' , '')) <= LENGTH(categories)-n.digit
+			"
+		);
 
-	if($data) {
-		$items = explode(',', $data);
-		$results = array();
+		if ( $data ) {
+			$items   = explode( ',', $data );
+			$results = array();
 
-		if($items) {
-			foreach($items as $item) {
-				$unique = substr(base_convert(md5($item), 16, 10) , -10);
-				$results[$unique] = $item;
+			if ( $items ) {
+				foreach ( $items as $item ) {
+					$unique             = substr( base_convert( md5( $item ), 16, 10 ), - 10 );
+					$results[ $unique ] = $item;
+				}
 			}
+
+			return $results;
 		}
 
-		return $results;
+		return false;
 	}
-
-	return false;
 }
 
-function at_import_json_process($item) {
-    print_r($item);
+if( ! function_exists( 'at_import_json_process' ) ) {
+	/**
+	 * at_import_json_process
+	 *
+	 * @param $item
+	 */
+	function at_import_json_process( $item ) {
+		print_r( $item );
+	}
 }
