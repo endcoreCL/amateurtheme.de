@@ -55,7 +55,9 @@ class AT_Import_Big7_Crawler {
     }
 
     function read($filename = 'videos.json', $filter = array()) {
-        if(!file_exists($this->folder . '/' . $filename)) {
+	    //$cache = get_transient( 'at_import_big7_json_cache' );
+
+        //if(!file_exists($this->folder . '/' . $filename) || $cache === false) {
             /**
              * Try to get the file from Big7 directly
              */
@@ -67,8 +69,9 @@ class AT_Import_Big7_Crawler {
 
             if($data) {
                 $this->save($data, $filename);
+	            //set_transient( 'at_import_big7_json_cache', 'cached' );
             }
-        }
+        //}
 
 	    set_time_limit(0);
 

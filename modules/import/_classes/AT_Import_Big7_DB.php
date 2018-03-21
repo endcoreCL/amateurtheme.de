@@ -22,10 +22,10 @@ class AT_Import_Big7_DB {
 
 		// initiate cronjob
 		if (!wp_next_scheduled('at_import_big7_generate_amateur_db')) {
-			wp_schedule_event(time(), 'daily', 'at_import_big7_generate_amateur_db');
+			wp_schedule_event(time(), 'weekly', 'at_import_big7_generate_amateur_db');
 		}
 		if (!wp_next_scheduled('at_import_big7_generate_video_db')) {
-			wp_schedule_event(time(), 'daily', 'at_import_big7_generate_video_db');
+			wp_schedule_event(time(), 'weekly', 'at_import_big7_generate_video_db');
 		}
 	}
 
@@ -36,49 +36,51 @@ class AT_Import_Big7_DB {
 		$amateurs = $crawler->jsonAmateurs();
 
 		if($amateurs) {
+			at_error_log('Started cronjob (BIG7, generateAmateurDB)');
+
 			foreach($amateurs as $amateur) {
 				$uid = intval($amateur['u_id']);
-				$username = $amateur['nickname'];
-				$username_sc = $amateur['nickname_sc'];
-				$gender = $amateur['geschlecht'];
-				$birthday = $amateur['geburtstag'];
-				$zipcode = $amateur['plz'];
-				$city = $amateur['ort'];
-				$country = $amateur['land'];
-				$state = $amateur['bundesland'];
-				$firstname = $amateur['vorname'];
-				$size = $amateur['groesse'];
-				$weight = $amateur['gewicht'];
-				$eyecolor = $amateur['augenfarbe'];
-				$haircolor = $amateur['haarfarbe'];
-				$sex = $amateur['sex'];
+				$username = (isset($amateur['nickname']) ? $amateur['nickname'] : '');
+				$username_sc = (isset($amateur['nickname_sc']) ? $amateur['nickname_sc'] : '');
+				$gender = (isset($amateur['geschlecht']) ? $amateur['geschlecht'] : '');
+				$birthday = (isset($amateur['geburtstag']) ? $amateur['geburtstag'] : '');
+				$zipcode = (isset($amateur['plz']) ? $amateur['plz'] : '');
+				$city = (isset($amateur['ort']) ? $amateur['ort'] : '');
+				$country = (isset($amateur['land']) ? $amateur['land'] : '');
+				$state = (isset($amateur['bundesland']) ? $amateur['bundesland'] : '');
+				$firstname = (isset($amateur['vorname']) ? $amateur['vorname'] : '');
+				$size = (isset($amateur['groesse']) ? $amateur['groesse'] : '');
+				$weight = (isset($amateur['gewicht']) ? $amateur['gewicht'] : '');
+				$eyecolor = (isset($amateur['augenfarbe']) ? $amateur['augenfarbe'] : '');
+				$haircolor = (isset($amateur['haarfarbe']) ? $amateur['haarfarbe'] : '');
+				$sex = (isset($amateur['sex']) ? $amateur['sex'] : '');
 				$shaved = ($amateur['intimrasur'] == 'ja' ? 1 : 0);
-				$body = $amateur['figur'];
-				$piercings = $amateur['piercings'];
-				$tattoos = $amateur['tattoos'];
-				$preferences = $amateur['vorlieben'];
-				$sexfantasies = $amateur['sexfantasie'];
-				$penis = intval($amateur['penis']);
-				$aboutme = $amateur['uebermich'];
-				$aboutme_sc = $amateur['uebermich_sc'];
-				$languages = $amateur['sprachen'];
-				$link = $amateur['link'];
-				$is_bdsm = intval($amateur['ist_bdsm']);
-				$image_small = $amateur['fotos'][0]['small'];
-				$image_medium = $amateur['fotos'][0]['medium'];
-				$image_large = $amateur['fotos'][0]['large'];
+				$body = (isset($amateur['figur']) ? $amateur['figur'] : '');
+				$piercings = (isset($amateur['piercings']) ? $amateur['piercings'] : '');
+				$tattoos = (isset($amateur['tattoos']) ? $amateur['tattoos'] : '');
+				$preferences = (isset($amateur['vorlieben']) ? $amateur['vorlieben'] : '');
+				$sexfantasies = (isset($amateur['sexfantasie']) ? $amateur['sexfantasie'] : '');
+				$penis = (isset($amateur['penis']) ? intval($amateur['penis']) : 0);
+				$aboutme = (isset($amateur['uebermich']) ? $amateur['uebermich'] : '');
+				$aboutme_sc = (isset($amateur['uebermich_sc']) ? $amateur['uebermich_sc'] : '');
+				$languages = (isset($amateur['sprachen']) ? $amateur['sprachen'] : '');
+				$link = (isset($amateur['link']) ? $amateur['link'] : '');
+				$is_bdsm = (isset($amateur['ist_bdsm']) ? intval($amateur['ist_bdsm']) : 0);
+				$image_small = (isset($amateur['fotos'][0]['small']) ? $amateur['fotos'][0]['small'] : '');
+				$image_medium = (isset($amateur['fotos'][0]['medium']) ? $amateur['fotos'][0]['medium'] : '');
+				$image_large = (isset($amateur['fotos'][0]['large']) ? $amateur['fotos'][0]['large'] : '');
 
 				$wpdb->query(
-					$wpdb->prepare(
-						"
-						REPLACE into {$this->table_amateurs}
-						(uid, username, username_sc, gender, birthday, zipcode, city, country, state, firstname, size, weight, eyecolor, haircolor, sex, shaved, body, piercings, tattoos, preferences, sexfantasies , penis, aboutme, aboutme_sc, languages, link, is_bdsm, image_small, image_medium, image_large)
-						VALUES 
-						  ({$uid} ,'" . esc_sql($username) . "', '" . esc_sql($username_sc) . "', '{$gender}', '{$birthday}', '{$zipcode}', '{$city}', '{$country}', '{$state}', '{$firstname}', '{$size}', '{$weight}', '{$eyecolor}', '{$haircolor}', '{$sex}', {$shaved}, '{$body}', '{$piercings}', '{$tattoos}', '" . esc_sql($preferences) . "', '" . esc_sql($sexfantasies) . "', {$penis}, '" . esc_sql($aboutme) . "', '" . esc_sql($aboutme_sc) . "', '{$languages}', '{$link}', {$is_bdsm}, '{$image_small}', '{$image_medium}', '{$image_large}')
-						"
-					)
+					"
+					REPLACE into {$this->table_amateurs}
+					(uid, username, username_sc, gender, birthday, zipcode, city, country, state, firstname, size, weight, eyecolor, haircolor, sex, shaved, body, piercings, tattoos, preferences, sexfantasies , penis, aboutme, aboutme_sc, languages, link, is_bdsm, image_small, image_medium, image_large)
+					VALUES 
+					({$uid} ,'" . esc_sql($username) . "', '" . esc_sql($username_sc) . "', '{$gender}', '{$birthday}', '{$zipcode}', '{$city}', '{$country}', '{$state}', '{$firstname}', '{$size}', '{$weight}', '{$eyecolor}', '{$haircolor}', '{$sex}', {$shaved}, '{$body}', '{$piercings}', '{$tattoos}', '" . esc_sql($preferences) . "', '" . esc_sql($sexfantasies) . "', {$penis}, '" . esc_sql($aboutme) . "', '" . esc_sql($aboutme_sc) . "', '{$languages}', '{$link}', {$is_bdsm}, '{$image_small}', '{$image_medium}', '{$image_large}')
+					"
 				);
 			}
+
+			at_error_log('Stopped cronjob (BIG7, generateAmateurDB), imported ' . count($amateurs) . ' amateurs.');
 		}
 	}
 
@@ -93,6 +95,8 @@ class AT_Import_Big7_DB {
 				$videos = $item['videos'];
 
 				if($videos) {
+					at_error_log('Started cronjob (BIG7, generateVideoDB)');
+
 					$uid = $item['u_id'];
 
 					foreach($videos as $video) {
@@ -119,16 +123,16 @@ class AT_Import_Big7_DB {
 						$categories = implode(',', $categories);
 
 						$wpdb->query(
-							$wpdb->prepare(
-								"
-								REPLACE into {$this->table_videos}
-								(uid, video_id, preview, preview_webm, preview_mp4, title, title_sc, duration, rating, rating_count, date, description, description_sc, link, categories)
-								VALUES 
-								  ({$uid} ,'{$video_id}', '{$preview}', '{$preview_webm}', '{$preview_mp4}', '" . esc_sql($title) . "', '" . esc_sql($title_sc) . "', '{$duration}', '{$rating}', '{$rating_count}', '{$date}', '" . esc_sql($description) . "', '" . esc_sql($description_sc) . "', '{$link}', '{$categories}')
-								"
-							)
+							"
+							REPLACE into {$this->table_videos}
+							(uid, video_id, preview, preview_webm, preview_mp4, title, title_sc, duration, rating, rating_count, date, description, description_sc, link, categories)
+							VALUES 
+							  ({$uid} ,'{$video_id}', '{$preview}', '{$preview_webm}', '{$preview_mp4}', '" . esc_sql($title) . "', '" . esc_sql($title_sc) . "', '{$duration}', '{$rating}', '{$rating_count}', '{$date}', '" . esc_sql($description) . "', '" . esc_sql($description_sc) . "', '{$link}', '{$categories}')
+							"
 						);
 					}
+
+					at_error_log('Stopped cronjob (BIG7, generateVideoDB), imported ' . count($videos) . ' videos.');
 				}
 			}
 		}
