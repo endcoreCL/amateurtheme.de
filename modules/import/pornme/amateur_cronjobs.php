@@ -72,6 +72,8 @@ if ( ! function_exists( 'at_import_pornme_scrape_videos_cronjob' ) ) {
 
 		$results = array('created' => 0, 'skipped' => 0, 'total' => 0, 'last_updated' => '');
 
+		at_error_log('Started cronjob (PornME, Crawl ' . $id . ')');
+
 		if ($cron) {
 			$uid = $cron->object_id;
 
@@ -80,7 +82,7 @@ if ( ! function_exists( 'at_import_pornme_scrape_videos_cronjob' ) ) {
 
 			$num_pages = $import->getNumPages('video', array('UID' => $uid));
 
-			if ($num_pages) {
+			if ($num_pages !== false) {
 				$wpdb->update(
 					AT_CRON_TABLE,
 					array(
@@ -127,6 +129,8 @@ if ( ! function_exists( 'at_import_pornme_scrape_videos_cronjob' ) ) {
 				)
 			);
 		}
+
+		at_error_log('Stoped cronjob (PornMe, Crawl, ' . $id . ')');
 
 		echo json_encode($results);
 	}

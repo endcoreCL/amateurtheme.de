@@ -12,8 +12,8 @@ class AT_Import_PornMe_Crawler {
 		$this->sec = md5("xfo7%bdYmO!p3DkwT4=l2s" . $this->vx_id . "9mG3lH3f2&Ma!md6G=76(2");
 		$this->urls = array(
 			'user' => 'https://api.pornme.com/webmaster.api.php?type=amateurs&vx_id=' . $this->vx_id . '&sec=' . $this->sec,
-			'video' => 'http://api.pornme.com/amateur.api.php?type=videos&vx_id=' . $this->vx_id . '&&sec=82hBdF6as' . $this->sec,
-			'tag' => 'http://api.pornme.com/amateur.api.php?type=categories&vx_id=' . $this->vx_id . '&&sec=82hBdF6as' . $this->sec,
+			'video' => 'http://api.pornme.com/webmaster.api.php?type=videos&vx_id=' . $this->vx_id . '&&sec=' . $this->sec,
+			'tag' => 'http://api.pornme.com/webmaster.api.php?type=categories&vx_id=' . $this->vx_id . '&&sec=' . $this->sec,
 		);
 	}
 

@@ -31,9 +31,12 @@ class AT_Import_PornMe_DB {
 		$crawler = new AT_Import_PornMe_Crawler();
 		$total_pages = $crawler->getNumPages('user');
 
+		at_error_log('Started cronjob (PornMe, generateAmateurDB)');
+
 		if($total_pages) {
 			$wpdb->hide_errors();
 
+			$count = 0;
 			for($i=0; $i<=$total_pages; $i++) {
 				$amateurs = $crawler->jsonAmateurs($i);
 
@@ -48,9 +51,13 @@ class AT_Import_PornMe_DB {
 							ON DUPLICATE KEY UPDATE username = '" . esc_sql($username) . "'
 							"
 						);
+
+						$count++;
 					}
 				}
 			}
+
+			at_error_log('Stopped cronjob (PornMe, generateAmateurDB), imported ' . $count . ' amateurs.');
 		}
 	}
 }
