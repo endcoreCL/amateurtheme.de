@@ -105,8 +105,10 @@ if ( ! function_exists( 'at_import_pornme_database_tables' ) ) {
 		if ($wpdb->get_var("show tables like '" . $database->table_videos . "'") != $database->table_videos) {
 			$sql = "CREATE TABLE " . $database->table_videos . " (
 				id int(11) NOT NULL AUTO_INCREMENT,
-	            source_id int(25),
+	            source_id varchar(255),
 	            source_type varchar(255),
+	            user_id varchar(255),
+	            username varchar(255),
 	            video_id int(25),
 	            preview text,
 	            title varchar(255),

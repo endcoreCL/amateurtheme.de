@@ -420,8 +420,8 @@ function at_import_pornme_panel() {
                                     <tbody>
                                         <?php
                                         $args = array(
-                                            'network' => 'pornme',
-                                            'type' => 'category'
+	                                        'network' => 'pornme',
+	                                        'type' => 'category'
                                         );
                                         $categories = $cronjobs->get($args);
                                         if ($categories) :
@@ -440,15 +440,21 @@ function at_import_pornme_panel() {
                                                         </a>
                                                     </td>
                                                     <td class="cron-video-count">
-                                                        <?php //echo at_import_pornme_get_category_video_count($item->name); ?>
+                                                        <?php echo at_import_pornme_get_video_count($item->object_id); ?>
                                                     </td>
                                                     <td class="cron-video-imported">
-                                                        <?php //echo at_import_pornme_get_category_imported_video_count($item->name); ?>
+                                                        <?php echo at_import_pornme_get_imported_video_count($item->object_id); ?>
                                                     </td>
                                                     <td class="cron-last-update">
                                                         <?php echo $last_update; ?>
                                                     </td>
                                                     <td class="cron-action">
+	                                                    <?php if($item->scrape == 0) : ?>
+                                                            <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="scrape" data-value="1"><?php _e('Scrape aktivieren', 'amateurtheme'); ?></a>
+	                                                    <?php else: ?>
+                                                            <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="scrape" data-value="0"><?php _e('Scrape deaktivieren', 'amateurtheme'); ?></a>
+	                                                    <?php endif; ?>
+                                                        |
                                                         <?php if($item->import == 0) : ?>
                                                             <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="import" data-value="1"><?php _e('Import aktivieren', 'amateurtheme'); ?></a>
                                                         <?php else: ?>
@@ -468,12 +474,10 @@ function at_import_pornme_panel() {
                                             <select name="category" class="form-control at-category-select">
                                                 <option value=""><?php _e('Kategorie auswählen', 'amateurtheme'); ?></option>
                                                 <?php
-                                                //$categories = at_import_pornme_get_categories();
+                                                $categories = at_import_pornme_get_tags();
                                                 if($categories) {
                                                     foreach($categories as $k => $v) {
-                                                        if($v == 'Alle') continue;
-
-                                                        ?><option value="<?php echo $k; ?>"><?php echo $v; ?></option><?php
+                                                        ?><option value="<?php echo $v->tag ?>"><?php echo $v->tag ?></option><?php
                                                     }
                                                 }
                                                 ?>

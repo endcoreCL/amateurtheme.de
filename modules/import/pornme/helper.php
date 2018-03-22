@@ -77,7 +77,7 @@ if ( ! function_exists( 'at_import_pornme_get_video_count' ) ) {
 
 		$database = new AT_Import_PornMe_DB();
 
-		$videos = $wpdb->get_var('SELECT COUNT(id) as count FROM ' . $database->table_videos . ' WHERE source_id = ' . $source_id);
+		$videos = $wpdb->get_var('SELECT COUNT(id) as count FROM ' . $database->table_videos . ' WHERE source_id = "' . $source_id . '"');
 
 		if($videos) {
 			return $videos;
@@ -100,7 +100,7 @@ if ( ! function_exists( 'at_import_pornme_get_imported_video_count' ) ) {
 
 		$database = new AT_Import_PornMe_DB();
 
-		$videos = $wpdb->get_var('SELECT COUNT(id) as count FROM ' . $database->table_videos . ' WHERE source_id = ' . $source_id . ' AND imported = 1');
+		$videos = $wpdb->get_var('SELECT COUNT(id) as count FROM ' . $database->table_videos . ' WHERE source_id = "' . $source_id . '" AND imported = 1');
 
 		if($videos) {
 			return $videos;
@@ -142,5 +142,26 @@ if( ! function_exists( 'at_import_pornme_untag_video_as_imported' ) ) {
 				)
 			);
 		}
+	}
+}
+
+if( ! function_exists( 'at_import_pornme_get_tags' ) ) {
+	/**
+	 * at_import_pornme_get_tags
+	 *
+	 * @return bool
+	 */
+	function at_import_pornme_get_tags() {
+		global $wpdb;
+
+		$database = new AT_Import_PornMe_DB();
+
+		$tags = $wpdb->get_results( 'SELECT * FROM ' . $database->table_tags );
+
+		if ( $tags ) {
+			return $tags;
+		}
+
+		return false;
 	}
 }

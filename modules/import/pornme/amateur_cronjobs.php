@@ -38,7 +38,7 @@ if ( ! function_exists( 'at_import_pornme_amateur_cronjob_initiate' ) ) {
 			$cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
 
 			if ($cron) {
-				if ($cron->network == 'pornme' && $cron->type == 'user') {
+				if ($cron->network == 'pornme') {
 					if ($value == '1') {
 						if (!wp_next_scheduled('at_import_pornme_import_videos_cronjob', array($id))) {
 							wp_schedule_event(time(), '30min', 'at_import_pornme_import_videos_cronjob', array($id));
@@ -201,7 +201,7 @@ if ( ! function_exists( 'at_import_pornme_import_videos_cronjob' ) ) {
 							}
 
 							// actor
-							$video->set_term('video_actor', $cron->name, 'pornme', $cron->object_id);
+							$video->set_term('video_actor', $item->username, 'pornme', $item->user_id);
 
 							$results['created'] += 1;
 							$results['total'] += 1;

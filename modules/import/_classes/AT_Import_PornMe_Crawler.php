@@ -20,7 +20,7 @@ class AT_Import_PornMe_Crawler {
 	public function get($url, $page = 0, $param = array()) {
 		if($param) {
 			foreach($param as $k => $v) {
-				$url .= '&' . $k . '=' . $v;
+				$url .= '&' . $k . '=' . urlencode($v);
 			}
 		}
 
@@ -53,7 +53,11 @@ class AT_Import_PornMe_Crawler {
 
 	public function getNumPages($type = 'user', $param = array()) {
 		if($type == 'video') {
-			$name = $param['UID'];
+			if(isset($param['UID'])) {
+				$name = $param['UID'];
+			} else {
+				$name = $param['cat'];
+			}
 		} else {
 			$name = $type;
 		}
@@ -113,6 +117,26 @@ class AT_Import_PornMe_Crawler {
 		return false;
 	}
 
+	public function jsonVideosByTag($tag, $page = 0) {
+		$data = $this->get($this->urls['video'], $page, array('cat' => $tag));
+
+		if($data) {
+			return $data;
+		}
+
+		return false;
+	}
+
+	public function jsonTags($page = 0) {
+		$data = $this->get($this->urls['tag'], $page);
+
+		if($data) {
+			return $data;
+		}
+
+		return false;
+	}
+
 	public function saveVideos($user_id, $data, $source_type = 'user') {
 		global $wpdb;
 
@@ -135,12 +159,23 @@ class AT_Import_PornMe_Crawler {
 
 		foreach($data as $item) {
 			if($item['VID'] && $item['link']) {
+				$check = $wpdb->get_var('SELECT id FROM ' . $database->table_videos . ' WHERE video_id = ' . $item['VID']);
+
+				if($check) {
+					$s++;
+
+					$status['skipped'] = $s;
+
+					continue; // video already exists
+				}
 
 				$wpdb->insert(
 					$database->table_videos,
 					array(
 						'source_id' => $user_id,
 						'source_type' => $source_type,
+						'user_id' => $item['UID'],
+						'username' => $item['username'],
 						'video_id' => $item['VID'],
 						'preview' => $item['previewpic'],
 						'title' => $item['title'],
