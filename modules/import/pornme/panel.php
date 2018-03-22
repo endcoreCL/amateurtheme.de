@@ -149,7 +149,7 @@ function at_import_pornme_panel() {
 	                                                <?php echo at_import_pornme_get_video_count($item->object_id); ?>
                                                 </td>
                                                 <td class="cron-video-imported">
-                                                    <?php //echo at_import_pornme_get_imported_video_count($item->object_id); ?>
+                                                    <?php echo at_import_pornme_get_imported_video_count($item->object_id); ?>
                                                 </td>
                                                 <td class="cron-last-update">
                                                     <?php echo $last_update; ?>
