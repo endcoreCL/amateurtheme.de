@@ -69,7 +69,7 @@ if ( ! function_exists( 'at_import_mdh_prepare_video_fields' ) ) {
 
             // format rating
             $raw_rating = $video->rating;
-            $rating = $rating = round(($raw_rating / 2) * 2) / 2;
+            $rating = round(($raw_rating / 2) * 2) / 2;
 
             $fields = array(
                 'duration' => $duration,
@@ -88,4 +88,39 @@ if ( ! function_exists( 'at_import_mdh_prepare_video_fields' ) ) {
 
         return false;
     }
+}
+
+if( ! function_exists( 'at_import_mdh_untag_video_as_imported' ) ) {
+	/**
+	 * at_import_mdh_untag_video_as_imported
+	 */
+	add_action( 'before_delete_post', 'at_import_mdh_untag_video_as_imported' );
+	function at_import_mdh_untag_video_as_imported( $post_id ) {
+		global $wpdb;
+
+		global $post_type;
+		if ( $post_type != 'video' ) {
+			return;
+		}
+
+		$video_source = get_field( 'video_source', $post_id );
+		if ( $video_source != 'mdh' ) {
+			return;
+		}
+
+		$database = new AT_Import_MDH_DB();
+		$video_id = get_post_meta( $post_id, 'video_unique_id', true );
+
+		if ( $video_id ) {
+			$wpdb->update(
+				$database->table_videos,
+				array(
+					'imported' => '0'
+				),
+				array(
+					'video_id' => $video_id
+				)
+			);
+		}
+	}
 }

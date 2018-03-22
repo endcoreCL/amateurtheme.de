@@ -171,29 +171,9 @@ function at_import_cronjob_delete() {
     exit;
 }
 
-add_action( 'before_delete_post', 'at_import_untag_video_as_imported' );
-function at_import_untag_video_as_imported($post_id) {
-    global $wpdb;
-
-    global $post_type;
-    if ( $post_type != 'video' ) return;
-
-    $database = new AT_Import_MDH_DB();
-    $video_id = get_post_meta($post_id, 'video_unique_id', true);
-
-    if($video_id) {
-        $wpdb->update(
-            $database->table_videos,
-            array(
-                'imported' => '0'
-            ),
-            array(
-                'video_id' => $video_id
-            )
-        );
-    }
-}
-
+/**
+ * Remove thumbnails before delete video
+ */
 add_action('before_delete_post', 'at_import_remove_media_when_deleted');
 function at_import_remove_media_when_deleted($post_id) {
 	global $post_type;
