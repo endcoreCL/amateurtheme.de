@@ -73,6 +73,26 @@ class AT_Import_PornMe_Crawler {
 		return $value;
 	}
 
+	function getAmateurVideos($u_id) {
+		global $wpdb;
+
+		$database = new AT_Import_PornMe_DB();
+
+		$data = $wpdb->get_results(
+			"
+    		SELECT * FROM {$database->table_videos}
+    	  	WHERE source_id = {$u_id}
+    		",
+			OBJECT
+		);
+
+		if($data) {
+			return $data;
+		}
+
+		return false;
+	}
+
 	public function jsonAmateurs($page = 0) {
 		$data = $this->get($this->urls['user'], $page);
 
