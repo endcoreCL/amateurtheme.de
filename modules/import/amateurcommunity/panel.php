@@ -58,6 +58,14 @@ function at_import_ac_panel() {
                         <div class="inside">
                             <form method="post">
                                 <div class="form-group">
+                                    <label for="at_ac_crawl"><?php _e('Amateur Crawl aktivieren', 'amateurtheme'); ?></label>
+                                    <select name="at_ac_crawl" class="form-control">
+                                        <option value="0" <?php echo (get_option('at_ac_crawl') == '0' ? 'selected' : ''); ?>><?php _e('Nein', 'amateurtheme'); ?></option>
+                                        <option value="1" <?php echo (get_option('at_ac_crawl') == '1' ? 'selected' : ''); ?>><?php _e('Ja', 'amateurtheme'); ?></option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="at_ac_wmb"><?php _e('Webmaster ID', 'amateurtheme'); ?></label>
                                     <input name="at_ac_wmb" id="at_ac_wmb" type="text" value="<?php echo (get_option('at_ac_wmb') ? get_option('at_ac_wmb') : '') ?>" class="form-control"/>
                                 </div>

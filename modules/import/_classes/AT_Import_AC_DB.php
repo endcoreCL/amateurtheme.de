@@ -12,36 +12,32 @@ class AT_Import_AC_DB {
 		$this->table_amateurs = $wpdb->prefix . 'import_ac_amateurs';
 		$this->table_media = $wpdb->prefix . 'import_ac_media';
 
-		// ajax
-		add_action('wp_ajax_at_import_ac_db_amateur', array( &$this, 'generateAmateurDB' ));
-		//add_action('wp_ajax_at_import_big7_db_video', array( &$this, 'generateVideoDB' ));
-
 		// initiate cronjob func
-		//add_action('at_import_big7_generate_amateur_db', array( &$this, 'generateAmateurDB' ));
-		//add_action('at_import_big7_generate_video_db', array( &$this, 'generateVideoDB' ));
+		add_action('at_import_ac_generate_amateur_db', array( &$this, 'generateAmateurDB' ));
 
-		// initiate cronjob
-		if (!wp_next_scheduled('at_import_big7_generate_amateur_db')) {
-			//wp_schedule_event(time(), 'weekly', 'at_import_big7_generate_amateur_db');
-		}
-		if (!wp_next_scheduled('at_import_big7_generate_video_db')) {
-			//wp_schedule_event(time(), 'weekly', 'at_import_big7_generate_video_db');
+		// initiate cronjob for zipAreas
+		if(get_option('at_ac_crawl') == '1') {
+			for ( $i = 1; $i < 10; $i ++ ) {
+				if ( ! wp_next_scheduled( 'at_import_ac_generate_amateur_db', array( $i ) ) ) {
+					wp_schedule_event( time(), 'weekly', 'at_import_ac_generate_amateur_db', array( $i ) );
+				}
+			}
 		}
 	}
 
-	public function generateAmateurDB($zipArea = '1', $limit = '700') {
+	public function generateAmateurDB($crawl_zipArea = '1') {
 		global $wpdb;
 
 		$filter = array(
-			'zipArea' => 1,
-			'limit' => $limit
+			'zipArea' => $crawl_zipArea,
+			'limit' => 700
 		);
 
 		$crawler = new AT_Import_AC_Crawler();
 		$amateurs = $crawler->jsonAmateurs($filter);
 
 		if($amateurs) {
-			at_error_log( 'Started cronjob (AC, generateAmateurDB)' );
+			at_error_log( 'Started cronjob for zipArea ' . $crawl_zipArea . ' (AC, generateAmateurDB)' );
 
 			foreach($amateurs as $data) {
 				$setcard = $data['setcard'];
@@ -193,6 +189,8 @@ class AT_Import_AC_DB {
 					"
 				);
 			}
+
+			at_error_log('Stopped cronjob for zipArea ' . $crawl_zipArea . ' (AC, generateAmateurDB), imported/updated ' . count($amateurs) . ' amateurs.');
 		}
 	}
 }
