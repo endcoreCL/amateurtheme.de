@@ -26,12 +26,12 @@ if ( ! function_exists( 'at_import_big7_database_notice' ) ) {
 			<div class="error">
 				<p>
 					<?php _e('Eine oder mehrere Datenbank-Tabellen für den Import fehlen. Bitte aktualisiere deine Datenbank.', 'amateurtheme'); ?>
-					<a class="button" id="at-import-mdh-install-tables"><?php _e('Datenbank aktualisieren', 'amateurtheme'); ?></a>
+					<a class="button" id="at-import-bi7-install-tables"><?php _e('Datenbank aktualisieren', 'amateurtheme'); ?></a>
 				</p>
 			</div>
 
 			<script type="text/javascript">
-                jQuery('#at-import-mdh-install-tables').bind('click', function (e) {
+                jQuery('#at-import-big7-install-tables').bind('click', function (e) {
                     var target = jQuery(this).closest('.error');
                     jQuery(this).append(' <span class="spinner" style="visibility:initial"></span>');
 
