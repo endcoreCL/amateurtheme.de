@@ -267,6 +267,9 @@ if ( ! function_exists( 'at_import_ac_import_videos_cronjob' ) ) {
 				}
 			}
 
+			// update Actor if timestamp is expired
+			at_import_ac_update_actor($cron->object_id, $cron->name);
+
 			$wpdb->update(
 				AT_CRON_TABLE,
 				array(
