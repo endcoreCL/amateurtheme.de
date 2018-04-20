@@ -149,6 +149,7 @@ if ( ! function_exists( 'at_import_ac_database_tables' ) ) {
 			$sql = "CREATE TABLE " . $database->table_media . " (
                 id int(11) NOT NULL AUTO_INCREMENT,
                 uid int(11),
+                nickname varchar(255),
                 media_id varchar(255),
                 title text,
                 title_sc text,

@@ -162,6 +162,12 @@ function at_import_ac_panel() {
                                                     <?php echo $last_update; ?>
                                                 </td>
                                                 <td class="cron-action">
+	                                                <?php if($item->scrape == 0) : ?>
+                                                        <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="scrape" data-value="1"><?php _e('Scrape aktivieren', 'amateurtheme'); ?></a>
+	                                                <?php else: ?>
+                                                        <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="scrape" data-value="0"><?php _e('Scrape deaktivieren', 'amateurtheme'); ?></a>
+	                                                <?php endif; ?>
+                                                    |
                                                     <?php if($item->import == 0) : ?>
                                                         <a href="#" class="cron-update" data-id="<?php echo $item->id; ?>" data-field="import" data-value="1"><?php _e('Import aktivieren', 'amateurtheme'); ?></a>
                                                     <?php else: ?>
