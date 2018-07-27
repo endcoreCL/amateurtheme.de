@@ -1,12 +1,12 @@
 <section id="topbar">
 	<?php
-	$topbar_bottom_columns = get_field('design_topbar_bottom_columns', 'options');
-	if ($topbar_bottom_columns) { ?>
+	$topbar_columns = get_field('design_topbar_columns', 'options');
+	if ($topbar_columns) { ?>
 		<div class="container">
 			<div class="row">
 				<?php
 				$c=1;
-				foreach ($topbar_bottom_columns as $k => $v) {
+				foreach ($topbar_columns as $k => $v) {
 					$class = ($v['class'] ? $v['class'] : 'col-sm');
 					?>
 					<div class="<?php echo $class; ?>">
@@ -25,7 +25,7 @@
 										'menu_class'    => 'list-inline',
 										'container'     => false,
 										'depth'         => 2,
-										'fallback_cb'   => 'xcore_nav_walker_topba::fallback',
+										'fallback_cb'   => 'xcore_nav_walker_topbar::fallback',
 										'walker'        => new xcore_nav_walker_topbar()
 									)
 								);
