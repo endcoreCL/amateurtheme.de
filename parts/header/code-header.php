@@ -2,6 +2,7 @@
 $layout = new xCORE_Layout();
 $navbar_pos = $layout->navbar_pos();
 $banner = get_field('design_header_banner', 'options');
+$search = get_field('design_header_search', 'options');
 
 if($navbar_pos == 'top') {
 	?>
@@ -12,18 +13,31 @@ if($navbar_pos == 'top') {
 					<a class="header-brand" href="<?php echo home_url(); ?>"
 					   title="<?php bloginfo( 'name' ); ?>"><?php echo $layout->logo(); ?></a>
 				</div>
-				<?php if ( $banner ) { ?>
-					<div class="col-sm-6 align-self-center">
-						<div class="header-search">
-							<?php get_search_form(); ?>
-						</div>
-					</div>
-					<div class="col-sm-3 align-self-center">
-						<div class="header-text">
-							<?php echo $banner; ?>
-						</div>
-					</div>
-				<?php } else { ?>
+				<?php
+                if ( $banner ) {
+                    if( $search ) {
+	                    ?>
+                        <div class="col-sm-6 align-self-center">
+                            <div class="header-search">
+			                    <?php get_search_form(); ?>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 align-self-center">
+                            <div class="header-text">
+			                    <?php echo $banner; ?>
+                            </div>
+                        </div>
+	                    <?php
+                    } else {
+                        ?>
+                        <div class="col-sm-9 align-self-center">
+                            <div class="header-text">
+			                    <?php echo $banner; ?>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                } else if($search) { ?>
 					<div class="col-sm-9 align-self-center">
 						<div class="header-search">
 							<?php get_search_form(); ?>
