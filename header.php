@@ -1,4 +1,4 @@
-<?php do_action('xcore_init'); ?>
+<?php do_action('xcore_init'); global $xcore_layout; ?>
 <!doctype html>
 <html lang="en">
 	<head>
@@ -11,8 +11,12 @@
 	<body>
 	    <?php
         do_action('xcore_after_body');
-        $layout = new xCORE_Layout();
         ?>
 		<div id="wrapper-fluid">
-            <?php get_template_part('parts/header/code', 'header'); ?>
+            <?php
+            if(get_field('design_topbar', 'options')) {
+	            get_template_part( 'parts/topbar/code', 'topbar' );
+            }
 
+            get_template_part('parts/header/code', 'header');
+            ?>
