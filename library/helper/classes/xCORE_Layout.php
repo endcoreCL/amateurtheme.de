@@ -23,10 +23,10 @@ class xCORE_Layout {
 	    return get_bloginfo('name');
     }
 
-    public function navbar_pos() {
-	    $nav_pos = (get_field('design_header_nav_pos', 'options') ? get_field('design_header_nav_pos', 'options') : 'top');
+    public function logo_pos() {
+	    $logo_pos = (get_field('design_header_logo_pos', 'options') ? get_field('design_header_logo_pos', 'options') : 'top');
 
-	    return $nav_pos;
+	    return $logo_pos;
     }
 
     public function navbar_wrapper_classes() {
