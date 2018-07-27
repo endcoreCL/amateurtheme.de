@@ -272,3 +272,58 @@ if ( ! function_exists( 'at_attach_external_image' ) ) {
         return $att_id;
     }
 }
+
+function at_attribute_array_html($attributes) {
+	$attributes_html = '';
+
+	if($attributes) {
+		foreach($attributes as $k => $v) {
+			if($v) {
+				$attributes_html .= $k . '="' . implode($v, ' ') . '" ';
+			}
+		}
+	}
+
+	return $attributes_html;
+}
+
+function at_pb_render_editor($item, $count) {
+	$class = $item['class'];
+	$class_col = $item['class_col'];
+	$bgimage = $item['bgimage'];
+	$bgcolor = $item['bgcolor'];
+	$editor = $item['editor'];
+
+	$attributes = array(
+		'class' => array(),
+		'style' => array(),
+	);
+
+	if($class) {
+		$attributes['class'][] = $class;
+	}
+
+	if(!$class_col) {
+		$attributes['class'][] = 'col';
+	} else {
+		$attributes['class'][] = $class_col;
+	}
+
+	if($bgimage) {
+		$attributes['style'][] = 'background-image: url(' . $bgimage['url'] . ');';
+	}
+
+	if($bgcolor) {
+		$attributes['style'][] = 'background-color: ' . $bgcolor . ';';
+
+		if($bgcolor == '#0c617a') {
+			$attributes['class'][] = 'text-white';
+		}
+	}
+
+	$output = '<div ' . at_attribute_array_html($attributes) . '>';
+		$output .= $editor;
+	$output .= '</div>';
+
+	return $output;
+}
