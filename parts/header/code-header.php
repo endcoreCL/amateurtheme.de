@@ -4,87 +4,92 @@ $logo_pos = $layout->logo_pos();
 $banner = get_field('design_header_banner', 'options');
 $search = get_field('design_header_search', 'options');
 $search_pos = get_field('design_header_search_pos', 'options');
-?>
-<header id="header">
-    <div class="container">
-        <div class="row">
-            <?php
-            if($logo_pos == 'top') {
-                ?>
-                <div class="col-sm-3 align-self-center">
-                    <a class="header-brand" href="<?php echo home_url(); ?>" title="<?php bloginfo( 'name' ); ?>">
-                        <?php echo $layout->logo(); ?>
-                    </a>
-                </div>
+
+if($logo_pos == 'top' || $banner || $search) {
+    ?>
+    <header id="header">
+        <div class="container">
+            <div class="row">
                 <?php
-                if ( $banner ) {
-                    if( $search && $search_pos == 'top' ) {
-                        ?>
-                        <div class="col-sm-6 align-self-center">
-                            <div class="header-search">
-                                <?php get_search_form(); ?>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 align-self-center">
-                            <div class="header-text">
-                                <?php echo $banner; ?>
-                            </div>
-                        </div>
-                        <?php
-                    } else {
-                        ?>
-                        <div class="col-sm-9 align-self-center">
-                            <div class="header-text">
-                                <?php echo $banner; ?>
-                            </div>
-                        </div>
-                        <?php
-                    }
-                } else if($search && $search_pos == 'top') { ?>
-                    <div class="col-sm-6 offset-sm-3">
-                        <div class="header-search">
-                            <?php get_search_form(); ?>
-                        </div>
-                    </div>
-                <?php
-                }
-            } else {
-                if ( $banner ) {
-                    if( $search && $search_pos == 'top' ) {
-                        ?>
-                        <div class="col-sm-6 align-self-center">
-                            <div class="header-search">
-                                <?php get_search_form(); ?>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 align-self-center">
-                            <div class="header-text">
-                                <?php echo $banner; ?>
-                            </div>
-                        </div>
-                        <?php
-                    } else {
-                        ?>
-                        <div class="col-sm-12 align-self-center">
-                            <div class="header-text">
-                                <?php echo $banner; ?>
-                            </div>
-                        </div>
-                        <?php
-                    }
-                } else if($search && $search_pos == 'top') { ?>
-                    <div class="col-sm-6 offset-sm-6">
-                        <div class="header-search">
-                            <?php get_search_form(); ?>
-                        </div>
+                if($logo_pos == 'top') {
+                    ?>
+                    <div class="col-sm-4 align-self-center">
+                        <a class="header-brand" href="<?php echo home_url(); ?>" title="<?php bloginfo( 'name' ); ?>">
+                            <?php echo $layout->logo(); ?>
+                        </a>
                     </div>
                     <?php
+                    if ( $banner ) {
+                        if( $search && $search_pos == 'top' ) {
+                            ?>
+                            <div class="col-sm-4 align-self-center">
+                                <div class="header-search">
+                                    <?php get_search_form(); ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 align-self-center">
+                                <div class="header-text">
+                                    <?php echo $banner; ?>
+                                </div>
+                            </div>
+                            <?php
+                        } else {
+                            ?>
+                            <div class="col-sm-8 align-self-center">
+                                <div class="header-text">
+                                    <?php echo $banner; ?>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    } else if($search && $search_pos == 'top') { ?>
+                        <div class="col-sm-4 offset-sm-6">
+                            <div class="header-search">
+                                <?php get_search_form(); ?>
+                            </div>
+                        </div>
+                    <?php
+                    }
+                } else {
+                    if ( $banner ) {
+                        if( $search && $search_pos == 'top' ) {
+                            ?>
+                            <div class="col-sm-6 align-self-center">
+                                <div class="header-search">
+                                    <?php get_search_form(); ?>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 align-self-center">
+                                <div class="header-text">
+                                    <?php echo $banner; ?>
+                                </div>
+                            </div>
+                            <?php
+                        } else {
+                            ?>
+                            <div class="col-sm-12 align-self-center">
+                                <div class="header-text">
+                                    <?php echo $banner; ?>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    } else if($search && $search_pos == 'top') { ?>
+                        <div class="col-sm-6 offset-sm-6">
+                            <div class="header-search">
+                                <?php get_search_form(); ?>
+                            </div>
+                        </div>
+                        <?php
+                    }
                 }
-            }
-            ?>
+                ?>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
+<?php
+}
+?>
 
 <nav class="<?php echo $layout->navbar_wrapper_classes(); ?>" id="navigation">
 	<div class="container">
