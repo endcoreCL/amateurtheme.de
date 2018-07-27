@@ -19,4 +19,15 @@
             }
 
             get_template_part('parts/header/code', 'header');
-            ?>
+
+            if ( function_exists('yoast_breadcrumb') && ('top' == get_field('design_breadcrumbs_pos', 'option'))) { ?>
+                <section id="breadcrumbs">
+                    <div class="container">
+                        <?php
+                        $breadcrumbs = yoast_breadcrumb('<nav><ol class="breadcrumb"><li class="breadcrumb-item">','</li></ol></nav>', false);
+                        echo str_replace( '»', '</li><li class="breadcrumb-item">', $breadcrumbs );
+                        ?>
+                    </div>
+                </section>
+			<?php
+			}
