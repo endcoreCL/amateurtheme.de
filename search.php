@@ -31,15 +31,23 @@
 
 				if($layout) {
 					if ( have_posts() ) :
-						if ( $layout == 'grid' ) {
-							echo '<div class="card-columns">';
-						}
+                        if($post_type == 'video') {
+					        echo '<div id="video-list">';
+                        }
 
-						while ( have_posts() ) : the_post();
-							get_template_part( 'parts/' . $post_type . '/loop', $layout );
-						endwhile;
+                            if ( $layout == 'grid' ) {
+                                echo '<div class="card-columns">';
+                            }
 
-						if ( $layout == 'grid' ) {
+                                while ( have_posts() ) : the_post();
+                                    get_template_part( 'parts/' . $post_type . '/loop', $layout );
+                                endwhile;
+
+                            if ( $layout == 'grid' ) {
+                                echo '</div>';
+                            }
+
+                        if ( $post_type == 'video' ) {
 							echo '</div>';
 						}
 
