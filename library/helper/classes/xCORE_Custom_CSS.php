@@ -70,6 +70,7 @@ class xCORE_Custom_SCSS {
 	}
 
 	public function generate_scss() {
+		$this->fields = $this->get_fields();
 		ob_start();
 		if($this->fields) {
 			?>
