@@ -4,7 +4,7 @@
     </li>
 
     <li class="list-inline-item">
-        <i class="fa fa-user"></i> <?php echo get_the_author_link(); ?>
+        <i class="fa fa-user"></i> <a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>"><?php echo get_the_author(); ?></a>
     </li>
 
     <li class="list-inline-item">

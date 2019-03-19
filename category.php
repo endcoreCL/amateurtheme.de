@@ -1,28 +1,23 @@
 <?php
 get_header();
-$sidebar = $xcore_layout->get_sidebar( 'general' );
-$classes = $xcore_layout->get_sidebar_classes( 'general' );
-$page_for_posts = get_option( 'page_for_posts' );
+$sidebar = $xcore_layout->get_sidebar( 'category' );
+$classes = $xcore_layout->get_sidebar_classes( 'category' );
 ?>
 
 <div id="main">
     <div class="container">
+        <h1><?php single_cat_title(); ?></h1>
+
         <?php
-        if ( $page_for_posts ) {
-            echo '<h1>' . get_the_title( $page_for_posts ) . '</h1>';
-
-            $content = apply_filters( 'the_content', get_post_field( 'post_content', $page_for_posts ) );
-
-            if ( $content && ! is_paged() ) {
-                echo $content . '<hr>';
-            }
+        if ( category_description() && ! is_paged() ) {
+            echo '<p>' . category_description() . '</p><hr>';
         }
         ?>
 
         <div class="row">
             <div class="<?php echo $classes['content']; ?>">
                 <div id="content">
-                    <?php $xcore_layout->get_posts( 'general' ); ?>
+                    <?php $xcore_layout->get_posts( 'category' ); ?>
                 </div>
             </div>
 
