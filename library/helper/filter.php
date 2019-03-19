@@ -231,4 +231,14 @@ function at_search_defaults($query) {
 	return $query;
 }
 
+add_filter( 'excerpt_length', 'at_excerpt_length', 999 );
+function at_excerpt_length( $length ) {
+    $excerpt_length = get_field( 'blog_excerpt_length', 'options');
+
+    if ( $excerpt_length ) {
+        return $excerpt_length;
+    }
+
+    return $length;
+}
 

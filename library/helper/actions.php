@@ -174,3 +174,22 @@ function xcore_fb_pixel_tracking() {
 		<?php
 	}
 }
+
+if( ! function_exists( 'at_fix_no_editor_on_posts_page' ) ) {
+
+    /**
+     * Add the wp-editor back into WordPress after it was removed in 4.2.2.
+     *
+     * @param Object $post
+     * @return void
+     */
+    function at_fix_no_editor_on_posts_page( $post ) {
+        if( isset( $post ) && $post->ID != get_option('page_for_posts') ) {
+            return;
+        }
+
+        remove_action( 'edit_form_after_title', '_wp_posts_page_notice' );
+        add_post_type_support( 'page', 'editor' );
+    }
+    add_action( 'edit_form_after_title', 'at_fix_no_editor_on_posts_page', 0 );
+}
