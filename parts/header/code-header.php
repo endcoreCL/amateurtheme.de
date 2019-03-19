@@ -22,12 +22,12 @@ if($logo_pos == 'top' || $banner || $search) {
                     if ( $banner ) {
                         if( $search && $search_pos == 'top' ) {
                             ?>
-                            <div class="col-sm-4 align-self-center">
+                            <div class="col-sm-4 align-self-center d-none d-md-block">
                                 <div class="header-search">
                                     <?php get_search_form(); ?>
                                 </div>
                             </div>
-                            <div class="col-sm-4 align-self-center">
+                            <div class="col-sm-8 col-md-4 align-self-center d-none d-sm-block">
                                 <div class="header-text">
                                     <?php echo $banner; ?>
                                 </div>
@@ -35,7 +35,7 @@ if($logo_pos == 'top' || $banner || $search) {
                             <?php
                         } else {
                             ?>
-                            <div class="col-sm-8 align-self-center">
+                            <div class="col-sm-8 align-self-center d-none d-sm-block">
                                 <div class="header-text">
                                     <?php echo $banner; ?>
                                 </div>
@@ -43,7 +43,7 @@ if($logo_pos == 'top' || $banner || $search) {
                             <?php
                         }
                     } else if($search && $search_pos == 'top') { ?>
-                        <div class="col-sm-4 offset-sm-6">
+                        <div class="col-sm-4 offset-sm-6 d-none d-md-block">
                             <div class="header-search">
                                 <?php get_search_form(); ?>
                             </div>
@@ -54,12 +54,12 @@ if($logo_pos == 'top' || $banner || $search) {
                     if ( $banner ) {
                         if( $search && $search_pos == 'top' ) {
                             ?>
-                            <div class="col-sm-6 align-self-center">
+                            <div class="col-sm-6 align-self-center d-none d-md-block">
                                 <div class="header-search">
                                     <?php get_search_form(); ?>
                                 </div>
                             </div>
-                            <div class="col-sm-6 align-self-center">
+                            <div class="col-sm-12 col-md-6 align-self-center d-none d-sm-block">
                                 <div class="header-text">
                                     <?php echo $banner; ?>
                                 </div>
@@ -67,7 +67,7 @@ if($logo_pos == 'top' || $banner || $search) {
                             <?php
                         } else {
                             ?>
-                            <div class="col-sm-12 align-self-center">
+                            <div class="col-sm-12 align-self-center d-none d-sm-block">
                                 <div class="header-text">
                                     <?php echo $banner; ?>
                                 </div>
@@ -75,7 +75,7 @@ if($logo_pos == 'top' || $banner || $search) {
                             <?php
                         }
                     } else if($search && $search_pos == 'top') { ?>
-                        <div class="col-sm-6 offset-sm-6">
+                        <div class="col-sm-6 offset-sm-6 d-none d-md-block">
                             <div class="header-search">
                                 <?php get_search_form(); ?>
                             </div>
@@ -100,28 +100,30 @@ if($logo_pos == 'top' || $banner || $search) {
 			<?php
 		}
 		?>
+
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-		<?php
-		wp_nav_menu(
-			array(
-				'menu' => 'main',
-				'theme_location' => 'navigation_main',
-				'container'       => 'div',
-				'container_id'    => 'bs4navbar',
-				'container_class' => 'collapse navbar-collapse',
-				'menu_id'         => false,
-				'menu_class'      => $layout->navbar_classes(),
-				'depth'           => 4,
-				'fallback_cb'     => 'xcore_nav_walker::fallback',
-				'walker'          => new xcore_nav_walker()
-			)
-		);
 
-		if($search_pos == 'inline') {
-			get_search_form();
+        <?php
+        wp_nav_menu(
+            array(
+                'menu'              => 'main',
+                'theme_location'    => 'navigation_main',
+                'container'         => 'div',
+                'container_id'      => 'navbarNav',
+                'container_class'   => 'collapse navbar-collapse',
+                'menu_id'           => false,
+                'menu_class'        => $layout->navbar_classes(),
+                'depth'             => 4,
+                'fallback_cb'       => 'xcore_nav_walker::fallback',
+                'walker'            => new xcore_nav_walker()
+            )
+        );
+
+        if($search_pos == 'inline') {
+            get_search_form();
         }
-		?>
+        ?>
 	</div>
 </nav>
