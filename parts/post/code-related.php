@@ -31,9 +31,9 @@ if ( $related->have_posts() ) {
         <?php
         if ( $options['headline'] ) {
             ?>
-            <h2>
+            <h4>
                 <?php echo $options['headline']; ?>
-            </h2>
+            </h4>
             <?php
 
             if ( strpos ( $layout, 'card' ) !== false ) {

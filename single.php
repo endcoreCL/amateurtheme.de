@@ -12,6 +12,8 @@ $nav = get_field( 'blog_single_nav', 'options');
     <div class="container">
         <h1><?php the_title(); ?></h1>
 
+        <?php get_template_part( 'parts/post/code', 'meta' ); ?>
+
         <div class="row">
             <div class="<?php echo $classes['content']; ?>">
                 <div id="content">
@@ -24,6 +26,10 @@ $nav = get_field( 'blog_single_nav', 'options');
 
                             if ( $author ) {
                                 get_template_part( 'parts/post/code', 'author' );
+                            }
+
+                            if ( $related ) {
+                                get_template_part( 'parts/post/code', 'related' );
                             }
 
                             if ( $nav ) {

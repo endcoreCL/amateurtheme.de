@@ -1,8 +1,9 @@
 <?php
-$prev_post = get_previous_post( true );
-$next_post = get_next_post( true );
+$options    = get_field( 'blog_single_nav_options', 'options' );
+$prev_post  = get_previous_post( ( $options['in_term'] ? true : false ) );
+$next_post  = get_next_post(  ( $options['in_term'] ? true : false )  );
 ?>
-<hr class="transparent">
+<hr class="hr-transparent">
 
 <div class="post-nav">
     <nav>

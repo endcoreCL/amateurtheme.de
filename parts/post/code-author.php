@@ -1,6 +1,19 @@
+<?php
+$options = get_field( 'blog_single_author_options', 'options' );
+?>
 <hr class="hr-transparent">
 
 <div class="post-author">
+    <?php
+    if ( $options['headline'] ) {
+        ?>
+        <h4>
+            <?php echo $options['headline']; ?>
+        </h4>
+        <?php
+    }
+    ?>
+
     <div class="card">
         <div class="row no-gutters">
             <div class="col-md-3">
@@ -18,50 +31,56 @@
             </div>
         </div>
 
-        <div class="card-footer">
-            <ul class="list-inline mb-0">
-                <li class="list-inline-item">
-                    <a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>">
-                        <?php printf( __( 'Weitere Artikel von %s', 'amateurtheme' ), get_the_author_meta( 'display_name' ) ); ?>
-                    </a>
-                </li>
-
-                <?php
-                if ( get_the_author_meta( 'url' ) ) {
-                    ?>
+        <?php
+        if ( $options['footer'] ) {
+            ?>
+            <div class="card-footer">
+                <ul class="list-inline mb-0">
                     <li class="list-inline-item">
-                        <a href="<?php echo get_the_author_meta( 'url' ); ?>" title="<?php printf( __('%s Webseite', 'amateurtheme'), get_the_author_meta( 'display_name') ); ?>" target="_blank" rel="nofollow">
-                            <i class="fa fa-globe"></i>
+                        <a href="<?php echo get_author_posts_url( get_the_author_meta( 'ID' ) ); ?>">
+                            <?php printf( __( 'Weitere Artikel von %s', 'amateurtheme' ), get_the_author_meta( 'display_name' ) ); ?>
                         </a>
                     </li>
-                    <?php
-                }
-                ?>
 
-                <?php
-                if ( get_the_author_meta( 'facebook' ) ) {
-                    ?>
-                    <li class="list-inline-item">
-                        <a href="<?php echo get_the_author_meta( 'facebook' ); ?>" title="<?php printf( __('%s auf Facebook', 'amateurtheme'), get_the_author_meta( 'display_name') ); ?>" target="_blank" rel="nofollow">
-                            <i class="fab fa-facebook"></i>
-                        </a>
-                    </li>
                     <?php
-                }
-                ?>
+                    if ( get_the_author_meta( 'url' ) ) {
+                        ?>
+                        <li class="list-inline-item">
+                            <a href="<?php echo get_the_author_meta( 'url' ); ?>" title="<?php printf( __('%s Webseite', 'amateurtheme'), get_the_author_meta( 'display_name') ); ?>" target="_blank" rel="nofollow">
+                                <i class="fa fa-globe"></i>
+                            </a>
+                        </li>
+                        <?php
+                    }
+                    ?>
 
-                <?php
-                if ( get_the_author_meta( 'twitter' ) ) {
-                    ?>
-                    <li class="list-inline-item">
-                        <a href="https://twitter.com/<?php echo get_the_author_meta( 'twitter' ); ?>" title="<?php printf( __('%s auf Twitter', 'amateurtheme'), get_the_author_meta( 'display_name') ); ?>" target="_blank" rel="nofollow">
-                            <i class="fab fa-twitter"></i>
-                        </a>
-                    </li>
                     <?php
-                }
-                ?>
-            </ul>
-        </div>
+                    if ( get_the_author_meta( 'facebook' ) ) {
+                        ?>
+                        <li class="list-inline-item">
+                            <a href="<?php echo get_the_author_meta( 'facebook' ); ?>" title="<?php printf( __('%s auf Facebook', 'amateurtheme'), get_the_author_meta( 'display_name') ); ?>" target="_blank" rel="nofollow">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                        </li>
+                        <?php
+                    }
+                    ?>
+
+                    <?php
+                    if ( get_the_author_meta( 'twitter' ) ) {
+                        ?>
+                        <li class="list-inline-item">
+                            <a href="https://twitter.com/<?php echo get_the_author_meta( 'twitter' ); ?>" title="<?php printf( __('%s auf Twitter', 'amateurtheme'), get_the_author_meta( 'display_name') ); ?>" target="_blank" rel="nofollow">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                        </li>
+                        <?php
+                    }
+                    ?>
+                </ul>
+            </div>
+            <?php
+        }
+        ?>
     </div>
 </div>
