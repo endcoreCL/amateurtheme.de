@@ -1,7 +1,7 @@
 <?php
 get_header();
-$sidebar = $xcore_layout->get_sidebar( 'author' );
-$classes = $xcore_layout->get_sidebar_classes( 'author' );
+$sidebar = $xcore_layout->get_sidebar( 'blog_author' );
+$classes = $xcore_layout->get_sidebar_classes( 'blog_author' );
 ?>
 
 <div id="main">
@@ -29,7 +29,9 @@ $classes = $xcore_layout->get_sidebar_classes( 'author' );
             if ( $sidebar ) {
                 ?>
                 <div class="<?php echo $classes['sidebar']; ?>">
-                    <?php get_sidebar(); ?>
+                    <div id="sidebar">
+                        <?php get_sidebar(); ?>
+                    </div>
                 </div>
                 <?php
             }

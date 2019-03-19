@@ -1,7 +1,7 @@
 <?php
 get_header();
-$sidebar = $xcore_layout->get_sidebar( 'tag' );
-$classes = $xcore_layout->get_sidebar_classes( 'tag' );
+$sidebar = $xcore_layout->get_sidebar( 'blog_tag' );
+$classes = $xcore_layout->get_sidebar_classes( 'blog_tag' );
 ?>
 
 <div id="main">
@@ -25,7 +25,9 @@ $classes = $xcore_layout->get_sidebar_classes( 'tag' );
             if ( $sidebar ) {
                 ?>
                 <div class="<?php echo $classes['sidebar']; ?>">
-                    <?php get_sidebar(); ?>
+                    <div id="sidebar">
+                        <?php get_sidebar(); ?>
+                    </div>
                 </div>
                 <?php
             }

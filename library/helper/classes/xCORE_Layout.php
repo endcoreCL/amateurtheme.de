@@ -72,7 +72,10 @@ class xCORE_Layout {
     }
 
     public function get_sidebar( $section ) {
-        $sidebar = ( get_field( 'blog_' . $section . '_sidebar', 'options' ) ? get_field( 'blog_' . $section . '_sidebar', 'options' ) : false );
+        // catch post
+        if ( strpos($section, 'post' ) !== false ) $section = str_replace( 'post', 'blog', $section );
+
+        $sidebar = ( get_field( $section . '_sidebar', 'options' ) ? get_field( $section . '_sidebar', 'options' ) : false );
 
         return apply_filters( 'at_get_sidebar', $sidebar );
     }

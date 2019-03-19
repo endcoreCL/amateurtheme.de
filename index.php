@@ -1,7 +1,7 @@
 <?php
 get_header();
-$sidebar = $xcore_layout->get_sidebar( 'general' );
-$classes = $xcore_layout->get_sidebar_classes( 'general' );
+$sidebar = $xcore_layout->get_sidebar( 'blog_general' );
+$classes = $xcore_layout->get_sidebar_classes( 'blog_general' );
 $page_for_posts = get_option( 'page_for_posts' );
 ?>
 
@@ -30,7 +30,9 @@ $page_for_posts = get_option( 'page_for_posts' );
             if ( $sidebar ) {
                 ?>
                 <div class="<?php echo $classes['sidebar']; ?>">
-                    <?php get_sidebar(); ?>
+                    <div id="sidebar">
+                        <?php get_sidebar(); ?>
+                    </div>
                 </div>
                 <?php
             }
