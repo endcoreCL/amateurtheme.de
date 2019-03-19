@@ -64,7 +64,14 @@ $video = new AT_Video(get_the_ID());
 
                                 <hr>
 
-                                <?php echo get_the_term_list(get_the_ID(), 'video_category', '<span class="badge badge-dark">', '</span> <span class="badge badge-dark">', '</span>'); ?>
+                                <?php
+                                if ( get_the_content() ) {
+                                    the_content();
+
+                                    echo '<hr>';
+                                }
+
+                                echo get_the_term_list(get_the_ID(), 'video_category', '<span class="badge badge-dark">', '</span> <span class="badge badge-dark">', '</span>'); ?>
                             </div>
                         </div>
 
