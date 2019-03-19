@@ -13,13 +13,13 @@ class xCORE_Layout {
             return '<img src="' . $logo['url'] . '"' . ($logo['width'] ? ' width="' . $logo['width'] . '"' : '') . ($logo['height'] ? ' height="' . $logo['height'] . '"' : '') . ' alt="' . $logo['alt'] . '" title="' . $logo['title'] . '" class="img-fluid" />';
         }
 
-        return get_bloginfo('name');
+        return get_bloginfo( 'name' );
     }
 
     public function logo_pos() {
         $logo_pos = (get_field('design_header_logo_pos', 'options') ? get_field('design_header_logo_pos', 'options') : 'top');
 
-        return $logo_pos;
+        return apply_filters( 'at_logo_pos', $logo_pos );
     }
 
     public function navbar_wrapper_classes() {
@@ -45,7 +45,7 @@ class xCORE_Layout {
             $classes[] = 'navbar-expand-' . $navbar_trigger;
         }
 
-        return implode(' ', $classes);
+        return apply_filters( 'at_navbar_wrapper_classes', implode( ' ', $classes ) );
     }
 
     public function navbar_classes() {
@@ -68,17 +68,13 @@ class xCORE_Layout {
             }
         }
 
-        return implode(' ', $classes);
+        return apply_filters( 'at_navbar_classes', implode( ' ', $classes ) );
     }
 
     public function get_sidebar( $section ) {
-        $sidebar = get_field( 'blog_' . $section . '_sidebar', 'options' );
+        $sidebar = ( get_field( 'blog_' . $section . '_sidebar', 'options' ) ? get_field( 'blog_' . $section . '_sidebar', 'options' ) : false );
 
-        if ( $sidebar ) {
-            return $sidebar;
-        }
-
-        return false;
+        return apply_filters( 'at_get_sidebar', $sidebar );
     }
 
     public function get_sidebar_classes( $section ) {
@@ -99,17 +95,13 @@ class xCORE_Layout {
             }
         }
 
-        return $classes;
+        return apply_filters( 'at_get_sidebar_classes', $classes );
     }
 
     public function get_posts_layout ( $section ) {
-        $layout = get_field( 'blog_' . $section . '_posts_layout', 'options' );
+        $layout = ( get_field( 'blog_' . $section . '_posts_layout', 'options' ) ? get_field( 'blog_' . $section . '_posts_layout', 'options' ) : 'large' );
 
-        if ( $layout ) {
-            return $layout;
-        }
-
-        return 'large';
+        return apply_filters( 'at_get_posts_layout', $layout );
     }
 
     public function get_posts( $section ) {
