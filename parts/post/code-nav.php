@@ -7,11 +7,11 @@ $next_post  = get_next_post(  ( $options['in_term'] ? true : false )  );
 
 <div class="post-nav">
     <nav>
-        <ul class="pager list-inline">
+        <ul class="pager list-inline d-flex">
             <?php
             if($prev_post) {
                 ?>
-                <li class="previous list-inline-item">
+                <li class="previous list-inline-item flex-fill">
                     <a rel="prev" href="<?php echo get_permalink( $prev_post->ID ); ?>" title="<?php _e( 'zum Vorherigen Artikel', 'xcore' ); ?>">
                         <small><?php _e( 'Vorheriger Artikel', 'xcore' ); ?></small>
                         <?php echo get_the_title( $prev_post->ID ); ?>
@@ -22,7 +22,7 @@ $next_post  = get_next_post(  ( $options['in_term'] ? true : false )  );
 
             if($next_post) {
                 ?>
-                <li class="next list-inline-item text-right">
+                <li class="next list-inline-item flex-fill text-right">
                     <a rel="next" href="<?php echo get_permalink( $next_post->ID ); ?>" title="<?php _e( 'zum Nächsten Artikel', 'xcore' ); ?>">
                         <small><?php _e( 'Nächster Artikel', 'xcore' ); ?></small>
                         <?php echo get_the_title( $next_post->ID ); ?>

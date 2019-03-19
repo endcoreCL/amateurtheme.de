@@ -1,8 +1,9 @@
 <?php
 get_header();
-$sidebar = $xcore_layout->get_sidebar( 'single' );
-$classes = $xcore_layout->get_sidebar_classes( 'single' );
+$sidebar = $xcore_layout->get_sidebar( 'blog_single' );
+$classes = $xcore_layout->get_sidebar_classes( 'blog_single' );
 
+$share = get_field( 'blog_single_share', 'options' );
 $author = get_field( 'blog_single_author', 'options' );
 $related = get_field( 'blog_single_related', 'options' );
 $nav = get_field( 'blog_single_nav', 'options');
@@ -23,6 +24,10 @@ $nav = get_field( 'blog_single_nav', 'options');
                             the_post();
 
                             the_content();
+
+                            if ( $share ) {
+                                get_template_part( 'parts/stuff/code', 'share' );
+                            }
 
                             if ( $author ) {
                                 get_template_part( 'parts/post/code', 'author' );
