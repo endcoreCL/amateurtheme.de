@@ -8,8 +8,8 @@
  */
 
 // Classes
-require_once(XCORE_MODULES . '/import/_classes/AT_Import_PornMe_Crawler.php');
-require_once(XCORE_MODULES . '/import/_classes/AT_Import_PornMe_DB.php');
+require_once(AT_MODULES . '/import/_classes/AT_Import_PornMe_Crawler.php');
+require_once(AT_MODULES . '/import/_classes/AT_Import_PornMe_DB.php');
 
 // General
 require_once('database.php');
