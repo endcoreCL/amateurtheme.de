@@ -273,13 +273,13 @@ if ( ! function_exists( 'at_attach_external_image' ) ) {
     }
 }
 
-function at_attribute_array_html($attributes) {
+function at_attribute_array_html( $attributes ) {
 	$attributes_html = '';
 
-	if($attributes) {
-		foreach($attributes as $k => $v) {
-			if($v) {
-				$attributes_html .= $k . '="' . implode($v, ' ') . '" ';
+	if( $attributes ) {
+		foreach( $attributes as $k => $v ) {
+			if( $v ) {
+				$attributes_html .= $k . '="' . implode( $v, ' ' ) . '" ';
 			}
 		}
 	}
