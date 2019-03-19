@@ -145,12 +145,12 @@ get_header(); ?>
                                 }
                                 ?>
                                 <div id="video-list">
-                                    <div class="card-columns">
+                                    <div class="card-deck">
                                         <?php
                                         while($videos->have_posts()) {
 	                                        $videos->the_post();
 
-                                            get_template_part('parts/video/loop', 'grid');
+                                            get_template_part('parts/video/loop', 'card');
                                         }
 
                                         wp_reset_query();

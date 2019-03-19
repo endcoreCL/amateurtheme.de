@@ -47,9 +47,9 @@ $term_id = $queried_object->term_id;
 					<div id="video-list" class="video-category">
                         <?php
                         if (have_posts()) :
-                            echo '<div class="card-columns">';
+                            echo '<div class="card-deck">';
                             while (have_posts()) : the_post();
-                                get_template_part('parts/video/loop', 'grid');
+                                get_template_part('parts/video/loop', 'card');
                             endwhile;
                             echo '</div>';
 	                        echo '<div class="divider"></div>';

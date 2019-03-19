@@ -1,11 +1,11 @@
 <?php
-$layout = new xCORE_Layout();
-$logo_pos = $layout->logo_pos();
-$banner = get_field('design_header_banner', 'options');
-$search = get_field('design_header_search', 'options');
-$search_pos = get_field('design_header_search_pos', 'options');
+$xcore_layout   = new xCORE_Layout();
+$logo_pos       = $xcore_layout->logo_pos();
+$banner         = get_field( 'design_header_banner', 'options' );
+$search         = get_field( 'design_header_search', 'options' );
+$search_pos     = get_field( 'design_header_search_pos', 'options' );
 
-if($logo_pos == 'top' || $banner || $search) {
+if( $logo_pos == 'top' || $banner || $search ) {
     ?>
     <header id="header">
         <div class="container">
@@ -15,7 +15,7 @@ if($logo_pos == 'top' || $banner || $search) {
                     ?>
                     <div class="col-sm-4 align-self-center">
                         <a class="header-brand" href="<?php echo home_url(); ?>" title="<?php bloginfo( 'name' ); ?>">
-                            <?php echo $layout->logo(); ?>
+                            <?php echo $xcore_layout->logo(); ?>
                         </a>
                     </div>
                     <?php
@@ -91,12 +91,12 @@ if($logo_pos == 'top' || $banner || $search) {
 }
 ?>
 
-<nav class="<?php echo $layout->navbar_wrapper_classes(); ?>" id="navigation">
+<nav class="<?php echo $xcore_layout->navbar_wrapper_classes(); ?>" id="navigation">
 	<div class="container">
 		<?php
 		if($logo_pos == 'inline') {
 			?>
-			<a class="navbar-brand" href="<?php echo home_url(); ?>" title="<?php bloginfo('name'); ?>"><?php echo $layout->logo(); ?></a>
+			<a class="navbar-brand" href="<?php echo home_url(); ?>" title="<?php bloginfo('name'); ?>"><?php echo $xcore_layout->logo(); ?></a>
 			<?php
 		}
 		?>
@@ -114,7 +114,7 @@ if($logo_pos == 'top' || $banner || $search) {
                 'container_id'      => 'navbarNav',
                 'container_class'   => 'collapse navbar-collapse',
                 'menu_id'           => false,
-                'menu_class'        => $layout->navbar_classes(),
+                'menu_class'        => $xcore_layout->navbar_classes(),
                 'depth'             => 4,
                 'fallback_cb'       => 'xcore_nav_walker::fallback',
                 'walker'            => new xcore_nav_walker()

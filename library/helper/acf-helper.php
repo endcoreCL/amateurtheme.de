@@ -49,9 +49,9 @@ if ( ! function_exists( 'at_acf_option_pages' ) ) {
     /**
      * Add acf option pages
      */
-    add_action('acf/init', 'at_acf_option_pages');
+    add_action( 'init', 'at_acf_option_pages' );
     function at_acf_option_pages() {
-        if ( function_exists('acf_add_options_page') ) {
+        if ( function_exists( 'acf_add_options_page' ) ) {
             acf_add_options_page(
                 array(
                     'page_title' => __( 'Framework', 'xcore' ),
