@@ -98,6 +98,7 @@ get_header(); ?>
                             $actor = get_sub_field( 'latest_actor' );
                             $category = get_sub_field( 'latest_category' );
                             $tags = get_sub_field( 'latest_tags' );
+                            $source = get_sub_field( 'latest_source' );
 
                             if( $count ) {
                                 $args['posts_per_page'] = $count;
@@ -126,6 +127,14 @@ get_header(); ?>
 					                'field' => 'term_id'
 				                );
 			                }
+
+			                if ( $source ) {
+                                $args['meta_query'][] = array(
+                                    'key' => 'video_source',
+                                    'value' => $source,
+                                    'compare' => '='
+                                );
+                            }
                         } else if( $type == 'post__in' ) {
 		                    $ids = get_sub_field( 'post__in_video' );
 

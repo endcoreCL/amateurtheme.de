@@ -1,6 +1,6 @@
 <?php
 /**
- * Diverse WP Actions
+ * WP Actions
  *
  * @author		Christian Lang
  * @version		1.0

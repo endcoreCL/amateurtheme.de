@@ -1,4 +1,4 @@
-<?php do_action('xcore_init'); global $xcore_layout; ?>
+<?php do_action('at_init'); global $xcore_layout; ?>
 <!doctype html>
 <html lang="en">
 	<head>
