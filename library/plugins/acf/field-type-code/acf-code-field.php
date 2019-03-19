@@ -16,7 +16,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 load_plugin_textdomain( 'acf-code-field', false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
 
 define( 'ACFCF_CODEMIRROR_VERSION', 'codemirror-5.23.0' );
-define( 'ACFCF_PLUGIN_DIR', XCORE_PLUGINS . '/acf/field-type-code/' );
+define( 'ACFCF_PLUGIN_DIR', AT_PLUGINS . '/acf/field-type-code/' );
 
 include_once( 'lib/class.acf-code-field-util.php' );
 
