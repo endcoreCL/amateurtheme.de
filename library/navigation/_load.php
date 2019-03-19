@@ -7,6 +7,6 @@
  * @category	_load
  */
 
-require_once(XCORE_LIBRARY . '/navigation/walker.php');
-require_once(XCORE_LIBRARY . '/navigation/walker-topbar.php');
-require_once(XCORE_LIBRARY . '/navigation/helper.php');
+require_once(AT_LIBRARY . '/navigation/walker.php');
+require_once(AT_LIBRARY . '/navigation/walker-topbar.php');
+require_once(AT_LIBRARY . '/navigation/helper.php');
