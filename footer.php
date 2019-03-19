@@ -1,9 +1,10 @@
             <?php
-            if ( function_exists('yoast_breadcrumb') && ('bottom' == get_field('design_breadcrumbs_pos', 'option'))) { ?>
+            if ( function_exists('yoast_breadcrumb') && ('bottom' == get_field('design_breadcrumbs_pos', 'option') ) ) {
+                ?>
                 <section id="breadcrumbs">
                     <div class="container">
                         <?php
-                        $breadcrumbs = yoast_breadcrumb('<nav><ol class="breadcrumb"><li class="breadcrumb-item">','</li></ol></nav>', false);
+                        $breadcrumbs = yoast_breadcrumb( '<nav><ol class="breadcrumb"><li class="breadcrumb-item">','</li></ol></nav>', false );
                         echo str_replace( '»', '</li><li class="breadcrumb-item">', $breadcrumbs );
                         ?>
                     </div>
@@ -95,7 +96,7 @@
 
 	<?php
 	/* Support old Browsers (eg IE6-9) */
-	if(get_field('src_ie_support', 'options')) {
+	if( get_field( 'src_ie_support', 'options' ) ) {
 		?>
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
