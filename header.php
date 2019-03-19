@@ -8,26 +8,26 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 		<?php wp_head(); ?>
 	</head>
-	<body>
-	    <?php
-        do_action('xcore_after_body');
-        ?>
+	<body <?php body_class(); ?>>
+	    <?php do_action('at_after_body'); ?>
+
 		<div id="wrapper-fluid">
             <?php
-            if(get_field('design_topbar', 'options')) {
+            if( get_field( 'design_topbar', 'options' ) ) {
 	            get_template_part( 'parts/topbar/code', 'topbar' );
             }
 
-            get_template_part('parts/header/code', 'header');
+            get_template_part( 'parts/header/code', 'header' );
 
-            if ( function_exists('yoast_breadcrumb') && ('top' == get_field('design_breadcrumbs_pos', 'option'))) { ?>
+            if ( function_exists('yoast_breadcrumb') && ('top' == get_field('design_breadcrumbs_pos', 'option') ) ) {
+                ?>
                 <section id="breadcrumbs">
                     <div class="container">
                         <?php
-                        $breadcrumbs = yoast_breadcrumb('<nav><ol class="breadcrumb"><li class="breadcrumb-item">','</li></ol></nav>', false);
+                        $breadcrumbs = yoast_breadcrumb( '<nav><ol class="breadcrumb"><li class="breadcrumb-item">','</li></ol></nav>', false );
                         echo str_replace( '»', '</li><li class="breadcrumb-item">', $breadcrumbs );
                         ?>
                     </div>
                 </section>
-			<?php
+			    <?php
 			}
