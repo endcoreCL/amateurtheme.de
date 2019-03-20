@@ -27,7 +27,7 @@ function video_register() {
         'public'			=> true,
         'show_ui'			=> true,
         'has_archive'		=> true,
-        'hierarchical'		=> true,
+        'hierarchical'		=> false,
         'menu_icon'			=> 'dashicons-video-alt3',
         'rewrite'			=> array('slug' => 'video', 'with_front' => false),
         'supports' 			=> array('title', 'editor', 'thumbnail', 'author', 'custom-fields')

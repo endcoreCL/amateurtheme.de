@@ -9,6 +9,92 @@
 
 add_image_size('video_grid', 345, 194, true);
 
+if ( ! function_exists( 'at_video_admin_columns' ) ) {
+	/**
+	 * Manage admin columns for videos
+	 *
+	 * @param $columns
+	 *
+	 * @return array
+	 */
+	add_filter( 'manage_edit-video_columns', 'at_video_admin_columns' ) ;
+	function at_video_admin_columns( $columns ) {
+		$columns = array(
+			'cb' => '<input type="checkbox" />',
+			'title' => __('Titel', 'xcore'),
+			'taxonomy-video_actor' => __( 'Darsteller', 'amateurtheme' ),
+			'taxonomy-video_category' => __( 'Kategorie', 'amateurtheme' ),
+			'taxonomy-video_tags' => __( 'Schlagwörter', 'amateurtheme' ),
+			'video_source' => __( 'Quelle', 'amateurtheme' ),
+			'date' => __( 'Hinzugefügt am', 'amateurtheme' )
+		);
+
+		return $columns;
+	}
+}
+
+if ( ! function_exists( 'at_video_admin_columns_content' ) ) {
+	/**
+	 * Output details in admin columns for videos
+	 *
+	 * @param $column
+	 * @param $post_id
+	 */
+	add_action( 'manage_video_posts_custom_column', 'at_video_admin_columns_content', 10, 2 );
+	function at_video_admin_columns_content( $column, $post_id ) {
+		global $wpdb;
+
+		switch( $column ) {
+			case 'video_source':
+				$video_source = get_field( 'video_source', $post_id );
+				if ( $video_source ) {
+					echo at_video_sanitize_source( $video_source );
+				} else {
+					echo '-';
+				}
+				break;
+
+			default :
+				break;
+		}
+	}
+}
+
+if ( ! function_exists( 'at_video_sanitize_source' ) ) {
+	/**
+	 * Sanitize the source of a video
+	 *
+	 * @param $source
+	 *
+	 * @return string
+	 */
+	function at_video_sanitize_source( $source ) {
+		switch ( $source ) {
+			case 'big7':
+				return 'Big7';
+				break;
+
+			case 'mdh':
+				return 'MyDirtyHobby';
+				break;
+
+			case 'pornme':
+				return 'PornMe';
+				break;
+
+			case 'ac':
+				return 'AmateurCommunity';
+				break;
+
+			case 'own':
+				return 'Eigene Quelle';
+				break;
+		}
+
+		return 'unknown';
+	}
+}
+
 if ( ! function_exists('at_video_taxonomy_args') ) {
     /**
      * edit taxonomy archive query for video_actor / video_category / video_tags
