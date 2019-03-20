@@ -14,6 +14,8 @@ $actor_profile_url = $actor->url();
 
 $video_actor_description  = get_field( 'video_actor_description', 'options' );
 $video_actor_details = get_field( 'video_actor_details', 'options' );
+
+$prg = get_field( 'prg_activate', 'options' );
 ?>
 
 <div id="main">
@@ -41,7 +43,13 @@ $video_actor_details = get_field( 'video_actor_details', 'options' );
 	                            }
 
 	                            if ( $actor_profile_url ) {
-		                            echo '<p><a href="' . $actor_profile_url . '" target="_blank" rel="nofollow" class="btn btn-primary">' . __( 'zum Profil', 'amateurtheme' ) . '</a></p>';
+		                            echo '<p>';
+		                                if ( $prg ) {
+		                                    echo '<span class="redir-link btn btn-primary" data-submit="' . base64_encode( $actor_profile_url ) . '" data-target="_blank">' . __( 'zum Profil', 'amateurtheme' ) . '</span>';
+                                        } else {
+			                                echo '<a href="' . $actor_profile_url . '" target="_blank" rel="nofollow" class="btn btn-primary">' . __( 'zum Profil', 'amateurtheme' ) . '</a>';
+                                        }
+		                            echo '</p>';
 	                            }
 
 	                            echo '<hr class="hr-transparent">';
