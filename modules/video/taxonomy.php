@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Taxonomy
  *
  * @author		Christian Lang
@@ -13,8 +13,8 @@ function video_taxonomies() {
         'video_category',
         'video',
         array(
-            'label' => __('Kategorie', 'xcore'),
-            'rewrite' => array( 'slug' =>  'kategorie', 'with_front' => true, 'hierarchical' => true),
+            'label' => __( 'Kategorie', 'amateurtheme' ),
+            'rewrite' => array( 'slug' =>  'kategorie', 'with_front' => true, 'hierarchical' => true ),
             'hierarchical' => true,
             'query_var' => true,
             'sort' => true,
@@ -26,8 +26,8 @@ function video_taxonomies() {
         'video_tags',
         'video',
         array(
-            'label' => __('Schlagwörter', 'xcore'),
-            'rewrite' => array( 'slug' =>  'tags', 'with_front' => true, 'hierarchical' => true),
+            'label' => __( 'Schlagwörter', 'amateurtheme' ),
+            'rewrite' => array( 'slug' =>  'tags', 'with_front' => true, 'hierarchical' => true ),
             'hierarchical' => true,
             'query_var' => true,
             'sort' => true,
@@ -39,8 +39,8 @@ function video_taxonomies() {
         'video_actor',
         'video',
         array(
-            'label' => __('Darsteller', 'xcore'),
-            'rewrite' => array( 'slug' =>  'darsteller', 'with_front' => true, 'hierarchical' => true),
+            'label' => __( 'Darsteller', 'amateurtheme' ),
+            'rewrite' => array( 'slug' =>  'darsteller', 'with_front' => true, 'hierarchical' => true ),
             'hierarchical' => true,
             'query_var' => true,
             'sort' => true,

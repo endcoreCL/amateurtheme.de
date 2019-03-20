@@ -7,7 +7,7 @@
  * @category	helper
  */
 
-add_action( 'xcore_init', 'xcore_global_vars' );
+add_action( 'at_init', 'xcore_global_vars' );
 function xcore_global_vars() {
 	global $xcore_layout;
 	$xcore_layout = new xCORE_Layout();

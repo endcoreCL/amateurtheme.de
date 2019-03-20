@@ -19,6 +19,7 @@ class xCORE_Custom_SCSS {
 	}
 
 	public function get_fields() {
+	    echo 'fired';
 		$acf_fields = get_field_objects('options');
 		$fields = array();
 

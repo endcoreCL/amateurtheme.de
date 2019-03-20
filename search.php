@@ -5,11 +5,20 @@ $post_type = ( $_GET['post_type'] ? $_GET['post_type'] : 'post' );
 $sidebar = $xcore_layout->get_sidebar( $post_type . '_search' );
 $classes = $xcore_layout->get_sidebar_classes( $post_type . '_search' );
 $layout = get_field( ( $post_type == 'post' ? 'blog' : $post_type ) . '_search_posts_layout', 'options' );
+$headline = get_field( ( $post_type == 'post' ? 'blog' : $post_type ) . '_search_headline', 'options' );
 ?>
 
 <div id="main">
 	<div class="container">
-        <h1><?php printf( __( 'Deine Suche nach <span class="highlight">%s</span>', 'xcore' ), get_search_query()); ?></h1>
+        <h1>
+            <?php
+            if ( $headline ) {
+                printf( $headline, get_search_query() );
+            } else {
+	            printf( __( 'Deine Suche nach <span class="highlight">%s</span>', 'xcore' ), get_search_query() );
+            }
+            ?>
+        </h1>
 
         <div class="row">
             <div class="<?php echo $classes['content']; ?>">

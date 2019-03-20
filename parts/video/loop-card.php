@@ -21,14 +21,8 @@ $video = new AT_Video($post->ID);
                 <?php echo $video->title(); ?>
             </a>
         </h3>
-        <ul class="list-inline list-meta">
-            <li class="list-inline-item">
-                <i class="fa fa-eye" aria-hidden="true"></i> <?php echo $video->views(); ?>
-            </li>
-            <li class="list-inline-item">
-                <i class="fa fa-star" aria-hidden="true"></i> <?php echo $video->rating(); ?>
-            </li>
-        </ul>
+
+        <?php get_template_part( 'parts/video/code', 'meta' ); ?>
     </div>
 </div>
 

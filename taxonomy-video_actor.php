@@ -4,34 +4,37 @@ get_header();
 /**
  * Vars
  */
+$sidebar = $xcore_layout->get_sidebar( 'video_actor' );
+$classes = $xcore_layout->get_sidebar_classes( 'video_actor' );
+$headline = get_field( 'video_actor_headline', 'options' );
 $queried_object = get_queried_object();
 $term_id = $queried_object->term_id;
 $actor = new AT_Video_Actor($term_id);
-
 $actor_image = $actor->image();
 $actor_description = term_description();
 $actor_profile_url = $actor->url();
-
 $video_actor_description  = get_field( 'video_actor_description', 'options' );
 $video_actor_details = get_field( 'video_actor_details', 'options' );
-
 $prg = get_field( 'prg_activate', 'options' );
 ?>
 
 <div id="main">
     <div class="container">
         <div class="row">
-            <div class="col-2">
-                <div id="sidebar">
-                    <?php get_sidebar(); ?>
-                </div>
-            </div>
-
-            <div class="col-10">
+            <div class="<?php echo $classes['content']; ?>">
                 <div id="content">
                     <?php if( !is_paged() ) { ?>
                         <div class="video-actor-header clearfix">
-							<h1><?php single_term_title(); ?></h1>
+							<h1>
+                                <?php
+                                if ( $headline ) {
+                                    printf( $headline, single_term_title( '', false ) );
+                                } else {
+	                                single_term_title();
+                                }
+                                ?>
+                            </h1>
+
                             <?php
                             if ( $video_actor_description ) {
 	                            if ( $actor_image ) {
@@ -59,61 +62,74 @@ $prg = get_field( 'prg_activate', 'options' );
 
                         <?php
                         if ( $video_actor_details ) {
-                            ?>
-                            <div class="video-actor-details">
-                                <?php
-                                echo '<h2>' . __( 'Details', 'amateurtheme' ) . '</h2>';
-                                $fields = apply_filters( 'at_video_actor_details_fields',
-                                    array(
-                                        __( 'Geschlecht', 'amateurtheme' ) => 'gender',
-                                        __( 'Körpergröße', 'amateurtheme' ) => 'size',
-                                        __( 'Haarfarbe', 'amateurtheme' ) => 'haircolor',
-                                        __( 'Haarlänge', 'amateurtheme' ) => 'hairlength',
-                                        __( 'Figur', 'amateurtheme' ) => 'bodytype',
-                                        __( 'Erscheinungsbild', 'amateurtheme' ) => 'bodystyle',
-                                        __( 'Augenfarbe', 'amateurtheme' ) => 'eyecolor',
-                                        __( 'PLZ', 'amateurtheme' ) => 'zipcode',
-                                        __( 'Stadt', 'amateurtheme' ) => 'city',
-                                        __( 'Land', 'amateurtheme' ) => 'country',
-                                        __( 'Alter', 'amateurtheme' ) => 'age',
-                                        __( 'Sternzeichen', 'amateurtheme' ) => 'star_sign',
-                                        __( 'Orientierung', 'amateurtheme' ) => 'sex_orientation',
-                                        __( 'Gewicht', 'amat eurtheme' ) => 'weight',
-                                        __( 'Körpchengröße', 'amateurtheme' ) => 'breast_size',
-                                        __( 'Intimrasur', 'amateurtheme' ) => 'shave',
-                                        __( 'Beruf', 'amateurtheme' ) => 'job',
-                                        __( 'Ich bin', 'amateurtheme' ) => 'relationship_status',
-                                        __( 'Ich suche', 'amateurtheme' ) => 'search',
-                                        __( 'für', 'amateurtheme' ) => 'search_for',
-                                        __( 'Raucher', 'amateurtheme' ) => 'smoke',
-                                        __( 'Alkohol', 'amateurtheme' ) => 'alcohol'
-                                    )
-                                );
+	                        $has_data = false;
+
+	                        $fields = apply_filters( 'at_video_actor_details_fields',
+		                        array(
+			                        __( 'Geschlecht', 'amateurtheme' ) => 'gender',
+			                        __( 'Körpergröße', 'amateurtheme' ) => 'size',
+			                        __( 'Haarfarbe', 'amateurtheme' ) => 'haircolor',
+			                        __( 'Haarlänge', 'amateurtheme' ) => 'hairlength',
+			                        __( 'Figur', 'amateurtheme' ) => 'bodytype',
+			                        __( 'Erscheinungsbild', 'amateurtheme' ) => 'bodystyle',
+			                        __( 'Augenfarbe', 'amateurtheme' ) => 'eyecolor',
+			                        __( 'PLZ', 'amateurtheme' ) => 'zipcode',
+			                        __( 'Stadt', 'amateurtheme' ) => 'city',
+			                        __( 'Land', 'amateurtheme' ) => 'country',
+			                        __( 'Alter', 'amateurtheme' ) => 'age',
+			                        __( 'Sternzeichen', 'amateurtheme' ) => 'star_sign',
+			                        __( 'Orientierung', 'amateurtheme' ) => 'sex_orientation',
+			                        __( 'Gewicht', 'amat eurtheme' ) => 'weight',
+			                        __( 'Körpchengröße', 'amateurtheme' ) => 'breast_size',
+			                        __( 'Intimrasur', 'amateurtheme' ) => 'shave',
+			                        __( 'Beruf', 'amateurtheme' ) => 'job',
+			                        __( 'Ich bin', 'amateurtheme' ) => 'relationship_status',
+			                        __( 'Ich suche', 'amateurtheme' ) => 'search',
+			                        __( 'für', 'amateurtheme' ) => 'search_for',
+			                        __( 'Raucher', 'amateurtheme' ) => 'smoke',
+			                        __( 'Alkohol', 'amateurtheme' ) => 'alcohol'
+		                        )
+	                        );
+
+	                        if ( $fields ) {
+	                            // check if there is any data to output
+		                        foreach( $fields as $k => $v ) {
+		                            if ( $actor->field( $v ) != '-' ) {
+		                                $has_data = true;
+		                            }
+		                        }
+                            }
+
+	                        if ( $has_data ) {
                                 ?>
-                                <table class="table table-bordered table-details">
-                                    <colgroup>
-                                        <col style="width: 20%">
-                                        <col style="width: 30%">
-                                        <col style="width: 20%">
-                                        <col style="width: 30%">
-                                    </colgroup>
-                                    <tbody>
-                                        <tr>
-                                            <?php
-                                            $i=0;
-                                            foreach( $fields as $k => $v ) {
-                                                if( $i%2==0 && $i!=0 ) echo '</tr><tr>';
+                                <div class="video-actor-details">
+                                    <?php echo '<h2>' . apply_filters( 'at_video_actor_details_headline', __( 'Details', 'amateurtheme' ) ) . '</h2>'; ?>
+                                    <table class="table table-bordered table-details">
+                                        <colgroup>
+                                            <col style="width: 20%">
+                                            <col style="width: 30%">
+                                            <col style="width: 20%">
+                                            <col style="width: 30%">
+                                        </colgroup>
+                                        <tbody>
+                                            <tr>
+                                                <?php
+                                                $i=0;
+                                                foreach( $fields as $k => $v ) {
+                                                    if( $i%2==0 && $i!=0 ) echo '</tr><tr>';
 
-                                                echo '<td class="td-label">' . $k . '</td><td class="td-value">' . $actor->field( $v ) . '</td>';
-
-                                                $i++;
-                                            }
-                                            ?>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <?php
+                                                    if ( $actor->field( $v ) != '-' ) {
+	                                                    echo '<td class="td-label">' . $k . '</td><td class="td-value">' . $actor->field( $v ) . '</td>';
+	                                                    $i ++;
+                                                    }
+                                                }
+                                                ?>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <?php
+                            }
                         }
                         ?>
 
@@ -123,16 +139,20 @@ $prg = get_field( 'prg_activate', 'options' );
                     } else {
                         // paged
                         ?>
-                        <h1><?php printf( __( '%s Videos', 'amateurtheme' ), single_term_title( '', false ) ); ?></h1>
+                        <h1>
+                            <?php apply_filters( 'at_video_actor_video_paginated_headline', sprintf( __( '%s Videos', 'amateurtheme' ), single_term_title( '', false ) ) ); ?>
+                        </h1>
                         <?php
                     }
                     ?>
 
 					<div id="video-list" class="video-actor">
                         <?php
-                        if( ! is_paged() ) {
+                        if( ! is_paged() && $has_data ) {
                             ?>
-                            <h2><?php _e( 'Videos', 'amateurtheme' ); ?></h2>
+                            <h2>
+                                <?php echo apply_filters( 'at_video_actor_video_headline', __( 'Videos', 'amateurtheme' ) ); ?>
+                            </h2>
                             <?php
                         }
 
@@ -155,6 +175,18 @@ $prg = get_field( 'prg_activate', 'options' );
                     </div>
                 </div>
             </div>
+
+	        <?php
+	        if ( $sidebar ) {
+		        ?>
+                <div class="<?php echo $classes['sidebar']; ?>">
+                    <div id="sidebar">
+				        <?php get_sidebar(); ?>
+                    </div>
+                </div>
+		        <?php
+	        }
+	        ?>
         </div>
     </div>
 </div>

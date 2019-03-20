@@ -4,6 +4,9 @@ get_header();
 /**
  * Vars
  */
+$sidebar = $xcore_layout->get_sidebar( 'video_category' );
+$classes = $xcore_layout->get_sidebar_classes( 'video_category' );
+$headline = get_field( 'video_category_headline', 'options' );
 $queried_object = get_queried_object();
 $term_id = $queried_object->term_id;
 ?>
@@ -11,15 +14,17 @@ $term_id = $queried_object->term_id;
 <div id="main">
     <div class="container">
         <div class="row">
-            <div class="col-2">
-                <div id="sidebar">
-                    <?php get_sidebar(); ?>
-                </div>
-            </div>
-
-            <div class="col-10">
+            <div class="<?php echo $classes['content']; ?>">
                 <div id="content">
-                    <h1><?php single_term_title(); ?></h1>
+                    <h1>
+                        <?php
+                        if ( $headline ) {
+                            printf( $headline, single_term_title( '', false ) ) ;
+                        } else {
+	                        single_term_title();
+                        }
+                        ?>
+                    </h1>
 
                     <?php
                     $tags = at_video_category_related_tags ( $queried_object->name, $term_id );
@@ -68,6 +73,18 @@ $term_id = $queried_object->term_id;
                     </div>
                 </div>
             </div>
+
+	        <?php
+	        if ( $sidebar ) {
+		        ?>
+                <div class="<?php echo $classes['sidebar']; ?>">
+                    <div id="sidebar">
+				        <?php get_sidebar(); ?>
+                    </div>
+                </div>
+		        <?php
+	        }
+	        ?>
         </div>
     </div>
 </div>

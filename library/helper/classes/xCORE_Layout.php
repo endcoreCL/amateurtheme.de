@@ -81,20 +81,36 @@ class xCORE_Layout {
     }
 
     public function get_sidebar_classes( $section ) {
+    	// default sizes
+    	$size_full = 12;
+    	$size_content = 8;
+    	$size_sidebar = 4;
+
+    	// get sizes from options
+    	$sizes = get_field( $section . '_sidebar_size', 'options' );
+    	if ( $sizes ) {
+    		$sizes_arr = explode( '_', $sizes );
+
+    		if ( $sizes_arr ) {
+			    $size_content = $sizes_arr[0];
+			    $size_sidebar = $sizes_arr[1];
+		    }
+	    }
+
         $classes = array(
-            'content' => 'col-md-12',
-            'sidebar' => 'col-md-12'
+            'content' => 'col-md-' . $size_full,
+            'sidebar' => 'col-md-' . $size_full
         );
 
         $sidebar = $this->get_sidebar( $section );
 
         if ( $sidebar ) {
-            $classes['content'] = 'col-md-8';
-            $classes['sidebar'] = 'col-md-4';
+            $classes['content'] = 'col-md-' . $size_content;
+            $classes['sidebar'] = 'col-md-' . $size_sidebar;
 
             if ( $sidebar == 'left' ) {
-                $classes['content'] = 'col-md-8 order-md-last';
-                $classes['sidebar'] = 'col-md-4 order-md-first';
+                $classes['content'] = 'col-md-' . $size_content . ' order-md-last';
+                $classes['sidebar'] = 'col-md-' . $size_sidebar . ' order-md-first';
             }
         }
 

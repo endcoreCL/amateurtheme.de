@@ -101,20 +101,45 @@ if ( ! function_exists('at_video_taxonomy_args') ) {
      */
     add_filter('pre_get_posts', 'at_video_taxonomy_args');
     function at_video_taxonomy_args($query) {
+	    /**
+	     * Video tags query
+	     */
         if ( $query->is_tax('video_tags')  && $query->is_main_query() ) {
 	        $posts_per_page = ( get_field( 'video_tags_posts_per_page', 'options' ) ? get_field( 'video_tags_posts_per_page', 'options' ) : 12 );
 	        $query->set( 'posts_per_page', $posts_per_page );
         }
 
+	    /**
+	     * Video category query
+	     */
 	    if ( $query->is_tax('video_category') && $query->is_main_query() ) {
 		    $posts_per_page = ( get_field( 'video_category_posts_per_page', 'options' ) ? get_field( 'video_category_posts_per_page', 'options' ) : 12 );
 		    $query->set( 'posts_per_page', $posts_per_page );
 	    }
 
+	    /**
+	     * Video actor query
+	     */
         if ( $query->is_tax('video_actor') && $query->is_main_query() ) {
         	$posts_per_page = ( get_field( 'video_actor_posts_per_page', 'options' ) ? get_field( 'video_actor_posts_per_page', 'options' ) : 12 );
         	$query->set( 'posts_per_page', $posts_per_page );
         }
+
+	    /**
+	     * Video archive query
+	     */
+	    if ( $query->is_post_type_archive('video') && $query->is_main_query() ) {
+		    $posts_per_page = ( get_field( 'video_archive_posts_per_page', 'options' ) ? get_field( 'video_archive_posts_per_page', 'options' ) : 12 );
+		    $query->set( 'posts_per_page', $posts_per_page );
+	    }
+
+	    /**
+	     * Video search query
+	     */
+	    if ( $query->is_search() && $query->get('post_type') == 'video' && $query->is_main_query() ) {
+		    $posts_per_page = ( get_field( 'video_search_posts_per_page', 'options' ) ? get_field( 'video_search_posts_per_page', 'options' ) : 12 );
+		    $query->set( 'posts_per_page', $posts_per_page );
+	    }
 
         return $query;
     }

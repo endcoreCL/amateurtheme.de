@@ -3,7 +3,6 @@ get_header();
 
 // Vars
 $video = new AT_Video( get_the_ID() );
-$meta = get_field( 'video_single_meta', 'options' );
 $categories = get_field( 'video_single_category', 'options' );
 $ad_top = get_field( 'video_single_ad_top', 'options' );
 $prg = get_field( 'prg_activate', 'options' );
@@ -35,10 +34,12 @@ if ( $ad_top ) {
                                 if( $preview_webm || $preview_mp4 ) {
                                     $poster = $video->thumbnail_url();
                                     ?>
-                                    <video poster="<?php echo $poster; ?>" id="player" playsinline controls data-plyr-config='{"loadSprite" : "<?php echo get_template_directory_uri(); ?>/assets/img/plyr.svg"}'>
-                                        <?php if( $preview_mp4 ) { ?><source src="<?php echo $preview_mp4; ?>" type="video/mp4"><?php } ?>
-                                        <?php if( $preview_webm ) { ?><source src="<?php echo $preview_webm; ?>" type="video/webm"><?php } ?>
-                                    </video>
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <video poster="<?php echo $poster; ?>" id="player" playsinline controls data-plyr-config='{"loadSprite" : "<?php echo get_template_directory_uri(); ?>/assets/img/plyr.svg"}'>
+                                            <?php if( $preview_mp4 ) { ?><source src="<?php echo $preview_mp4; ?>" type="video/mp4"><?php } ?>
+                                            <?php if( $preview_webm ) { ?><source src="<?php echo $preview_webm; ?>" type="video/webm"><?php } ?>
+                                        </video>
+                                    </div>
                                     <?php
                                 } else {
 	                                // thumbnail
@@ -88,19 +89,7 @@ if ( $ad_top ) {
                                 <h1><?php echo $video->title(); ?></h1>
 
                                 <?php
-                                if ( $meta ) {
-	                                ?>
-                                    <ul class="list-inline list-meta">
-                                        <li class="list-inline-item video-views">
-                                            <i class="fa fa-eye" aria-hidden="true"></i> <?php echo $video->views(); ?>
-                                        </li>
-                                        <li class="list-inline-item video-rating">
-                                            <i class="fa fa-star"
-                                               aria-hidden="true"></i> <?php echo $video->rating(); ?>
-                                        </li>
-                                    </ul>
-	                                <?php
-                                }
+                                get_template_part( 'parts/video/code', 'meta' );
 
                                 the_content();
 
