@@ -6,6 +6,7 @@ $video = new AT_Video( get_the_ID() );
 $meta = get_field( 'video_single_meta', 'options' );
 $categories = get_field( 'video_single_category', 'options' );
 $ad_top = get_field( 'video_single_ad_top', 'options' );
+$prg = get_field( 'prg_activate', 'options' );
 
 // classes
 $col = array( 'content' => 'col-sm-12', 'sidebar' => 'col-sm-12' );
@@ -43,19 +44,33 @@ if ( $ad_top ) {
 	                                // thumbnail
 	                                $external_url = $video->external_url();
 	                                if ( $external_url ) {
-		                                ?>
-                                        <a href="<?php echo $external_url; ?>" title="<?php $video->title(); ?>" target="_blank" rel="nofollow">
-			                                <?php
-                                            echo $video->thumbnail(
-                                                'full',
-                                                array(
-                                                    'class' => 'img-fluid',
-                                                    'style' => 'width: 100%; height: auto;'
-                                                )
-                                            );
-                                            ?>
-                                        </a>
-		                                <?php
+	                                    if ( $prg ) {
+	                                        ?>
+                                            <span class="redir-link" data-submit="<?php echo base64_encode( $external_url ); ?>" title="<?php $video->title(); ?>" data-target="_blank">
+	                                        <?php
+                                        } else {
+	                                        ?>
+                                            <a href="<?php echo $external_url; ?>" title="<?php $video->title(); ?>" target="_blank" rel="nofollow">
+	                                        <?php
+                                        }
+
+                                        echo $video->thumbnail(
+                                            'full',
+                                            array(
+                                                'class' => 'img-fluid',
+                                                'style' => 'width: 100%; height: auto;'
+                                            )
+                                        );
+
+	                                    if ( $prg ) {
+	                                        ?>
+                                            </span>
+                                            <?php
+	                                    } else {
+	                                        ?>
+                                            </a>
+	                                        <?php
+                                        }
 	                                } else {
                                         echo $video->thumbnail(
                                             'full',

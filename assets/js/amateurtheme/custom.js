@@ -33,3 +33,21 @@ function social_share(elem, m) {
     elem.moveTo(screen.width / 2 - 300, screen.height / 2 - 450);
     elem.focus();
 }
+
+/**
+ * PRG Pattern
+ */
+jQuery(document).ready(function($) {
+    $('.redir-link[data-submit]').click(function (e) {
+        e.preventDefault();
+        var $this = $(this), $redirectForm = $('#redirform'), $redirectValue = $('#redirdata'), $target = $this.data('target'), value = $this.data('submit');
+
+        $redirectValue.val(value);
+
+        if($target) {
+            $redirectForm.attr('target', $target);
+        }
+
+        $redirectForm.submit();
+    });
+});
