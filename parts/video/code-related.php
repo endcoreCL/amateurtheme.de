@@ -1,42 +1,57 @@
 <?php
-$video_actor = wp_get_post_terms(get_the_ID(), 'video_actor', array('fields' => 'ids'));
-$video_category = wp_get_post_terms(get_the_ID(), 'video_category', array('fields' => 'ids'));
+$show = get_field( 'video_single_related', 'options' );
+$options = get_field( 'video_single_related_options', 'options' );
 
-$args = array(
-    'post_type' => 'video',
-    'posts_per_page' => 12,
-    'tax_query' => array(),
-    'orderby' => 'rand'
-);
+if ( $show ) {
+	$video_actor = wp_get_post_terms(get_the_ID(), 'video_actor', array('fields' => 'ids'));
+	$video_category = wp_get_post_terms(get_the_ID(), 'video_category', array('fields' => 'ids'));
 
-if($video_actor) {
-    $args['tax_query'][] = array(
-        'taxonomy' => 'video_actor',
-        'field'    => 'term_id',
-        'terms' => $video_actor,
-    );
-}
+	$args = array(
+	    'post_type' => 'video',
+	    'posts_per_page' => ( $options['posts_per_page'] ? $options['posts_per_page'] : 12 ),
+	    'tax_query' => array(),
+	    'orderby' => 'rand'
+	);
 
-if($video_category) {
-    $args['tax_query'][] = array(
-        'taxonomy' => 'video_category',
-        'field'    => 'term_id',
-        'terms' => $video_category,
-    );
-}
+	if($video_actor) {
+	    $args['tax_query'][] = array(
+	        'taxonomy' => 'video_actor',
+	        'field'    => 'term_id',
+	        'terms' => $video_actor,
+	    );
+	}
 
-$related = new WP_Query($args);
+	if($video_category) {
+	    $args['tax_query'][] = array(
+	        'taxonomy' => 'video_category',
+	        'field'    => 'term_id',
+	        'terms' => $video_category,
+	    );
+	}
 
-if($related->have_posts()) {
-    echo '<div id="video-list" class="video-related">';
-        echo '<div class="card-deck">';
-            while($related->have_posts()) {
-                $related->the_post();
+	$related = new WP_Query($args);
 
-                get_template_part('parts/video/loop', 'card');
-            }
-        echo '</div>';
-    echo '</div>';
+	if($related->have_posts()) {
+	    ?>
+		<div id="video-list" class="video-related">
+			<?php
+			if ( $options['headline'] ) {
+				?>
+				<h2><?php echo $options['headline']; ?></h2>
+				<?php
+			}
+			?>
+	        <div class="card-deck">
+		        <?php
+	            while( $related->have_posts() ) {
+	                $related->the_post();
 
-    wp_reset_query();
+	                get_template_part('parts/video/loop', 'card');
+	            }
+	            ?>
+	        </div>
+	    </div>
+		<?php
+	    wp_reset_query();
+	}
 }

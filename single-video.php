@@ -3,27 +3,40 @@ get_header();
 
 // Vars
 $video = new AT_Video( get_the_ID() );
+$meta = get_field( 'video_single_meta', 'options' );
+$categories = get_field( 'video_single_category', 'options' );
+$ad_top = get_field( 'video_single_ad_top', 'options' );
+
+// classes
+$col = array( 'content' => 'col-sm-12', 'sidebar' => 'col-sm-12' );
+
+if ( $ad_top ) {
+    $col['content'] = 'col-sm-10';
+    $col['sidebar'] = 'col-sm-2';
+}
 ?>
 
 <div id="main" data-post-id="<?php the_ID(); ?>">
     <div class="container">
         <div id="content">
-            <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+            <?php
+            if (have_posts()) : while (have_posts()) : the_post();
+                ?>
                 <div class="video-summary">
                     <div class="row">
-                        <div class="col-10">
+                        <div class="<?php echo $col['content']; ?>">
                             <div class="video-thumb-container">
                                 <?php
                                 // preview videos
-                                $preview_webm = $video->preview_video('webm');
-                                $preview_mp4 = $video->preview_video('mp4');
+                                $preview_webm = $video->preview_video( 'webm' );
+                                $preview_mp4 = $video->preview_video( 'mp4' );
 
-                                if($preview_webm || $preview_mp4) {
+                                if( $preview_webm || $preview_mp4 ) {
                                     $poster = $video->thumbnail_url();
                                     ?>
                                     <video poster="<?php echo $poster; ?>" id="player" playsinline controls data-plyr-config='{"loadSprite" : "<?php echo get_template_directory_uri(); ?>/assets/img/plyr.svg"}'>
-                                        <?php if($preview_mp4) { ?><source src="<?php echo $preview_mp4; ?>" type="video/mp4"><?php } ?>
-                                        <?php if($preview_webm) { ?><source src="<?php echo $preview_webm; ?>" type="video/webm"><?php } ?>
+                                        <?php if( $preview_mp4 ) { ?><source src="<?php echo $preview_mp4; ?>" type="video/mp4"><?php } ?>
+                                        <?php if( $preview_webm ) { ?><source src="<?php echo $preview_webm; ?>" type="video/webm"><?php } ?>
                                     </video>
                                     <?php
                                 } else {
@@ -33,18 +46,24 @@ $video = new AT_Video( get_the_ID() );
 		                                ?>
                                         <a href="<?php echo $external_url; ?>" title="<?php $video->title(); ?>" target="_blank" rel="nofollow">
 			                                <?php
-                                            echo $video->thumbnail( 'full', array(
-				                                'class' => 'img-fluid',
-				                                'style' => 'width: 100%; height: auto;'
-			                                ) );
+                                            echo $video->thumbnail(
+                                                'full',
+                                                array(
+                                                    'class' => 'img-fluid',
+                                                    'style' => 'width: 100%; height: auto;'
+                                                )
+                                            );
                                             ?>
                                         </a>
 		                                <?php
 	                                } else {
-                                        echo $video->thumbnail( 'full', array(
-                                            'class' => 'img-fluid',
-                                            'style' => 'width: 100%; height: auto;'
-                                        ) );
+                                        echo $video->thumbnail(
+                                            'full',
+                                            array(
+                                                'class' => 'img-fluid',
+                                                'style' => 'width: 100%; height: auto;'
+                                            )
+                                        );
 	                                }
                                 }
                                 ?>
@@ -53,39 +72,48 @@ $video = new AT_Video( get_the_ID() );
                             <div class="video-info">
                                 <h1><?php echo $video->title(); ?></h1>
 
-                                <ul class="list-inline list-meta">
-                                    <li class="list-inline-item video-views">
-                                        <i class="fa fa-eye"  aria-hidden="true"></i> <?php echo $video->views(); ?>
-                                    </li>
-                                    <li class="list-inline-item video-rating">
-                                        <i class="fa fa-star" aria-hidden="true"></i> <?php echo $video->rating(); ?>
-                                    </li>
-                                </ul>
-
-                                <hr>
-
                                 <?php
-                                if ( get_the_content() ) {
-                                    the_content();
-
-                                    echo '<hr>';
+                                if ( $meta ) {
+	                                ?>
+                                    <ul class="list-inline list-meta">
+                                        <li class="list-inline-item video-views">
+                                            <i class="fa fa-eye" aria-hidden="true"></i> <?php echo $video->views(); ?>
+                                        </li>
+                                        <li class="list-inline-item video-rating">
+                                            <i class="fa fa-star"
+                                               aria-hidden="true"></i> <?php echo $video->rating(); ?>
+                                        </li>
+                                    </ul>
+	                                <?php
                                 }
 
-                                echo get_the_term_list(get_the_ID(), 'video_category', '<span class="badge badge-dark">', '</span> <span class="badge badge-dark">', '</span>'); ?>
+                                the_content();
+
+                                if ( $categories ) {
+	                                echo get_the_term_list( get_the_ID(), 'video_category', '<span class="badge badge-dark">', '</span> <span class="badge badge-dark">', '</span>' );
+                                }
+                                ?>
                             </div>
                         </div>
 
-                        <div class="col-2">
-                            <?php get_sidebar(); ?>
-                        </div>
+                        <?php
+                        if ( $ad_top ) {
+	                        ?>
+                            <div class="<?php echo $col['sidebar']; ?>">
+		                        <?php echo $ad_top; ?>
+                            </div>
+	                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
 
-                <?php get_template_part('parts/video/code', 'related'); ?>
+                <?php
+                get_template_part( 'parts/video/code', 'related' );
 
-                <?php get_template_part('parts/video/code', 'ad-bottom'); ?>
-
-            <?php endwhile; endif; ?>
+                get_template_part( 'parts/video/code', 'ad-bottom' );
+             endwhile; endif;
+             ?>
         </div>
     </div>
 </div>
