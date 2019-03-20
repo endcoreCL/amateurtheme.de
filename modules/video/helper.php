@@ -56,3 +56,45 @@ if ( ! function_exists('at_video_set_post_view') ) {
 		exit;
 	}
 }
+
+if ( ! function_exists( 'at_video_category_related_tags' ) ) {
+	/**
+	 * A simple function to get related tags for a category
+	 *
+	 * @param $category
+	 * @param $id
+	 *
+	 * @return array
+	 */
+	function at_video_category_related_tags( $category, $id ) {
+		if ( false === ( $tags = get_transient( 'cat_' . $id . '_tags' ) ) ) {
+			// related tags
+			$titles = explode( ' ', $category );
+			$tags = array();
+
+			if ( $titles ) {
+				foreach ( $titles as $title ) {
+					$args = array(
+						'hide_empty' => true,
+						'number' => 10,
+						'name__like' => $title
+					);
+
+					$tags_tmp = get_terms( 'video_tags', $args );
+
+					if ( $tags_tmp ) {
+						$tags = array_merge ( $tags, $tags_tmp );
+					}
+				}
+
+				if ( $tags ) {
+					$tags = array_slice( $tags, 0, 10 );
+					$exp = apply_filters( 'at_video_category_related_tags_transient_expiration', 12 * HOUR_IN_SECONDS );
+					set_transient( 'cat_' . $id . '_tags', $tags, $exp );
+				}
+			}
+		}
+
+		return $tags;
+	}
+}

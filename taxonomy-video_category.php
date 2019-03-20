@@ -22,14 +22,7 @@ $term_id = $queried_object->term_id;
                     <h1><?php single_term_title(); ?></h1>
 
                     <?php
-                    // related tags
-                    $args = array(
-                        'hide_empty' => true,
-                        'number' => 10,
-                        'name__like' => single_term_title( false, '' )
-                    );
-
-                    $tags = get_terms( 'video_tags', $args );
+                    $tags = at_video_category_related_tags ( $queried_object->name, $term_id );
                     if( $tags ) {
                         ?>
                         <ul class="list-inline list-related-tags">
