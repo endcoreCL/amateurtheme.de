@@ -2,10 +2,10 @@
 get_header();
 
 // Vars
-$video = new AT_Video(get_the_ID());
+$video = new AT_Video( get_the_ID() );
 ?>
 
-<div id="main">
+<div id="main" data-post-id="<?php the_ID(); ?>">
     <div class="container">
         <div id="content">
             <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
@@ -84,6 +84,7 @@ $video = new AT_Video(get_the_ID());
                 <?php get_template_part('parts/video/code', 'related'); ?>
 
                 <?php get_template_part('parts/video/code', 'ad-bottom'); ?>
+
             <?php endwhile; endif; ?>
         </div>
     </div>
