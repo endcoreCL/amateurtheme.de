@@ -12,6 +12,7 @@ $actor_image = $actor->image();
 $actor_description = term_description();
 $actor_profile_url = $actor->url();
 
+$video_actor_description  = get_field( 'video_actor_description', 'options' );
 $video_actor_details = get_field( 'video_actor_details', 'options' );
 ?>
 
@@ -30,25 +31,27 @@ $video_actor_details = get_field( 'video_actor_details', 'options' );
                         <div class="video-actor-header clearfix">
 							<h1><?php single_term_title(); ?></h1>
                             <?php
-                            if($actor_image) {
-                            	echo '<img src="' . $actor_image['url'] . '" alt="' . $actor_image['alt'] . '" class="alignright img-fluid">';
+                            if ( $video_actor_description ) {
+	                            if ( $actor_image ) {
+		                            echo '<img src="' . $actor_image['url'] . '" alt="' . $actor_image['alt'] . '" class="alignright img-fluid">';
+	                            }
+
+	                            if ( $actor_description ) {
+		                            echo '<div class="video-actor-description">' . $actor_description . '</div>';
+	                            }
+
+	                            if ( $actor_profile_url ) {
+		                            echo '<p><a href="' . $actor_profile_url . '" target="_blank" rel="nofollow" class="btn btn-primary">' . __( 'zum Profil', 'amateurtheme' ) . '</a></p>';
+	                            }
+
+	                            echo '<hr class="hr-transparent">';
                             }
-
-							if ($actor_description) {
-								echo '<div class="video-actor-description">' . $actor_description . '</div>';
-							}
-
-							if ($actor_profile_url) {
-								echo '<p><a href="' . $actor_profile_url . '" target="_blank" rel="nofollow" class="btn btn-primary">' . __('zum Profil', 'amateurtheme') . '</a></p>';
-							}
 							?>
                         </div>
 
                         <?php
                         if ( $video_actor_details ) {
                             ?>
-                            <hr class="hr-transparent">
-
                             <div class="video-actor-details">
                                 <?php
                                 echo '<h2>' . __( 'Details', 'amateurtheme' ) . '</h2>';
