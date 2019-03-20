@@ -82,7 +82,6 @@ class xCORE_Layout {
 
     public function get_sidebar_classes( $section ) {
     	// default sizes
-    	$size_full = 12;
     	$size_content = 8;
     	$size_sidebar = 4;
 
@@ -95,11 +94,11 @@ class xCORE_Layout {
 			    $size_content = $sizes_arr[0];
 			    $size_sidebar = $sizes_arr[1];
 		    }
-	    }
+    	}
 
         $classes = array(
-            'content' => 'col-md-' . $size_full,
-            'sidebar' => 'col-md-' . $size_full
+            'content' => 'col-md-12',
+            'sidebar' => 'col-md-12'
         );
 
         $sidebar = $this->get_sidebar( $section );

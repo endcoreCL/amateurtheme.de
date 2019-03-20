@@ -2,9 +2,9 @@
     <div class="row">
         <?php
         if ( has_post_thumbnail() ) {
-            $col_class = 'col-8';
+            $col_class = 'col-md-8';
             ?>
-            <div class="col-4">
+            <div class="col-md-4">
                 <div class="post-thumbnail">
                     <a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
                         <?php
