@@ -7,15 +7,23 @@ get_header();
 $sidebar = $xcore_layout->get_sidebar( 'video_archive' );
 $classes = $xcore_layout->get_sidebar_classes( 'video_archive' );
 $headline = ( get_field( 'video_archive_headline', 'options' ) ? get_field( 'video_archive_headline', 'options' ) : __( 'Alle Videos', 'amateurtheme' ) );
+$text_top = get_field( 'video_archive_text_top', 'options' );
+$text_bottom = get_field( 'video_archive_text_bottom', 'options' );
 ?>
 
 <div id="main">
 	<div class="container">
-		<h1><?php echo $headline; ?></h1>
-
 		<div class="row">
 			<div class="<?php echo $classes['content']; ?>">
 				<div id="content">
+                    <h1><?php echo $headline; ?></h1>
+
+					<?php
+					if ( $text_top && ! is_paged() ) {
+						echo $text_top . '<hr class="hr-transparent">';
+					}
+					?>
+
 					<div id="video-list">
 						<?php
 						if ( have_posts() ) :
@@ -35,6 +43,12 @@ $headline = ( get_field( 'video_archive_headline', 'options' ) ? get_field( 'vid
 						endif;
 						?>
 					</div>
+
+					<?php
+					if ( $text_bottom && ! is_paged() ) {
+						echo '<hr class="hr-transparent">' . $text_bottom;
+					}
+					?>
 				</div>
 			</div>
 
