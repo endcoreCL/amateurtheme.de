@@ -1,0 +1,10 @@
+/* _topbar.scss */
+
+#topbar {
+	background: $gray-100; color: $gray-600; padding: 0.5rem 0; font-size: 0.875rem;
+	p, ul { margin: 0; }
+	a {
+		color: inherit;
+		&:hover, &:focus { color: $primary; text-decoration: none; }
+	}
+}

@@ -1,0 +1,23 @@
+/* _navigation.scss */
+
+// NAVIGATION
+.navbar-nav .nav-link { font-weight: 400; }
+
+// NAVIGATION LIGHT
+.navbar-light {
+	.navbar-nav {
+		.current-menu-item > .nav-link,
+		.active > .nav-link,
+		.nav-link:hover,
+		.nav-link:focus { color: $primary; }
+	}
+}
+
+.navbar-dark {
+	.navbar-nav {
+		.current-menu-item > .nav-link,
+		.active > .nav-link,
+		.nav-link:hover,
+		.nav-link:focus { color: $white; }
+	}
+}
