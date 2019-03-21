@@ -2,11 +2,20 @@
 get_header();
 $sidebar = $xcore_layout->get_sidebar( 'blog_author' );
 $classes = $xcore_layout->get_sidebar_classes( 'blog_author' );
+$headline = get_field( 'blog_author_headline', 'options' );
 ?>
 
 <div id="main">
     <div class="container">
-        <h1><?php printf( __('Alle Beiträge von <span>%s</span>', 'amateurtheme'),  get_the_author() ); ?></h1>
+        <h1>
+            <?php
+            if ( $headline ) {
+	            printf( $headline, get_the_author() );
+            } else {
+	            printf( __( 'Alle Beiträge von <span>%s</span>', 'amateurtheme' ), get_the_author() );
+            }
+            ?>
+        </h1>
 
         <?php
         if(get_the_author_meta('description') && ! is_paged()) {

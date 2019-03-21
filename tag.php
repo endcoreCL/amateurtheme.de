@@ -2,11 +2,21 @@
 get_header();
 $sidebar = $xcore_layout->get_sidebar( 'blog_tag' );
 $classes = $xcore_layout->get_sidebar_classes( 'blog_tag' );
+$headline = get_field( 'blog_tag_headline', 'options' );
+
 ?>
 
 <div id="main">
     <div class="container">
-        <h1><?php single_tag_title(); ?></h1>
+        <h1>
+	        <?php
+	        if ( $headline ) {
+		        printf( $headline, single_tag_title( '', false ) );
+	        } else {
+		        single_tag_title();
+	        }
+	        ?>
+        </h1>
 
         <?php
         if ( tag_description() && ! is_paged() ) {
