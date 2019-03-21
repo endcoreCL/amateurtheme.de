@@ -1,33 +1,17 @@
-/* HEADER */
+/* _header.scss */
 
-
-#topbar { background: $primary; color: #fff; padding: 0.5rem 0; font-size: 0.875rem; }
-#topbar p,
-#topbar ul { margin: 0; }
-#topbar a { color: inherit; }
-
-
-// HEADER
 #header {
-	padding: $spacer * 2 0;
+	padding: 2rem 0;
+	.header-brand {
+		display: inline-block;
+		img { max-width: 100%; }
+	}
+	.header-search {
+		select { max-width: 240px; border-radius: 0; }
+		.form-control { box-shadow: none !important; border-color: darken($gray-200, 10%); }
+	}
+	.header-text {
+		text-align: right;
+		p { margin: 0; }
+	}
 }
-#header .header-brand { display: inline-block; }
-#header .header-brand img { max-width: 100%; }
-#header .header-search select { max-width: 120px; }
-#header .header-search .form-control { box-shadow: none !important; border-color: darken($border, 10%); }
-#header .header-text { text-align: right; }
-#header .header-text p { margin: 0; }
-
-// NAVIGATION
-.navbar-nav .nav-link { font-weight: 400; }
-
-// NAVIGATION LIGHT
-.navbar-light .navbar-nav .active > .nav-link,
-.navbar-light .navbar-nav .nav-link:hover,
-.navbar-light .navbar-nav .nav-link:focus { color: $primary; }
-
-// NAVIGATION DARK
-.navbar-dark .navbar-nav .active > .nav-link,
-.navbar-dark .navbar-nav .nav-link.active,
-.navbar-dark .navbar-nav .nav-link:hover,
-.navbar-dark .navbar-nav .nav-link:focus { color: $white; }

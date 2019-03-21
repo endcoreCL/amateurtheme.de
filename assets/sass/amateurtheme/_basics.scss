@@ -1,30 +1,8 @@
 /* BASICS */
 
-// MISC
-.divider {
-	@extend .py-3;
-}
-
-// ALIGNMENT
-.alignleft { float: left; margin: 0 1rem 1rem 0; }
-.aligncenter { display: block; margin: 0 auto 1rem auto; }
-.alignright { float: right; margin: 0 0 1rem 1rem; }
-.alignnone { float: none; display: block; margin: 0 0 1rem 0; }
-@include media-breakpoint-only(xs) {
-	.alignleft, .aligncenter, .alignright, .alignnone { width: 100% !important; margin: 0 auto 1rem auto; display: block; float: none; clear: both; }
-}
-@include media-breakpoint-only(sm) {
-	.alignleft, .aligncenter, .alignright, .alignnone { margin: 0 auto 1rem auto; display: block; float: none; clear: both; }
-}
-
-// WORDPRESS STUFF
-.wp-smiley { height: 16px; width: auto; max-width: 16px; }
-.wp-caption { color: $gray-light; max-width: 100%; }
-.wp-caption-text { font-size: 0.875rem; margin: 0.25rem 0 0 0; font-style: italic; }
-.wp-caption img { height: auto; }
 
 // WRAPPER
-#wrapper, #wrapper-fluid { background: #fff; max-width: 1920px; margin: 0 auto; box-shadow: $box-shadow; }
+#wrapper, #wrapper-fluid { background: #fff; margin: 0 auto; box-shadow: 0 0 30px 0 rgba($gray-900, 0.15); }
 #wrapper, .wrapped { margin-right: auto; margin-left: auto; }
 @include media-breakpoint-only(xs) {
 	#wrapper, .wrapped { width: 100%; }
@@ -44,10 +22,134 @@
 @media (min-width: 1600px) {
 	#wrapper-fluid { max-width: 1570px; }
 }
+@media (min-width: 1920px) {
+	#wrapper, #wrapper-fluid { max-width: 1920px; }
+}
 
-// STUFF
+// ALIGNMENTS
+.alignleft { float: left; margin: 0 1rem 1rem 0; }
+.aligncenter { display: block; margin: 0 auto 1rem auto; }
+.alignright { float: right; margin: 0 0 1rem 1rem; }
+.alignnone { float: none; display: block; margin: 0 0 1rem 0; }
+@include media-breakpoint-only(xs) {
+	.alignleft, .aligncenter, .alignright, .alignnone { width: 100% !important; margin: 0 auto 1rem auto; display: block; float: none; clear: both; }
+}
+@include media-breakpoint-only(sm) {
+	.alignleft, .aligncenter, .alignright, .alignnone { margin: 0 auto 1rem auto; display: block; float: none; clear: both; }
+}
+
+// IMAGES
+img[class*="wp-image-"],
+img[class*="attachment-"] { display: block; max-width: 100%; height: auto; }
+.wp-caption { max-width: 100%; width: auto !important; margin-bottom: 1rem; }
+.wp-caption img { height: auto; }
+.wp-caption-text { font-size: 0.75rem; margin: $spacer * 0.25 0 0 0; color: $gray-600; font-style: italic; }
+.mfp-title { font-size: 0.875rem !important; }
+.img-parallax { background-attachment: fixed; background-position: center; }
+
+// HR
+hr { margin-top: 1.5rem; margin-bottom: 1.5rem; border-color: $gray-200; }
+.hr-transparent	{ border-color: transparent !important; }
+.hr-no { margin-top: 0; margin-bottom: 0; }
+.hr-xs { margin-top: 0.25rem; margin-bottom: 0.25rem; }
+.hr-sm { margin-top: 0.5rem; margin-bottom: 0.5rem; }
+.hr-md { margin-top: 1rem; margin-bottom: 1rem; }
+.hr-lg { margin-top: 2rem; margin-bottom: 2rem; }
+.hr-xl { margin-top: 3rem; margin-bottom: 3rem; }
+
+// SPACING
+.spacing { display: block; }
+.spacing-xs { height: 0.25rem; }
+.spacing-sm { height: 0.5rem; }
+.spacing-md { height: 1rem; }
+.spacing-lg { height: 1.5rem; }
+.spacing-xl { height: 3rem; }
+
+
+// TEXT COLOR
+.text-white,
+.text-white h1, .text-white .h1,
+.text-white h2, .text-white .h2,
+.text-white h3, .text-white .h3,
+.text-white a:not(.btn):not([role="tab"]):not(.panel-title),
+.text-white a.btn-outline,
+.text-white .list-icon li:before { color: $white !important; }
+.text-white a:not(.btn):not([role="tab"]):not(.panel-title) { text-decoration: underline; }
+
+// MISC
+.divider {
+	@extend .py-3;
+}
+
+// FORM CONTROL
+.form-control  {
+	$frm-px: 1rem;
+	color: $gray-700; background: $white; border-color: darken($gray-200, 5%); font-size: 1rem; height: auto; padding: $frm-px / 3 $frm-px; font-weight: 400; border-radius: 0; box-shadow: none; transition: none; line-height: 1.5; display: block; width: 100%;
+	&:focus { box-shadow: none; color: $gray-800; border-color: darken($gray-200, 10%); outline: none; }
+	&::-moz-placeholder { color: $gray-600; }
+	&::-ms-input-placeholder { color: $gray-600; }
+	&::-webkit-input-placeholder { color: $gray-600; }
+}
+
+// LIST
+.list-icon,
+.widget_nav_menu .menu,
+.widget-block ul {
+	list-style: none; padding: 0;
+	li {
+		position: relative; padding-left: 1.5rem;
+		+ li,
+		ul > li { margin-top: 0.25rem; }
+		&:before { width: $spacer; content: "\f061"; font-size: 0.75em; font-family: 'Font Awesome 5 Pro', sans-serif; display: flex; justify-content: center; align-items: start; height: 100%; position: absolute; left: 0; top: 0.25rem; }
+	}
+}
+.list-icon {
+	&.list-icon-arrow-right li:before { content: "\f061"; color: $gray-600; }
+	&.list-icon-angle-right li:before { content: "\f105"; color: $gray-600; }
+	&.list-icon-plus li:before { content: "\f067"; color: $success; }
+	&.list-icon-minus li:before { content: "\f068"; color: $danger; }
+	&.list-icon-check li:before { content: "\f00c"; color: $success; }
+	&.list-icon-times li:before { content: "\f00d"; color: $danger; }
+	&.list-icon-cross li:before { content: "\f00d"; color: $danger; }
+}
+
+// TABLE
+.table {
+	thead, tbody, tfoot {
+		tr {
+			td, th { border-color: $gray-200; }
+		}
+	}
+	thead tr {
+		background: $primary; color: $white;
+		th, td { border-color: $primary; }
+	}
+	&.table-bordered { border-color: $gray-200; border-top-color: $primary; }
+	&.table-striped > tbody > tr:nth-of-type(odd) { background-color: mix($gray-200, $white, 50%); }
+}
+
+// BOX SHADOW
+.box-shadow-sm { box-shadow: 0 5px 15px -5px rgba($gray-900, 0.15); }
+.box-shadow-md { box-shadow: 0 10px 30px -10px rgba($gray-900, 0.15); }
+.box-shadow-lg { box-shadow: 0 15px 45px -15px rgba($gray-900, 0.15); }
+
+// BORDER RADIUS
+.border-radius-sm { border-radius: 0.25rem; }
+.border-radius-md { border-radius: 0.5rem; }
+.border-radius-lg { border-radius: 0.75rem; }
+
+// WORDPRESS STUFF
+.wp-smiley { height: 16px; width: auto; max-width: 16px; }
+.wp-caption { color: $gray-600; max-width: 100%; }
+.wp-caption-text { font-size: 0.875rem; margin: 0.25rem 0 0 0; font-style: italic; }
+.wp-caption img { height: auto; }
+
+// MISC
+.grayscale {
+	-webkit-backface-visibility: hidden; filter: grayscale(100%); transition: $transition;
+	&:hover { filter: none; }
+}
 @media print {
-	/* @TODO anpassen */
 	#topbar, #navigation, #breadcrumbs, #sidebar, #footer, .post-social, .post-related, .post-postnav, .post-comments {
 		display: none !important;
 	}

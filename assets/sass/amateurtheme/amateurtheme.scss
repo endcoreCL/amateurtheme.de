@@ -1,16 +1,19 @@
-$near-white: $gray-100;
-$border: $gray-200;
-$gray-light: $gray-600;
-$gray: $gray-700;
-$gray-dark: $gray-800;
-$link-hover-color: $gray-dark;
+//$near-white: $gray-100;
+//$border: $gray-200;
+//$gray-light: $gray-600;
+//$gray: $gray-700;
+//$gray-dark: $gray-800;
+//$link-hover-color: $gray-dark;
+//
+//@import "test";
 
-@import "test";
 @import "basics";
 @import "type";
+@import "topbar";
 @import "header";
-@import "content";
- @import "videos";
-@import "sidebar";
+@import "navigation";
+//@import "content";
+//@import "videos";
+//@import "sidebar";
 //@import "footer";
 

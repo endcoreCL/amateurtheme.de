@@ -1,5 +1,5 @@
 /* TYPE.SCSS */
-
+html { position: relative; min-height: 100%;  }
 @include media-breakpoint-only(xs) {
 	html { font-size: 14px; }
 }
@@ -16,29 +16,30 @@
 	html { font-size: 16px; }
 }
 
-body {
-	background-color: $at-body-bg; // can't use $body-bg because it's used as a variable in multiple places
-	font-style: $at-font-style-base; // $font-style-base has not been considered in bootstrap yet
-	color: $at-font-color-base; // can't use $body-color because it is used as a variable in multiple places.
-	line-height: 1.75;
-	font-size: 1rem;
+body { font-family: $font-family-base; font-size: 1rem; font-weight: $font-weight-normal; line-height: $line-height-base; color: $at-font-color-base; background: $at-body-bg; }
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 { font-family: $headings-font-family; line-height: $headings-line-height; color: $headings-color; margin: 0 0 $spacer 0; font-weight: $headings-font-weight; }
+h1, .h1 { font-size: 2.500rem; }
+h2, .h2 { font-size: 1.750rem; }
+h3, .h3 { font-size: 1.250rem; }
+h4, .h4 { font-size: 1.125rem; }
+h5, .h5 { font-size: 1.000rem; }
+h6, .h6 { font-size: 0.875rem; }
+::selection { color: #fff; background: $primary; text-shadow: none; }
+::-moz-selection { color: #fff; background: $primary; text-shadow: none; }
+p, ul, ol, table, blockquote, table, .alert { margin: 0 0 $spacer 0; }
+small { font-size: 0.875rem; color: $gray-600; }
+blockquote {
+	font-size: 1.125rem; line-height: 1.75; font-weight: 300; font-style: italic; background: $light; color: $gray-700; border: none; padding: $spacer $spacer * 2;
+	footer {
+		font-style: normal; font-size: 0.875rem; color: $gray-600;
+		&:before { content: none; }
+	}
 }
-h1, h2, h3, h4, h5, h6,
-.h1, .h2, .h3, .h4, .h5, .h6 {
-	font-style: $at-headings-font-style; // $headings-font-style has not been considered in bootstrap yet
-	line-height: 1.25;
-	margin: 0 0 1rem 0;
-}
-::selection { color: $white; background: $primary; text-shadow: none; }
-::-moz-selection { color: $white; background: $primary; text-shadow: none; }
-p, ol, ul, table, blockquote, .alert { margin: 0 0 1rem 0; }
 p.empty { padding: 0; margin: 0; line-height: 0; }
-img[class*="wp-image-"],
-img[class*="attachment-"] { max-width: 100%; height: auto; display: block; }
-hr { border-color: $border; margin: 1rem auto; }
-/*
-a:not(.btn):not(.nav-link):not(.dropdown-item) {
-	color: $primary; transition: $transition;
-	&:hover, &:focus, &:active, &:active:hover, &:active:focus { color: $gray-dark; outline: none; }
+a {
+	color: $primary;
+	&:hover, &:focus { color: darken($primary, 15%); }
 }
- */
+@media (max-width: 767px) {
+	h1, .h1 { font-size: 2.5rem; }
+}
