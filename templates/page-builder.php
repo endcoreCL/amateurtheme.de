@@ -368,6 +368,9 @@ get_header(); ?>
 		                    echo $text;
                         }
 
+		                /**
+		                 * @TODO: Set taxonomy to: video_tags
+		                 */
 		                $args = array(
                             'taxonomy' => 'video_actor',
                             'orderby' => 'name'
