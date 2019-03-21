@@ -283,3 +283,29 @@ if ( ! function_exists( 'at_pb_render_editor' ) ) {
         return $output;
     }
 }
+
+if ( ! function_exists( 'at_terms_generate_az' ) ) {
+	/**
+	 * Generate a-z ordered array with terms
+	 *
+	 * @param $terms
+	 *
+	 * @return array
+	 */
+	function at_terms_generate_az( $terms ) {
+		$term_list = [];
+
+		foreach ( $terms as $term ) {
+			$first_letter = strtoupper( $term->name[0] );
+
+			if ( ! ctype_alpha( $first_letter ) ) {
+				$first_letter = '#';
+			}
+
+			$term_list[ $first_letter ][] = $term;
+		}
+		unset( $term );
+
+		return $term_list;
+	}
+}
