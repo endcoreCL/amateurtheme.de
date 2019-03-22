@@ -7,41 +7,31 @@ class xCORE_Layout {
     }
 
     public function logo() {
-        $logo = get_field('design_general_logo', 'options');
+        $logo = get_field( 'design_general_logo', 'options' );
 
-        if($logo) {
-            return '<img src="' . $logo['url'] . '"' . ($logo['width'] ? ' width="' . $logo['width'] . '"' : '') . ($logo['height'] ? ' height="' . $logo['height'] . '"' : '') . ' alt="' . $logo['alt'] . '" title="' . $logo['title'] . '" class="img-fluid" />';
+        if( $logo ) {
+            return '<img src="' . $logo['url'] . '"' . ( $logo['width'] ? ' width="' . $logo['width'] . '"' : '' ) . ( $logo['height'] ? ' height="' . $logo['height'] . '"' : '' ) . ' alt="' . $logo['alt'] . '" title="' . $logo['title'] . '" class="img-fluid" />';
         }
 
         return get_bloginfo( 'name' );
     }
 
     public function logo_pos() {
-        $logo_pos = (get_field('design_header_logo_pos', 'options') ? get_field('design_header_logo_pos', 'options') : 'top');
+        $logo_pos = ( get_field('design_header_logo_pos', 'options') ? get_field( 'design_header_logo_pos', 'options' ) : 'top' );
 
         return apply_filters( 'at_logo_pos', $logo_pos );
     }
 
     public function navbar_wrapper_classes() {
-        $classes = array('navbar');
+        $classes = array( 'navbar' );
 
-        $navbar_color = (get_field('design_header_nav_bg', 'options') ? get_field('design_header_nav_bg', 'options') : 'dark');
-        if($navbar_color) {
-            switch($navbar_color) {
-                case 'bright':
-                    $classes[] = 'navbar-light';
-                    $classes[] = 'bg-light';
-                    break;
-
-                case 'dark':
-                    $classes[] = 'navbar-dark';
-                    $classes[] = 'bg-dark';
-                    break;
-            }
+        $navbar_color = ( get_field( 'design_header_nav_bg', 'options' ) ? get_field( 'design_header_nav_bg', 'options' ) : 'dark' );
+        if( $navbar_color ) {
+	        $attributes['class'][] = at_design_bg_classes( 'navbar', $navbar_color );
         }
 
-        $navbar_trigger = (get_field('design_header_trigger_mobile_nav', 'options') ? get_field('design_header_trigger_mobile_nav', 'options') : 'sm');
-        if($navbar_trigger) {
+        $navbar_trigger = ( get_field( 'design_header_trigger_mobile_nav', 'options' ) ? get_field( 'design_header_trigger_mobile_nav', 'options' ) : 'sm' );
+        if( $navbar_trigger ) {
             $classes[] = 'navbar-expand-' . $navbar_trigger;
         }
 
@@ -49,11 +39,11 @@ class xCORE_Layout {
     }
 
     public function navbar_classes() {
-        $classes = array('navbar-nav');
+        $classes = array( 'navbar-nav' );
 
-        $navbar_align = get_field('design_header_nav_align', 'options');
-        if($navbar_align) {
-            switch($navbar_align) {
+        $navbar_align = get_field( 'design_header_nav_align', 'options' );
+        if( $navbar_align ) {
+            switch( $navbar_align ) {
                 case 'left':
                     $classes[] = 'mr-auto';
                     break;
@@ -73,7 +63,7 @@ class xCORE_Layout {
 
     public function get_sidebar( $section ) {
         // catch post
-        if ( strpos($section, 'post' ) !== false ) $section = str_replace( 'post', 'blog', $section );
+        if ( strpos( $section, 'post' ) !== false ) $section = str_replace( 'post', 'blog', $section );
 
         $sidebar = ( get_field( $section . '_sidebar', 'options' ) ? get_field( $section . '_sidebar', 'options' ) : false );
 

@@ -19,7 +19,6 @@ class xCORE_Custom_SCSS {
 	}
 
 	public function get_fields() {
-	    echo 'fired';
 		$acf_fields = get_field_objects('options');
 		$fields = array();
 
@@ -70,7 +69,11 @@ class xCORE_Custom_SCSS {
 		return $style;
 	}
 
-	public function generate_scss() {
+	public function generate_scss( $post_id ) {
+	    if ( $post_id != 'options' ) {
+	        return;
+        }
+
 		$this->fields = $this->get_fields();
 		ob_start();
 		if($this->fields) {
