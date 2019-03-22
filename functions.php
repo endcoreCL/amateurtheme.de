@@ -24,6 +24,7 @@ require_once(AT_PLUGINS . '/acf/field-type-code/acf-code-field.php');
 require_once(AT_PLUGINS . '/acf/field-type-google-font/acf-google_font_selector.php');
 require_once(AT_PLUGINS . '/jsonreader/autoload.php');
 require_once(AT_PLUGINS . '/prg-pattern/prg-pattern.php');
+require_once(AT_PLUGINS . '/auto-tagging/auto-tagging.php');
 
 /**
  * Framework
