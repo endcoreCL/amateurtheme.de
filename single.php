@@ -11,17 +11,20 @@ $nav = get_field( 'blog_single_nav', 'options');
 
 <div id="main">
     <div class="container">
-        <h1><?php the_title(); ?></h1>
-
-        <?php get_template_part( 'parts/post/code', 'meta' ); ?>
-
         <div class="row">
             <div class="<?php echo $classes['content']; ?>">
                 <div id="content">
+
                     <?php
                     if (have_posts()) :
                         while (have_posts()) :
                             the_post();
+                            ?>
+
+                            <h1><?php the_title(); ?></h1>
+
+                            <?php
+                            get_template_part( 'parts/post/code', 'meta' );
 
                             the_content();
 
