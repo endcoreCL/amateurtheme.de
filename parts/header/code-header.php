@@ -13,13 +13,7 @@ if( $logo_pos == 'top' || $banner || $search ) {
         'class' => array()
     );
 
-    if ( $header_bg ) {
-	    if ( $header_bg == 'white' ) {
-		    $attributes['class'][] = 'bg-' . $header_bg;
-	    } else {
-		    $attributes['class'][] = 'header-' . $header_bg;
-	    }
-    }
+	$attributes['class'][] = at_design_bg_classes( 'header', $header_bg );
     ?>
     <header <?php echo at_attribute_array_html( $attributes ); ?>>
         <div class="container">

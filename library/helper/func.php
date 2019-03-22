@@ -334,3 +334,29 @@ if ( ! function_exists( 'at_terms_generate_az' ) ) {
 		return $term_list;
 	}
 }
+
+function at_design_bg_classes($section, $bg ) {
+	$classes = array();
+
+	switch ( $bg ) {
+		case 'light' :
+			$classes[] = $section . '-' . $bg;
+			break;
+
+		case 'dark' :
+			$classes[] = $section . '-' . $bg;
+			break;
+
+		case 'white':
+			$classes[] = $section . '-light';
+			break;
+
+		case 'primary':
+			$classes[] = $section . '-dark';
+			break;
+	}
+
+	$classes[] = 'bg-' . $bg;
+
+	return implode(' ', $classes);
+}

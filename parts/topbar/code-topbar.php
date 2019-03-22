@@ -1,4 +1,14 @@
-<section id="topbar">
+<?php
+$topbar_bg = ( get_field( 'design_topbar_bg', 'options' ) ? get_field( 'design_topbar_bg', 'options' ) : 'white' );
+
+$attributes = array(
+    'id' => array( 'topbar' ),
+    'class' => array()
+);
+
+$attributes['class'][] = at_design_bg_classes( 'topbar', $topbar_bg );
+?>
+<section <?php echo at_attribute_array_html( $attributes ); ?>>
 	<?php
 	$topbar_columns = get_field('design_topbar_columns', 'options');
 	if ($topbar_columns) { ?>
