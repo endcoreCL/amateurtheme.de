@@ -35,5 +35,10 @@
 	a {
 		&:hover, &:focus { color: $white; }
 	}
-	.form-control { color: $white; border-color: rgba($white, 0.1); background: rgba($white, 0.025) }
+	.form-control {
+		color: $white; border-color: rgba($white, 0.1); background: rgba($white, 0.025);
+		&::-moz-placeholder { color: rgba($white, 0.5); }
+		&::-ms-input-placeholder { color: rgba($white, 0.5); }
+		&::-webkit-input-placeholder { color: rgba($white, 0.5); }
+	}
 }
