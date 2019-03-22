@@ -377,11 +377,8 @@ get_header(); ?>
                         $attributes['style'][] = 'background-color: ' . get_sub_field( 'bgcolor' ) . ';';
                     }
 
-                    /**
-                     * @TODO: Set taxonomy to: video_tags
-                     */
                     $args = array(
-                        'taxonomy' => 'video_actor',
+                        'taxonomy' => 'video_tags',
                         'orderby' => 'name'
                     );
 
