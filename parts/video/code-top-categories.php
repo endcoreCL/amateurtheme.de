@@ -4,6 +4,8 @@ $options = get_field( 'video_single_top_categories_options', 'options' );
 
 if ( $categories ) {
 	?>
+	<hr class="hr-transparent">
+
 	<div class="video-top-categories">
 		<?php
 		if ( $options['headline'] ) {

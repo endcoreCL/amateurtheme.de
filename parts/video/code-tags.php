@@ -4,6 +4,8 @@ $options = get_field( 'video_single_tags_options', 'options' );
 
 if ( $tags ) {
 	?>
+    <hr class="hr-transparent">
+
 	<div class="video-tags">
 		<?php
 		if ( $options['headline'] ) {

@@ -33,23 +33,27 @@ if ( $show ) {
 
 	if($related->have_posts()) {
 	    ?>
-		<div id="video-list" class="video-related">
-			<?php
-			if ( $options['headline'] ) {
-				?>
-				<h2><?php echo $options['headline']; ?></h2>
-				<?php
-			}
-			?>
-	        <div class="card-deck">
-		        <?php
-	            while( $related->have_posts() ) {
-	                $related->the_post();
+        <hr class="hr-transparent">
 
-	                get_template_part('parts/video/loop', 'card');
-	            }
-	            ?>
-	        </div>
+		<div class="video-related">
+            <div id="video-list">
+                <?php
+                if ( $options['headline'] ) {
+                    ?>
+                    <h2><?php echo $options['headline']; ?></h2>
+                    <?php
+                }
+                ?>
+                <div class="card-deck">
+                    <?php
+                    while( $related->have_posts() ) {
+                        $related->the_post();
+
+                        get_template_part('parts/video/loop', 'card');
+                    }
+                    ?>
+                </div>
+            </div>
 	    </div>
 		<?php
 	    wp_reset_query();
