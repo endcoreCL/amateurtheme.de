@@ -6,8 +6,22 @@ $search         = get_field( 'design_header_search', 'options' );
 $search_pos     = get_field( 'design_header_search_pos', 'options' );
 
 if( $logo_pos == 'top' || $banner || $search ) {
+    $header_bg = get_field( 'design_header_bg', 'options' );
+
+    $attributes = array(
+        'id'    => array( 'header' ),
+        'class' => array()
+    );
+
+    if ( $header_bg ) {
+	    if ( $header_bg == 'white' ) {
+		    $attributes['class'][] = 'bg-' . $header_bg;
+	    } else {
+		    $attributes['class'][] = 'header-' . $header_bg;
+	    }
+    }
     ?>
-    <header id="header">
+    <header <?php echo at_attribute_array_html( $attributes ); ?>>
         <div class="container">
             <div class="row">
                 <?php
@@ -115,7 +129,7 @@ if( $logo_pos == 'top' || $banner || $search ) {
                 'container_class'   => 'collapse navbar-collapse',
                 'menu_id'           => false,
                 'menu_class'        => $xcore_layout->navbar_classes(),
-                'depth'             => 4,
+                'depth'             => 5,
                 'fallback_cb'       => 'xcore_nav_walker::fallback',
                 'walker'            => new xcore_nav_walker()
             )

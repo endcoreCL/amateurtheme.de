@@ -53,7 +53,7 @@ if ( ! function_exists('at_error_log') ) {
     }
 }
 
-if ( ! function_exists( 'xcore_parse_external_url' ) ) {
+if ( ! function_exists( 'at_parse_external_url' ) ) {
     /**
      * Link attributes for external urls
      *
@@ -62,7 +62,7 @@ if ( ! function_exists( 'xcore_parse_external_url' ) ) {
      * @param string $external_class
      * @return array|bool
      */
-    function xcore_parse_external_url( $url, $internal_class = '', $external_class = '' ) {
+    function at_parse_external_url( $url, $internal_class = '', $external_class = '' ) {
         // Abort if parameter URL is empty
         if (empty($url)) {
             return false;
@@ -97,13 +97,13 @@ if ( ! function_exists( 'xcore_parse_external_url' ) ) {
     }
 }
 
-if ( ! function_exists( 'xcore_phone_detect' ) ) {
+if ( ! function_exists( 'at_phone_detect' ) ) {
     /**
      * Detect smartphones
      *
      * @return boolean
      */
-    function xcore_phone_detect() {
+    function at_phone_detect() {
         $detect = new Mobile_Detect;
         if ( $detect->isMobile() && ! $detect->isTablet() ) {
             return true;
@@ -113,13 +113,13 @@ if ( ! function_exists( 'xcore_phone_detect' ) ) {
     }
 }
 
-if ( ! function_exists( 'xcore_tablet_detect' ) ) {
+if ( ! function_exists( 'at_tablet_detect' ) ) {
     /**
      * Detect tablets
      *
      * @return boolean
      */
-    function xcore_tablet_detect() {
+    function at_tablet_detect() {
         $detect = new Mobile_Detect;
 
         if ( $detect->isTablet() ) {
@@ -217,25 +217,50 @@ if ( ! function_exists( 'at_attach_external_image' ) ) {
 }
 
 if ( ! function_exists( 'at_attribute_array_html' ) ) {
-    /**
-     * Helper function to create attributes html
-     *
-     * @param $attributes
-     * @return string
-     */
-    function at_attribute_array_html( $attributes ) {
-        $attributes_html = '';
+	/**
+	 * A function to render a array as html attributes
+	 *
+	 * @param $attributes
+	 *
+	 * @return string
+	 */
+	function at_attribute_array_html( $attributes ) {
+		$attributes_html = '';
 
-        if( $attributes ) {
-            foreach( $attributes as $k => $v ) {
-                if( $v ) {
-                    $attributes_html .= $k . '="' . implode( $v, ' ' ) . '" ';
-                }
-            }
-        }
+		if ( $attributes ) {
+			foreach ( $attributes as $k => $v ) {
+				if ( $v ) {
+					$attributes_html .= $k . '="' . ( is_array( $v ) ? implode( $v, ' ' ) : $v ) . '" ';
+				}
+			}
+		}
 
-        return $attributes_html;
-    }
+		return $attributes_html;
+	}
+}
+
+if ( ! function_exists( 'at_shortcode_get_all_attributes') ) {
+	/**
+	 * A simple function to get attributes of a shortcode found in atext
+	 *
+	 * @param $tag
+	 * @param $text
+	 *
+	 * @return array
+	 */
+	function at_shortcode_get_all_attributes( $tag, $text ) {
+		preg_match_all( '/' . get_shortcode_regex() . '/s', $text, $matches );
+		$out = array();
+		if( isset( $matches[2] ) )
+		{
+			foreach( (array) $matches[2] as $key => $value )
+			{
+				if( $tag === $value )
+					$out[] = shortcode_parse_atts( $matches[3][$key] );
+			}
+		}
+		return $out;
+	}
 }
 
 if ( ! function_exists( 'at_pb_render_editor' ) ) {
