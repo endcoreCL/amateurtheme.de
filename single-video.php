@@ -3,7 +3,6 @@ get_header();
 
 // Vars
 $video = new AT_Video( get_the_ID() );
-$categories = get_field( 'video_single_category', 'options' );
 $ad_top = get_field( 'video_single_ad_top', 'options' );
 $prg = get_field( 'prg_activate', 'options' );
 
@@ -92,10 +91,6 @@ if ( $ad_top ) {
                                 get_template_part( 'parts/video/code', 'meta' );
 
                                 the_content();
-
-                                if ( $categories ) {
-	                                echo get_the_term_list( get_the_ID(), 'video_category', '<span class="badge badge-dark">', '</span> <span class="badge badge-dark">', '</span>' );
-                                }
                                 ?>
                             </div>
                         </div>
@@ -110,12 +105,21 @@ if ( $ad_top ) {
                         }
                         ?>
                     </div>
+
+	                <?php
+                    get_template_part( 'parts/video/code', 'categories' );
+
+	                get_template_part( 'parts/video/code', 'related' );
+
+	                get_template_part( 'parts/video/code', 'tags' );
+
+	                get_template_part( 'parts/video/code', 'top-categories' );
+
+	                get_template_part( 'parts/video/code', 'ad-bottom' );
+	                ?>
                 </div>
 
                 <?php
-                get_template_part( 'parts/video/code', 'related' );
-
-                get_template_part( 'parts/video/code', 'ad-bottom' );
              endwhile; endif;
              ?>
         </div>
