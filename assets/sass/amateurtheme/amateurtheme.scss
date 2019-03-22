@@ -8,12 +8,13 @@
 //@import "test";
 
 @import "basics";
-@import "type";
 @import "topbar";
 @import "header";
 @import "navigation";
 //@import "content";
+@import "pagebuilder";
 //@import "videos";
 //@import "sidebar";
-//@import "footer";
+@import "breadcrumbs";
+@import "footer";
 

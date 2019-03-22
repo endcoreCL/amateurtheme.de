@@ -1,5 +1,6 @@
 /* _header.scss */
 
+// HEADER BASICS
 #header {
 	padding: 2rem 0;
 	.header-brand {
@@ -7,11 +8,32 @@
 		img { max-width: 100%; }
 	}
 	.header-search {
-		select { max-width: 240px; border-radius: 0; }
-		.form-control { box-shadow: none !important; border-color: darken($gray-200, 10%); }
+		.form-control { box-shadow: none !important; }
 	}
 	.header-text {
 		text-align: right;
-		p { margin: 0; }
+		> :last-child { margin: 0; }
 	}
+	a {
+		color: inherit;
+		&:hover, &:focus { text-decoration: none; }
+	}
+}
+
+// HEADER LIGHT
+#header.header-light {
+	color: $gray-700;
+	a {
+		&:hover, &:focus { color: $primary; }
+	}
+	.form-control { border-color: darken($gray-200, 10%); }
+}
+
+// HEADER DARK
+#header.header-dark {
+	color: rgba($white, 0.75);
+	a {
+		&:hover, &:focus { color: $white; }
+	}
+	.form-control { color: $white; border-color: rgba($white, 0.1); background: rgba($white, 0.025) }
 }

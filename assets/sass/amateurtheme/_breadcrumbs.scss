@@ -1,0 +1,28 @@
+/* _breadcrumbs.scss */
+
+// BREADCRUMBS BASICS
+#breadcrumbs {
+	padding: 1.5rem 0; font-size: 0.875rem;
+	p, ul { margin: 0; }
+	a {
+		color: inherit;
+		&:hover, &:focus { text-decoration: none; }
+	}
+	.breadcrumb { padding: 0; margin: 0; border-radius: 0; background: transparent; }
+}
+
+// BREADCRUMBS LIGHT
+#breadcrumbs.breadcrumbs-light {
+	color: $gray-700;
+	a {
+		&:hover, &:focus { color: $primary; }
+	}
+}
+
+// BREADCRUMBS DARK
+#breadcrumbs.breadcrumbs-dark {
+	color: rgba($white, 0.75);
+	a {
+		&:hover, &:focus { color: $white; }
+	}
+}

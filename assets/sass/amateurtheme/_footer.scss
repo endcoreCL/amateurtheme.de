@@ -1,3 +1,50 @@
 /* footer */
 
-#footer { background: #222; padding: $spacer * 3 0; }
+// FOOTER BASICS
+#footer {
+	.footer-top {
+		padding: 3rem 0 0 0;
+		a {
+			color: inherit;
+			&:hover, &:focus { text-decoration: none; }
+		}
+		.h1 { font-size: 1.5rem; }
+		.widget { margin-bottom: 3rem; }
+	}
+	.footer-bottom {
+		padding: 1rem 0; font-size: 0.875rem; background: rgba($dark, 0.05);
+		p, ul { margin: 0; }
+		a {
+			color: inherit;
+			&:hover, &:focus { text-decoration: none; }
+		}
+	}
+}
+
+// FOOTER LIGHT
+#footer.footer-light {
+	.footer-top {
+		color: $gray-700;
+		.h1 { color: $gray-800 }
+	}
+	.footer-bottom {
+		color: $gray-600;
+	}
+	a {
+		&:hover, &:focus { color: $primary; }
+	}
+}
+
+// FOOTER DARK
+#footer.footer-dark {
+	.footer-top {
+		color: rgba($white, 0.75);
+		.h1 { color: $white }
+	}
+	.footer-bottom {
+		color: rgba($white, 0.5);
+	}
+	a {
+		&:hover, &:focus { color: $white; }
+	}
+}

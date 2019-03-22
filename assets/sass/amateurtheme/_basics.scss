@@ -1,5 +1,51 @@
-/* BASICS */
+/* _basics.scss */
 
+// FONT SIZE
+html { position: relative; min-height: 100%;  }
+@include media-breakpoint-only(xs) {
+	html { font-size: 14px; }
+}
+@include media-breakpoint-only(sm) {
+	html { font-size: 14px; }
+}
+@include media-breakpoint-only(md) {
+	html { font-size: 15px; }
+}
+@include media-breakpoint-only(lg) {
+	html { font-size: 15px; }
+}
+@include media-breakpoint-only(xl) {
+	html { font-size: 16px; }
+}
+
+// TYPO
+body { font-family: $font-family-base; font-size: 1rem; font-weight: $font-weight-normal; line-height: $line-height-base; color: $at-font-color-base; background: $at-body-bg; }
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 { font-family: $headings-font-family; line-height: $headings-line-height; color: $headings-color; margin: 0 0 $spacer 0; font-weight: $headings-font-weight; }
+h1, .h1 { font-size: 2.500rem; }
+h2, .h2 { font-size: 1.750rem; }
+h3, .h3 { font-size: 1.250rem; }
+h4, .h4 { font-size: 1.125rem; }
+h5, .h5 { font-size: 1.000rem; }
+h6, .h6 { font-size: 0.875rem; }
+::selection { color: #fff; background: $primary; text-shadow: none; }
+::-moz-selection { color: #fff; background: $primary; text-shadow: none; }
+p, ul, ol, table, blockquote, .alert { margin: 0 0 $spacer 0; }
+small { font-size: 0.875rem; color: $gray-600; }
+blockquote {
+	font-size: 1.125rem; line-height: 1.75; font-weight: 300; font-style: italic; background: $light; color: $gray-700; border: none; padding: $spacer $spacer * 2;
+	footer {
+		font-style: normal; font-size: 0.875rem; color: $gray-600;
+		&:before { content: none; }
+	}
+}
+p.empty { padding: 0; margin: 0; line-height: 0; }
+a {
+	color: $primary;
+	&:hover, &:focus { color: darken($primary, 15%); }
+}
+@media (max-width: 767px) {
+	h1, .h1 { font-size: 2.5rem; }
+}
 
 // WRAPPER
 #wrapper, #wrapper-fluid { background: #fff; margin: 0 auto; box-shadow: 0 0 30px 0 rgba($gray-900, 0.15); }
@@ -65,7 +111,6 @@ hr { margin-top: 1.5rem; margin-bottom: 1.5rem; border-color: $gray-200; }
 .spacing-lg { height: 1.5rem; }
 .spacing-xl { height: 3rem; }
 
-
 // TEXT COLOR
 .text-white,
 .text-white h1, .text-white .h1,
@@ -90,6 +135,7 @@ hr { margin-top: 1.5rem; margin-bottom: 1.5rem; border-color: $gray-200; }
 	&::-ms-input-placeholder { color: $gray-600; }
 	&::-webkit-input-placeholder { color: $gray-600; }
 }
+.form-inline select { -webkit-appearance: none; -webkit-border-radius: 0; }
 
 // LIST
 .list-icon,
@@ -100,7 +146,7 @@ hr { margin-top: 1.5rem; margin-bottom: 1.5rem; border-color: $gray-200; }
 		position: relative; padding-left: 1.5rem;
 		+ li,
 		ul > li { margin-top: 0.25rem; }
-		&:before { width: $spacer; content: "\f061"; font-size: 0.75em; font-family: 'Font Awesome 5 Pro', sans-serif; display: flex; justify-content: center; align-items: start; height: 100%; position: absolute; left: 0; top: 0.25rem; }
+		&:before { width: $spacer; content: "\f105"; font-size: 0.75em; font-family: 'Font Awesome 5 Pro', sans-serif; display: flex; justify-content: center; align-items: start; height: 100%; position: absolute; left: 0; top: 0.25rem; }
 	}
 }
 .list-icon {
@@ -109,7 +155,7 @@ hr { margin-top: 1.5rem; margin-bottom: 1.5rem; border-color: $gray-200; }
 	&.list-icon-plus li:before { content: "\f067"; color: $success; }
 	&.list-icon-minus li:before { content: "\f068"; color: $danger; }
 	&.list-icon-check li:before { content: "\f00c"; color: $success; }
-	&.list-icon-times li:before { content: "\f00d"; color: $danger; }
+	&.list-icon-times li:before,
 	&.list-icon-cross li:before { content: "\f00d"; color: $danger; }
 }
 
@@ -120,10 +166,10 @@ hr { margin-top: 1.5rem; margin-bottom: 1.5rem; border-color: $gray-200; }
 			td, th { border-color: $gray-200; }
 		}
 	}
-	thead tr {
-		background: $primary; color: $white;
-		th, td { border-color: $primary; }
-	}
+ 	// thead tr {
+	// 	background: $primary; color: $white;
+	// 	th, td { border-color: $primary; }
+	// }
 	&.table-bordered { border-color: $gray-200; border-top-color: $primary; }
 	&.table-striped > tbody > tr:nth-of-type(odd) { background-color: mix($gray-200, $white, 50%); }
 }
