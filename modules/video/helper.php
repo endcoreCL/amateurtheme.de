@@ -209,3 +209,90 @@ if ( ! function_exists( 'at_video_category_related_tags' ) ) {
 		return $tags;
 	}
 }
+
+if ( ! function_exists( 'at_video_related_videos' ) ) {
+	/**
+	 * A function to get the related videos
+	 *
+	 * @param int $post_id
+	 * @param int $page
+	 *
+	 * @return bool|WP_Query
+	 */
+	function at_video_related_videos( $post_id = 0, $page = 1 ) {
+		$options = get_field( 'video_single_related_options', 'options' );
+		$video_actor = wp_get_post_terms( $post_id, 'video_actor', array( 'fields' => 'ids') );
+		$video_category = wp_get_post_terms( $post_id, 'video_category', array( 'fields' => 'ids') );
+
+		$args = array(
+			'post_type' => 'video',
+			'posts_per_page' => ( $options['posts_per_page'] ? $options['posts_per_page'] : 12 ),
+			'tax_query' => array(),
+			'orderby' => 'rand',
+			'post__not_in' => array ( $post_id )
+		);
+
+		if( $video_actor ) {
+			$args['tax_query'][] = array(
+				'taxonomy' => 'video_actor',
+				'field'    => 'term_id',
+				'terms' => $video_actor,
+			);
+		}
+
+		if( $video_category ) {
+			$args['tax_query'][] = array(
+				'taxonomy' => 'video_category',
+				'field'    => 'term_id',
+				'terms' => $video_category,
+			);
+		}
+
+		if ( $page ) {
+			$args['paged'] = $page;
+		}
+
+		$related = new WP_Query($args);
+
+		if ( $related->have_posts() ) {
+			return $related;
+		}
+
+		return false;
+	}
+}
+
+add_action( 'wp_ajax_video_related', 'at_video_related_videos_ajax' ) ;
+add_action( 'wp_ajax_nopriv_video_related', 'at_video_related_videos_ajax' ) ;
+function at_video_related_videos_ajax() {
+	$post_id = ( isset ( $_POST['post_id'] ) ? $_POST['post_id'] : false );
+	$page = ( isset ( $_POST['page'] ) ? $_POST['page'] : 1 );
+
+	if ( ! $post_id ) {
+		die( 'error' );
+	}
+
+	$related = at_video_related_videos( $post_id, $page );
+
+	if ( $related->have_posts() ) {
+		?>
+		<div class="card-deck">
+			<?php
+			while( $related->have_posts() ) {
+				$related->the_post();
+
+				get_template_part('parts/video/loop', 'card');
+			}
+			?>
+		</div>
+
+		<hr class="hr-transparent">
+
+		<?php
+		$max_pages = ( $related->max_num_pages > 8 ? 8 : $related->max_num_pages );
+
+		echo at_pagination( $max_pages, 8, $page );
+	}
+
+	exit;
+}

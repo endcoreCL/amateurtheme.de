@@ -22,3 +22,37 @@ jQuery(document).ready(function () {
         });
     }
 });
+
+/**
+ * Paginated related posts
+ */
+jQuery(document).ready(function () {
+    jQuery(document).on('click', '.video-related[data-pagination="true"] .page-link', function(e) {
+        var post_id = jQuery('#main').attr('data-post-id');
+        var page = jQuery(this).attr('data-page');
+
+        if ( post_id ) {
+            jQuery('.video-related[data-pagination="true"] .page-link').attr( 'disabled', true );
+            jQuery('.video-related[data-pagination="true"]').addClass('loading');
+
+            jQuery.ajax({
+                url: ajaxurl,
+                data: {action: 'video_related', post_id: post_id, page : page},
+                type: 'POST',
+                success: function (data) {
+                    jQuery('.video-related[data-pagination="true"] .inner').html(data);
+
+                    jQuery('.video-related[data-pagination="true"] .page-link').attr( 'disabled', false );
+                    jQuery('.video-related[data-pagination="true"]').removeClass('loading');
+                },
+                error: function () {
+                    jQuery('.video-related[data-pagination="true"] .page-link').attr( 'disabled', false );
+                    jQuery('.video-related[data-pagination="true"]').removeClass('loading');
+                }
+            });
+        }
+
+        e.preventDefault();
+        return false;
+    });
+});

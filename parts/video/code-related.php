@@ -3,39 +3,13 @@ $show = get_field( 'video_single_related', 'options' );
 $options = get_field( 'video_single_related_options', 'options' );
 
 if ( $show ) {
-	$video_actor = wp_get_post_terms(get_the_ID(), 'video_actor', array('fields' => 'ids'));
-	$video_category = wp_get_post_terms(get_the_ID(), 'video_category', array('fields' => 'ids'));
-
-	$args = array(
-	    'post_type' => 'video',
-	    'posts_per_page' => ( $options['posts_per_page'] ? $options['posts_per_page'] : 12 ),
-	    'tax_query' => array(),
-	    'orderby' => 'rand'
-	);
-
-	if($video_actor) {
-	    $args['tax_query'][] = array(
-	        'taxonomy' => 'video_actor',
-	        'field'    => 'term_id',
-	        'terms' => $video_actor,
-	    );
-	}
-
-	if($video_category) {
-	    $args['tax_query'][] = array(
-	        'taxonomy' => 'video_category',
-	        'field'    => 'term_id',
-	        'terms' => $video_category,
-	    );
-	}
-
-	$related = new WP_Query($args);
+    $related = at_video_related_videos( get_the_ID(), 1 );
 
 	if($related->have_posts()) {
 	    ?>
         <hr class="hr-transparent">
 
-		<div class="video-related">
+		<div class="video-related"<?php echo ( $options['pagination'] ? ' data-pagination="true"' : '' ); ?>>
             <div id="video-list">
                 <?php
                 if ( $options['headline'] ) {
@@ -44,14 +18,27 @@ if ( $show ) {
                     <?php
                 }
                 ?>
-                <div class="card-deck">
-                    <?php
-                    while( $related->have_posts() ) {
-                        $related->the_post();
 
-                        get_template_part('parts/video/loop', 'card');
-                    }
-                    ?>
+                <div class="inner">
+                    <div class="card-deck">
+			            <?php
+			            while( $related->have_posts() ) {
+				            $related->the_post();
+
+				            get_template_part('parts/video/loop', 'card');
+			            }
+			            ?>
+                    </div>
+
+                    <hr class="hr-transparent">
+
+		            <?php
+		            if ( $options['pagination'] ) {
+			            $max_pages = ( $related->max_num_pages > 8 ? 8 : $related->max_num_pages );
+
+			            echo at_pagination( $max_pages, 8, 1 );
+		            }
+		            ?>
                 </div>
             </div>
 	    </div>
