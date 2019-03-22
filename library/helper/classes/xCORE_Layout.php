@@ -27,7 +27,7 @@ class xCORE_Layout {
 
         $navbar_color = ( get_field( 'design_header_nav_bg', 'options' ) ? get_field( 'design_header_nav_bg', 'options' ) : 'dark' );
         if( $navbar_color ) {
-	        $attributes['class'][] = at_design_bg_classes( 'navbar', $navbar_color );
+	        $classes[] = at_design_bg_classes( 'navbar', $navbar_color );
         }
 
         $navbar_trigger = ( get_field( 'design_header_trigger_mobile_nav', 'options' ) ? get_field( 'design_header_trigger_mobile_nav', 'options' ) : 'sm' );
