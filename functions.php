@@ -25,6 +25,7 @@ require_once(AT_PLUGINS . '/acf/field-type-google-font/acf-google_font_selector.
 require_once(AT_PLUGINS . '/jsonreader/autoload.php');
 require_once(AT_PLUGINS . '/prg-pattern/prg-pattern.php');
 require_once(AT_PLUGINS . '/auto-tagging/auto-tagging.php');
+require_once(AT_PLUGINS . '/updates/_load.php');
 
 /**
  * Framework
