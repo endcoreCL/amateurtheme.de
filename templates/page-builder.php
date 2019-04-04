@@ -151,6 +151,120 @@ get_header(); ?>
                 endif;
 
                 /**
+                 * Feld: Accordions
+                 */
+                if( get_row_layout() == 'page_builder_accordions' ) :
+                    $headline = get_sub_field( 'headline' );
+                    $group = get_sub_field( 'group' );
+	                $items = get_sub_field( 'items' );
+
+                    $attributes = array(
+                        'id' => array( get_sub_field( 'id' ) ),
+                        'class' => array( 'section', 'accordions' ),
+                        'style' => array(),
+                    );
+
+                    if( get_sub_field( 'class' ) ) {
+                        $attributes['class'][] = get_sub_field( 'class' );
+                    }
+
+                    if( get_sub_field('id' ) ) {
+                        $attributes['class'][] = 'id-' . get_sub_field( 'id' );
+                    }
+
+                    if( get_sub_field( 'bgcolor' ) ) {
+                        $attributes['style'][] = 'background-color: ' . get_sub_field( 'bgcolor' ) . ';';
+                    }
+
+                    if( $items ) {
+                        ?>
+                        <div <?php echo at_attribute_array_html( $attributes ); ?>>
+                            <div class="container">
+                                <?php
+                                if ( $headline ) {
+                                    echo '<h2>' .$headline . '</h2>';
+                                }
+
+                                if ( $items ) {
+	                                $output = '[accordions id="accordions' . $i . '"]';
+                                        foreach ( $items as $k => $item ) {
+                                            $title = $item['title'];
+                                            $open = $item['open'];
+                                            $text = $item['text'];
+
+                                            $output .= '[accordion id="accordion_' . $k . '"' . ( $group ? ' parent="accordions' . $i . '" ' : ' ' ) . 'headline="' . $title . '" expanded="' . ( $open ? 'true' : 'false' ) . '"]';
+                                                $output .= $text;
+                                            $output .= '[/accordion]';
+                                        }
+	                                $output .= '[/accordions]';
+
+                                    echo do_shortcode( $output );
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                endif;
+
+                /**
+                 * Feld: Tabs
+                 */
+                if( get_row_layout() == 'page_builder_tabs' ) :
+                    $headline = get_sub_field( 'headline' );
+                    $type = get_sub_field( 'type' );
+	                $items = get_sub_field( 'items' );
+
+                    $attributes = array(
+                        'id' => array( get_sub_field( 'id' ) ),
+                        'class' => array( 'section', 'tabs' ),
+                        'style' => array(),
+                    );
+
+                    if( get_sub_field( 'class' ) ) {
+                        $attributes['class'][] = get_sub_field( 'class' );
+                    }
+
+
+                    if( get_sub_field('id' ) ) {
+                        $attributes['class'][] = 'id-' . get_sub_field( 'id' );
+                    }
+
+                    if( get_sub_field( 'bgcolor' ) ) {
+                        $attributes['style'][] = 'background-color: ' . get_sub_field( 'bgcolor' ) . ';';
+                    }
+
+                    if( $items ) {
+                        ?>
+                        <div <?php echo at_attribute_array_html( $attributes ); ?>>
+                            <div class="container">
+                                <?php
+                                if ( $headline ) {
+                                    echo '<h2>' .$headline . '</h2>';
+                                }
+
+                                if ( $items ) {
+	                                $output = '[tabs id="tabs' . $i . '" type="' . $type . '"]';
+                                        foreach ( $items as $k => $item ) {
+                                            $title = $item['title'];
+                                            $text = $item['text'];
+
+                                            $output .= '[tab id="tabs' . $i . '_' . $k . '" headline="' . $title . '" expanded="' . ( $k == 0 ? 'true' : 'false' ) . '"]';
+                                                $output .= $text;
+                                            $output .= '[/tab]';
+                                        }
+	                                $output .= '[/tabs]';
+
+                                    echo do_shortcode( $output );
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                endif;
+
+                /**
                  * Feld: Videos
                  */
                 if( get_row_layout() == 'page_builder_videos' ) :
