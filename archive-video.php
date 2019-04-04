@@ -7,6 +7,7 @@ get_header();
 $sidebar = $xcore_layout->get_sidebar( 'video_archive' );
 $classes = $xcore_layout->get_sidebar_classes( 'video_archive' );
 $headline = ( get_field( 'video_archive_headline', 'options' ) ? get_field( 'video_archive_headline', 'options' ) : __( 'Alle Videos', 'amateurtheme' ) );
+$ads = get_field( 'video_archive_ad', 'options' );
 $text_top = get_field( 'video_archive_text_top', 'options' );
 $text_bottom = get_field( 'video_archive_text_bottom', 'options' );
 ?>
@@ -47,6 +48,16 @@ $text_bottom = get_field( 'video_archive_text_bottom', 'options' );
 					<?php
 					if ( $text_bottom && ! is_paged() ) {
 						echo '<hr class="hr-transparent">' . $text_bottom;
+					}
+					?>
+
+					<?php
+					if ( $ads ) {
+						?>
+                        <div class="video-bnr">
+							<?php echo $ads; ?>
+                        </div>
+						<?php
 					}
 					?>
 				</div>

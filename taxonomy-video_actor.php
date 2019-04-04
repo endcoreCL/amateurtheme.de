@@ -7,6 +7,7 @@ get_header();
 $sidebar = $xcore_layout->get_sidebar( 'video_actor' );
 $classes = $xcore_layout->get_sidebar_classes( 'video_actor' );
 $headline = get_field( 'video_actor_headline', 'options' );
+$ads = get_field( 'video_actor_ad', 'options' );
 $queried_object = get_queried_object();
 $term_id = $queried_object->term_id;
 $actor = new AT_Video_Actor($term_id);
@@ -173,6 +174,16 @@ $prg = get_field( 'prg_activate', 'options' );
                         endif;
                         ?>
                     </div>
+
+	                <?php
+	                if ( $ads ) {
+		                ?>
+                        <div class="video-bnr">
+			                <?php echo $ads; ?>
+                        </div>
+		                <?php
+	                }
+	                ?>
                 </div>
             </div>
 

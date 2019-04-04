@@ -4,7 +4,7 @@ if ( $ad ) {
     ?>
     <hr class="hr-transparent">
     
-    <div class="video-banner">
+    <div class="video-bnr">
         <?php echo $ad; ?>
     </div>
     <?php

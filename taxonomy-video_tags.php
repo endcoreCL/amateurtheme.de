@@ -7,6 +7,7 @@ get_header();
 $sidebar = $xcore_layout->get_sidebar( 'video_tags' );
 $classes = $xcore_layout->get_sidebar_classes( 'video_tags' );
 $headline = get_field( 'video_tags_headline', 'options' );
+$ads = get_field( 'video_tags_ad', 'options' );
 $queried_object = get_queried_object();
 $term_id = $queried_object->term_id;
 ?>
@@ -52,6 +53,16 @@ $term_id = $queried_object->term_id;
                         endif;
                         ?>
                     </div>
+
+	                <?php
+	                if ( $ads ) {
+		                ?>
+                        <div class="video-bnr">
+			                <?php echo $ads; ?>
+                        </div>
+		                <?php
+	                }
+	                ?>
                 </div>
             </div>
 
