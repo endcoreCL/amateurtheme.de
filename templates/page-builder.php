@@ -618,6 +618,46 @@ get_header(); ?>
                     }
                 endif;
 
+	            /**
+	             * Feld: Trennlinie
+	             */
+	            if(get_row_layout() == 'page_builder_hr'):
+		            $layout = get_sub_field('layout');
+
+		            $element_attributes = array(
+			            'style' => array(),
+		            );
+
+		            $attributes = array(
+			            'class' => array('section', 'hr', 'id-' . $i),
+			            'style' => array(),
+		            );
+
+		            if(get_sub_field('id')) {
+			            $attributes['id'][] = get_sub_field('id');
+		            }
+
+		            if(get_sub_field('class')) {
+			            $attributes['class'][] = get_sub_field('class');
+		            }
+
+		            if(get_sub_field('size')) {
+			            $element_attributes['class'][] = get_sub_field('size');
+		            }
+
+		            if(get_sub_field('color')) {
+			            $element_attributes['style'][] = 'border-color: ' . get_sub_field('color') . ';';
+		            }
+
+		            ?>
+                    <div <?php echo at_attribute_array_html($attributes); ?>>
+		                <?php if($layout == 'boxed') { echo '<div class="container">'; } ?>
+		                <hr <?php echo at_attribute_array_html($element_attributes); ?>>
+		                <?php if($layout == 'boxed') { echo '</div>'; } ?>
+		            </div>
+                    <?php
+	            endif;
+
                 $i++;
             endwhile;
 
