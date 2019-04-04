@@ -22,14 +22,20 @@
 		.nav-link:focus { color: $white; }
 	}
 }
+
+// DROPDOWN MENU
+
+
 /*
 @media (max-width: 767px) {
 	.navbar-nav .nav-link { position: relative; }
 	.navbar-nav .nav-link-extra { position: absolute; right: 0; top: 0; width: 2rem; text-align: center; }
-	.dropdown-menu { position: relative; top: auto; margin: 0; padding: 0; border: none; border-radius: 0; background: none; }
-	.dropdown-menu .dropdown-item { color: rgba(255, 255, 255, 0.5); padding: 0.5rem 1rem; }
-	.dropdown-menu .dropdown-item:hover,
-	.dropdown-menu .dropdown-item:focus { color: #fff; background: none;  }
+	.navbar-nav .dropdown-menu { position: relative; top: auto; margin: 0; padding: 0; border: none; border-radius: 0; background: none; }
+	.navbar-nav .dropdown-menu .dropdown-item { color: rgba(255, 255, 255, 0.5); padding: 0.5rem 1rem; }
+	.navbar-nav .dropdown-menu .dropdown-menu .dropdown-item { padding-left: 2rem; }
+	.navbar-nav .dropdown-menu .dropdown-item:hover,
+	.navbar-nav .dropdown-menu .dropdown-item:focus { color: #fff; background: none; }
+
 }
 */
 
