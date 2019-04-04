@@ -143,7 +143,8 @@ jQuery( document ).ready( function () {
                 items: 1,
                 touchDrag: drag,
                 mouseDrag: drag,
-                pullDrag: drag
+                pullDrag: drag,
+                autoHeight: true
             });
         });
 
