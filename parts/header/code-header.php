@@ -134,4 +134,6 @@ if( $logo_pos == 'top' || $banner || $search ) {
         }
         ?>
 	</div>
+
+    <?php do_action( 'at_after_navbar' ); ?>
 </nav>
