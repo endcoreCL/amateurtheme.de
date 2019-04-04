@@ -193,3 +193,81 @@ if( ! function_exists( 'at_fix_no_editor_on_posts_page' ) ) {
     }
     add_action( 'edit_form_after_title', 'at_fix_no_editor_on_posts_page', 0 );
 }
+
+
+add_action( 'at_after_navbar', 'at_navigation_javascript_fix' );
+function at_navigation_javascript_fix() {
+    ?>
+    <script type="text/javascript">
+        /**
+         * Navbar classes (javascript only)
+         */
+        function at_get_document_width() {
+            return Math.max(
+                document.body.scrollWidth,
+                document.documentElement.scrollWidth,
+                document.body.offsetWidth,
+                document.documentElement.offsetWidth,
+                document.documentElement.clientWidth
+            );
+        }
+
+        function at_has_class(element, className) {
+            return (' ' + element.className + ' ').indexOf(' ' + className+ ' ') > -1;
+        }
+
+        function at_navbar_classes() {
+            var el = document.getElementById('navigation');
+            var width =  at_get_document_width();
+
+            // expand-sm
+            if ( at_has_class( el, 'navbar-expand-sm' ) ) {
+                if ( width <= 575.98 ) {
+                    el.classList.add('navbar-mobile');
+                    el.classList.remove('navbar-desktop');
+                } else {
+                    el.classList.add('navbar-desktop');
+                    el.classList.remove('navbar-mobile');
+                }
+            }
+
+            // expand-md
+            if ( at_has_class( el, 'navbar-expand-md' ) ) {
+                if ( width <= 767.98 ) {
+                    el.classList.add('navbar-mobile');
+                    el.classList.remove('navbar-desktop');
+                } else {
+                    el.classList.add('navbar-desktop');
+                    el.classList.remove('navbar-mobile');
+                }
+            }
+
+            // expand-lg
+            if ( at_has_class( el, 'navbar-expand-lg' ) ) {
+                if ( width <= 991.98 ) {
+                    el.classList.add('navbar-mobile');
+                    el.classList.remove('navbar-desktop');
+                } else {
+                    el.classList.add('navbar-desktop');
+                    el.classList.remove('navbar-mobile');
+                }
+            }
+
+            // expand-xl
+            if ( at_has_class( el, 'navbar-expand-xl' ) ) {
+                if ( width <= 1199.98 ) {
+                    el.classList.add('navbar-mobile');
+                    el.classList.remove('navbar-desktop');
+                } else {
+                    el.classList.add('navbar-desktop');
+                    el.classList.remove('navbar-mobile');
+                }
+            }
+        }
+
+        at_navbar_classes();
+
+        window.addEventListener('resize', at_navbar_classes);
+    </script>
+    <?php
+}
