@@ -32,7 +32,11 @@ class xCORE_Layout {
 
         $navbar_trigger = ( get_field( 'design_header_trigger_mobile_nav', 'options' ) ? get_field( 'design_header_trigger_mobile_nav', 'options' ) : 'sm' );
         if( $navbar_trigger ) {
-            $classes[] = 'navbar-expand-' . $navbar_trigger;
+        	if ( $navbar_trigger == 'always' ) {
+        		$classes[] = 'navbar-expand';
+	        } else {
+		        $classes[] = 'navbar-expand-' . $navbar_trigger;
+	        }
         }
 
         return apply_filters( 'at_navbar_wrapper_classes', implode( ' ', $classes ) );
