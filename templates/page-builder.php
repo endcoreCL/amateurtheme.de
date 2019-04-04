@@ -21,7 +21,7 @@ get_header(); ?>
 
 		            $attributes = array(
 			            'id' => array( get_sub_field( 'id' ) ),
-			            'class' => array( 'section', 'slideshow' ),
+			            'class' => array( 'section', 'slideshow', 'section-' . $i ),
 			            'style' => array(),
 		            );
 
@@ -112,7 +112,7 @@ get_header(); ?>
 
                     $attributes = array(
                         'id' => array( get_sub_field( 'id' ) ),
-                        'class' => array( 'section', 'textarea', 'textarea-row-' . get_sub_field( 'rows' ), 'item-' . $i ),
+                        'class' => array( 'section', 'textarea', 'textarea-row-' . get_sub_field( 'rows' ), 'section-' . $i ),
                         'style' => array(),
                     );
 
@@ -160,7 +160,7 @@ get_header(); ?>
 
                     $attributes = array(
                         'id' => array( get_sub_field( 'id' ) ),
-                        'class' => array( 'section', 'accordions' ),
+                        'class' => array( 'section', 'accordions', 'section-' . $i ),
                         'style' => array(),
                     );
 
@@ -217,14 +217,13 @@ get_header(); ?>
 
                     $attributes = array(
                         'id' => array( get_sub_field( 'id' ) ),
-                        'class' => array( 'section', 'tabs' ),
+                        'class' => array( 'section', 'tabs', 'section-' . $i ),
                         'style' => array(),
                     );
 
                     if( get_sub_field( 'class' ) ) {
                         $attributes['class'][] = get_sub_field( 'class' );
                     }
-
 
                     if( get_sub_field('id' ) ) {
                         $attributes['class'][] = 'id-' . get_sub_field( 'id' );
@@ -265,6 +264,165 @@ get_header(); ?>
                 endif;
 
                 /**
+                 * Feld: CTA
+                 */
+                if( get_row_layout() == 'page_builder_cta' ) :
+                    $text = get_sub_field( 'text' );
+                    $color = get_sub_field( 'color' );
+	                $button = get_sub_field( 'button' );
+	                $style = get_sub_field( 'style' );
+
+                    $attributes = array(
+                        'id' => array( get_sub_field( 'id' ) ),
+                        'class' => array( 'section', 'cta', 'section-' . $i ),
+                        'style' => array(),
+                    );
+
+                    if( get_sub_field( 'class' ) ) {
+                        $attributes['class'][] = get_sub_field( 'class' );
+                    }
+
+                    if( get_sub_field('id' ) ) {
+                        $attributes['class'][] = 'id-' . get_sub_field( 'id' );
+                    }
+
+                    if( get_sub_field( 'bgcolor' ) ) {
+                        $attributes['style'][] = 'background-color: ' . get_sub_field( 'bgcolor' ) . ';';
+                    }
+
+                    if ( $style ) {
+                        $attributes['class'][] = 'cta-' . $style;
+                    }
+
+                    if( $items ) {
+                        ?>
+                        <div <?php echo at_attribute_array_html( $attributes ); ?>>
+                            <div class="container">
+                                <?php
+                                $button_html = '<a href="' . $button['url'] . '" target="' . $button['target'] . '" class="btn btn-' . $button['style'] . ' btn-lg">' . $button['text'] . '</a>';
+                                $text_html = '<p class="h1"' . ( $color ? ' style="color: ' . $color . '"' : '' ) . '>' . $text. '</p>';
+
+                                if ( $text ) {
+                                    if  ( $style == 'small' ) {
+                                        ?>
+                                        <div class="row">
+                                            <div class="col-sm-9">
+                                                <?php echo $text_html; ?>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <?php echo $button_html; ?>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    } else {
+                                        ?>
+                                        <div class="text-center">
+	                                        <?php echo $text_html; ?>
+	                                        <?php echo $button_html; ?>
+                                        </div>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                endif;
+
+                /**
+                 * Feld: Blog
+                 */
+                if( get_row_layout() == 'page_builder_blog' ) :
+                    $text = get_sub_field( 'text' );
+                    $type = get_sub_field( 'type' );
+
+                    $attributes = array(
+                        'id' => array( get_sub_field( 'id' ) ),
+                        'class' => array( 'section', 'blog', 'item-' . $i ),
+                        'style' => array(),
+                    );
+
+                    if( get_sub_field( 'class' ) ) {
+                        $attributes['class'][] = get_sub_field( 'class' );
+                    }
+
+                    if( get_sub_field( 'id' ) ) {
+                        $attributes['class'][] = 'id-' . get_sub_field( 'id' );
+                    }
+
+                    if( get_sub_field( 'bgcolor' ) ) {
+                        $attributes['style'][] = 'background-color: ' . get_sub_field( 'bgcolor' ) . ';';
+                    }
+
+                    $args = array(
+                        'posts_per_page' => 6,
+                        'tax_query' => array()
+                    );
+
+                    if( $type == 'latest' ) {
+                        $count = get_sub_field( 'latest_count' );
+                        $category = get_sub_field( 'latest_category' );
+                        $tags = get_sub_field( 'latest_tags' );
+
+                        if( $count ) {
+                            $args['posts_per_page'] = $count;
+                        }
+
+                        if( $category ) {
+                            $args['tax_query'][] = array(
+                                'taxonomy' => 'category',
+                                'terms' => $category,
+                                'field' => 'term_id'
+                            );
+                        }
+
+                        if( $tags ) {
+                            $args['tax_query'][] = array(
+                                'taxonomy' => 'post_tags',
+                                'terms' => $tags,
+                                'field' => 'term_id'
+                            );
+                        }
+                    } else if( $type == 'post__in' ) {
+                        $ids = get_sub_field( 'post__in_video' );
+
+                        if( $ids ) {
+                            $args['post__in'] = $ids;
+                            $args['posts_per_page'] = count( $ids );
+                        }
+                    }
+
+                    $videos = new WP_Query( $args );
+
+                    if( $videos->have_posts() ) {
+                        ?>
+                        <div <?php echo at_attribute_array_html( $attributes ); ?>>
+                            <div class="container">
+                                <?php
+                                if( $text ) {
+                                    echo $text;
+                                }
+                                ?>
+                                <div class="card-deck">
+                                    <?php
+                                    while( $videos->have_posts() ) {
+                                        $videos->the_post();
+
+                                        get_template_part( 'parts/post/loop', 'card' );
+                                    }
+
+                                    wp_reset_query();
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                endif;
+
+                /**
                  * Feld: Videos
                  */
                 if( get_row_layout() == 'page_builder_videos' ) :
@@ -273,16 +431,12 @@ get_header(); ?>
 
                     $attributes = array(
                         'id' => array( get_sub_field( 'id' ) ),
-                        'class' => array( 'section', 'videos', 'item-' . $i ),
+                        'class' => array( 'section', 'videos', 'section-' . $i ),
                         'style' => array(),
                     );
 
                     if( get_sub_field( 'class' ) ) {
                         $attributes['class'][] = get_sub_field( 'class' );
-                    }
-
-                    if( get_sub_field( 'padding' ) == '1' ) {
-                        $attributes['class'][] = 'no-padding';
                     }
 
                     if( get_sub_field( 'id' ) ) {
@@ -389,7 +543,7 @@ get_header(); ?>
 
                     $attributes = array(
                         'id' => array( get_sub_field( 'id' ) ),
-                        'class' => array( 'section', 'video-category', 'item-' . $i ),
+                        'class' => array( 'section', 'video-category', 'section-' . $i ),
                         'style' => array(),
                     );
 
@@ -461,7 +615,7 @@ get_header(); ?>
 
                     $attributes = array(
                         'id' => array( get_sub_field( 'id' ) ),
-                        'class' => array( 'section', 'video-actor', 'item-' . $i ),
+                        'class' => array( 'section', 'video-actor', 'section-' . $i ),
                         'style' => array(),
                     );
 
@@ -562,7 +716,7 @@ get_header(); ?>
 
                     $attributes = array(
                         'id' => array( get_sub_field( 'id' ) ),
-                        'class' => array( 'section', 'video-tag', 'item-' . $i ),
+                        'class' => array( 'section', 'video-tag', 'section-' . $i ),
                         'style' => array(),
                     );
 
@@ -743,7 +897,7 @@ get_header(); ?>
 		            );
 
 		            $attributes = array(
-			            'class' => array('section', 'hr', 'id-' . $i),
+			            'class' => array('section', 'hr', 'secion-' . $i),
 			            'style' => array(),
 		            );
 

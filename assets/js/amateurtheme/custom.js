@@ -149,5 +149,48 @@ jQuery( document ).ready( function () {
         });
 
     }
+});
 
+/**
+ * Popup
+ */
+jQuery( document ).ready( function () {
+    if ( jQuery('.at-popup').length > 0 ) {
+        var cookieExpire = jQuery('.at-popup').attr('data-cookie-lifetime');
+        var show_time = jQuery('.at-popup').attr('data-show-time');
+        var show_scroll = jQuery('.at-popup').attr('data-show-scroll');
+
+        var popup = ouibounce(false, {
+            timer: 0,
+            cookieExpire: cookieExpire,
+            callback: function() {
+                jQuery('.at-popup:not(.dismiss)').addClass('active');
+            }
+        });
+
+        if ( show_time || show_scroll ) {
+            if (show_time) {
+                setTimeout(function () {
+                    popup.fire();
+                }, show_time);
+            }
+
+            if (show_scroll) {
+                jQuery(document).scroll(function (e) {
+                    var scrollAmount = jQuery(window).scrollTop();
+                    var documentHeight = jQuery(document).height();
+                    var scrollPercent = (scrollAmount / documentHeight) * 100;
+                    if (scrollPercent > show_scroll) {
+                        popup.fire();
+                    }
+                });
+            }
+        } else {
+            popup.fire();
+        }
+
+        jQuery('.at-popup [data-dismiss=toast]').on('click', function() {
+            jQuery('.at-popup').removeClass('active').addClass('dismiss');
+        });
+    }
 });

@@ -27,3 +27,10 @@ $fa-font-path: "assets/fonts/fontawesome";
 
 // AMATEURTHEME
 @import "amateurtheme/amateurtheme";
+
+/**
+ * TMP
+ */
+.at-popup { position: fixed; bottom: 15px; right: 15px; display: none; }
+.at-popup.active { display: block; }
+.at-popup.active .toast { opacity: 1; }

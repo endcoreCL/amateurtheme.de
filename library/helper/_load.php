@@ -18,3 +18,4 @@ require_once( AT_HELPER . '/func.php' );
 require_once( AT_HELPER . '/pagination.php' );
 require_once( AT_HELPER . '/acf-helper.php' );
 require_once( AT_HELPER . '/markup.php' );
+require_once( AT_HELPER . '/popup.php' );
