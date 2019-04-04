@@ -117,3 +117,36 @@ jQuery( document ).ready( function() {
         jQuery('iframe[src*="youtube"]').wrap('<div class="embed-responsive embed-responsive-16by9">');
     }
 });
+
+/**
+ * Owl carousels
+ */
+jQuery( document ).ready( function () {
+    /**
+     * PB: Slideshow
+     */
+    if( jQuery( '.owl-slideshow' ).length ) {
+        jQuery( '.owl-slideshow').each(function() {
+            var autoplay = jQuery(this).attr('data-autoplay');
+            var timeout = jQuery(this).attr('data-timeout');
+            var nav = jQuery(this).attr('data-nav');
+            var dots = jQuery(this).attr('data-dots');
+            var count = jQuery(this).find('.item').length;
+            var drag = ( count > 1 ? true : false );
+
+            jQuery( this ).owlCarousel({
+                loop: false,
+                autoplay: autoplay,
+                autoplayTimeout:  timeout,
+                nav: nav,
+                dots: dots,
+                items: 1,
+                touchDrag: drag,
+                mouseDrag: drag,
+                pullDrag: drag
+            });
+        });
+
+    }
+
+});

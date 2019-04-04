@@ -12,6 +12,97 @@ get_header(); ?>
 
             $i = 0;
             while ( have_rows('page_builder') ) : the_row();
+	            /**
+	             * Feld: Slideshow
+	             */
+	            if( get_row_layout() == 'page_builder_slideshow' ) :
+		            $options = get_sub_field( 'options' );
+		            $items = get_sub_field( 'items' );
+
+		            $attributes = array(
+			            'id' => array( get_sub_field( 'id' ) ),
+			            'class' => array( 'section', 'slideshow' ),
+			            'style' => array(),
+		            );
+
+		            if( get_sub_field( 'class' ) ) {
+			            $attributes['class'][] = get_sub_field( 'class' );
+		            }
+
+		            if( get_sub_field('id' ) ) {
+			            $attributes['class'][] = 'id-' . get_sub_field( 'id' );
+		            }
+
+		            $attributes_owl = array(
+                        'class' => array ( 'owl-carousel', 'owl-theme', 'owl-slideshow' ),
+                        'data-autoplay' => array ( ( $options['autoplay'] ? true : false ) ),
+                        'data-timeout' => array ( ( $options['timeout'] ? $options['timeout'] : 4000 ) ),
+                        'data-nav' => array ( ( $options['nav'] ? true : false ) ),
+                        'data-dots' => array ( ( $options['dots'] ? true : false ) ),
+                    );
+
+		            if( $items ) {
+			            $count = count( $items );
+			            ?>
+                        <div <?php echo at_attribute_array_html( $attributes ); ?>>
+                            <div <?php echo at_attribute_array_html( $attributes_owl ); ?>>
+                                <?php
+                                foreach ( $items as $item ) {
+                                    $images = $item['images'];
+                                    $caption = $item['caption'];
+                                    ?>
+                                    <div class="item">
+                                        <picture>
+                                            <?php
+                                            if ( $images['xs'] ) {
+	                                            ?>
+                                                <source media="(max-width: 575px)" srcset="<?php echo $images['xs']['url']; ?>">
+	                                            <?php
+                                            }
+                                            if ( $images['sm'] ) {
+	                                            ?>
+                                                <source media="(min-width: 576px) AND (max-width: 767px)" srcset="<?php echo $images['sm']['url']; ?>">
+	                                            <?php
+                                            }
+                                            if ( $images['md'] ) {
+	                                            ?>
+                                                <source media="(min-width: 768px) AND (max-width: 991px)" srcset="<?php echo $images['md']['url']; ?>">
+	                                            <?php
+                                            }
+                                            if ( $images['lg'] ) {
+	                                            ?>
+                                                <source media="(min-width: 992px) AND (max-width: 1199px)" srcset="<?php echo $images['lg']['url']; ?>">
+	                                            <?php
+                                            }
+                                            if ( $images['xl'] ) {
+                                                ?>
+                                                <source srcset="<?php echo $images['xl']['url']; ?>">
+                                                <img src="<?php echo $images['xl']['url']; ?>" alt="<?php echo $images['xl']['alt']; ?>" />
+                                                <?php
+                                            }
+                                            ?>
+                                        </picture>
+
+                                        <?php
+                                        if ( $caption ) {
+                                            ?>
+                                            <div class="caption">
+                                                <div class="inner">
+                                                    <?php echo $caption; ?>
+                                                </div>
+                                            </div>
+                                            <?php
+                                        }
+                                        ?>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+			            <?php
+		            }
+	            endif;
 
                 /**
                  * Feld: Textarea
