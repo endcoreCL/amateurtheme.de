@@ -11,7 +11,7 @@ $video = new AT_Video($post->ID);
         </span>
     <?php } ?>
 
-    <a href="<?php echo $video->permalink(); ?>" title="<?php echo $video->title(); ?>">
+    <a href="<?php echo $video->permalink(); ?>" title="<?php echo $video->title(); ?>" class="card-link-img">
         <?php the_post_thumbnail('video_grid', array('class' => 'img-fluid card-img-top')); ?>
     </a>
 
@@ -21,8 +21,11 @@ $video = new AT_Video($post->ID);
                 <?php echo $video->title(); ?>
             </a>
         </h3>
+	</div>
 
-        <?php get_template_part( 'parts/video/code', 'meta' ); ?>
-    </div>
+	<div class="card-footer">
+		<?php get_template_part( 'parts/video/code', 'meta' ); ?>
+	</div>
+
 </div>
 

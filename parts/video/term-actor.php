@@ -1,8 +1,8 @@
-<div class="card term-<?php echo $term->term_id; ?>">
-	<a href="<?php echo get_term_link( $term ); ?>" title="<?php echo $term->name; ?>">
+<div class="card card-video term-<?php echo $term->term_id; ?>">
+	<a href="<?php echo get_term_link( $term ); ?>" title="<?php echo $term->name; ?>" class="card-link-img">
 		<?php
 		// @TODO: Placeholder
-		$image_url = 'https://placehold.it/280x420/?text=' . $term->name;
+		$image_url = 'https://placehold.it/543x407/?text=' . $term->name;
 		$image_alt = $term->name;
 
 		$actor_image = get_field( 'actor_image', $term );
@@ -18,11 +18,15 @@
 	</a>
 
 	<div class="card-body">
-		<h5 class="card-title">
+		<h3 class="card-title card-title-1">
 			<a href="<?php echo get_term_link( $term ); ?>" title="<?php echo $term->name; ?>">
 				<?php echo $term->name; ?>
 			</a>
-		</h5>
-		<p class="card-text mb-0"><?php printf( _n( '%s Video', '%s Videos', $term->count, 'amateurtheme' ), $term->count ); ?></p>
+		</h3>
 	</div>
+
+	<div class="card-footer">
+		<p class="text-muted"><?php printf( _n( '%s Video', '%s Videos', $term->count, 'amateurtheme' ), $term->count ); ?></p>
+	</div>
+
 </div>
