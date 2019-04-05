@@ -17,6 +17,7 @@ $actor_profile_url = $actor->url();
 $video_actor_description  = get_field( 'video_actor_description', 'options' );
 $video_actor_details = get_field( 'video_actor_details', 'options' );
 $prg = get_field( 'prg_activate', 'options' );
+$actor_second_description = get_field( 'actor_second_description', $queried_object );
 ?>
 
 <div id="main">
@@ -183,6 +184,14 @@ $prg = get_field( 'prg_activate', 'options' );
                         </div>
 		                <?php
 	                }
+
+	                if ( $actor_second_description && !is_paged() ) {
+	                    ?>
+                        <div class="second-description">
+                            <?php echo $actor_second_description; ?>
+                        </div>
+                        <?php
+                    }
 	                ?>
                 </div>
             </div>

@@ -10,6 +10,7 @@ $headline = get_field( 'video_tags_headline', 'options' );
 $ads = get_field( 'video_tags_ad', 'options' );
 $queried_object = get_queried_object();
 $term_id = $queried_object->term_id;
+$tag_second_description = get_field( 'tag_second_description', $queried_object );
 ?>
 
 <div id="main">
@@ -59,6 +60,14 @@ $term_id = $queried_object->term_id;
 		                ?>
                         <div class="video-bnr">
 			                <?php echo $ads; ?>
+                        </div>
+		                <?php
+	                }
+
+	                if ( $tag_second_description && !is_paged() ) {
+		                ?>
+                        <div class="second-description">
+			                <?php echo $tag_second_description; ?>
                         </div>
 		                <?php
 	                }

@@ -10,6 +10,7 @@ $headline = get_field( 'video_category_headline', 'options' );
 $ads = get_field( 'video_category_ad', 'options' );
 $queried_object = get_queried_object();
 $term_id = $queried_object->term_id;
+$category_second_description = get_field( 'category_second_description', $queried_object );
 ?>
 
 <div id="main">
@@ -80,6 +81,14 @@ $term_id = $queried_object->term_id;
                             <?php echo $ads; ?>
                         </div>
                         <?php
+                    }
+
+                    if ( $category_second_description && !is_paged() ) {
+	                    ?>
+                        <div class="second-description">
+		                    <?php echo $category_second_description; ?>
+                        </div>
+	                    <?php
                     }
                     ?>
                 </div>
