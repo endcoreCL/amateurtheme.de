@@ -1,18 +1,18 @@
 /* SIDEBAR */
 
-#sidebar .h1 { font-size: 1rem; color: $gray-light; }
+#sidebar .h1 { font-size: 1.5rem; color: $gray-700; }
 
 #sidebar .widget_term_list > ul > li {
-	border-bottom: 1px solid $border; position: relative;
+	border-bottom: 1px solid $gray-300; position: relative;
 	a {
-		color: $gray; display: block; padding: 0.25rem 2rem 0.25rem 0;
+		color: $gray-700; display: block; padding: 0.25rem 2rem 0.25rem 0;
 		.badge {
-			position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+			color: $gray-600; background: $gray-100; position: absolute; right: 0; top: 50%; transform: translateY(-50%);
 		}
 		&:hover, &:focus {
 			color: $primary; text-decoration: none;
 			.badge {
-				background: $primary; color: $white;
+				color: $gray-700; background: $gray-100;
 			}
 		}
 	}
@@ -25,3 +25,5 @@
 		}
 	}
 }
+
+

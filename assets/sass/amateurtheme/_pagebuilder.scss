@@ -28,3 +28,16 @@
 // PAGE BUILDER: MISC
 #page-builder .section > .row > .col > :last-child,
 #page-builder .section > .row > div[class*="col-"] > :last-child { margin-bottom: 0; }
+
+// SLIDESHOW
+#page-builder .section.slideshow {
+	padding: 0;
+}
+
+// VIDEO TAG
+#page-builder .section.video-tag {
+	.list-unstyled li a {
+		color: inherit;
+		&:hover, &:focus { color: $primary; text-decoration: none; }
+	}
+}

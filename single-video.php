@@ -11,7 +11,7 @@ $col = array( 'content' => 'col-sm-12', 'sidebar' => 'col-sm-12' );
 
 if ( $ad_top ) {
     $col['content'] = 'col-sm-10';
-    $col['sidebar'] = 'col-sm-2';
+    $col['sidebar'] = 'col-sm-2 d-none d-sm-block';
 }
 ?>
 
@@ -96,7 +96,7 @@ if ( $ad_top ) {
                         </div>
 
                         <?php
-                        if ( $ad_top ) {
+                        if ( $ad_top && !wp_is_mobile() ) {
 	                        ?>
                             <div class="<?php echo $col['sidebar']; ?>">
 		                        <?php echo $ad_top; ?>
@@ -110,6 +110,14 @@ if ( $ad_top ) {
                     get_template_part( 'parts/video/code', 'categories' );
 
 	                get_template_part( 'parts/video/code', 'related' );
+
+	                if ( $ad_top && wp_is_mobile() ) {
+	                    ?>
+	                    <div class="d-block d-sm-none">
+	                        <?php echo $ad_top; ?>
+                        </div>
+	                    <?php
+	                }
 
 	                get_template_part( 'parts/video/code', 'tags' );
 

@@ -24,7 +24,7 @@ if ( $social_networks ) {
                 }
                 ?>
                 <li class="<?php echo implode( ' ', $classes ); ?>">
-                    <a href="<?php echo $url; ?>" onClick="social_share(this, '<?php echo $network; ?>'); return false;">
+                    <a class="network-link" href="<?php echo $url; ?>" onClick="social_share(this, '<?php echo $network; ?>'); return false;">
                         <i class="fab fa-<?php echo $network; ?>"></i> <?php echo $text; ?>
                     </a>
                 </li>

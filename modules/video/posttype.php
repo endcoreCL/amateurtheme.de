@@ -11,7 +11,7 @@ add_action( 'init', 'video_register' );
 function video_register() {
 	$video_archive_deactivate = get_field( 'video_archive_deactivate', 'options' );
 	$video_archive_slug = ( get_field( 'video_archive_slug', 'options' ) ? get_field( 'video_archive_slug', 'options' ) : 'videos' );
-	$video_single_slig = ( get_field( 'video_single_slug', 'options' ) ? get_field( 'video_single_slug', 'options' ) : 'videos' );
+	$video_single_slug = ( get_field( 'video_single_slug', 'options' ) ? get_field( 'video_single_slug', 'options' ) : 'videos' );
 
 	$labels = array(
         'name' 				=> __( 'Videos', 'amateurtheme' ),
@@ -34,7 +34,7 @@ function video_register() {
         'has_archive'		=> ( $video_archive_deactivate ? false : $video_archive_slug ),
         'hierarchical'		=> false,
         'menu_icon'			=> 'dashicons-video-alt3',
-        'rewrite'			=> array( 'slug' => $video_single_slig, 'with_front' => false ),
+        'rewrite'			=> array( 'slug' => $video_single_slug, 'with_front' => false ),
         'supports' 			=> array( 'title', 'editor', 'thumbnail', 'author', 'custom-fields' )
     );
 

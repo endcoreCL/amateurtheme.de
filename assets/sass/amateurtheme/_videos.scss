@@ -1,5 +1,42 @@
 /* _video.scss */
 
+// VIDEO SINGLE
+.video-info { margin: 2rem 0; }
+.video-actor-header img { width: 300px; height: auto; }
+.table-details {
+	background: $gray-100;
+	.td-label { color: $gray-600; font-weight: 700; font-size: 0.875rem; }
+	.td-value { color: $gray-700; background: $white; }
+}
+@include media-breakpoint-down(sm) {
+	.table-details { border-bottom: 0; }
+	.table-details tr td { width: 50%; border-top: none; border-right: none; border-left: none; float: left; min-height: 46px; }
+}
+@include media-breakpoint-only(xs) {
+	.video-actor-header img { width: auto; margin: 0 auto 1rem auto; display: block; float: none; }
+}
+
+// CARD VIDEO GRID
+@include media-breakpoint-only(xs) {
+	#video-list .card-columns { column-count: 2; }
+	#video-list.video-related .card-columns { column-count: 2; }
+}
+@include media-breakpoint-only(sm) {
+	#video-list .card-columns { column-count: 2; }
+	#video-list.video-related .card-columns { column-count: 3; }
+}
+@include media-breakpoint-only(md) {
+	#video-list .card-columns { column-count: 3; }
+	#video-list.video-related .card-columns { column-count: 4; }
+}
+@include media-breakpoint-only(lg) {
+	#video-list .card-columns { column-count: 3; }
+	#video-list.video-related .card-columns { column-count: 5; }
+}
+@include media-breakpoint-only(xl) {
+	#video-list .card-columns { column-count: 3; }
+	#video-list.video-related .card-columns { column-count: 5; }
+}
 
 // CARD VIDEO
 .card-video {
@@ -36,6 +73,7 @@
 				color:inherit;
 				&:hover, &:focus { color: $primary; text-decoration: none; }
 			}
+			.fa { color: $gray-500; }
 		}
 	}
 }

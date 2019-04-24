@@ -46,10 +46,10 @@ if ( ! function_exists( 'at_pagination' ) ) {
                     echo '<li class="page-item disabled hidden-md-down d-none d-lg-inline-block"><span class="page-link">' . sprintf(__('Seite %s von %s', 'amateurtheme'), $paged, $pages) . '</span></li>';
 
                     if($paged > 2 && $paged > $range+1 && $showitems < $pages)
-                        echo '<li class="page-item"><a class="page-link" data-page="1" href="' . ( $custom_param ? at_get_pagenum_link( 1 ) : get_pagenum_link( 1 ) ) . '" aria-label="' . __('Erste Seite', 'amateurtheme') . '">&laquo;<span class="hidden-sm-down d-none d-md-block"> ' . __('Anfang', 'amateurtheme') . '</span></a></li>';
+                        echo '<li class="page-item"><a class="page-link" data-page="1" href="' . ( $custom_param ? at_get_pagenum_link( 1 ) : get_pagenum_link( 1 ) ) . '" aria-label="' . __('Erste Seite', 'amateurtheme') . '"> &laquo; <span class="hidden-sm-down d-none d-md-inline-block"> ' . __('Anfang', 'amateurtheme') . '</span></a></li>';
 
                     if($paged > 1 && $showitems < $pages)
-                        echo '<li class="page-item"><a class="page-link" data-page="' . ( $paged - 1 ) . '" href="' . ( $custom_param ? at_get_pagenum_link( $paged - 1 ) : get_pagenum_link( $paged - 1) ) . '" aria-label="' . __('Vorherige Seite', 'amateurtheme') . '">&lsaquo;<span class="hidden-sm-down d-none d-md-block"> ' . __('Vorherige', 'amateurtheme') . '</span></a></li>';
+                        echo '<li class="page-item"><a class="page-link" data-page="' . ( $paged - 1 ) . '" href="' . ( $custom_param ? at_get_pagenum_link( $paged - 1 ) : get_pagenum_link( $paged - 1) ) . '" aria-label="' . __('Vorherige Seite', 'amateurtheme') . '"> &lsaquo; <span class="hidden-sm-down d-none d-md-inline-block"> ' . __('Vorherige', 'amateurtheme') . '</span></a></li>';
 
                     for ($i=1; $i <= $pages; $i++)
                     {
@@ -58,10 +58,10 @@ if ( ! function_exists( 'at_pagination' ) ) {
                     }
 
                     if ($paged < $pages && $showitems < $pages)
-                        echo '<li class="page-item"><a class="page-link" data-page="' . ( $paged + 1 ) . '" href="' . ( $custom_param ? at_get_pagenum_link( $paged + 1 ) : get_pagenum_link( $paged + 1 ) ) . '" aria-label="' . __('Nächste Seite', 'amateurtheme') . '"><span class="hidden-sm-down d-none d-md-block">' . __('Nächste', 'amateurtheme') . ' </span>&rsaquo;</a></li>';
+                        echo '<li class="page-item"><a class="page-link" data-page="' . ( $paged + 1 ) . '" href="' . ( $custom_param ? at_get_pagenum_link( $paged + 1 ) : get_pagenum_link( $paged + 1 ) ) . '" aria-label="' . __('Nächste Seite', 'amateurtheme') . '"><span class="hidden-sm-down d-none d-md-inline-block">' . __('Nächste', 'amateurtheme') . ' </span> &rsaquo; </a></li>';
 
                     if ($paged < $pages-1 &&  $paged+$range-1 < $pages && $showitems < $pages)
-                        echo '<li class="page-item"><a class="page-link" data-page="' . $pages . '" href="' . ( $custom_param ? at_get_pagenum_link( $pages ) : get_pagenum_link( $pages ) ).'" aria-label="' . __('Letzte Seite', 'amateurtheme') . '"><span class="hidden-sm-down d-none d-md-block">' . __('Ende', 'amateurtheme') . ' </span>&raquo;</a></li>';
+                        echo '<li class="page-item"><a class="page-link" data-page="' . $pages . '" href="' . ( $custom_param ? at_get_pagenum_link( $pages ) : get_pagenum_link( $pages ) ).'" aria-label="' . __('Letzte Seite', 'amateurtheme') . '"><span class="hidden-sm-down d-none d-md-inline-block">' . __('Ende', 'amateurtheme') . ' </span> &raquo; </a></li>';
                 echo '</ul>';
             echo '</nav>';
         }

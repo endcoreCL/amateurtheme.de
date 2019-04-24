@@ -1,4 +1,4 @@
-<article <?php post_class('loop-large'); ?>>
+<article <?php post_class('loop-small'); ?>>
     <div class="row">
         <?php
         if ( has_post_thumbnail() ) {

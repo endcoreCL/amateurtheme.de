@@ -1,1 +1,28 @@
 /* _shortcodes.scss */
+
+/* ACCORDIONS */
+.accordion .card .card-header {
+	padding: 0;
+	.btn {
+		display: block; width: 100%; text-align: left; position: relative; padding: 0.75rem 1rem; color: inherit; font-weight: 600;
+		&:hover, &:focus { color: $primary; text-decoration: none; }
+		&:after { content: "\f107"; position: absolute; top: 0; right: 0; height: 2.75rem; line-height: 2.75rem; width: 2.75rem; text-align: center; font-family: 'Font Awesome 5 Pro'; font-weight: 700; }
+		&[aria-expanded="true"] {
+			color: $primary;
+			&:after { content: "\f106"; }
+		}
+	}
+}
+
+
+
+/* TABS */
+.nav-tabs {
+	.nav-link {
+		color: $gray-700; font-weight: 600;
+		&:hover,
+		&:focus { color: $primary; border-color: transparent; }
+		&.active { color: $primary; border-color: $gray-300; border-bottom-color: #fff; }
+	}
+	+ .tab-content { border: 1px solid $gray-300; border-top: none; padding: 1rem; }
+}
