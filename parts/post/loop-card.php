@@ -19,13 +19,5 @@
                 <?php the_title(); ?>
             </a>
         </h2>
-
-        <p class="card-text"><?php echo get_the_excerpt(); ?></p>
-    </div>
-
-    <div class="card-footer">
-        <a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>" class="btn btn-primary">
-            <?php _e('weiterlesen', 'amateurtheme'); ?>
-        </a>
     </div>
 </article>
