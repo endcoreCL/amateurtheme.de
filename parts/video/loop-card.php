@@ -11,7 +11,7 @@ $video = new AT_Video($post->ID);
         </span>
     <?php } ?>
 
-    <a href="<?php echo $video->permalink(); ?>" title="<?php echo $video->title(); ?>" class="card-link-img">
+    <a href="<?php echo $video->permalink(); ?>" title="<?php echo $video->title(); ?>" class="card-link-img card-play-icon">
         <?php the_post_thumbnail('video_grid', array('class' => 'img-fluid card-img-top')); ?>
     </a>
 
