@@ -27,7 +27,7 @@ jQuery(document).ready(function () {
  * Paginated related posts
  */
 jQuery(document).ready(function () {
-    jQuery(document).on('click', '.video-related[data-pagination="true"] .page-link', function(e) {
+    jQuery(document).on('click', '.video-related[data-pagination="true"] a.page-link', function(e) {
         var post_id = jQuery('#main').attr('data-post-id');
         var page = jQuery(this).attr('data-page');
 
