@@ -24,7 +24,7 @@ if ( $ad_top ) {
                 <div class="video-summary">
                     <div class="row">
                         <div class="<?php echo $col['content']; ?>">
-                            <div class="video-thumb-container">
+                            <div class="video-thumb-container card-video">
                                 <?php
                                 // preview videos
                                 $preview_webm = $video->preview_video( 'webm' );
@@ -46,11 +46,11 @@ if ( $ad_top ) {
 	                                if ( $external_url ) {
 	                                    if ( $prg ) {
 	                                        ?>
-                                            <span class="redir-link" data-submit="<?php echo base64_encode( $external_url ); ?>" title="<?php $video->title(); ?>" data-target="_blank">
+                                            <span class="redir-link card-link-img card-play-icon" data-submit="<?php echo base64_encode( $external_url ); ?>" title="<?php $video->title(); ?>" data-target="_blank">
 	                                        <?php
                                         } else {
 	                                        ?>
-                                            <a href="<?php echo $external_url; ?>" title="<?php $video->title(); ?>" target="_blank" rel="nofollow">
+                                            <a href="<?php echo $external_url; ?>" class="card-play-icon" title="<?php $video->title(); ?>" target="_blank" rel="nofollow">
 	                                        <?php
                                         }
 

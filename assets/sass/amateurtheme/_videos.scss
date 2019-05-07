@@ -47,6 +47,7 @@
 			-webkit-backface-visibility: hidden; transition: $transition;
 		}
 		&:hover, &:focus {
+			cursor: pointer;
 			img { opacity: 0.25; }
 		}
 	}
