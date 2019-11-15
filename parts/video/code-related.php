@@ -5,7 +5,7 @@ $options = get_field( 'video_single_related_options', 'options' );
 if ( $show ) {
     $related = at_video_related_videos( get_the_ID(), 1 );
 
-	if($related->have_posts()) {
+	if( is_object( $related ) && $related->have_posts() ) {
 	    ?>
         <hr class="hr-transparent">
 
