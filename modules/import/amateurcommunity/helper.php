@@ -263,3 +263,23 @@ function at_import_ac_update_actor($actor_id) {
 		}
 	}
 }
+
+if ( ! function_exists( 'at_ac_rewrite_video_url' ) ) {
+	/**
+	 * Fix amateurcommunity url (.de to .com)
+	 *
+	 * @param $value
+	 * @param $post_id
+	 * @param $field
+	 *
+	 * @return mixed
+	 */
+	add_filter( 'acf/load_value/name=video_url', 'at_ac_rewrite_video_url', 10, 3 );
+	function at_ac_rewrite_video_url( $value, $post_id, $field ) {
+		if ( is_admin() ) {
+			return $value;
+		}
+
+		return str_replace( 'www.amateurcommunity.de', 'www.amateurcommunity.com', $value );
+	}
+}
