@@ -23,6 +23,7 @@ if ( ! function_exists( 'xcore_shortcode_modal' ) ) {
 					'size'          => '',
 					'fade'          => 'false',
 					'text-align'    => '',
+					'centered'      => 'false'
 				),
 				$atts
 			)
@@ -38,6 +39,7 @@ if ( ! function_exists( 'xcore_shortcode_modal' ) ) {
 		$size           = ( $atts['size'] ? $atts['size'] : '' );
 		$fade           = ( $atts['fade'] ? $atts['fade'] : '' );
 		$text_align     = ( $atts['text-align'] ? $atts['text-align'] : '' );
+		$centered       = ( $atts['centered'] ? $atts['centered'] : 'false' );
 
 		$attributes = array(
 			'id' => $id,
@@ -81,6 +83,10 @@ if ( ! function_exists( 'xcore_shortcode_modal' ) ) {
 
 		if ( $text_align ) {
 			$attributes['class'][] = 'text-' . $text_align;
+		}
+
+		if ( $centered == 'true' ) {
+			$attributes_inner['class'][] = 'modal-dialog-centered';
 		}
 
 		$output = '<div ' . at_attribute_array_html( $attributes ) . '>';
