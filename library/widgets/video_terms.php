@@ -28,6 +28,8 @@ class at_video_terms_widget extends WP_Widget {
         $terms = get_terms($taxonomy, $args);
 
         if($terms) {
+            $current_term_id = get_queried_object_id();
+
             echo $before_widget;
 
             if ($instance['title']) {
@@ -36,9 +38,9 @@ class at_video_terms_widget extends WP_Widget {
 
             echo '<ul class="list-unstyled">';
 
-            foreach($terms as $term) {
-                echo '<li class="term term-' . $term->term_id . '"><a href="' . get_term_link($term) . '">' . $term->name . ($count ? ' <span class="badge badge-light term-count">' . $term->count . '</span>' : '') . '</a></li>';
-            }
+                foreach($terms as $term) {
+                    echo '<li class="term term-' . $term->term_id . ( $current_term_id == $term->term_id ? ' active' : '' ) . '"><a href="' . get_term_link($term) . '">' . $term->name . ($count ? ' <span class="badge badge-light term-count">' . $term->count . '</span>' : '') . '</a></li>';
+                }
 
             echo '</ul>';
 
