@@ -144,6 +144,10 @@ if ( ! function_exists( 'xcore_shortcode_tabs' ) ) {
 						}
 					$output .= '</div>';
 				}
+
+				if ( strpos( $type, 'card-' ) !== false ) {
+					$output .= '</div>';
+				}
 			$output .= '</div>';
 		}
 
