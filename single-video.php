@@ -39,6 +39,35 @@ if ( $ad_top ) {
                                             <?php if( $preview_webm ) { ?><source src="<?php echo $preview_webm; ?>" type="video/webm"><?php } ?>
                                         </video>
                                     </div>
+
+                                    <div class="video-cta text-center py-3">
+                                        <?php
+                                        $external_url = $video->external_url();
+                                        if ( $external_url ) {
+	                                        if ( $prg ) {
+		                                        ?>
+                                                <span class="btn btn-primary redir-link" data-submit="<?php echo base64_encode( $external_url ); ?>" title="<?php $video->title(); ?>" data-target="_blank">
+		                                        <?php
+	                                        } else {
+		                                        ?>
+                                                <a class="btn btn-primary" href="<?php echo $external_url; ?>" title="<?php $video->title(); ?>" target="_blank" rel="nofollow">
+		                                        <?php
+	                                        }
+
+	                                        echo '<i class="fas fa-play mr-3"></i> ' . __( 'Video jetzt in voller Länge ansehen', 'amateurthene' );
+
+	                                        if ( $prg ) {
+		                                        ?>
+                                                </span>
+		                                        <?php
+	                                        } else {
+		                                        ?>
+                                                </a>
+		                                        <?php
+	                                        }
+                                        }
+                                        ?>
+                                    </div>
                                     <?php
                                 } else {
 	                                // thumbnail

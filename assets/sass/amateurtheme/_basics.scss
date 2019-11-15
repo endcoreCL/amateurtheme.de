@@ -47,6 +47,7 @@ a {
 	h1, .h1 { font-size: 2.5rem; }
 }
 .btn:not(.btn-light):not(.btn-link):focus { color: #fff; }
+.redir-link:hover { cursor: pointer; }
 
 // BADGE
 .badge,
