@@ -194,3 +194,11 @@ jQuery( document ).ready( function () {
         });
     }
 });
+
+/**
+ * Stuff
+ */
+jQuery( document ).ready( function() {
+    // empty p fix
+    jQuery( 'p:empty' ).addClass('empty');
+});
