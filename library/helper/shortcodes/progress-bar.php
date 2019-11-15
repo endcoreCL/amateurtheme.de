@@ -1,6 +1,7 @@
 <?php
 if ( ! function_exists( 'xcore_shortcode_progress_bars' ) ) {
 	add_shortcode( 'progress', 'xcore_shortcode_progress_bars' );
+	add_shortcode( 'progress-bars', 'xcore_shortcode_progress_bars' );
 	/**
 	 * Progress shortcode
 	 *
