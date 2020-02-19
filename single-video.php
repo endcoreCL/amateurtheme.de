@@ -79,7 +79,7 @@ if ( $ad_top ) {
 	                                        <?php
                                         } else {
 	                                        ?>
-                                            <a href="<?php echo $external_url; ?>" class="card-play-icon" title="<?php $video->title(); ?>" target="_blank" rel="nofollow">
+                                            <a href="<?php echo $external_url; ?>" class="card-link-img card-play-icon" title="<?php $video->title(); ?>" target="_blank" rel="nofollow">
 	                                        <?php
                                         }
 

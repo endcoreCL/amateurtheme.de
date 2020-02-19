@@ -25,3 +25,10 @@
 		&:hover, &:focus { color: $white; }
 	}
 }
+
+// TOPBAR Mobile Fix
+@media (max-width: 767.98px) {
+	#topbar * {
+		text-align: center !important;
+	}
+}
