@@ -26,7 +26,7 @@ if ( ! function_exists( 'at_import_big7_database_notice' ) ) {
 			<div class="error">
 				<p>
 					<?php _e('Eine oder mehrere Datenbank-Tabellen für den Import fehlen. Bitte aktualisiere deine Datenbank.', 'amateurtheme'); ?>
-					<a class="button" id="at-import-bi7-install-tables"><?php _e('Datenbank aktualisieren', 'amateurtheme'); ?></a>
+					<a class="button" id="at-import-big7-install-tables"><?php _e('Datenbank aktualisieren', 'amateurtheme'); ?></a>
 				</p>
 			</div>
 
@@ -119,7 +119,7 @@ if ( ! function_exists( 'at_import_big7_database_tables' ) ) {
                   image_small text,
                   image_medium text,
                   image_large text,
-                PRIMARY KEY (id)
+                PRIMARY KEY (id),
                 UNIQUE KEY (uid)
             );";
 
