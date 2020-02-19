@@ -27,7 +27,7 @@
                                     <?php
                                     for ( $i = 1; $i <= $design_footer_widget_areas; $i++ ) {
                                         ?>
-                                        <div class="col footer-widget-<?php echo $i; ?>">
+                                        <div class="col-sm-6 col-md footer-widget-<?php echo $i; ?>">
                                             <?php dynamic_sidebar( 'footer_' . $i ); ?>
                                         </div>
                                         <?php
