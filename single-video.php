@@ -10,8 +10,8 @@ $prg = get_field( 'prg_activate', 'options' );
 $col = array( 'content' => 'col-sm-12', 'sidebar' => 'col-sm-12' );
 
 if ( $ad_top ) {
-    $col['content'] = 'col-sm-10';
-    $col['sidebar'] = 'col-sm-2 d-none d-sm-block';
+    $col['content'] = 'col-sm-9';
+    $col['sidebar'] = 'col-sm-3 d-none d-sm-block';
 }
 ?>
 
