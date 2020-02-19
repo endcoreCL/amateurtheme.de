@@ -68,3 +68,13 @@
 		.card-deck .card:nth-child(1n+4) { margin-top: 30px; }
 	}
 }
+
+.table-responsive {
+	table {
+		tr {
+			th {
+				white-space: nowrap;
+			}
+		}
+	}
+}

@@ -201,4 +201,7 @@ jQuery( document ).ready( function () {
 jQuery( document ).ready( function() {
     // empty p fix
     jQuery( 'p:empty' ).addClass('empty');
+
+    // responsive tables
+    jQuery( '#content table' ).wrap( '<div class="table-responsive">' );
 });
