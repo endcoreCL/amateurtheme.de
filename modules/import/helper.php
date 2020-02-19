@@ -34,7 +34,7 @@ function at_import_menu() {
     add_menu_page('at_import', __('Import', 'amateurtheme'), 'administrator', 'at_import', "at_import", "dashicons-smiley");
     add_submenu_page( 'at_import', __('Big7', 'amateurtheme'), __('Big7', 'amateurtheme'), 'administrator', 'at_import_big7_panel', 'at_import_big7_panel');
     add_submenu_page( 'at_import', __('MyDirtyHobby', 'amateurtheme'), __('MyDirtyHobby', 'amateurtheme'), 'administrator', 'at_import_mydirtyhobby_panel', 'at_import_mydirtyhobby_panel');
-	add_submenu_page( 'at_import', __('PornMe', 'amateurtheme'), __('PornMe', 'amateurtheme'), 'administrator', 'at_import_pornme_panel', 'at_import_pornme_panel');
+	#add_submenu_page( 'at_import', __('PornMe', 'amateurtheme'), __('PornMe', 'amateurtheme'), 'administrator', 'at_import_pornme_panel', 'at_import_pornme_panel');
 	add_submenu_page( 'at_import', __('AmateurCommunity', 'amateurtheme'), __('AmateurCommunity', 'amateurtheme'), 'administrator', 'at_import_ac_panel', 'at_import_ac_panel');
 }
 
