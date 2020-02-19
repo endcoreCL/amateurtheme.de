@@ -1,0 +1,593 @@
+{
+    "key": "group_5a21791e204d6",
+    "title": "Framework - Allgemein",
+    "fields": [
+        {
+            "key": "field_5a217928e5777",
+            "label": "Customizing",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "left",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5a21793ce5778",
+            "label": "Custom CSS",
+            "name": "customizing_css",
+            "type": "acf_code_field",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "mode": "css",
+            "theme": "monokai"
+        },
+        {
+            "key": "field_5a217974e5779",
+            "label": "Custom Code (Header)",
+            "name": "customizing_code_header",
+            "type": "acf_code_field",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "mode": "htmlmixed",
+            "theme": "monokai"
+        },
+        {
+            "key": "field_5a217992e577a",
+            "label": "Custom Code (Footer)",
+            "name": "customizing_code_footer",
+            "type": "acf_code_field",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "mode": "htmlmixed",
+            "theme": "monokai"
+        },
+        {
+            "key": "field_5a217fe1e12b4",
+            "label": "Tracking",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5a217fefe12b5",
+            "label": "Google Analytics ID",
+            "name": "tracking_ga",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "UA-",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5a21800de12b6",
+            "label": "Google Tag Manager ID",
+            "name": "tracking_gtm",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "GTM-",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5a21820e0be25",
+            "label": "Facebook",
+            "name": "tracking_fb",
+            "type": "group",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "sub_fields": [
+                {
+                    "key": "field_5a2182240be26",
+                    "label": "ID",
+                    "name": "id",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                },
+                {
+                    "key": "field_5a21822d0be27",
+                    "label": "Sprache",
+                    "name": "language",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "de_DE",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "maxlength": ""
+                }
+            ]
+        },
+        {
+            "key": "field_5a218adbabd91",
+            "label": "Ressourcen",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5a218b52abd93",
+            "label": "Popper JS",
+            "name": "src_popper",
+            "type": "true_false",
+            "instructions": "Mit dieser Option wird Popper JS geladen.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Aktiviert",
+            "ui_off_text": "Deaktiviert"
+        },
+        {
+            "key": "field_5a218b07abd92",
+            "label": "Bootstrap JS",
+            "name": "src_bootstrap",
+            "type": "true_false",
+            "instructions": "Mit dieser Option wird Bootstrap JS geladen.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Aktiviert",
+            "ui_off_text": "Deaktiviert"
+        },
+        {
+            "key": "field_5a218fcbbb0e6",
+            "label": "Mobile Detect",
+            "name": "src_mobile_detect",
+            "type": "true_false",
+            "instructions": "Mit dieser Option wird ein Mobile Detect JS geladen.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "Aktiviert",
+            "ui_off_text": "Deaktiviert"
+        },
+        {
+            "key": "field_5a2191587ea07",
+            "label": "Lightbox",
+            "name": "src_lightbox",
+            "type": "true_false",
+            "instructions": "Mit dieser Option wird ein Lightbox JS geladen.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "Aktiviert",
+            "ui_off_text": "Deaktiviert"
+        },
+        {
+            "key": "field_5a218e7a6965a",
+            "label": "HTML5 Shiv & Respond.js",
+            "name": "src_ie_support",
+            "type": "true_false",
+            "instructions": "Wird für den Support von Internet Explorer 6-9 benötigt.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "Aktiviert",
+            "ui_off_text": "Deaktiviert"
+        },
+        {
+            "key": "field_5c90dc87d4c01",
+            "label": "Social Buttons",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5c90dc8fd4c02",
+            "label": "Netzwerke",
+            "name": "social_networks",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "facebook": "Facebook",
+                "twitter": "Twitter",
+                "whatsapp": "WhatsApp"
+            },
+            "default_value": [],
+            "allow_null": 1,
+            "multiple": 1,
+            "ui": 0,
+            "return_format": "value",
+            "ajax": 0,
+            "placeholder": ""
+        },
+        {
+            "key": "field_5c920e73a6387",
+            "label": "PRG Pattern",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5c920e7ba6388",
+            "label": "Aktivieren",
+            "name": "prg_activate",
+            "type": "true_false",
+            "instructions": "Soll die PRG-Pattern Funktion aktiviert werden? Ausgehende Links für Videos werden maskiert.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5c920ebaa6389",
+            "label": "Slug",
+            "name": "prg_slug",
+            "type": "text",
+            "instructions": "Die URL auf welche das PRG Formular kurzeitig weiterleitet, z.B: https:\/\/www.deineurl.de\/out\/. Bitte beachte das der Slug in deiner Installation nicht belegt sein darf, sonst kann es sein das die ausgehenden Links nicht funktionieren. Zudem darf der Slug keine Sonderzeichen oder Leerzeichen enthalten! Solltest du Probleme mit dem Slug haben, so speichere bitte zunächst deine Permalinks neu (Einstellungen > Permalinks > Speichern).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "out",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5ca6123de033d",
+            "label": "Popup",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_5ca61d8775a97",
+            "label": "Aktivieren",
+            "name": "popup_active",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5ca6127ee033e",
+            "label": "Anzeigen nach (Zeit)",
+            "name": "popup_show_after_time",
+            "type": "number",
+            "instructions": "Nach wieviel Millisekunden soll das Popup angezeigt werden? Wert 0 deaktiviert diese Funktion.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "ms",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_5ca6129de033f",
+            "label": "Anzeigen nach (Scrolltiefe)",
+            "name": "popup_show_after_scroll",
+            "type": "number",
+            "instructions": "Nach wieviel % des scrolltiefe soll das Popup angezeigt werden? Wert 0 deaktiviert diese Funktion.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "%",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_5ca612b4e0340",
+            "label": "Cookie",
+            "name": "popup_cookie",
+            "type": "true_false",
+            "instructions": "Wenn du den Cookie aktivierst, bekommt der Besucher das Popup für eine bestimmte Dauer nicht mehr zu sehen.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
+            "key": "field_5ca612dde0341",
+            "label": "Cookie Laufzeit",
+            "name": "popup_cookie_lifetime",
+            "type": "number",
+            "instructions": "Bestimmte die Dauer, für die der Besucher das Popup nicht mehr sehen soll.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "Tag(e)",
+            "min": "",
+            "max": "",
+            "step": ""
+        },
+        {
+            "key": "field_5ca612fce0342",
+            "label": "Geräteeinstellungen",
+            "name": "popup_devices",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "xs": "Extra small <576px",
+                "sm": "Small ≥576px",
+                "md": "Medium ≥768px",
+                "lg": "Large ≥992px",
+                "xl": "Extra large ≥1200px"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 1,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_5ca61381e0344",
+            "label": "Überschrift",
+            "name": "popup_headline",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
+            "key": "field_5ca6138be0345",
+            "label": "Text",
+            "name": "popup_text",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 1
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options-allgemein"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": 1,
+    "description": "",
+    "modified": 1582115227
+}
