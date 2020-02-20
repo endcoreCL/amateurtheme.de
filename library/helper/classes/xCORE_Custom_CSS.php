@@ -74,7 +74,14 @@ class xCORE_Custom_SCSS {
 	        return;
         }
 
+	    $recompile = $_POST['acf']['field_5e4e6e37256e8'];
+
+	    if ( ! $recompile ) {
+	       return;
+        }
+
 		$this->fields = $this->get_fields();
+
 		ob_start();
 		if($this->fields) {
 			?>
@@ -129,6 +136,9 @@ $border-radius:	5px;  <?php // @TODO NEUES JA/NEIN FIELD ?>
 <?php
 		}
 		$output = ob_get_clean();
+
+		// reset recompile setting
+        update_field( 'field_5e4e6e37256e8', 0, 'options' );
 
 		$this->write($output);
 	}
