@@ -89,6 +89,12 @@ function at_import_mydirtyhobby_panel() {
                                     <p class="hint"><?php _e('Jedes Video hat eine kurze Beschreibung die auch importiert werden kann. Achte aber bitte darauf das diese Texte ggf. Duplicate Content erzeugen können!', 'amateurtheme'); ?></p>
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="at_mdh_video_promo"><?php _e('Promo-Aktion', 'amateurtheme'); ?></label>
+                                    <input type="text" class="form-control" name="at_mdh_video_promo" value="<?= get_option('at_mdh_video_promo'); ?>">
+                                    <p class="hint"><?php _e('Füge hier einen Wert ein, welcher als ?promo= an alle URLs angehängt werden soll. Wenn du dieses Feld leer lässt, wird kein Promo-Parameter übergeben.', 'amateurtheme'); ?></p>
+                                </div>
+
                                 <input type="hidden" name="action" value="save"/>
                                 <input name="save" type="submit" class="btn btn-at" value="<?php _e('Speichern', 'amateurtheme'); ?>"/>
                             </form>

@@ -124,3 +124,25 @@ if( ! function_exists( 'at_import_mdh_untag_video_as_imported' ) ) {
 		}
 	}
 }
+
+/**
+ * Add promo param for all mdh urls
+ *
+ * @param $value
+ * @param $post_id
+ * @param $field
+ *
+ * @return string
+ */
+add_filter('acf/load_value/name=video_url', 'xcore_mdh_promo_urls', 10, 3);
+function xcore_mdh_promo_urls( $value, $post_id, $field ) {
+    if( get_field( 'video_source', $post_id ) == 'mdh' ) {
+        $promo = get_option('at_mdh_video_promo');
+
+        if ( $promo ) {
+            $value .= '&promo=' . $promo;
+        }
+    }
+    return $value;
+}
+

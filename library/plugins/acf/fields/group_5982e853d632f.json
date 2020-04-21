@@ -145,15 +145,14 @@
                 "own": "Eigene Quelle",
                 "big7": "Big7",
                 "mdh": "MyDirtyHobby",
-                "pornme": "PornMe",
                 "ac": "AmateurCommunity"
             },
             "default_value": [],
             "allow_null": 0,
             "multiple": 0,
             "ui": 0,
-            "ajax": 0,
             "return_format": "value",
+            "ajax": 0,
             "placeholder": ""
         },
         {
@@ -252,5 +251,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1582115215
+    "modified": 1587454624
 }
