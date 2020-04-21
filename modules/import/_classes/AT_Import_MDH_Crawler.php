@@ -8,10 +8,10 @@
 class AT_Import_MDH_Crawler {
     public function __construct() {
         $this->naffcode = get_option('at_mdh_naffcode');
-        $this->amateurs_url = 'https://www.mydirtyhobby.com/api/amateurs/?naff=' . $this->naffcode;
-        $this->amateur_videos_url = 'https://www.mydirtyhobby.com/api/amateurvideos/?naff=' . $this->naffcode;
-        $this->category_videos_url = 'https://www.mydirtyhobby.com/api/categoryvideos/?naff=' . $this->naffcode;
-        $this->top_videos_url = 'https://www.mydirtyhobby.com/api/topvideos/?naff=' . $this->naffcode;
+        $this->amateurs_url = 'https://www.mydirtyhobby.com/api/amateurs/?ats=' . $this->naffcode;
+        $this->amateur_videos_url = 'https://www.mydirtyhobby.com/api/amateurvideos/?ats=' . $this->naffcode;
+        $this->category_videos_url = 'https://www.mydirtyhobby.com/api/categoryvideos/?ats=' . $this->naffcode;
+        $this->top_videos_url = 'https://www.mydirtyhobby.com/api/topvideos/?ats=' . $this->naffcode;
 
         // tables
         global $wpdb;
