@@ -147,6 +147,7 @@ hr { margin-top: 1.5rem; margin-bottom: 1.5rem; border-color: $gray-200; }
 	&::-webkit-input-placeholder { color: $gray-600; }
 }
 .form-inline select { -webkit-appearance: none; -webkit-border-radius: 0; }
+.form-inline select { -webkit-appearance: menulist-button; }
 
 // LIST
 .list-icon,
@@ -213,4 +214,13 @@ hr { margin-top: 1.5rem; margin-bottom: 1.5rem; border-color: $gray-200; }
 }
 @-moz-document url-prefix() {
 	fieldset { display: table-cell; }
+}
+
+// POPUP
+.at-popup {
+	z-index: 9; position: fixed; bottom: $spacer; right: $spacer; display: none;
+	&.active {
+		display: block;
+		.toast { opacity: 1; }
+	}
 }

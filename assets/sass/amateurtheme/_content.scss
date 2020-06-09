@@ -45,6 +45,15 @@
 		.card-deck .card:nth-child(1n+3) { margin-top: 30px; }
 	}
 }
+.card-deck .card.type-post { border: none; }
+.card-deck .card.type-post .card-img-top { border-radius: calc(5px - 1px); }
+.card-deck .card.type-post .card-body { padding: 1.25rem 0 0 0; }
+.card-deck .card.type-post .card-footer { opacity: 0.25; }
+@media (min-width: 1200px) {
+	.col-md-8 > #content .card-deck .card { flex: 0 0 calc(33.33% - 30px); margin-top: 0 !important; }
+	.col-md-8 > #content .card-deck .card:nth-child(1n+4) { margin-top: 30px !important; }
+}
+
 
 // CARD GRID
 .col-md-9 > #content {

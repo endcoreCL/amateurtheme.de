@@ -1,20 +1,21 @@
 /*
 Theme Name: Amateur Theme
-Theme URI: http://endcore.com
+Theme URI: https://amateurtheme.de
 Description: Legen... wait for it... Dary!
 Author: endcore Medienagentur
-Author URI: http://endcore.com
-Version: 1.1
+Author URI: https://endcore.com
+Version: 1.2
 */
 
-// CUSTOM           | 2018-01-01 | 1.0.0 | \library\helper\classes\xCORE_Custom_CSS.php
+// CUSTOM
+// library/helper/classes/xCORE_Custom_CSS.php
 @import "_custom";
 
-// BOOTSTRAP		| 2019-02-13 | 4.3.1 | https://github.com/twbs/bootstrap/releases
+// BOOTSTRAP
 $yiq-contrasted-threshold: 170;
 @import "bootstrap/bootstrap";
 
-// FONT AWESOME		| 2019-03-19 | 5.8.0 | https://github.com/FortAwesome/Font-Awesome/releases
+// FONTAWESOME
 $fa-font-path: "assets/fonts/fontawesome";
 @import "fontawesome/brands";
 @import "fontawesome/light";
@@ -22,15 +23,8 @@ $fa-font-path: "assets/fonts/fontawesome";
 @import "fontawesome/solid";
 @import "fontawesome/fontawesome";
 
-// SIMPLELIGHTBOX	| 2018-06-20 | 1.13.0 | https://github.com/andreknieriem/simplelightbox/releasesext
+// SIMPLELIGHTBOX
 @import "simplelightbox/simplelightbox";
 
 // AMATEURTHEME
 @import "amateurtheme/amateurtheme";
-
-/**
- * TMP
- */
-.at-popup { position: fixed; bottom: 15px; right: 15px; display: none; }
-.at-popup.active { display: block; }
-.at-popup.active .toast { opacity: 1; }

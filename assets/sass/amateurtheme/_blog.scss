@@ -67,3 +67,14 @@
 		}
 	}
 }
+
+
+// PAGER
+.post-nav .pager {
+	margin: 0;
+	.list-inline-item a { display: block; color: $gray-700; font-weight: 600; padding: 0.5rem 2rem; }
+	.list-inline-item a:hover,
+	.list-inline-item a:focus { color: $primary; text-decoration: none; background-color: $light; }
+	.list-inline-item a small { display: block; color: $gray-600; font-size: 0.75rem; }
+}
+

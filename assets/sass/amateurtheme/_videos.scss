@@ -93,6 +93,18 @@
         column-count: 5;
     }
 }
+.video-related {
+    .card-deck {
+        position: relative;
+        &:after { opacity: 0; transition: transform 10s; content: "\f110"; position: absolute; top: 50%; left: 50%; transform: translateX(-50%) translateY(-50%); font-family: 'Font Awesome 5 Pro', sans-serif; font-weight: 900; font-size: 2rem; color: #d21446; }
+        .card { transition: all 0.25s; filter: blur(0); opacity: 1; }
+    }
+    &.loading .card-deck {
+        &:after { opacity: 1; transform: translateX(-50%) translateY(-50%) rotate(3600deg); }
+        .card { filter: blur(2.5px) grayscale(0.25); opacity: 0.75; }
+    }
+}
+
 
 // CARD VIDEO
 .card-video {
