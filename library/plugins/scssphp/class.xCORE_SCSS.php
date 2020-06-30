@@ -1,5 +1,5 @@
 <?php
-use Leafo\ScssPhp\Compiler;
+use ScssPhp\ScssPhp\Compiler;
 
 class xCORE_SCSS {
     /**
