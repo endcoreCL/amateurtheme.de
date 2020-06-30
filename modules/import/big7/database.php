@@ -2,35 +2,36 @@
 /**
  * Loading big7 database helper functions
  *
- * @author		Christian Lang
- * @version		1.0
- * @category	helper
+ * @author        Christian Lang
+ * @version        1.0
+ * @category    helper
  */
 
 if ( ! function_exists( 'at_import_big7_database_notice' ) ) {
-	/**
-	 * at_import_big7_database_notice
-	 *
-	 */
-	add_action( 'admin_notices', 'at_import_big7_database_notice' );
-	function at_import_big7_database_notice() {
-		global $wpdb;
+    /**
+     * at_import_big7_database_notice
+     *
+     */
+    add_action( 'admin_notices', 'at_import_big7_database_notice' );
+    function at_import_big7_database_notice ()
+    {
+        global $wpdb;
 
-		$database = new AT_Import_Big7_DB();
+        $database = new AT_Import_Big7_DB();
 
-		if(
-			$wpdb->get_var("show tables like '" . $database->table_amateurs . "'") != $database->table_amateurs ||
-			$wpdb->get_var("show tables like '" . $database->table_videos . "'") != $database->table_videos
-		) {
-			?>
-			<div class="error">
-				<p>
-					<?php _e('Eine oder mehrere Datenbank-Tabellen für den Import fehlen. Bitte aktualisiere deine Datenbank.', 'amateurtheme'); ?>
-					<a class="button" id="at-import-big7-install-tables"><?php _e('Datenbank aktualisieren', 'amateurtheme'); ?></a>
-				</p>
-			</div>
+        if (
+            $wpdb->get_var( "show tables like '" . $database->table_amateurs . "'" ) != $database->table_amateurs ||
+            $wpdb->get_var( "show tables like '" . $database->table_videos . "'" ) != $database->table_videos
+        ) {
+            ?>
+            <div class="error">
+                <p>
+                    <?php _e( 'Eine oder mehrere Datenbank-Tabellen für den Import fehlen. Bitte aktualisiere deine Datenbank.', 'amateurtheme' ); ?>
+                    <a class="button" id="at-import-big7-install-tables"><?php _e( 'Datenbank aktualisieren', 'amateurtheme' ); ?></a>
+                </p>
+            </div>
 
-			<script type="text/javascript">
+            <script type="text/javascript">
                 jQuery('#at-import-big7-install-tables').bind('click', function (e) {
                     var target = jQuery(this).closest('.error');
                     jQuery(this).append(' <span class="spinner" style="visibility:initial"></span>');
@@ -46,48 +47,50 @@ if ( ! function_exists( 'at_import_big7_database_notice' ) ) {
 
                     e.preventDefault();
                 });
-			</script>
-			<?php
-		}
-	}
+            </script>
+            <?php
+        }
+    }
 }
 
 if ( ! function_exists( 'at_import_big7_install_tables' ) ) {
-	/**
-	 * at_import_big7_install_tables
-	 *
-	 */
-	add_action("wp_ajax_at_import_big7_install_tables", "at_import_big7_install_tables");
-	function at_import_big7_install_tables() {
-		at_import_big7_database_tables();
+    /**
+     * at_import_big7_install_tables
+     *
+     */
+    add_action( "wp_ajax_at_import_big7_install_tables", "at_import_big7_install_tables" );
+    function at_import_big7_install_tables ()
+    {
+        at_import_big7_database_tables();
 
-		$response = array();
+        $response = array();
 
-		$response['status'] = 'ok';
+        $response['status'] = 'ok';
 
-		echo json_encode($response);
+        echo json_encode( $response );
 
-		exit();
-	}
+        exit();
+    }
 }
 
 if ( ! function_exists( 'at_import_big7_database_tables' ) ) {
-	/**
-	 * at_import_big7_database_tables
-	 *
-	 */
-	add_action('upgrader_process_complete', 'at_import_big7_database_tables', 10, 1);
-	add_action('after_switch_theme', 'at_import_big7_database_tables');
-	function at_import_big7_database_tables() {
-		global $wpdb;
+    /**
+     * at_import_big7_database_tables
+     *
+     */
+    add_action( 'upgrader_process_complete', 'at_import_big7_database_tables', 10, 1 );
+    add_action( 'after_switch_theme', 'at_import_big7_database_tables' );
+    function at_import_big7_database_tables ()
+    {
+        global $wpdb;
 
-		$database = new AT_Import_Big7_DB();
+        $database = new AT_Import_Big7_DB();
 
-		/**
-		 *  Amateure
-		 */
-		if ($wpdb->get_var("show tables like '" . $database->table_amateurs . "'") != $database->table_amateurs) {
-			$sql = "CREATE TABLE " . $database->table_amateurs . " (
+        /**
+         *  Amateure
+         */
+        if ( $wpdb->get_var( "show tables like '" . $database->table_amateurs . "'" ) != $database->table_amateurs ) {
+            $sql = "CREATE TABLE " . $database->table_amateurs . " (
                   id int(11) NOT NULL AUTO_INCREMENT,
                   uid int(11),
                   username text,
@@ -123,15 +126,15 @@ if ( ! function_exists( 'at_import_big7_database_tables' ) ) {
                 UNIQUE KEY (uid)
             );";
 
-			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-			dbDelta($sql);
-		}
+            require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+            dbDelta( $sql );
+        }
 
-		/**
-		 *  Videos
-		 */
-		if ($wpdb->get_var("show tables like '" . $database->table_videos . "'") != $database->table_videos) {
-			$sql = "CREATE TABLE " . $database->table_videos . " (
+        /**
+         *  Videos
+         */
+        if ( $wpdb->get_var( "show tables like '" . $database->table_videos . "'" ) != $database->table_videos ) {
+            $sql = "CREATE TABLE " . $database->table_videos . " (
                 id int(11) NOT NULL AUTO_INCREMENT,
                 uid int(11),
                 video_id varchar(255),
@@ -154,8 +157,8 @@ if ( ! function_exists( 'at_import_big7_database_tables' ) ) {
                 UNIQUE KEY (video_id)
             );";
 
-			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-			dbDelta($sql);
-		}
-	}
+            require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+            dbDelta( $sql );
+        }
+    }
 }

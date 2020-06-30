@@ -2,14 +2,15 @@
 /**
  * Register Sidebar Areas
  *
- * @author		Christian Lang
- * @version		1.0
- * @category	widgets
+ * @author        Christian Lang
+ * @version        1.0
+ * @category    widgets
  */
 
 if ( ! function_exists( 'xcore_register_sidebar ' ) ) {
     add_action( 'widgets_init', 'xcore_register_sidebar' );
-    function xcore_register_sidebar() {
+    function xcore_register_sidebar ()
+    {
         // Allgemeine Sidebar
         register_sidebar(
             array(

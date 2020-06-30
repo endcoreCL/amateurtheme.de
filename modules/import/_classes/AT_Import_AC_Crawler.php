@@ -1,162 +1,171 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: christianlang
  * Date: 04.08.17
  * Time: 15:22
  */
-class AT_Import_AC_Crawler {
-    public function __construct() {
+class AT_Import_AC_Crawler
+{
+    public function __construct ()
+    {
         // folder
-        $upload_dir = wp_upload_dir();
+        $upload_dir   = wp_upload_dir();
         $this->folder = $upload_dir['basedir'] . '/big7';
 
-        $this->wmb = get_option('at_big7_wmb');
+        $this->wmb      = get_option( 'at_big7_wmb' );
         $this->amateurs = 'https://api.campartner.com/content/v3/amateurs';
-        $this->amateur = 'https://api.campartner.com/content/v3/amateur';
+        $this->amateur  = 'https://api.campartner.com/content/v3/amateur';
 
         $this->json_result = array();
     }
 
-    function json_callback($item) {
+    function json_callback ( $item )
+    {
         $this->json_result[] = $item;
     }
 
-    function get($type = 'amateurs', $filter = array()) {
-        if($type == 'amateur') {
+    function get ( $type = 'amateurs', $filter = array() )
+    {
+        if ( $type == 'amateur' ) {
             $url = $this->amateur . '/' . $filter;
         } else {
-        	$url = $this->amateurs;
+            $url = $this->amateurs;
 
-	        if(!empty($filter)) {
-		        $url .= '?' . http_build_query( $filter );
-	        }
+            if ( ! empty( $filter ) ) {
+                $url .= '?' . http_build_query( $filter );
+            }
         }
 
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 1);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt( $curl, CURLOPT_URL, $url );
+        curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, 1 );
+        curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
 
-        $response = curl_exec($curl);
+        $response = curl_exec( $curl );
 
-        if(curl_errno($curl)) {
-            return 'Curl error: ' . curl_error($curl);
+        if ( curl_errno( $curl ) ) {
+            return 'Curl error: ' . curl_error( $curl );
         }
 
-        curl_close($curl);
+        curl_close( $curl );
 
-        return json_decode($response, true);
+        return json_decode( $response, true );
     }
 
-	function jsonAmateurs($filter = array()) {
-    	// catch age
-		$age = array();
-		if(isset($filter['age_from'])) {
-			$age[] = $filter['age_from'];
-			unset($filter['age_from']);
-		}
-		if(isset($filter['age_to'])) {
-			$age[] = $filter['age_to'];
-			unset($filter['age_to']);
-		}
-		if(!empty($age)) {
-			$filter['age'] = implode('-', $age);
-		}
+    function jsonAmateurs ( $filter = array() )
+    {
+        // catch age
+        $age = array();
+        if ( isset( $filter['age_from'] ) ) {
+            $age[] = $filter['age_from'];
+            unset( $filter['age_from'] );
+        }
+        if ( isset( $filter['age_to'] ) ) {
+            $age[] = $filter['age_to'];
+            unset( $filter['age_to'] );
+        }
+        if ( ! empty( $age ) ) {
+            $filter['age'] = implode( '-', $age );
+        }
 
-		$data = $this->get('amateurs', $filter);
+        $data = $this->get( 'amateurs', $filter );
 
-		if($data) {
-			return $data;
-		}
+        if ( $data ) {
+            return $data;
+        }
 
-		return false;
-	}
-
-    function jsonMedias($user) {
-	    $data = $this->get('amateur', $user);
-
-	    if($data) {
-	    	return $data;
-	    }
-
-	    return false;
+        return false;
     }
 
-	public function saveMedias($user_id, $username, $data, $type = 'movies') {
-		global $wpdb;
+    function jsonMedias ( $user )
+    {
+        $data = $this->get( 'amateur', $user );
 
-		if(!$data)
-			return false;
+        if ( $data ) {
+            return $data;
+        }
 
-		$status = array(
-			'created' => '',
-			'skipped' => '',
-			'total' => ''
-		);
+        return false;
+    }
 
-		$c = 0;
-		$s = 0;
-		$i = 0;
+    public function saveMedias ( $user_id, $username, $data, $type = 'movies' )
+    {
+        global $wpdb;
 
-		$wpdb->hide_errors();
+        if ( ! $data ) {
+            return false;
+        }
 
-		$database = new AT_Import_AC_DB();
+        $status = array(
+            'created' => '',
+            'skipped' => '',
+            'total'   => ''
+        );
 
-		foreach($data as $item) {
-			if($item['id']) {
-				if($item['type'] != $type) {
-					// skip wrong type
-					continue;
-				}
+        $c = 0;
+        $s = 0;
+        $i = 0;
 
-				$check = $wpdb->get_var('SELECT id FROM ' . $database->table_media . ' WHERE media_id = ' . $item['id']);
+        $wpdb->hide_errors();
 
-				if($check) {
-					$s++;
+        $database = new AT_Import_AC_DB();
 
-					$status['skipped'] = $s;
+        foreach ( $data as $item ) {
+            if ( $item['id'] ) {
+                if ( $item['type'] != $type ) {
+                    // skip wrong type
+                    continue;
+                }
 
-					continue; // video already exists
-				}
+                $check = $wpdb->get_var( 'SELECT id FROM ' . $database->table_media . ' WHERE media_id = ' . $item['id'] );
 
-				$wpdb->insert(
-					$database->table_media,
-					array(
-						'uid' => $user_id,
-						'nickname' => $username,
-						'media_id' => $item['id'],
-						'title' => $item['name']['18']['de'],
-						'title_sc' => $item['name']['16']['de'],
-						'description' => $item['description']['18']['de'],
-						'description_sc' => $item['description']['16']['de'],
-						'date' => $item['publishingDate'],
-						'rating' => $item['rating'],
-						'type' => $item['type'],
-						'votes' => $item['votes'],
-						'categories' => json_encode($item['categories']),
-						'preview' => $item['thumbs']['18']['large'],
-						'preview_sc' => $item['thumbs']['16']['large'],
-						'url' => $item['url'],
-						'imported' => '0'
-					)
-				);
+                if ( $check ) {
+                    $s++;
 
-				if($wpdb->last_error) {
-					$s++;
+                    $status['skipped'] = $s;
 
-					$status['skipped'] = $s;
-				} else {
-					$c++;
+                    continue; // video already exists
+                }
 
-					$status['created'] = $c;
-				}
+                $wpdb->insert(
+                    $database->table_media,
+                    array(
+                        'uid'            => $user_id,
+                        'nickname'       => $username,
+                        'media_id'       => $item['id'],
+                        'title'          => $item['name']['18']['de'],
+                        'title_sc'       => $item['name']['16']['de'],
+                        'description'    => $item['description']['18']['de'],
+                        'description_sc' => $item['description']['16']['de'],
+                        'date'           => $item['publishingDate'],
+                        'rating'         => $item['rating'],
+                        'type'           => $item['type'],
+                        'votes'          => $item['votes'],
+                        'categories'     => json_encode( $item['categories'] ),
+                        'preview'        => $item['thumbs']['18']['large'],
+                        'preview_sc'     => $item['thumbs']['16']['large'],
+                        'url'            => $item['url'],
+                        'imported'       => '0'
+                    )
+                );
 
-				$i++;
-				$status['total'] = $i;
-			}
-		}
+                if ( $wpdb->last_error ) {
+                    $s++;
 
-		return json_encode($status);
-	}
+                    $status['skipped'] = $s;
+                } else {
+                    $c++;
+
+                    $status['created'] = $c;
+                }
+
+                $i++;
+                $status['total'] = $i;
+            }
+        }
+
+        return json_encode( $status );
+    }
 }

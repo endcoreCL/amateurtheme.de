@@ -2,9 +2,9 @@
 /**
  * Loading general import database helper functions
  *
- * @author		Christian Lang
- * @version		1.0
- * @category	helper
+ * @author        Christian Lang
+ * @version        1.0
+ * @category    helper
  */
 
 if ( ! function_exists( 'at_import_database_notice' ) ) {
@@ -12,12 +12,13 @@ if ( ! function_exists( 'at_import_database_notice' ) ) {
      * at_import_database_notice
      *
      */
-    add_action('admin_notices', 'at_import_database_notice');
-    function at_import_database_notice() {
+    add_action( 'admin_notices', 'at_import_database_notice' );
+    function at_import_database_notice ()
+    {
         global $wpdb;
 
         if (
-            $wpdb->get_var("show tables like '" . AT_CRON_TABLE . "'") != AT_CRON_TABLE
+            $wpdb->get_var( "show tables like '" . AT_CRON_TABLE . "'" ) != AT_CRON_TABLE
         ) {
             ?>
             <div class="error">
@@ -54,15 +55,16 @@ if ( ! function_exists( 'at_import_install_tables' ) ) {
      * at_import_install_tables
      *
      */
-    add_action("wp_ajax_at_import_install_tables", "at_import_install_tables");
-    function at_import_install_tables() {
+    add_action( "wp_ajax_at_import_install_tables", "at_import_install_tables" );
+    function at_import_install_tables ()
+    {
         at_import_database_tables();
 
         $response = array();
 
         $response['status'] = 'ok';
 
-        echo json_encode($response);
+        echo json_encode( $response );
 
         exit();
     }
@@ -73,15 +75,16 @@ if ( ! function_exists( 'at_import_database_tables' ) ) {
      * at_import_database_tables
      *
      */
-    add_action('upgrader_process_complete', 'at_import_database_tables', 10, 1);
-    add_action('after_switch_theme', 'at_import_database_tables');
-    function at_import_database_tables() {
+    add_action( 'upgrader_process_complete', 'at_import_database_tables', 10, 1 );
+    add_action( 'after_switch_theme', 'at_import_database_tables' );
+    function at_import_database_tables ()
+    {
         global $wpdb;
 
         /**
          *  Cronjobs
          */
-        if ($wpdb->get_var("show tables like '" . AT_CRON_TABLE . "'") != AT_CRON_TABLE) {
+        if ( $wpdb->get_var( "show tables like '" . AT_CRON_TABLE . "'" ) != AT_CRON_TABLE ) {
             $sql = "CREATE TABLE " . AT_CRON_TABLE . " (
                 id int(11) NOT NULL AUTO_INCREMENT,
                 object_id int(11),
@@ -102,8 +105,8 @@ if ( ! function_exists( 'at_import_database_tables' ) ) {
                 PRIMARY KEY (id)
             );";
 
-            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-            dbDelta($sql);
+            require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+            dbDelta( $sql );
         }
     }
 }

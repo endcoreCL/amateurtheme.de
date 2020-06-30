@@ -2,35 +2,36 @@
 /**
  * Loading ac database helper functions
  *
- * @author		Christian Lang
- * @version		1.0
- * @category	helper
+ * @author        Christian Lang
+ * @version        1.0
+ * @category    helper
  */
 
 if ( ! function_exists( 'at_import_ac_database_notice' ) ) {
-	/**
-	 * at_import_ac_database_notice
-	 *
-	 */
-	add_action( 'admin_notices', 'at_import_ac_database_notice' );
-	function at_import_ac_database_notice() {
-		global $wpdb;
+    /**
+     * at_import_ac_database_notice
+     *
+     */
+    add_action( 'admin_notices', 'at_import_ac_database_notice' );
+    function at_import_ac_database_notice ()
+    {
+        global $wpdb;
 
-		$database = new AT_Import_AC_DB();
+        $database = new AT_Import_AC_DB();
 
-		if(
-			$wpdb->get_var("show tables like '" . $database->table_amateurs . "'") != $database->table_amateurs ||
-			$wpdb->get_var("show tables like '" . $database->table_media . "'") != $database->table_media
-		) {
-			?>
-			<div class="error">
-				<p>
-					<?php _e('Eine oder mehrere Datenbank-Tabellen für den Import fehlen. Bitte aktualisiere deine Datenbank.', 'amateurtheme'); ?>
-					<a class="button" id="at-import-ac-install-tables"><?php _e('Datenbank aktualisieren', 'amateurtheme'); ?></a>
-				</p>
-			</div>
+        if (
+            $wpdb->get_var( "show tables like '" . $database->table_amateurs . "'" ) != $database->table_amateurs ||
+            $wpdb->get_var( "show tables like '" . $database->table_media . "'" ) != $database->table_media
+        ) {
+            ?>
+            <div class="error">
+                <p>
+                    <?php _e( 'Eine oder mehrere Datenbank-Tabellen für den Import fehlen. Bitte aktualisiere deine Datenbank.', 'amateurtheme' ); ?>
+                    <a class="button" id="at-import-ac-install-tables"><?php _e( 'Datenbank aktualisieren', 'amateurtheme' ); ?></a>
+                </p>
+            </div>
 
-			<script type="text/javascript">
+            <script type="text/javascript">
                 jQuery('#at-import-ac-install-tables').bind('click', function (e) {
                     var target = jQuery(this).closest('.error');
                     jQuery(this).append(' <span class="spinner" style="visibility:initial"></span>');
@@ -46,48 +47,50 @@ if ( ! function_exists( 'at_import_ac_database_notice' ) ) {
 
                     e.preventDefault();
                 });
-			</script>
-			<?php
-		}
-	}
+            </script>
+            <?php
+        }
+    }
 }
 
 if ( ! function_exists( 'at_import_ac_install_tables' ) ) {
-	/**
-	 * at_import_ac_install_tables
-	 *
-	 */
-	add_action("wp_ajax_at_import_ac_install_tables", "at_import_ac_install_tables");
-	function at_import_ac_install_tables() {
-		at_import_ac_database_tables();
+    /**
+     * at_import_ac_install_tables
+     *
+     */
+    add_action( "wp_ajax_at_import_ac_install_tables", "at_import_ac_install_tables" );
+    function at_import_ac_install_tables ()
+    {
+        at_import_ac_database_tables();
 
-		$response = array();
+        $response = array();
 
-		$response['status'] = 'ok';
+        $response['status'] = 'ok';
 
-		echo json_encode($response);
+        echo json_encode( $response );
 
-		exit();
-	}
+        exit();
+    }
 }
 
 if ( ! function_exists( 'at_import_ac_database_tables' ) ) {
-	/**
-	 * at_import_ac_database_tables
-	 *
-	 */
-	add_action('upgrader_process_complete', 'at_import_ac_database_tables', 10, 1);
-	add_action('after_switch_theme', 'at_import_ac_database_tables');
-	function at_import_ac_database_tables() {
-		global $wpdb;
+    /**
+     * at_import_ac_database_tables
+     *
+     */
+    add_action( 'upgrader_process_complete', 'at_import_ac_database_tables', 10, 1 );
+    add_action( 'after_switch_theme', 'at_import_ac_database_tables' );
+    function at_import_ac_database_tables ()
+    {
+        global $wpdb;
 
-		$database = new AT_Import_AC_DB();
+        $database = new AT_Import_AC_DB();
 
-		/**
-		 *  Amateure
-		 */
-		if ($wpdb->get_var("show tables like '" . $database->table_amateurs . "'") != $database->table_amateurs) {
-			$sql = "CREATE TABLE " . $database->table_amateurs . " (
+        /**
+         *  Amateure
+         */
+        if ( $wpdb->get_var( "show tables like '" . $database->table_amateurs . "'" ) != $database->table_amateurs ) {
+            $sql = "CREATE TABLE " . $database->table_amateurs . " (
                   id int(11) NOT NULL AUTO_INCREMENT,
                   uid int(11) DEFAULT 0,
                   nickname text,
@@ -138,15 +141,15 @@ if ( ! function_exists( 'at_import_ac_database_tables' ) ) {
                 UNIQUE KEY (uid)
             );";
 
-			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-			dbDelta($sql);
-		}
+            require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+            dbDelta( $sql );
+        }
 
-		/**
-		 *  Media
-		 */
-		if ($wpdb->get_var("show tables like '" . $database->table_media . "'") != $database->table_media) {
-			$sql = "CREATE TABLE " . $database->table_media . " (
+        /**
+         *  Media
+         */
+        if ( $wpdb->get_var( "show tables like '" . $database->table_media . "'" ) != $database->table_media ) {
+            $sql = "CREATE TABLE " . $database->table_media . " (
                 id int(11) NOT NULL AUTO_INCREMENT,
                 uid int(11),
                 nickname varchar(255),
@@ -168,8 +171,8 @@ if ( ! function_exists( 'at_import_ac_database_tables' ) ) {
                 UNIQUE KEY (media_id)
             );";
 
-			require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-			dbDelta($sql);
-		}
-	}
+            require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+            dbDelta( $sql );
+        }
+    }
 }

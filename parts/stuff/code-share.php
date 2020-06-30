@@ -7,19 +7,19 @@ if ( $social_networks ) {
         <ul class="list-share list-inline d-flex">
             <?php
             foreach ( $social_networks as $network ) {
-                $url = '';
-                $text = '';
-                $classes = array( 'list-inline-item',  'flex-fill', 'network-' . $network );
+                $url     = '';
+                $text    = '';
+                $classes = array( 'list-inline-item', 'flex-fill', 'network-' . $network );
 
                 if ( $network == 'facebook' ) {
-                    $url = 'https://www.facebook.com/sharer.php?u=' . urlencode( get_permalink() );
+                    $url  = 'https://www.facebook.com/sharer.php?u=' . urlencode( get_permalink() );
                     $text = __( 'sharen', 'amateurtheme' );
-                } else if ( $network == 'twitter' ) {
-                    $url = 'https://twitter.com/share?url=' . urlencode( get_permalink() );
+                } elseif ( $network == 'twitter' ) {
+                    $url  = 'https://twitter.com/share?url=' . urlencode( get_permalink() );
                     $text = __( 'tweeten', 'amateurtheme' );
-                } else if ( $network == 'whatsapp' ) {
-                    $url = 'whatsapp://send?text=' . urlencode(get_the_title()) . ' - ' . urlencode( get_permalink );
-                    $text =  __( 'WhatsApp', 'amateurtheme' );
+                } elseif ( $network == 'whatsapp' ) {
+                    $url       = 'whatsapp://send?text=' . urlencode( get_the_title() ) . ' - ' . urlencode( get_permalink );
+                    $text      = __( 'WhatsApp', 'amateurtheme' );
                     $classes[] = 'd-block d-sm-none';
                 }
                 ?>

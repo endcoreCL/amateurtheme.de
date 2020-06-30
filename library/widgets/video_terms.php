@@ -1,46 +1,50 @@
 <?php
+
 /**
  * Widget: Video Terms
  */
-class at_video_terms_widget extends WP_Widget {
-    public function __construct() {
-        $widget_ops = array('classname' => 'widget_term_list widget_block', 'description' => 'Dieses Widget zeigt Einträge einer Taxonomie an.' );
-        parent::__construct('at_video_terms_widget', 'amateurtheme.de &raquo; Terms (Kategorie/Darsteller)', $widget_ops);
+class at_video_terms_widget extends WP_Widget
+{
+    public function __construct ()
+    {
+        $widget_ops = array( 'classname' => 'widget_term_list widget_block', 'description' => 'Dieses Widget zeigt Einträge einer Taxonomie an.' );
+        parent::__construct( 'at_video_terms_widget', 'amateurtheme.de &raquo; Terms (Kategorie/Darsteller)', $widget_ops );
     }
 
-    function widget($args, $instance) {
-        extract($args, EXTR_SKIP);
+    function widget ( $args, $instance )
+    {
+        extract( $args, EXTR_SKIP );
 
         // fields
-        $taxonomy = (get_field('widget_video_terms_taxonomy', 'widget_' . $args['widget_id']) ? get_field('widget_video_terms_taxonomy', 'widget_' . $args['widget_id']) : 'video_category');
-        $limit = (get_field('widget_video_terms_limit', 'widget_' . $args['widget_id']) ? get_field('widget_video_terms_limit', 'widget_' . $args['widget_id']) : 12);
-        $orderby = (get_field('widget_video_terms_orderby', 'widget_' . $args['widget_id']) ? get_field('widget_video_terms_orderby', 'widget_' . $args['widget_id']) : 'count');
-        $order = (get_field('widget_video_terms_order', 'widget_' . $args['widget_id']) ? get_field('widget_video_terms_order', 'widget_' . $args['widget_id']) : 'desc');
-        $count = get_field('widget_video_terms_count', 'widget_' . $args['widget_id']);
+        $taxonomy = ( get_field( 'widget_video_terms_taxonomy', 'widget_' . $args['widget_id'] ) ? get_field( 'widget_video_terms_taxonomy', 'widget_' . $args['widget_id'] ) : 'video_category' );
+        $limit    = ( get_field( 'widget_video_terms_limit', 'widget_' . $args['widget_id'] ) ? get_field( 'widget_video_terms_limit', 'widget_' . $args['widget_id'] ) : 12 );
+        $orderby  = ( get_field( 'widget_video_terms_orderby', 'widget_' . $args['widget_id'] ) ? get_field( 'widget_video_terms_orderby', 'widget_' . $args['widget_id'] ) : 'count' );
+        $order    = ( get_field( 'widget_video_terms_order', 'widget_' . $args['widget_id'] ) ? get_field( 'widget_video_terms_order', 'widget_' . $args['widget_id'] ) : 'desc' );
+        $count    = get_field( 'widget_video_terms_count', 'widget_' . $args['widget_id'] );
 
         $args = array(
             'hide_empty' => true,
-            'number' => $limit,
-            'orderby' => $orderby,
-            'order' => $order
+            'number'     => $limit,
+            'orderby'    => $orderby,
+            'order'      => $order
         );
 
-        $terms = get_terms($taxonomy, $args);
+        $terms = get_terms( $taxonomy, $args );
 
-        if($terms) {
+        if ( $terms ) {
             $current_term_id = get_queried_object_id();
 
             echo $before_widget;
 
-            if ($instance['title']) {
+            if ( $instance['title'] ) {
                 echo $before_title . $instance['title'] . $after_title;
             }
 
             echo '<ul class="list-unstyled">';
 
-                foreach($terms as $term) {
-                    echo '<li class="term term-' . $term->term_id . ( $current_term_id == $term->term_id ? ' active' : '' ) . '"><a href="' . get_term_link($term) . '">' . $term->name . ($count ? ' <span class="badge badge-light term-count">' . $term->count . '</span>' : '') . '</a></li>';
-                }
+            foreach ( $terms as $term ) {
+                echo '<li class="term term-' . $term->term_id . ( $current_term_id == $term->term_id ? ' active' : '' ) . '"><a href="' . get_term_link( $term ) . '">' . $term->name . ( $count ? ' <span class="badge badge-light term-count">' . $term->count . '</span>' : '' ) . '</a></li>';
+            }
 
             echo '</ul>';
 
@@ -48,22 +52,25 @@ class at_video_terms_widget extends WP_Widget {
         }
     }
 
-    function update($new_instance, $old_instance) {
-        $instance = $old_instance;
-        $instance['title'] = strip_tags($new_instance['title']);
+    function update ( $new_instance, $old_instance )
+    {
+        $instance          = $old_instance;
+        $instance['title'] = strip_tags( $new_instance['title'] );
 
         return $instance;
     }
 
-    function form($instance) {
-        $instance = wp_parse_args( (array) $instance, array( 'title' => '' ) );
-        $title = $instance['title'];
+    function form ( $instance )
+    {
+        $instance = wp_parse_args( (array)$instance, array( 'title' => '' ) );
+        $title    = $instance['title'];
         ?>
         <p>
-            <label for="<?php echo $this->get_field_id('title'); ?>"><?php _e('Titel:', 'amateurtheme'); ?></label>
-            <input class="widefat" id="<?php echo $this->get_field_id('title'); ?>" name="<?php echo $this->get_field_name('title'); ?>" value="<?php echo $title; ?>">
+            <label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Titel:', 'amateurtheme' ); ?></label>
+            <input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $title; ?>">
         </p>
         <?php
     }
 }
-register_widget('at_video_terms_widget');
+
+register_widget( 'at_video_terms_widget' );

@@ -6,78 +6,87 @@
  * File gets saved in the public folder with a cache buster.
  */
 $variables = Kirki::$fields;
+
 //xcore_debug($variables);
 
-class Kirki_SCSS {
-	private $folder;
-	private $filename;
-	private $variables;
+class Kirki_SCSS
+{
+    private $folder;
+    private $filename;
+    private $variables;
 
-	public function __construct() {
-		$this->folder = 'kirki';
-		$this->filename = 'kirki.scss';
-		$this->variables = Kirki_Util::get_variables();
+    public function __construct ()
+    {
+        $this->folder    = 'kirki';
+        $this->filename  = 'kirki.scss';
+        $this->variables = Kirki_Util::get_variables();
 
-		add_action( 'customize_save_after', array( $this, 'generate_scss' ) );
-	}
+        add_action( 'customize_save_after', array( $this, 'generate_scss' ) );
+    }
 
-	public function get_file_path() {
-		$theme_dir = get_template_directory() . '/assets/sass';
-		$css_url = trailingslashit( $theme_dir ) . $this->folder . '/' . $this->filename;
-		return $css_url;
-	}
+    public function get_file_path ()
+    {
+        $theme_dir = get_template_directory() . '/assets/sass';
+        $css_url   = trailingslashit( $theme_dir ) . $this->folder . '/' . $this->filename;
 
-	public function generate_scss() {
-		$output = '';
+        return $css_url;
+    }
 
-		if($this->variables) {
-			// catch blocks
-			$output .= $this->generate_scss_catch_block('grays');
-			$output .= $this->generate_scss_catch_block('theme-colors');
+    public function generate_scss ()
+    {
+        $output = '';
 
-			foreach($this->variables as $k => $v) {
-				$output .= '$' . $k . ': ' . $v . ';' . "\n";
-			}
-		}
+        if ( $this->variables ) {
+            // catch blocks
+            $output .= $this->generate_scss_catch_block( 'grays' );
+            $output .= $this->generate_scss_catch_block( 'theme-colors' );
 
-		$this->write($output);
-	}
+            foreach ( $this->variables as $k => $v ) {
+                $output .= '$' . $k . ': ' . $v . ';' . "\n";
+            }
+        }
 
-	public function generate_scss_catch_block($block = '') {
-		$output = '';
+        $this->write( $output );
+    }
 
-		// catch block items
-		$grays_header = '$' . $block . ': () !default; $' . $block . ': map-merge((' . "\n";
-		foreach($this->variables as $k => $v) {
-			if(strpos($k, $block) !== false) {
-				$output .= '"' . str_replace($block . '-', '', $k) . '": ' . $v . ',' . "\n";
-				unset($this->variables[$k]);
-			}
-		}
-		$grays_footer = '), $' . $block . ');' . "\n";
+    public function generate_scss_catch_block ( $block = '' )
+    {
+        $output = '';
 
-		// merge block
-		if($output) {
-			$output = $grays_header . $output . $grays_footer;
-		}
+        // catch block items
+        $grays_header = '$' . $block . ': () !default; $' . $block . ': map-merge((' . "\n";
+        foreach ( $this->variables as $k => $v ) {
+            if ( strpos( $k, $block ) !== false ) {
+                $output .= '"' . str_replace( $block . '-', '', $k ) . '": ' . $v . ',' . "\n";
+                unset( $this->variables[$k] );
+            }
+        }
+        $grays_footer = '), $' . $block . ');' . "\n";
 
-		return $output;
-	}
+        // merge block
+        if ( $output ) {
+            $output = $grays_header . $output . $grays_footer;
+        }
 
-	public function write($content) {
-		global $wp_filesystem;
+        return $output;
+    }
 
-		if ( empty( $wp_filesystem ) ) {
-			require_once( ABSPATH . '/wp-admin/includes/file.php' );
-			WP_Filesystem();
-		}
+    public function write ( $content )
+    {
+        global $wp_filesystem;
 
-		if ( ! $wp_filesystem->put_contents($this->get_file_path(), $content, FS_CHMOD_FILE ) ) {
-			// Fail!
-			error_log('AT: Cannot create Kriki scss file. (path: ' . $this->get_file_path() . ')');
-			return false;
-		}
-	}
+        if ( empty( $wp_filesystem ) ) {
+            require_once( ABSPATH . '/wp-admin/includes/file.php' );
+            WP_Filesystem();
+        }
+
+        if ( ! $wp_filesystem->put_contents( $this->get_file_path(), $content, FS_CHMOD_FILE ) ) {
+            // Fail!
+            error_log( 'AT: Cannot create Kriki scss file. (path: ' . $this->get_file_path() . ')' );
+
+            return false;
+        }
+    }
 }
 
 $Kirki_SCSS = new Kirki_SCSS();

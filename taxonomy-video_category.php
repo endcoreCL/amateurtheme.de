@@ -4,37 +4,37 @@ get_header();
 /**
  * Vars
  */
-$sidebar = $xcore_layout->get_sidebar( 'video_category' );
-$classes = $xcore_layout->get_sidebar_classes( 'video_category' );
-$headline = get_field( 'video_category_headline', 'options' );
-$ads = get_field( 'video_category_ad', 'options' );
-$queried_object = get_queried_object();
-$term_id = $queried_object->term_id;
+$sidebar                     = $xcore_layout->get_sidebar( 'video_category' );
+$classes                     = $xcore_layout->get_sidebar_classes( 'video_category' );
+$headline                    = get_field( 'video_category_headline', 'options' );
+$ads                         = get_field( 'video_category_ad', 'options' );
+$queried_object              = get_queried_object();
+$term_id                     = $queried_object->term_id;
 $category_second_description = get_field( 'category_second_description', $queried_object );
 ?>
 
-<div id="main">
-    <div class="container">
-        <div class="row">
-            <div class="<?php echo $classes['content']; ?>">
-                <div id="content">
-                    <h1>
-                        <?php
-                        if ( $headline ) {
-                            printf( $headline, single_term_title( '', false ) ) ;
-                        } else {
-	                        single_term_title();
-                        }
-                        ?>
-                    </h1>
+    <div id="main">
+        <div class="container">
+            <div class="row">
+                <div class="<?php echo $classes['content']; ?>">
+                    <div id="content">
+                        <h1>
+                            <?php
+                            if ( $headline ) {
+                                printf( $headline, single_term_title( '', false ) );
+                            } else {
+                                single_term_title();
+                            }
+                            ?>
+                        </h1>
 
-                    <?php
-                    $tags = at_video_category_related_tags ( $queried_object->name, $term_id );
-                    if( $tags ) {
+                        <?php
+                        $tags = at_video_category_related_tags( $queried_object->name, $term_id );
+                        if ( $tags ) {
                         ?>
                         <ul class="list-inline list-related-tags">
                             <?php
-                            foreach( $tags as $tag ) {
+                            foreach ( $tags as $tag ) {
                                 ?>
                                 <li class="list-inline-item term term-<?php echo $tag->term_id; ?>">
                                     <a href="<?php echo get_term_link( $tag ); ?>" title="<?php echo $tag->name; ?>">
@@ -45,68 +45,68 @@ $category_second_description = get_field( 'category_second_description', $querie
                                 </li>
                                 <?php
                             }
-                        echo '</ul>';
-                    }
+                            echo '</ul>';
+                            }
 
-                    $description = term_description();
-                    if ( $description && ! is_paged() ) {
-                        echo '<div class="video-category-description">' . $description . '</div><hr class="hr-transparent">';
-                    }
-                    ?>
-
-					<div id="video-list" class="video-category">
-                        <?php
-                        if ( have_posts() ) :
+                            $description = term_description();
+                            if ( $description && ! is_paged() ) {
+                                echo '<div class="video-category-description">' . $description . '</div><hr class="hr-transparent">';
+                            }
                             ?>
-                            <div class="card-deck">
-                                <?php
-                                while ( have_posts() ) :
-                                    the_post();
 
-                                    get_template_part( 'parts/video/loop', 'card' );
-                                endwhile;
+                            <div id="video-list" class="video-category">
+                                <?php
+                                if ( have_posts() ) :
+                                    ?>
+                                    <div class="card-deck">
+                                        <?php
+                                        while ( have_posts() ) :
+                                            the_post();
+
+                                            get_template_part( 'parts/video/loop', 'card' );
+                                        endwhile;
+                                        ?>
+                                    </div>
+                                    <hr class="hr-transparent">
+                                    <?php
+                                    echo at_pagination();
+                                endif;
                                 ?>
                             </div>
-                            <hr class="hr-transparent">
+
                             <?php
-                            echo at_pagination();
-                        endif;
-                        ?>
+                            if ( $ads ) {
+                                ?>
+                                <div class="video-bnr">
+                                    <?php echo $ads; ?>
+                                </div>
+                                <?php
+                            }
+
+                            if ( $category_second_description && ! is_paged() ) {
+                                ?>
+                                <div class="second-description">
+                                    <?php echo $category_second_description; ?>
+                                </div>
+                                <?php
+                            }
+                            ?>
                     </div>
+                </div>
 
-                    <?php
-                    if ( $ads ) {
-                        ?>
-                        <div class="video-bnr">
-                            <?php echo $ads; ?>
-                        </div>
-                        <?php
-                    }
-
-                    if ( $category_second_description && !is_paged() ) {
-	                    ?>
-                        <div class="second-description">
-		                    <?php echo $category_second_description; ?>
-                        </div>
-	                    <?php
-                    }
+                <?php
+                if ( $sidebar ) {
                     ?>
-                </div>
-            </div>
-
-	        <?php
-	        if ( $sidebar ) {
-		        ?>
-                <div class="<?php echo $classes['sidebar']; ?>">
-                    <div id="sidebar">
-				        <?php get_sidebar(); ?>
+                    <div class="<?php echo $classes['sidebar']; ?>">
+                        <div id="sidebar">
+                            <?php get_sidebar(); ?>
+                        </div>
                     </div>
-                </div>
-		        <?php
-	        }
-	        ?>
+                    <?php
+                }
+                ?>
+            </div>
         </div>
     </div>
-</div>
 
 <?php get_footer(); ?>

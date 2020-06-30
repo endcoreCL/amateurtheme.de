@@ -2,23 +2,22 @@
 /**
  * Taxonomy
  *
- * @author		Christian Lang
- * @version		1.0
- * @category	video
+ * @author        Christian Lang
+ * @version        1.0
+ * @category    video
  */
 
-add_action( 'init', 'video_taxonomies', 0 );
-function video_taxonomies() {
+add_action( 'init', function () {
     register_taxonomy(
         'video_category',
         'video',
         array(
-            'label' => __( 'Kategorie', 'amateurtheme' ),
-            'rewrite' => array( 'slug' =>  'kategorie', 'with_front' => true, 'hierarchical' => true ),
+            'label'        => __( 'Kategorie', 'amateurtheme' ),
+            'rewrite'      => array( 'slug' => 'kategorie', 'with_front' => true, 'hierarchical' => true ),
             'hierarchical' => true,
-            'query_var' => true,
-            'sort' => true,
-            'public' => true,
+            'query_var'    => true,
+            'sort'         => true,
+            'public'       => true,
         )
     );
 
@@ -26,12 +25,12 @@ function video_taxonomies() {
         'video_tags',
         'video',
         array(
-            'label' => __( 'Schlagwörter', 'amateurtheme' ),
-            'rewrite' => array( 'slug' =>  'tags', 'with_front' => true, 'hierarchical' => true ),
+            'label'        => __( 'Schlagwörter', 'amateurtheme' ),
+            'rewrite'      => array( 'slug' => 'tags', 'with_front' => true, 'hierarchical' => true ),
             'hierarchical' => true,
-            'query_var' => true,
-            'sort' => true,
-            'public' => true,
+            'query_var'    => true,
+            'sort'         => true,
+            'public'       => true,
         )
     );
 
@@ -39,14 +38,14 @@ function video_taxonomies() {
         'video_actor',
         'video',
         array(
-            'label' => __( 'Darsteller', 'amateurtheme' ),
-            'rewrite' => array( 'slug' =>  'darsteller', 'with_front' => true, 'hierarchical' => true ),
+            'label'        => __( 'Darsteller', 'amateurtheme' ),
+            'rewrite'      => array( 'slug' => 'darsteller', 'with_front' => true, 'hierarchical' => true ),
             'hierarchical' => true,
-            'query_var' => true,
-            'sort' => true,
-            'public' => true,
+            'query_var'    => true,
+            'sort'         => true,
+            'public'       => true,
         )
     );
 
     flush_rewrite_rules();
-}
+} );

@@ -97,39 +97,6 @@ if ( ! function_exists( 'at_parse_external_url' ) ) {
     }
 }
 
-if ( ! function_exists( 'at_phone_detect' ) ) {
-    /**
-     * Detect smartphones
-     *
-     * @return boolean
-     */
-    function at_phone_detect() {
-        $detect = new Mobile_Detect;
-        if ( $detect->isMobile() && ! $detect->isTablet() ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-}
-
-if ( ! function_exists( 'at_tablet_detect' ) ) {
-    /**
-     * Detect tablets
-     *
-     * @return boolean
-     */
-    function at_tablet_detect() {
-        $detect = new Mobile_Detect;
-
-        if ( $detect->isTablet() ) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-}
-
 if ( ! function_exists( 'at_attach_external_image' ) ) {
     /**
      * at_attach_external_image function.

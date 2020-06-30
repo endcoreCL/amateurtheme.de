@@ -3,10 +3,10 @@ get_header();
 $sidebar = $xcore_layout->get_sidebar( 'blog_single' );
 $classes = $xcore_layout->get_sidebar_classes( 'blog_single' );
 
-$share = get_field( 'blog_single_share', 'options' );
-$author = get_field( 'blog_single_author', 'options' );
+$share   = get_field( 'blog_single_share', 'options' );
+$author  = get_field( 'blog_single_author', 'options' );
 $related = get_field( 'blog_single_related', 'options' );
-$nav = get_field( 'blog_single_nav', 'options');
+$nav     = get_field( 'blog_single_nav', 'options' );
 ?>
 
 <div id="main">
@@ -16,8 +16,8 @@ $nav = get_field( 'blog_single_nav', 'options');
                 <div id="content">
 
                     <?php
-                    if (have_posts()) :
-                        while (have_posts()) :
+                    if ( have_posts() ) :
+                        while ( have_posts() ) :
                             the_post();
                             ?>
 

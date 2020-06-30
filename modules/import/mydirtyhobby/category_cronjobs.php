@@ -2,9 +2,9 @@
 /**
  * Loading mydirtyhobby category cronjob functions
  *
- * @author		Christian Lang
- * @version		1.0
- * @category	helper
+ * @author        Christian Lang
+ * @version        1.0
+ * @category    helper
  */
 
 if ( ! function_exists( 'at_import_mdh_category_cronjob_initiate' ) ) {
@@ -12,39 +12,40 @@ if ( ! function_exists( 'at_import_mdh_category_cronjob_initiate' ) ) {
      * at_import_mdh_category_cronjob_initiate function
      *
      */
-    add_action('at_import_cronjob_edit', 'at_import_mdh_category_cronjob_initiate', 10, 3);
-    function at_import_mdh_category_cronjob_initiate($id, $field, $value) {
-        if ($field == 'scrape') {
+    add_action( 'at_import_cronjob_edit', 'at_import_mdh_category_cronjob_initiate', 10, 3 );
+    function at_import_mdh_category_cronjob_initiate ( $id, $field, $value )
+    {
+        if ( $field == 'scrape' ) {
             global $wpdb;
 
-            $cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
+            $cron = $wpdb->get_row( 'SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id );
 
-            if ($cron) {
-                if ($cron->network == 'mydirtyhobby' && $cron->type == 'category') {
-                    if ($value == '1') {
-                        if (!wp_next_scheduled('at_import_mdh_scrape_category_videos_cronjob', array($id))) {
-                            wp_schedule_event(time(), 'daily', 'at_import_mdh_scrape_category_videos_cronjob', array($id));
+            if ( $cron ) {
+                if ( $cron->network == 'mydirtyhobby' && $cron->type == 'category' ) {
+                    if ( $value == '1' ) {
+                        if ( ! wp_next_scheduled( 'at_import_mdh_scrape_category_videos_cronjob', array( $id ) ) ) {
+                            wp_schedule_event( time(), 'daily', 'at_import_mdh_scrape_category_videos_cronjob', array( $id ) );
                         }
                     } else {
-                        wp_clear_scheduled_hook('at_import_mdh_scrape_category_videos_cronjob', array($id));
+                        wp_clear_scheduled_hook( 'at_import_mdh_scrape_category_videos_cronjob', array( $id ) );
                     }
                 }
             }
         }
 
-        if ($field == 'import') {
+        if ( $field == 'import' ) {
             global $wpdb;
 
-            $cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
+            $cron = $wpdb->get_row( 'SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id );
 
-            if ($cron) {
-                if ($cron->network == 'mydirtyhobby' && $cron->type == 'category') {
-                    if ($value == '1') {
-                        if (!wp_next_scheduled('at_import_mdh_import_videos_cronjob', array($id))) {
-                            wp_schedule_event(time(), '30min', 'at_import_mdh_import_videos_cronjob', array($id));
+            if ( $cron ) {
+                if ( $cron->network == 'mydirtyhobby' && $cron->type == 'category' ) {
+                    if ( $value == '1' ) {
+                        if ( ! wp_next_scheduled( 'at_import_mdh_import_videos_cronjob', array( $id ) ) ) {
+                            wp_schedule_event( time(), '30min', 'at_import_mdh_import_videos_cronjob', array( $id ) );
                         }
                     } else {
-                        wp_clear_scheduled_hook('at_import_mdh_import_videos_cronjob', array($id));
+                        wp_clear_scheduled_hook( 'at_import_mdh_import_videos_cronjob', array( $id ) );
                     }
                 }
             }
@@ -53,22 +54,23 @@ if ( ! function_exists( 'at_import_mdh_category_cronjob_initiate' ) ) {
 }
 
 if ( ! function_exists( 'at_import_mdh_category_cronjob_delete' ) ) {
-	/**
-	 * at_import_mdh_category_cronjob_delete function
-	 *
-	 */
-	add_action('at_import_cronjob_delete', 'at_import_mdh_category_cronjob_delete', 10, 1);
-	function at_import_mdh_category_cronjob_delete($id) {
-		global $wpdb;
+    /**
+     * at_import_mdh_category_cronjob_delete function
+     *
+     */
+    add_action( 'at_import_cronjob_delete', 'at_import_mdh_category_cronjob_delete', 10, 1 );
+    function at_import_mdh_category_cronjob_delete ( $id )
+    {
+        global $wpdb;
 
-		$cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
+        $cron = $wpdb->get_row( 'SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id );
 
-		if ($cron) {
-			if ($cron->network == 'mydirtyhobby' && $cron->type == 'category') {
-				wp_clear_scheduled_hook('at_import_mdh_scrape_category_videos_cronjob', array($id));
-			}
-		}
-	}
+        if ( $cron ) {
+            if ( $cron->network == 'mydirtyhobby' && $cron->type == 'category' ) {
+                wp_clear_scheduled_hook( 'at_import_mdh_scrape_category_videos_cronjob', array( $id ) );
+            }
+        }
+    }
 }
 
 if ( ! function_exists( 'at_import_mdh_scrape_category_videos_cronjob' ) ) {
@@ -76,13 +78,14 @@ if ( ! function_exists( 'at_import_mdh_scrape_category_videos_cronjob' ) ) {
      * at_import_mdh_scrape_category_videos_cronjob function
      *
      */
-    add_action('at_import_mdh_scrape_category_videos_cronjob', 'at_import_mdh_scrape_category_videos_cronjob');
-    function at_import_mdh_scrape_category_videos_cronjob($id) {
+    add_action( 'at_import_mdh_scrape_category_videos_cronjob', 'at_import_mdh_scrape_category_videos_cronjob' );
+    function at_import_mdh_scrape_category_videos_cronjob ( $id )
+    {
         global $wpdb;
-        $cron = $wpdb->get_row('SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id);
-        $results = array('created' => 0, 'skipped' => 0, 'total' => 0, 'last_updated' => '');
+        $cron    = $wpdb->get_row( 'SELECT * FROM ' . AT_CRON_TABLE . ' WHERE id = ' . $id );
+        $results = array( 'created' => 0, 'skipped' => 0, 'total' => 0, 'last_updated' => '' );
 
-        if ($cron) {
+        if ( $cron ) {
             $c_id = $cron->object_id;
 
             // initiate import
@@ -90,14 +93,14 @@ if ( ! function_exists( 'at_import_mdh_scrape_category_videos_cronjob' ) ) {
 
             // get total
             $args = array(
-                'type' => 'category',
-                'limit' => 1,
+                'type'       => 'category',
+                'limit'      => 1,
                 'categoryId' => $c_id
             );
 
-            $total = $import->getTotal($args);
+            $total = $import->getTotal( $args );
 
-            if ($total) {
+            if ( $total ) {
                 $wpdb->update(
                     AT_CRON_TABLE,
                     array(
@@ -108,35 +111,37 @@ if ( ! function_exists( 'at_import_mdh_scrape_category_videos_cronjob' ) ) {
                     )
                 );
 
-                $num_pages = ceil($total / 100);
+                $num_pages = ceil( $total / 100 );
 
                 $last_pos = 0;
-                if ($cron->last_pos > 0) $last_pos = $cron->last_pos;
+                if ( $cron->last_pos > 0 ) {
+                    $last_pos = $cron->last_pos;
+                }
 
-                for ($i = $last_pos; $i <= $num_pages; $i++) {
-                    $videos = $import->getCategoryVideos($c_id, $i * 100);
-                    $data = json_decode($import->saveVideos($videos, $c_id), TRUE);
+                for ( $i = $last_pos; $i <= $num_pages; $i++ ) {
+                    $videos = $import->getCategoryVideos( $c_id, $i * 100 );
+                    $data   = json_decode( $import->saveVideos( $videos, $c_id ), true );
 
-                    if ($data['created']) {
+                    if ( $data['created'] ) {
                         $results['created'] = $results['created'] + $data['created'];
                     }
 
-                    if ($data['skipped']) {
+                    if ( $data['skipped'] ) {
                         $results['skipped'] = $results['skipped'] + $data['skipped'];
                     }
 
-                    if ($data['total']) {
+                    if ( $data['total'] ) {
                         $results['total'] = $results['total'] + $data['total'];
                     }
 
-                    $results['last_activity'] = date("d.m.Y H:i:s");
+                    $results['last_activity'] = date( "d.m.Y H:i:s" );
 
                     $wpdb->query(
                         "UPDATE " . AT_CRON_TABLE . " SET last_pos = '$i' WHERE id = $id"
                     );
                 }
 
-                if ($i > $num_pages) {
+                if ( $i > $num_pages ) {
                     // reset last_pos if maximum reached
                     $wpdb->query(
                         "UPDATE " . AT_CRON_TABLE . " SET last_pos = '0' WHERE id = $id"
@@ -147,10 +152,10 @@ if ( ! function_exists( 'at_import_mdh_scrape_category_videos_cronjob' ) ) {
             $wpdb->update(
                 AT_CRON_TABLE,
                 array(
-                    'created' => $results['created'],
-                    'skipped' => $results['skipped'],
-                    'processing' => 0,
-                    'last_activity' => date("Y-m-d H:i:s")
+                    'created'       => $results['created'],
+                    'skipped'       => $results['skipped'],
+                    'processing'    => 0,
+                    'last_activity' => date( "Y-m-d H:i:s" )
                 ),
                 array(
                     'object_id' => $c_id
@@ -158,6 +163,6 @@ if ( ! function_exists( 'at_import_mdh_scrape_category_videos_cronjob' ) ) {
             );
         }
 
-        echo json_encode($results);
+        echo json_encode( $results );
     }
 }

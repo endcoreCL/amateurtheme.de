@@ -5,7 +5,7 @@ if ( $show ) {
     ?>
     <ul class="list-meta list-inline">
         <li class="list-inline-item">
-            <i class="fa fa-calendar"></i> <?php the_time(  get_option('date_format') ); ?>
+            <i class="fa fa-calendar"></i> <?php the_time( get_option( 'date_format' ) ); ?>
         </li>
 
         <li class="list-inline-item">

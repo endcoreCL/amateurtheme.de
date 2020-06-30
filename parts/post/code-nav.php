@@ -1,7 +1,7 @@
 <?php
-$options    = get_field( 'blog_single_nav_options', 'options' );
-$prev_post  = get_previous_post( ( $options['in_term'] ? true : false ) );
-$next_post  = get_next_post(  ( $options['in_term'] ? true : false )  );
+$options   = get_field( 'blog_single_nav_options', 'options' );
+$prev_post = get_previous_post( ( $options['in_term'] ? true : false ) );
+$next_post = get_next_post( ( $options['in_term'] ? true : false ) );
 ?>
 <hr class="hr-transparent">
 
@@ -9,7 +9,7 @@ $next_post  = get_next_post(  ( $options['in_term'] ? true : false )  );
     <nav>
         <ul class="pager list-inline d-flex">
             <?php
-            if($prev_post) {
+            if ( $prev_post ) {
                 ?>
                 <li class="previous list-inline-item flex-fill">
                     <a rel="prev" href="<?php echo get_permalink( $prev_post->ID ); ?>" title="<?php _e( 'zum Vorherigen Artikel', 'xcore' ); ?>">
@@ -20,7 +20,7 @@ $next_post  = get_next_post(  ( $options['in_term'] ? true : false )  );
                 <?php
             }
 
-            if($next_post) {
+            if ( $next_post ) {
                 ?>
                 <li class="next list-inline-item flex-fill text-right">
                     <a rel="next" href="<?php echo get_permalink( $next_post->ID ); ?>" title="<?php _e( 'zum Nächsten Artikel', 'xcore' ); ?>">

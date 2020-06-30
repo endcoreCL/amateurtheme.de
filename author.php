@@ -1,7 +1,7 @@
 <?php
 get_header();
-$sidebar = $xcore_layout->get_sidebar( 'blog_author' );
-$classes = $xcore_layout->get_sidebar_classes( 'blog_author' );
+$sidebar  = $xcore_layout->get_sidebar( 'blog_author' );
+$classes  = $xcore_layout->get_sidebar_classes( 'blog_author' );
 $headline = get_field( 'blog_author_headline', 'options' );
 ?>
 
@@ -10,15 +10,15 @@ $headline = get_field( 'blog_author_headline', 'options' );
         <h1>
             <?php
             if ( $headline ) {
-	            printf( $headline, get_the_author() );
+                printf( $headline, get_the_author() );
             } else {
-	            printf( __( 'Alle Beiträge von <span>%s</span>', 'amateurtheme' ), get_the_author() );
+                printf( __( 'Alle Beiträge von <span>%s</span>', 'amateurtheme' ), get_the_author() );
             }
             ?>
         </h1>
 
         <?php
-        if(get_the_author_meta('description') && ! is_paged()) {
+        if ( get_the_author_meta( 'description' ) && ! is_paged() ) {
             ?>
             <p class="author-bio">
                 <?php the_author_meta( 'description' ); ?>

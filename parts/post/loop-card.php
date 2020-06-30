@@ -1,4 +1,4 @@
-<article <?php post_class('card'); ?>>
+<article <?php post_class( 'card' ); ?>>
     <?php
     if ( has_post_thumbnail() ) {
         ?>
