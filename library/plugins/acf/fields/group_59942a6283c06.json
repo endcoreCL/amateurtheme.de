@@ -3,6 +3,25 @@
     "title": "Darsteller",
     "fields": [
         {
+            "key": "field_5efb5e13fc0a6",
+            "label": "MDH Kampagne",
+            "name": "actor_mdh_video_campaign",
+            "type": "text",
+            "instructions": "Überschreibt, falls gesetzt, die globale MDH Kampagne.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": ""
+        },
+        {
             "key": "field_5ca6f1d7be38c",
             "label": "Erweiterte Beschreibung",
             "name": "actor_second_description",
@@ -582,5 +601,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1582115229
+    "modified": 1593531970
 }
