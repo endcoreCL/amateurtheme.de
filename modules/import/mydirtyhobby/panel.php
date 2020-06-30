@@ -63,8 +63,17 @@ function at_import_mydirtyhobby_panel ()
                         <div class="inside">
                             <form method="post">
                                 <div class="form-group">
-                                    <label for="at_mdh_naffcode"><?php _e( 'Naffcode', 'amateurtheme' ); ?></label>
-                                    <input name="at_mdh_naffcode" id="at_mdh_naffcode" type="text" value="<?php echo( get_option( 'at_mdh_naffcode' ) ? get_option( 'at_mdh_naffcode' ) : '' ) ?>" class="form-control"/>
+                                    <label for="at_mdh_ats"><?php _e( 'ATS', 'amateurtheme' ); ?></label>
+                                    <input name="at_mdh_ats" id="at_mdh_ats" type="text" value="<?= get_option( 'at_mdh_ats' ) ?: '' ?>" class="form-control"/>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="at_mdh_language"><?php _e( 'Sprache', 'amateurtheme' ); ?></label>
+                                    <select name="at_mdh_language" class="form-control">
+                                        <option value="de" <?= get_option( 'at_mdh_language' ) == 'de' ? 'selected' : '' ?>><?php _e( 'Deutsch', 'amateurtheme' ); ?></option>
+                                        <option value="en" <?= get_option( 'at_mdh_language' ) == 'en' ? 'selected' : '' ?>><?php _e( 'Englisch', 'amateurtheme' ); ?></option>
+                                        <option value="fr" <?= get_option( 'at_mdh_language' ) == 'fr' ? 'selected' : '' ?>><?php _e( 'Französisch', 'amateurtheme' ); ?></option>
+                                    </select>
                                 </div>
 
                                 <div class="form-group">
@@ -98,6 +107,12 @@ function at_import_mydirtyhobby_panel ()
                                     <p class="hint"><?php _e( 'Füge hier einen Wert ein, welcher als ?promo= an alle URLs angehängt werden soll. Wenn du dieses Feld leer lässt, wird kein Promo-Parameter übergeben.', 'amateurtheme' ); ?></p>
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="at_mdh_video_campaign"><?php _e( 'Kampagne', 'amateurtheme' ); ?></label>
+                                    <input type="text" class="form-control" name="at_mdh_video_campaign" value="<?= get_option( 'at_mdh_video_campaign' ); ?>">
+                                    <p class="hint"><?php _e( 'Füge hier einen Wert ein, welcher als ?atc= an alle URLs angehängt werden soll. Wenn du dieses Feld leer lässt, wird kein Promo-Parameter übergeben.', 'amateurtheme' ); ?></p>
+                                </div>
+
                                 <input type="hidden" name="action" value="save"/>
                                 <input name="save" type="submit" class="btn btn-at" value="<?php _e( 'Speichern', 'amateurtheme' ); ?>"/>
                             </form>
@@ -110,7 +125,7 @@ function at_import_mydirtyhobby_panel ()
                         </p>
 
                         <p>
-                            <?php _e( 'Bitte achte darauf, dass du einen <strong>korrekten Naffcode</strong> angegeben hast!', 'amateurtheme' ); ?>
+                            <?php _e( 'Bitte achte darauf, dass du einen <strong>korrekten ATS</strong> angegeben hast!', 'amateurtheme' ); ?>
                         </p>
                     </div>
                 </div>

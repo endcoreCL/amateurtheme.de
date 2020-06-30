@@ -10,11 +10,13 @@ class AT_Import_MDH_Crawler
 {
     public function __construct ()
     {
-        $this->naffcode            = get_option( 'at_mdh_naffcode' );
-        $this->amateurs_url        = 'https://www.mydirtyhobby.com/api/amateurs/?ats=' . $this->naffcode;
-        $this->amateur_videos_url  = 'https://www.mydirtyhobby.com/api/amateurvideos/?ats=' . $this->naffcode;
-        $this->category_videos_url = 'https://www.mydirtyhobby.com/api/categoryvideos/?ats=' . $this->naffcode;
-        $this->top_videos_url      = 'https://www.mydirtyhobby.com/api/topvideos/?ats=' . $this->naffcode;
+        $this->ats                 = get_option( 'at_mdh_ats' );
+        $this->language            = get_option( 'at_mdh_language' ) ?: 'de';
+        $this->locale              = 'de';
+        $this->amateurs_url        = 'https://' . $this->locale . '.mydirtyhobby.com/api/amateurs/?ats=' . $this->ats;
+        $this->amateur_videos_url  = 'https://' . $this->locale . '.mydirtyhobby.com/api/amateurvideos/?ats=' . $this->ats;
+        $this->category_videos_url = 'https://' . $this->locale . '.mydirtyhobby.com/api/categoryvideos/?ats=' . $this->ats;
+        $this->top_videos_url      = 'https://' . $this->locale . '.mydirtyhobby.com/api/topvideos/?ats=' . $this->ats;
 
         // tables
         global $wpdb;
@@ -41,10 +43,7 @@ class AT_Import_MDH_Crawler
 
         // set default language
         if ( ! isset( $params['language'] ) ) {
-            /**
-             * @TODO: Set language per option panel
-             */
-            $params['language'] = 'de';
+            $params['language'] = $this->language;
         }
 
         if ( ! empty( $params ) ) {

@@ -134,7 +134,7 @@ if ( ! function_exists( 'at_import_mdh_untag_video_as_imported' ) ) {
 }
 
 /**
- * Add promo param for all mdh urls
+ * Add promo and campaign param for all mdh urls
  *
  * @param $value
  * @param $post_id
@@ -147,12 +147,45 @@ function xcore_mdh_promo_urls ( $value, $post_id, $field )
 {
     if ( get_field( 'video_source', $post_id ) == 'mdh' ) {
         $promo = get_option( 'at_mdh_video_promo' );
-
         if ( $promo ) {
             $value .= '&promo=' . $promo;
+        }
+
+        $campaign = xcore_mdh_get_campaign( $post_id );
+        if ( $campaign ) {
+            $value .= '&atc=' . $campaign;
         }
     }
 
     return $value;
 }
 
+/**
+ * Get campaign for given post
+ *
+ * @param $post_id
+ *
+ * @return bool
+ */
+function xcore_mdh_get_campaign ( $post_id )
+{
+    // actor campaign
+    $terms = wp_get_post_terms( $post_id, 'video_actor' );
+    if ( $terms ) {
+        foreach ( $terms as $term ) {
+            $campaign = get_field( 'actor_mdh_video_campaign', $term );
+
+            if ( $campaign ) {
+                return $campaign;
+            }
+        }
+    }
+
+    // global campaign
+    $campaign = get_option( 'at_mdh_video_campaign' );
+    if ( $campaign ) {
+        return $campaign;
+    }
+
+    return false;
+}
