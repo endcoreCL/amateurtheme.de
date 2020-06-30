@@ -1,6 +1,3 @@
-<?php
-global $term;
-?>
 <div class="card card-video term-<?php echo $term->term_id; ?>">
     <a href="<?php echo get_term_link( $term ); ?>" title="<?php echo $term->name; ?>" class="card-link-img">
         <?php
