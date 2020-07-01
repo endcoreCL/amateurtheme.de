@@ -2,7 +2,6 @@
 include_once 'core/scss.inc.php';
 include_once 'class.xCORE_SCSS.php';
 
-
 $xcore_scss_settings = array(
     'scss_dir'      =>  get_template_directory() . '/assets/sass/',
     'css_dir'       =>  get_template_directory() . '/',

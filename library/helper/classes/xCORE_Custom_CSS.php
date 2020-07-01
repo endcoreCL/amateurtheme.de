@@ -83,7 +83,7 @@ class xCORE_Custom_SCSS
             return;
         }
 
-        $recompile = $_POST['acf']['field_5e4e6e37256e8'];
+        $recompile = $_POST['acf']['field_5efc9889c79bc'];
 
         if ( ! $recompile ) {
             return;
@@ -94,60 +94,60 @@ class xCORE_Custom_SCSS
         ob_start();
         if ( $this->fields ) {
             ?>
-            // VARIABLES: GRAYS
-            $white:       #ffffff;
-            $gray-100:    <?php echo $this->fields['grays_gray-100']; ?>;   // near white
-            $gray-200:    darken($gray-100, 5%);                            // border
-            $gray-300:    <?php echo $this->fields['grays_gray-300']; ?>;
-            $gray-400:    darken($gray-300, 5%);
-            $gray-500:    darken($gray-300, 20%);
-            $gray-600:    <?php echo $this->fields['grays_gray-600']; ?>;   // gray-light
-            $gray-700:    <?php echo $this->fields['grays_gray-700']; ?>;   // gray
-            $gray-800:    <?php echo $this->fields['grays_gray-800']; ?>;   // gray-dark
-            $gray-900:    darken($gray-800, 5%);
-            $black:       darken($gray-800, 10%);
+// VARIABLES: GRAYS
+$white:       #ffffff;
+$gray-100:    <?php echo $this->fields['grays_gray-100']; ?>;   // near white
+$gray-200:    darken($gray-100, 5%);                            // border
+$gray-300:    <?php echo $this->fields['grays_gray-300']; ?>;
+$gray-400:    darken($gray-300, 5%);
+$gray-500:    darken($gray-300, 20%);
+$gray-600:    <?php echo $this->fields['grays_gray-600']; ?>;   // gray-light
+$gray-700:    <?php echo $this->fields['grays_gray-700']; ?>;   // gray
+$gray-800:    <?php echo $this->fields['grays_gray-800']; ?>;   // gray-dark
+$gray-900:    darken($gray-800, 5%);
+$black:       darken($gray-800, 10%);
 
-            // VARIABLES: COLORS
-            $primary:      <?php echo $this->fields['theme-colors_primary']; ?>;
-            $secondary:    <?php echo $this->fields['theme-colors_secondary']; ?>;
-            $success:      <?php echo $this->fields['theme-colors_success']; ?>;
-            $info:         <?php echo $this->fields['theme-colors_info']; ?>;
-            $warning:      <?php echo $this->fields['theme-colors_warning']; ?>;
-            $danger:       <?php echo $this->fields['theme-colors_danger']; ?>;
-            $light:        $gray-100;
-            $dark:         $gray-800;
+// VARIABLES: COLORS
+$primary:      <?php echo $this->fields['theme-colors_primary']; ?>;
+$secondary:    <?php echo $this->fields['theme-colors_secondary']; ?>;
+$success:      <?php echo $this->fields['theme-colors_success']; ?>;
+$info:         <?php echo $this->fields['theme-colors_info']; ?>;
+$warning:      <?php echo $this->fields['theme-colors_warning']; ?>;
+$danger:       <?php echo $this->fields['theme-colors_danger']; ?>;
+$light:        $gray-100;
+$dark:         $gray-800;
 
-            // VARIABLES: OPTIONS
-            $enable-rounded:        true <?php // @TODO NEUES JA/NEIN FIELD - true ist default (gibt an, ob buttons, alerts, etc. rund sein sollen oder eckig) ?>;
-            $enable-shadows:        false <?php // @TODO NEUES JA/NEIN FIELD - false ist default (gibt an, ob bestimmte Elemente einen Shadow bekomme - kp wo) ?>;
-            $enable-gradients:      false <?php // @TODO NEUES JA/NEIN FIELD - false ist default (gibt an, ob farbige Elemente einen Verlauf bekommen. ?>;
-            $enable-transitions:    true <?php // @TODO NEUES JA/NEIN FIELD - true ist default (gibt an, ob div. Elemente eine Verzögerung haben oder nicht) ?>;
+// VARIABLES: OPTIONS
+$enable-rounded:        true <?php // @TODO NEUES JA/NEIN FIELD - true ist default (gibt an, ob buttons, alerts, etc. rund sein sollen oder eckig) ?>;
+$enable-shadows:        false <?php // @TODO NEUES JA/NEIN FIELD - false ist default (gibt an, ob bestimmte Elemente einen Shadow bekomme - kp wo) ?>;
+$enable-gradients:      false <?php // @TODO NEUES JA/NEIN FIELD - false ist default (gibt an, ob farbige Elemente einen Verlauf bekommen. ?>;
+$enable-transitions:    true <?php // @TODO NEUES JA/NEIN FIELD - true ist default (gibt an, ob div. Elemente eine Verzögerung haben oder nicht) ?>;
 
-            // VARIABLES: FONTS (BASE)
-            $font-family-base:      '<?php echo $this->fields['font_paragraphs']['font']; ?>';
-            $font-weight-normal:    <?php echo $this->font_weight( $this->fields['font_paragraphs'] ); ?>;
-            $line-height-base:      1.75 <?php // @TODO NEUES NUMMERN FIELD - 1.75 ist default ?>;
-            $at-font-color-base:    <?php echo $this->fields['color_paragraphs']; ?>;
-            $at-font-style-base:    <?php echo $this->font_style( $this->fields['font_paragraphs'] ); ?>;
+// VARIABLES: FONTS (BASE)
+$font-family-base:      '<?php echo $this->fields['font_paragraphs']['font']; ?>';
+$font-weight-normal:    <?php echo $this->font_weight( $this->fields['font_paragraphs'] ); ?>;
+$line-height-base:      1.75 <?php // @TODO NEUES NUMMERN FIELD - 1.75 ist default ?>;
+$at-font-color-base:    <?php echo $this->fields['color_paragraphs']; ?>;
+$at-font-style-base:    <?php echo $this->font_style( $this->fields['font_paragraphs'] ); ?>;
 
-            // VARIABLES: FONTS (HEADLINES)
-            $headings-font-family:      '<?php echo $this->fields['font_headlines']['font']; ?>';
-            $headings-font-weight:      <?php echo $this->font_weight( $this->fields['font_headlines'] ); ?>;
-            $headings-line-height:      1.25 <?php // @TODO NEUES NUMMERN FIELD - 1.25 ist default ?>;
-            $headings-color:            <?php echo $this->fields['color_headlines']; ?>;
-            $at-headings-font-style:    <?php echo $this->font_style( $this->fields['font_headlines'] ); ?>;
+// VARIABLES: FONTS (HEADLINES)
+$headings-font-family:      '<?php echo $this->fields['font_headlines']['font']; ?>';
+$headings-font-weight:      <?php echo $this->font_weight( $this->fields['font_headlines'] ); ?>;
+$headings-line-height:      1.25 <?php // @TODO NEUES NUMMERN FIELD - 1.25 ist default ?>;
+$headings-color:            <?php echo $this->fields['color_headlines']; ?>;
+$at-headings-font-style:    <?php echo $this->font_style( $this->fields['font_headlines'] ); ?>;
 
-            // VARIABLES: CUSTOM
-            $at-body-bg:    #e9ecef <?php // @TODO NEUES COLOR FIELD - e9ecef ist default ?>;
-            $box-shadow:    0 5px 15px rgba($gray-800, 0.15);
-            $transition:    all 0.25s; <?php // @TODO NEUES JA/NEIN FIELD ?>
-            $border-radius:    5px;  <?php // @TODO NEUES JA/NEIN FIELD ?>
+// VARIABLES: CUSTOM
+$at-body-bg:    #e9ecef <?php // @TODO NEUES COLOR FIELD - e9ecef ist default ?>;
+$box-shadow:    0 5px 15px rgba($gray-800, 0.15);
+$transition:    all 0.25s; <?php // @TODO NEUES JA/NEIN FIELD ?>
+$border-radius:    5px;  <?php // @TODO NEUES JA/NEIN FIELD ?>
             <?php
         }
         $output = ob_get_clean();
 
         // reset recompile setting
-        update_field( 'field_5e4e6e37256e8', 0, 'options' );
+        update_field( 'field_5efc9889c79bc', 0, 'options' );
 
         $this->write( $output );
     }
