@@ -107,6 +107,25 @@
             "endpoint": 0
         },
         {
+            "key": "field_5efc9889c79bc",
+            "label": "Recompile",
+            "name": "design_recompile",
+            "type": "true_false",
+            "instructions": "Nach Änderungen an den Farben musst du das Stylesheet recompilen. Setze dazu diese Option und klicke auf der rechten Seite auf \"Aktualisieren\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "",
+            "ui_off_text": ""
+        },
+        {
             "key": "field_5a99454934b91",
             "label": "Primary",
             "name": "colors_theme-colors_primary",
@@ -1171,5 +1190,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1582115224
+    "modified": 1593613076
 }
