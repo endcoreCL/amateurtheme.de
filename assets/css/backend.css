@@ -44,8 +44,8 @@ body[class*="import_page_at_import_"] #wpfooter { display: none; }
 #at-import-page-wrap #at-import-tabs .at-table > thead > tr > th { background: #105273; color: #fff; border: none;  }
 
 /* FORMS */
-#at-import-page-wrap #at-import-tabs .form-group { margin-bottom: 10px; }
-#at-import-page-wrap #at-import-tabs .form-group label { font-size: 14px; min-width: 200px; display: inline-block; font-weight: 600; }
+#at-import-page-wrap #at-import-tabs .form-group { margin-bottom: 30px; }
+#at-import-page-wrap #at-import-tabs .form-group label { font-size: 14px; min-width: 300px; display: inline-block; font-weight: 600; }
 #at-import-page-wrap #at-import-tabs .btn-at { vertical-align: top; height: 34px; line-height: 1.5; border: 1px solid #d10d3e; background: #d10d3e; color: #fff; padding: 6px 12px; border-radius: 3px; font-size: 14px; box-shadow: none; margin: 0; }
 #at-import-page-wrap #at-import-tabs .btn-at:hover,
 #at-import-page-wrap #at-import-tabs .btn-at:focus,

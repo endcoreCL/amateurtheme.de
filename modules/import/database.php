@@ -87,7 +87,7 @@ if ( ! function_exists( 'at_import_database_tables' ) ) {
         if ( $wpdb->get_var( "show tables like '" . AT_CRON_TABLE . "'" ) != AT_CRON_TABLE ) {
             $sql = "CREATE TABLE " . AT_CRON_TABLE . " (
                 id int(11) NOT NULL AUTO_INCREMENT,
-                object_id int(11),
+                object_id varchar(25),
                 network varchar(255),
                 name varchar(255),
                 alias varchar(255),

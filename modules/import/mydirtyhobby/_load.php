@@ -18,3 +18,4 @@ require_once 'ajax.php';
 require_once 'panel.php';
 require_once 'amateur_cronjobs.php';
 require_once 'category_cronjobs.php';
+require_once 'top_videos_cronjobs.php';

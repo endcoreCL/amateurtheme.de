@@ -105,6 +105,10 @@ if ( ! function_exists( 'at_video_taxonomy_args' ) ) {
     add_filter( 'pre_get_posts', 'at_video_taxonomy_args' );
     function at_video_taxonomy_args ( $query )
     {
+        if ( is_admin() ) {
+            return $query;
+        }
+
         /**
          * Video tags query
          */

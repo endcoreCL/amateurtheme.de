@@ -951,7 +951,7 @@
                 "id": ""
             },
             "message": "",
-            "default_value": 1,
+            "default_value": 0,
             "ui": 1,
             "ui_on_text": "",
             "ui_off_text": ""
@@ -1014,7 +1014,7 @@
                 "id": ""
             },
             "message": "",
-            "default_value": 1,
+            "default_value": 0,
             "ui": 1,
             "ui_on_text": "",
             "ui_off_text": ""
@@ -1055,7 +1055,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": "",
+                    "default_value": "Ähnliche Schlagwörter",
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
@@ -1221,7 +1221,7 @@
                         "class": "",
                         "id": ""
                     },
-                    "default_value": "",
+                    "default_value": "Ähnliche Kategorien",
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
@@ -1380,5 +1380,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1582115222
+    "modified": 1593613171
 }

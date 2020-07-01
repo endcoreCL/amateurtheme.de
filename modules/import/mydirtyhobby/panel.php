@@ -113,6 +113,15 @@ function at_import_mydirtyhobby_panel ()
                                     <p class="hint"><?php _e( 'Füge hier einen Wert ein, welcher als ?atc= an alle URLs angehängt werden soll. Wenn du dieses Feld leer lässt, wird kein Promo-Parameter übergeben.', 'amateurtheme' ); ?></p>
                                 </div>
 
+                                <div class="form-group">
+                                    <label for="at_mdh_top_videos_cronjob"><?php _e( 'TOP Videos automatisch importieren', 'amateurtheme' ); ?></label>
+                                    <select name="at_mdh_top_videos_cronjob" class="form-control">
+                                        <option value="0" <?php echo( get_option( 'at_mdh_top_videos_cronjob' ) == '0' ? 'selected' : '' ); ?>><?php _e( 'Nein', 'amateurtheme' ); ?></option>
+                                        <option value="1" <?php echo( get_option( 'at_mdh_top_videos_cronjob' ) == '1' ? 'selected' : '' ); ?>><?php _e( 'Ja', 'amateurtheme' ); ?></option>
+                                    </select>
+                                    <p class="hint"><?php _e( 'Wenn diese Option aktivierst, werden die TOP Videos in regelmäßigen Abständen automatisch importiert.', 'amateurtheme' ); ?></p>
+                                </div>
+
                                 <input type="hidden" name="action" value="save"/>
                                 <input name="save" type="submit" class="btn btn-at" value="<?php _e( 'Speichern', 'amateurtheme' ); ?>"/>
                             </form>

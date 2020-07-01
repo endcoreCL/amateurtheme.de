@@ -70,7 +70,7 @@ if ( ! function_exists( 'at_import_mdh_get_top_videos' ) ) {
         $response = $import->getTopVideos();
 
         if ( $response ) {
-            $import->saveVideos( $response );
+            $import->saveVideos( $response, 'top_video' );
 
             foreach ( $response as $item ) {
                 $item->imported = "false";
