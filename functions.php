@@ -2,13 +2,14 @@
 /**
  * AmateurTheme Framework Functions Library - Don't touch this.
  *
- * @author		Christian Lang
- * @version		1.0
- * @category	functions
+ * @author        Christian Lang
+ * @version        1.0
+ * @category    functions
  */
 
 global $wpdb;
 
+define( 'AT_VERSION', '1.3' );
 define( 'AT_LIBRARY', TEMPLATEPATH . '/library' );
 define( 'AT_HELPER', TEMPLATEPATH . '/library/helper' );
 define( 'AT_PLUGINS', TEMPLATEPATH . '/library/plugins' );
