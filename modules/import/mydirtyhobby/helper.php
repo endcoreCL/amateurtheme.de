@@ -169,23 +169,22 @@ function xcore_mdh_promo_urls ( $value, $post_id, $field )
  */
 function xcore_mdh_get_campaign ( $post_id )
 {
+    // global campaign
+    $campaign = get_option( 'at_mdh_video_campaign' );
+
     // actor campaign
     $terms = wp_get_post_terms( $post_id, 'video_actor' );
     if ( $terms ) {
         foreach ( $terms as $term ) {
-            $campaign = get_field( 'actor_mdh_video_campaign', $term );
+            $actor_campaign = get_field( 'actor_mdh_video_campaign', $term );
 
-            if ( $campaign ) {
-                return $campaign;
+            if ( $actor_campaign ) {
+                $campaign .= '~' . $actor_campaign;
+
+                break;
             }
         }
     }
 
-    // global campaign
-    $campaign = get_option( 'at_mdh_video_campaign' );
-    if ( $campaign ) {
-        return $campaign;
-    }
-
-    return false;
+    return $campaign;
 }
