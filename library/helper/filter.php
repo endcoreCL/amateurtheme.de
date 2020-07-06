@@ -293,3 +293,14 @@ if ( ! function_exists( 'xcore_media_mime_types_bugfix' ) ) {
         return $checked;
     }
 }
+
+/**
+ * Added noindex for all paginated pages
+ */
+add_filter( 'wpseo_robots', function ( $robots ) {
+    if ( is_paged() ) {
+        $robots = 'noindex, nofollow';
+    }
+
+    return $robots;
+} );
