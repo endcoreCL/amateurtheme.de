@@ -323,7 +323,7 @@ add_filter( 'option_bouncebooster', function ( $option ) {
         $currentPost = $wpdb->get_var( "SELECT ID FROM $wpdb->posts WHERE post_name = '$postName' AND post_type = 'video' LIMIT 0,1" );
 
         if ( $currentPost ) {
-            $videoLink = get_post_meta( $currentPost, 'video_link', true );
+            $videoLink = get_post_meta( $currentPost, 'video_url', true );
 
             if ( $videoLink ) {
                 $option['url_default'] = $videoLink;
