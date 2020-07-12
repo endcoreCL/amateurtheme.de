@@ -321,3 +321,25 @@ function at_import_big7_update_actor ( $actor_id )
         }
     }
 }
+
+/**
+ * Add promo and campaign param for all big7 urls
+ *
+ * @param $value
+ * @param $post_id
+ * @param $field
+ *
+ * @return string
+ */
+add_filter( 'acf/load_value/name=video_url', 'xcore_big7_campaign_urls', 10, 3 );
+function xcore_big7_campaign_urls ( $value, $post_id, $field )
+{
+    if ( get_field( 'video_source', $post_id ) == 'big7' ) {
+        $campaign = get_option( 'at_big7_video_campaign' );
+        if ( $campaign ) {
+            $value .= '&wms=' . $campaign;
+        }
+    }
+
+    return $value;
+}

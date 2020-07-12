@@ -83,6 +83,12 @@ function at_import_big7_panel ()
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="at_big7_video_campaign"><?php _e( 'Kampagne', 'amateurtheme' ); ?></label>
+                                    <input type="text" class="form-control" name="at_big7_video_campaign" value="<?= get_option( 'at_big7_video_campaign' ); ?>">
+                                    <p class="hint"><?php _e( 'Füge hier einen Wert ein, welcher als ?wms= an alle URLs angehängt werden soll. Wenn du dieses Feld leer lässt, wird kein Promo-Parameter übergeben.', 'amateurtheme' ); ?></p>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="at_big7_video_description"><?php _e( 'Beschreibung Importieren', 'amateurtheme' ); ?></label>
                                     <select name="at_big7_video_description" class="form-control">
                                         <option value="0" <?php echo( get_option( 'at_big7_video_description' ) == '0' ? 'selected' : '' ); ?>><?php _e( 'Nein', 'amateurtheme' ); ?></option>
