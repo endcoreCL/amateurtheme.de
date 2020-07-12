@@ -15,8 +15,8 @@ class AT_Import_Big7_Crawler
         $this->folder = $upload_dir['basedir'] . '/big7';
 
         $this->wmb      = get_option( 'at_big7_wmb' );
-        $this->videos   = 'http://cash.big7.com/xml_export.php?wmb=' . $this->wmb . '&security_key=c6aafc209e9593997dd949a85e15d49a&file=all_amateurs_videos&format=json&dl';
-        $this->amateure = 'http://cash.big7.com/xml_export.php?wmb=' . $this->wmb . '&security_key=c6aafc209e9593997dd949a85e15d49a&file=all_amateurs&format=json&dl';
+        $this->videos   = 'https://cash.big7.com/xml_export.php?wmb=' . $this->wmb . '&security_key=c6aafc209e9593997dd949a85e15d49a&file=all_amateurs_videos&format=json&dl';
+        $this->amateure = 'https://cash.big7.com/xml_export.php?wmb=' . $this->wmb . '&security_key=c6aafc209e9593997dd949a85e15d49a&file=all_amateurs&format=json&dl';
 
         $this->json_result = array();
     }
