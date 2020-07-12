@@ -308,3 +308,28 @@ function at_video_related_videos_ajax ()
 
     exit;
 }
+
+/**
+ * Overwrite Bounceboster URL
+ */
+add_filter( 'option_bouncebooster', function ( $option ) {
+    $actualLink = "$_SERVER[REQUEST_URI]";
+    $videoSlug  = get_field( 'video_single_slug', 'option' );
+
+    if ( strpos( $actualLink, '/' . $videoSlug . '/' ) !== false ) {
+        global $wpdb;
+
+        $postName    = str_replace( array( '/' . $videoSlug . '/', '/' ), '', $actualLink );
+        $currentPost = $wpdb->get_var( "SELECT ID FROM $wpdb->posts WHERE post_name = '$postName' AND post_type = 'video' LIMIT 0,1" );
+
+        if ( $currentPost ) {
+            $videoLink = get_post_meta( $currentPost, 'video_link', true );
+
+            if ( $videoLink ) {
+                $option['url_default'] = $videoLink;
+            }
+        }
+    }
+
+    return $option;
+}, 999 );
