@@ -67,6 +67,11 @@ function at_import_big7_panel ()
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="at_big7_security_key"><?php _e( 'Security Key', 'amateurtheme' ); ?></label>
+                                    <input name="at_big7_security_key" id="at_big7_security_key" type="text" value="<?php echo( get_option( 'at_big7_security_key' ) ? get_option( 'at_big7_security_key' ) : '' ) ?>" class="form-control"/>
+                                </div>
+
+                                <div class="form-group">
                                     <label for="at_big7_post_status"><?php _e( 'Status für neue Videos', 'amateurtheme' ); ?></label>
                                     <select name="at_big7_post_status" class="form-control">
                                         <option value="publish" <?php echo( get_option( 'at_big7_post_status' ) == 'publish' ? 'selected' : '' ); ?>><?php _e( 'Veröffentlicht', 'amateurtheme' ); ?></option>

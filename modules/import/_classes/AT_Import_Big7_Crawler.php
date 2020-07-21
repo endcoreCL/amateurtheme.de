@@ -5,6 +5,9 @@
  * User: christianlang
  * Date: 04.08.17
  * Time: 15:22
+ *
+ * Fallback WMID: 1217
+ * Fallback Security key: c6aafc209e9593997dd949a85e15d49a
  */
 class AT_Import_Big7_Crawler
 {
@@ -14,9 +17,10 @@ class AT_Import_Big7_Crawler
         $upload_dir   = wp_upload_dir();
         $this->folder = $upload_dir['basedir'] . '/big7';
 
-        $this->wmb      = get_option( 'at_big7_wmb' );
-        $this->videos   = 'https://cash.big7.com/xml_export.php?wmb=' . $this->wmb . '&security_key=c6aafc209e9593997dd949a85e15d49a&file=all_amateurs_videos&format=json&dl';
-        $this->amateure = 'https://cash.big7.com/xml_export.php?wmb=' . $this->wmb . '&security_key=c6aafc209e9593997dd949a85e15d49a&file=all_amateurs&format=json&dl';
+        $this->wmb          = get_option( 'at_big7_wmb' );
+        $this->security_key = get_option( 'at_big7_security_key' );
+        $this->videos       = 'https://cash.big7.com/xml_export.php?wmb=' . $this->wmb . '&security_key=' . $this->security_key . '&file=all_amateurs_videos&format=json&dl';
+        $this->amateure     = 'https://cash.big7.com/xml_export.php?wmb=' . $this->wmb . '&security_key=' . $this->security_key . '&file=all_amateurs&format=json&dl';
 
         $this->json_result = array();
     }
@@ -84,7 +88,8 @@ class AT_Import_Big7_Crawler
         set_time_limit( 0 );
 
         $parser = new \JsonCollectionParser\Parser();
-        $parser->parse( $this->folder . '/' . $filename, [ $this, 'json_callback' ], true );
+        $parser->parse( $this->folder . '/' . $filename, [ $this,
+            'json_callback' ], true );
 
         $json_data = $this->json_result;
 
