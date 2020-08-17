@@ -197,7 +197,7 @@ if ( ! function_exists( 'at_attribute_array_html' ) ) {
 		if ( $attributes ) {
 			foreach ( $attributes as $k => $v ) {
 				if ( $v ) {
-					$attributes_html .= $k . '="' . ( is_array( $v ) ? implode( $v, ' ' ) : $v ) . '" ';
+					$attributes_html .= $k . '="' . ( is_array( $v ) ? implode(' ', $v ) : $v ) . '" ';
 				}
 			}
 		}
