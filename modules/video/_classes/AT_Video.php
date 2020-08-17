@@ -103,6 +103,17 @@ class AT_Video
         return 0;
     }
 
+    public function date ( $format = 'd.m.Y' )
+    {
+        $date = $this->field( 'date' );
+
+        if ( $date ) {
+            return date( $format, strtotime( $date ) );
+        }
+
+        return false;
+    }
+
     public function field ( $name )
     {
         $field = get_field( 'video_' . $name, $this->id );
