@@ -71,7 +71,7 @@ if ( ! function_exists( 'at_import_mdh_prepare_video_fields' ) ) {
             $duration     = gmdate( "H:i:s", str_replace( '.', '', $raw_duration ) );
 
             // format date
-            $date     = $video->date;
+            $date = $video->date;
 
             // format rating
             $raw_rating = $video->rating;
@@ -119,15 +119,11 @@ if ( ! function_exists( 'at_import_mdh_untag_video_as_imported' ) ) {
         $video_id = get_post_meta( $post_id, 'video_unique_id', true );
 
         if ( $video_id ) {
-            $wpdb->update(
-                $database->table_videos,
-                array(
+            $wpdb->update( $database->table_videos, array(
                     'imported' => '0'
-                ),
-                array(
+                ), array(
                     'video_id' => $video_id
-                )
-            );
+                ) );
         }
     }
 }
@@ -186,4 +182,147 @@ function xcore_mdh_get_campaign ( $post_id )
     }
 
     return $campaign;
+}
+
+/**
+ * Update Actor in Database with given id
+ *
+ * @param $actorId
+ */
+function at_updateActor ( $actorId )
+{
+    global $wpdb;
+
+    // check autor data
+    $actorTermId = $wpdb->get_var( 'SELECT term_id FROM cp_termmeta WHERE meta_key = "actor_id" AND meta_value = "' . $actorId . '" LIMIT 0,1' );
+
+    if ( ! $actorTermId ) {
+        return;
+    }
+
+    $actorLastUpdated      = get_field( 'actor_last_updated', 'video_actor_' . $actorTermId );
+    $actorLastUpdatedCheck = time() - strtotime( '-1 months' );
+
+    if ( $actorLastUpdated >= $actorLastUpdatedCheck ) {
+        return;
+    }
+
+    at_error_log( '### Actor check START ###' );
+    at_error_log( $actorTermId );
+    at_error_log( '### Actor check END ###' );
+
+    $crawl   = new AT_Import_MDH_Crawler();
+    $amateur = $crawl->getAmateurDetails( $actorId );
+
+    if ( $amateur ) {
+        $amateur = $amateur[0];
+
+        at_error_log( print_r( $amateur, true ) );
+
+        $post_id = 'video_actor_' . $actorTermId;
+
+        // image
+        $actor_image = get_field( 'actor_image', $post_id );
+        if ( ! $actor_image ) {
+            if ( $image = ( isset( $amateur->images->bild1 ) ? $amateur->images->bild1 : '' ) ) {
+                $att_id = at_attach_external_image( $image, null, false, $amateur->nick . '-preview', array( 'post_title' => $amateur->nick ) );
+                if ( $att_id ) {
+                    update_field( 'actor_image', $att_id, $post_id );
+                }
+            }
+        }
+
+        // gender
+        if ( $gender = $amateur->gender ) {
+            if ( $gender == 'T' ) {
+                $gender_decoded = __( 'Transexuell', 'amateurtheme' );
+            } elseif ( $gender == 'F' ) {
+                $gender_decoded = __( 'Weiblich', 'amateurtheme' );
+            } else {
+                $gender_decoded = __( 'Männlich', 'amateurtheme' );
+            }
+
+            update_field( 'actor_gender', $gender_decoded, $post_id );
+        }
+
+        // zipcode
+        if ( $zipcode = $amateur->plz ) {
+            update_field( 'actor_zipcode', $zipcode, $post_id );
+        }
+
+        // link
+        if ( $link = $amateur->url ) {
+            update_field( 'actor_profile_url', $link, $post_id );
+        }
+
+        // groesse
+        if ( $size = $amateur->groesse ) {
+            update_field( 'actor_size', $size / 100 . 'm', $post_id );
+        }
+
+        // haare
+        if ( $haircolor = $amateur->haare ) {
+            update_field( 'actor_haircolor', $haircolor, $post_id );
+        }
+
+        // intimrasur
+        update_field( 'actor_shave', ( $amateur->rasintim == 1 ? __( 'Ja', 'amateurtheme' ) : __( 'Nein', 'amateurtheme' ) ), $post_id );
+
+        // beruf
+        if ( $job = $amateur->beruf ) {
+            update_field( 'actor_job', $job, $post_id );
+        }
+
+        // suche
+        if ( $suche = $amateur->suche ) {
+            update_field( 'actor_search', implode( ', ', $suche ), $post_id );
+        }
+
+        // für
+        if ( $search_for = $amateur->interesse ) {
+            update_field( 'actor_search', implode( ', ', $search_for ), $post_id );
+        }
+
+        // alter
+        if ( $age = $amateur->u_alter ) {
+            update_field( 'actor_age', $age, $post_id );
+        }
+
+        // augenfarbe
+        if ( $eyecolor = $amateur->augen ) {
+            update_field( 'actor_eyecolor', $eyecolor, $post_id );
+        }
+
+        // sternzeichen
+        if ( $star_sign = $amateur->sternzeichen ) {
+            update_field( 'actor_star_sign', $star_sign, $post_id );
+        }
+
+        // gewicht
+        if ( $gewicht = $amateur->gewicht ) {
+            update_field( 'actor_weight', $gewicht . 'kg', $post_id );
+        }
+
+        // körpchengroesse
+        if ( $kg = $amateur->k_umfang ) {
+            update_field( 'actor_breast_size', $kg . ( $amateur->k_schale ? $amateur->k_schale : '' ), $post_id );
+        }
+
+        // familien status
+        if ( $relationship_status = $amateur->famst ) {
+            update_field( 'actor_relationship_status', $relationship_status, $post_id );
+        }
+
+        // sex orientation
+        if ( $sex_orientation = $amateur->sexor ) {
+            update_field( 'actor_sex_orientation', $sex_orientation, $post_id );
+        }
+
+        // erscheinungsbild
+        if ( $aussehen = $amateur->aussehen ) {
+            update_field( 'actor_bodystyle', implode( ', ', $aussehen ), $post_id );
+        }
+
+        update_field( 'actor_last_updated', time(), $post_id );
+    }
 }
