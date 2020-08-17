@@ -71,8 +71,7 @@ if ( ! function_exists( 'at_import_mdh_prepare_video_fields' ) ) {
             $duration     = gmdate( "H:i:s", str_replace( '.', '', $raw_duration ) );
 
             // format date
-            $raw_date = $video->date;
-            $date     = date( 'Ymd', strtotime( $raw_date ) );
+            $date     = $video->date;
 
             // format rating
             $raw_rating = $video->rating;

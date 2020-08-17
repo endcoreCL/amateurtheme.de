@@ -115,6 +115,8 @@ if ( ! function_exists( 'at_video_taxonomy_args' ) ) {
         if ( $query->is_tax( 'video_tags' ) && $query->is_main_query() ) {
             $posts_per_page = ( get_field( 'video_tags_posts_per_page', 'options' ) ? get_field( 'video_tags_posts_per_page', 'options' ) : 12 );
             $query->set( 'posts_per_page', $posts_per_page );
+            $query->set( 'meta_key', 'video_date' );
+            $query->set( 'orderby', 'meta_value' );
         }
 
         /**
@@ -123,6 +125,8 @@ if ( ! function_exists( 'at_video_taxonomy_args' ) ) {
         if ( $query->is_tax( 'video_category' ) && $query->is_main_query() ) {
             $posts_per_page = ( get_field( 'video_category_posts_per_page', 'options' ) ? get_field( 'video_category_posts_per_page', 'options' ) : 12 );
             $query->set( 'posts_per_page', $posts_per_page );
+            $query->set( 'meta_key', 'video_date' );
+            $query->set( 'orderby', 'meta_value' );
         }
 
         /**
@@ -131,6 +135,8 @@ if ( ! function_exists( 'at_video_taxonomy_args' ) ) {
         if ( $query->is_tax( 'video_actor' ) && $query->is_main_query() ) {
             $posts_per_page = ( get_field( 'video_actor_posts_per_page', 'options' ) ? get_field( 'video_actor_posts_per_page', 'options' ) : 12 );
             $query->set( 'posts_per_page', $posts_per_page );
+            $query->set( 'meta_key', 'video_date' );
+            $query->set( 'orderby', 'meta_value' );
         }
 
         /**
@@ -139,6 +145,8 @@ if ( ! function_exists( 'at_video_taxonomy_args' ) ) {
         if ( $query->is_post_type_archive( 'video' ) && $query->is_main_query() ) {
             $posts_per_page = ( get_field( 'video_archive_posts_per_page', 'options' ) ? get_field( 'video_archive_posts_per_page', 'options' ) : 12 );
             $query->set( 'posts_per_page', $posts_per_page );
+            $query->set( 'meta_key', 'video_date' );
+            $query->set( 'orderby', 'meta_value' );
         }
 
         /**
@@ -147,6 +155,8 @@ if ( ! function_exists( 'at_video_taxonomy_args' ) ) {
         if ( $query->is_search() && $query->get( 'post_type' ) == 'video' && $query->is_main_query() ) {
             $posts_per_page = ( get_field( 'video_search_posts_per_page', 'options' ) ? get_field( 'video_search_posts_per_page', 'options' ) : 12 );
             $query->set( 'posts_per_page', $posts_per_page );
+            $query->set( 'meta_key', 'video_date' );
+            $query->set( 'orderby', 'meta_value' );
         }
 
         return $query;
