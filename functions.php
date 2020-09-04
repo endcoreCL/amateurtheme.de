@@ -9,7 +9,7 @@
 
 global $wpdb;
 
-define( 'AT_VERSION', '1.3.2' );
+define( 'AT_VERSION', '1.3.3' );
 define( 'AT_LIBRARY', TEMPLATEPATH . '/library' );
 define( 'AT_HELPER', TEMPLATEPATH . '/library/helper' );
 define( 'AT_PLUGINS', TEMPLATEPATH . '/library/plugins' );

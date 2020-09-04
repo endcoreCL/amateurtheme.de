@@ -18,6 +18,7 @@ $video_actor_description  = get_field( 'video_actor_description', 'options' );
 $video_actor_details      = get_field( 'video_actor_details', 'options' );
 $prg                      = get_field( 'prg_activate', 'options' );
 $actor_second_description = get_field( 'actor_second_description', $queried_object );
+$has_data                 = false;
 ?>
 
 <div id="main">
@@ -66,8 +67,7 @@ $actor_second_description = get_field( 'actor_second_description', $queried_obje
                         if ( $video_actor_details ) {
                             $has_data = false;
 
-                            $fields = apply_filters( 'at_video_actor_details_fields',
-                                array(
+                            $fields = apply_filters( 'at_video_actor_details_fields', array(
                                     __( 'Geschlecht', 'amateurtheme' )       => 'gender',
                                     __( 'Körpergröße', 'amateurtheme' )      => 'size',
                                     __( 'Haarfarbe', 'amateurtheme' )        => 'haircolor',
@@ -90,8 +90,7 @@ $actor_second_description = get_field( 'actor_second_description', $queried_obje
                                     __( 'für', 'amateurtheme' )              => 'search_for',
                                     __( 'Raucher', 'amateurtheme' )          => 'smoke',
                                     __( 'Alkohol', 'amateurtheme' )          => 'alcohol'
-                                )
-                            );
+                                ) );
 
                             if ( $fields ) {
                                 // check if there is any data to output

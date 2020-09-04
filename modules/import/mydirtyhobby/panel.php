@@ -149,6 +149,7 @@ function at_import_mydirtyhobby_panel ()
                                 <table class="at-table at-import-table">
                                     <thead>
                                     <tr>
+                                        <th><?php _e( 'Cron-ID', 'amateurtheme' ) ?></th>
                                         <th><?php _e( 'User', 'amateurtheme' ); ?></th>
                                         <th><?php _e( 'Videos (gesamt)', 'amateurtheme' ); ?></th>
                                         <th><?php _e( 'Importierte Videos', 'amateurtheme' ); ?></th>
@@ -174,6 +175,9 @@ function at_import_mydirtyhobby_panel ()
                                             endif;
                                             ?>
                                             <tr>
+                                                <td class="cron-id">
+                                                    <?= $item->id ?>
+                                                </td>
                                                 <td class="cron-name">
                                                     <a href="#" class="username-edit" data-user-id="<?php echo $item->object_id; ?>">
                                                         <?php echo $item->name; ?>
@@ -630,6 +634,7 @@ function at_import_mydirtyhobby_panel ()
                                 <table class="at-table at-import-table">
                                     <thead>
                                     <tr>
+                                        <th><?php _e( 'Cron-ID', 'amateurtheme' ); ?></th>
                                         <th><?php _e( 'Name', 'amateurtheme' ); ?></th>
                                         <th><?php _e( 'Videos (gesamt)', 'amateurtheme' ); ?></th>
                                         <th><?php _e( 'Importierte Videos', 'amateurtheme' ); ?></th>
@@ -655,6 +660,9 @@ function at_import_mydirtyhobby_panel ()
                                             endif;
                                             ?>
                                             <tr>
+                                                <td class="cron-id">
+                                                    <?= $item->id ?>
+                                                </td>
                                                 <td class="cron-name">
                                                     <a href="#" class="username-edit" data-user-id="<?php echo $item->object_id; ?>">
                                                         <?php echo $item->name; ?>
