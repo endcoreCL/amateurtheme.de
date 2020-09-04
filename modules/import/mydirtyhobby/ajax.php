@@ -127,6 +127,11 @@ if ( ! function_exists( 'at_mdh_import_video' ) ) {
 
                         if ( get_option( 'at_mdh_fsk18' ) == '1' ) {
                             $image = $preview->normal;
+
+                            // fix object
+                            if ( is_object( $image ) ) {
+                                $image = $image->url;
+                            }
                         }
 
                         if ( $image ) {

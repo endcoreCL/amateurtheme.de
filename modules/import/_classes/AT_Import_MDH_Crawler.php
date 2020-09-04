@@ -220,6 +220,23 @@ class AT_Import_MDH_Crawler
                 if ( $check ) {
                     $s++;
                     $status['skipped'] = $s;
+
+                    // update data
+                    $wpdb->update(
+                        $this->database->table_videos,
+                        array(
+                            'preview'      => json_encode( array( 'normal' => $item->image, 'censored' => $item->image_sc ) ),
+                            'duration'     => $item->runtime,
+                            'rating'       => $item->rating,
+                            'rating_count' => $item->rating_count,
+                            'description'  => $item->description,
+                            'link'         => $item->url,
+                        ),
+                        array(
+                            'id' => $check->id
+                        )
+                    );
+
                     continue;
                 }
 
