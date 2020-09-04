@@ -1,4 +1,5 @@
 <?php
+
 define( 'AT_PRG_PATTERN_SLUG', get_field( 'prg_slug', 'options' ) ?: 'out' );
 
 /**
@@ -81,7 +82,11 @@ function at_prg_pattern_out ()
         }
     }
 
-    header( "Location: " . $location, true, 302 );
+    ?>
+    <script>
+        window.location.replace("<?= $location ?>");
+    </script>
+    <?php
 
     exit();
 }
