@@ -343,3 +343,101 @@ add_filter( 'option_bouncebooster', function ( $option ) {
 
     return $option;
 }, 999 );
+
+/**
+ * Sheduled event to redownload missing thumbnails
+ */
+if ( ! wp_next_scheduled( 'checkVideoThumbnails' ) ) {
+    wp_schedule_event( time(), 'daily', 'checkVideoThumbnails' );
+}
+
+add_action( 'wp_ajax_checkVideoThumbnails', 'at_checkVideoThumbnails' );
+add_action( 'wp_ajax_nopriv_checkVideoThumbnails', 'at_checkVideoThumbnails' );
+add_action( 'checkVideoThumbnails', 'at_checkVideoThumbnails' );
+function at_checkVideoThumbnails ()
+{
+    $args = array(
+        'post_type'      => 'video',
+        'meta_query'     => array(
+            'relation' => 'AND',
+            array(
+                'relation' => 'OR',
+                array(
+                    'key'     => '_thumbnail_id',
+                    'compare' => 'NOT EXISTS'
+                ),
+                array(
+                    'key'     => '_thumbnail_id',
+                    'value'   => '',
+                    'compare' => '='
+                )
+            ),
+            array(
+                'relation' => 'OR',
+                array(
+                    'key'     => 'video_source',
+                    'value'   => 'mdh',
+                    'compare' => '='
+                ),
+                array(
+                    'key'     => 'video_source',
+                    'value'   => 'big7',
+                    'compare' => '='
+                ),
+            )
+        ),
+        'posts_per_page' => -1,
+        'fields'         => 'ids'
+    );
+
+    $videos = new WP_Query( $args );
+
+    if ( $videos->have_posts() ) {
+        global $wpdb;
+
+        while ( $videos->have_posts() ) {
+            $videos->the_post();
+
+            $video_source = get_field( 'video_source' );
+            $video_id     = get_post_meta( get_the_ID(), 'video_unique_id', true );
+
+            $imageUrl = false;
+
+            switch ( $video_source ) {
+                case 'mdh':
+                    $database = new AT_Import_MDH_DB();
+                    $videoObj = $wpdb->get_row( "SELECT * FROM $database->table_videos WHERE video_id = $video_id" );
+                    if ( $videoObj ) {
+                        $preview  = json_decode( $videoObj->preview );
+                        $imageUrl = $preview->censored;
+
+                        if ( get_option( 'at_mdh_fsk18' ) == '1' ) {
+                            $imageUrl = $preview->normal;
+                        }
+
+                        // fix object error
+                        if( is_object( $imageUrl ) ) {
+                            $imageUrl = $imageUrl->url;
+                        }
+                    }
+                    break;
+
+                case 'big7':
+                    $database = new AT_Import_Big7_DB();
+                    $videoObj = $wpdb->get_row( "SELECT * FROM $database->table_videos WHERE video_id = $video_id" );
+                    if ( $videoObj ) {
+                        $imageUrl = $videoObj->preview;
+                    }
+                    break;
+            }
+
+            if ( $imageUrl ) {
+                at_attach_external_image( $imageUrl, get_the_ID(), true, get_the_title() . '-preview', array( 'post_title' => get_the_title() ) );
+            }
+        }
+
+        wp_reset_query();
+    }
+
+    die();
+}
