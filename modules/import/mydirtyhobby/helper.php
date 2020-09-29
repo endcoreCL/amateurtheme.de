@@ -120,10 +120,10 @@ if ( ! function_exists( 'at_import_mdh_untag_video_as_imported' ) ) {
 
         if ( $video_id ) {
             $wpdb->update( $database->table_videos, array(
-                    'imported' => '0'
-                ), array(
-                    'video_id' => $video_id
-                ) );
+                'imported' => '0'
+            ), array(
+                'video_id' => $video_id
+            ) );
         }
     }
 }
@@ -193,8 +193,13 @@ function at_updateActor ( $actorId )
 {
     global $wpdb;
 
+    // prevent object error
+    if ( is_object( $actorId ) ) {
+        $actorId = $actorId->object_id;
+    }
+
     // check autor data
-    $actorTermId = $wpdb->get_var( 'SELECT term_id FROM cp_termmeta WHERE meta_key = "actor_id" AND meta_value = "' . $actorId . '" LIMIT 0,1' );
+    $actorTermId = $wpdb->get_var( 'SELECT term_id FROM ' . $wpdb->prefix . 'termmeta WHERE meta_key = "actor_id" AND meta_value = "' . $actorId . '" LIMIT 0,1' );
 
     if ( ! $actorTermId ) {
         return;
