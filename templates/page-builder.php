@@ -670,34 +670,38 @@ get_header(); ?>
                                     }
                                     ?>
                                 </div>
+
+								<?php
+
+
+								if ( $per_page ) {
+									if ( $items && count( $items ) > $per_page || ! $items ) {
+										// get maximum pages
+										$args_o = array(
+											'taxonomy' => 'video_actor',
+											'orderby'  => 'name'
+										);
+
+										if ( $items ) {
+											$args_o['include'] = $items;
+										}
+
+										$terms_count = get_terms( $args_o );
+
+										if ( $terms_count ) {
+											$max = count( $terms_count );
+
+											if ( $max ) {
+												$max_pages = ceil( $max / $per_page );
+												echo at_pagination( $max_pages, 3, true );
+											}
+										}
+									}
+								}
+								?>
                             </div>
                         </div>
-                        <?php
-
-                        if ( $per_page ) {
-                            if ( $items && count ( $items ) > $per_page || ! $items ) {
-                                // get maximum pages
-                                $args_o = array(
-                                    'taxonomy'  => 'video_actor',
-                                    'orderby'   => 'name'
-                                );
-
-                                if ( $items ) {
-                                    $args_o['include'] = $items;
-                                }
-
-                                $terms_count = get_terms ( $args_o );
-
-                                if ( $terms_count ) {
-                                    $max = count ( $terms_count );
-
-                                    if ( $max ) {
-                                        $max_pages = ceil ( $max / $per_page );
-                                        echo at_pagination( $max_pages, 3, true );
-                                    }
-                                }
-                            }
-                        }
+						<?php
                     }
                 endif;
 
