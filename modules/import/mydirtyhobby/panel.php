@@ -1,12 +1,12 @@
 <?php
 function at_import_mydirtyhobby_panel ()
 {
-    if ( get_magic_quotes_gpc() ) {
-        $_POST    = array_map( 'stripslashes_deep', $_POST );
-        $_GET     = array_map( 'stripslashes_deep', $_GET );
-        $_COOKIE  = array_map( 'stripslashes_deep', $_COOKIE );
-        $_REQUEST = array_map( 'stripslashes_deep', $_REQUEST );
-    }
+	if ( function_exists( 'stripslashes_deep' ) ) {
+		$_POST    = stripslashes_deep ( $_POST );
+		$_GET     = stripslashes_deep ( $_GET );
+		$_COOKIE  = stripslashes_deep ( $_COOKIE );
+		$_REQUEST = stripslashes_deep ( $_REQUEST );
+	}
 
     if ( is_array( $_REQUEST ) ) :
         if ( isset( $_REQUEST['action'] ) ) :
