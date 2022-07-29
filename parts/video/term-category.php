@@ -2,7 +2,7 @@
     <a href="<?php echo get_term_link( $term ); ?>" title="<?php echo $term->name; ?>" class="card-link-img">
         <?php
         // @TODO: Placeholder
-        $image_url = 'https://placehold.it/543x407/?text=' . $term->name;
+		$image_url = get_template_directory_uri() . '/assets/img/placeholder-543x407.jpg';
         $image_alt = $term->name;
 
         $category_image = get_field( 'category_image', $term );
