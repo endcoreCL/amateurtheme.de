@@ -39,5 +39,9 @@
 	.list-unstyled li a {
 		color: inherit;
 		&:hover, &:focus { color: $primary; text-decoration: none; }
+
+		@include media-breakpoint-only(xs) {
+			overflow-wrap: break-word;
+		}
 	}
 }

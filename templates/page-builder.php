@@ -672,8 +672,6 @@ get_header(); ?>
                                 </div>
 
 								<?php
-
-
 								if ( $per_page ) {
 									if ( $items && count( $items ) > $per_page || ! $items ) {
 										// get maximum pages
@@ -693,7 +691,10 @@ get_header(); ?>
 
 											if ( $max ) {
 												$max_pages = ceil( $max / $per_page );
-												echo at_pagination( $max_pages, 3, true );
+												?>
+													<hr class="hr-transparent">
+													<?= at_pagination( $max_pages, 3, true ) ?>
+												<?php
 											}
 										}
 									}
@@ -804,7 +805,7 @@ get_header(); ?>
                                                 foreach ( $value as $term ) {
                                                     if ( $i > 10 ) {
                                                         ?>
-                                                        <li class="col-3">
+                                                        <li class="col-6 col-md-3">
                                                             <a class="more-link" href="<?php echo get_permalink(); ?>?_filter=<?php echo strtolower( $key ); ?>">
                                                                 <?php _e( 'Alle anzeigen', 'amateurtheme' ); ?>
                                                             </a>
@@ -813,7 +814,7 @@ get_header(); ?>
                                                         break;
                                                     }
                                                     ?>
-                                                    <li class="col-3">
+                                                    <li class="col-6 col-md-3">
                                                         <a href="<?php echo get_term_link( $term ); ?>" title="<?php echo $term->name; ?>">
                                                             <?php echo $term->name; ?>
                                                         </a>

@@ -13,6 +13,7 @@ require_once AT_HELPER . '/classes/xCORE_Layout.php';
 require_once AT_HELPER . '/classes/xCORE_Custom_CSS.php';
 
 require_once AT_HELPER . '/shortcodes/_load.php';
+require_once AT_HELPER . '/favicon.php';
 require_once AT_HELPER . '/scripts.php';
 require_once AT_HELPER . '/actions.php';
 require_once AT_HELPER . '/filter.php';

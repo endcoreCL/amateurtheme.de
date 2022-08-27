@@ -125,13 +125,124 @@
         img {
             -webkit-backface-visibility: hidden;
             transition: $transition;
+            aspect-ratio: 16 / 9;
         }
 
         &:hover, &:focus {
             cursor: pointer;
 
             img {
-                opacity: 0.25;
+                opacity: 0.5;
+            }
+        }
+
+        &.card-play-icon {
+            position: relative;
+        }
+
+        &.card-play-icon:after {
+            content: "\f04b";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+            font-family: 'Font Awesome 5 Pro', sans-serif;
+            font-weight: 900;
+            font-size: 3rem;
+            color: #fff;
+            transition: all 0.25s;
+            text-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+        }
+
+        &.card-play-icon:hover:after {
+            font-size: 3.5rem;
+        }
+    }
+
+    .card-body {
+        padding: 1rem;
+
+        .card-title {
+            font-size: 1rem;
+            margin: 0;
+            line-height: 1.5;
+            min-height: 2 * 1.5rem; // clamp *  line-height
+            a {
+                color: $headings-color;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+
+                &:hover, &:focus {
+                    color: $primary;
+                    text-decoration: none;
+                }
+            }
+        }
+
+        .card-title-1 {
+            min-height: 1.5rem;
+
+            a {
+                -webkit-line-clamp: 1;
+            }
+        }
+    }
+
+    .card-footer {
+        background: none;
+        border: none;
+        padding: 0 1rem 0.75rem 1rem;
+
+        .text-muted,
+        .list-meta {
+            font-size: 0.875rem;
+            color: $gray-600;
+            margin: 0;
+
+            a {
+                color: inherit;
+
+                &:hover, &:focus {
+                    color: $primary;
+                    text-decoration: none;
+                }
+            }
+
+            .fa {
+                color: $gray-500;
+            }
+        }
+    }
+}
+
+.card-term {
+    .badge {
+        position: absolute;
+        top: 0.25rem;
+        right: 0.25rem;
+        z-index: 9;
+        opacity: 0.75;
+    }
+
+    .card-link-img {
+        display: block;
+        background: $primary;
+        border-top-left-radius: calc(5px - 1px);
+        border-top-right-radius: calc(5px - 1px);
+
+        img {
+            -webkit-backface-visibility: hidden;
+            transition: $transition;
+            aspect-ratio: 1 / 1;
+        }
+
+        &:hover, &:focus {
+            cursor: pointer;
+
+            img {
+                opacity: 0.5;
             }
         }
 

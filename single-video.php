@@ -35,10 +35,18 @@ if ( $ad_top ) {
                                     ?>
                                     <div class="embed-responsive embed-responsive-16by9">
                                         <video poster="<?php echo $poster; ?>" id="player" playsinline controls data-plyr-config='{"loadSprite" : "<?php echo get_template_directory_uri(); ?>/assets/img/plyr.svg"}'>
-                                            <?php if ( $preview_mp4 ) { ?>
-                                                <source src="<?php echo $preview_mp4; ?>" type="video/mp4"><?php } ?>
-                                            <?php if ( $preview_webm ) { ?>
-                                                <source src="<?php echo $preview_webm; ?>" type="video/webm"><?php } ?>
+                                            <?php
+											if ( $preview_mp4 ) {
+												?>
+                                                <source src="<?php echo $preview_mp4; ?>" type="video/mp4">
+												<?php
+											}
+											if ( $preview_webm ) {
+												?>
+                                                <source src="<?php echo $preview_webm; ?>" type="video/webm">
+												<?php
+											}
+											?>
                                         </video>
                                     </div>
 
