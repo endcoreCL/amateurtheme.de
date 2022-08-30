@@ -3,25 +3,47 @@
 
 // number of cards per line for each breakpoint
 $cards-per-line: (
-   xs: 1,
-   sm: 2,
-   md: 2,
-   lg: 3,
-   xl: 3
- );
+		xs: 1,
+		sm: 2,
+		md: 2,
+		lg: 3,
+		xl: 3
+);
 
 @each $name, $breakpoint in $grid-breakpoints {
-  @media (min-width: $breakpoint) {
-	.card-deck .card {
-	  flex: 0 0 calc(#{100/map-get($cards-per-line, $name)}% - #{$grid-gutter-width});
+	@media (min-width: $breakpoint) {
+		.card-deck .card {
+			flex: 0 0 calc(#{100/map-get($cards-per-line, $name)}% - #{$grid-gutter-width});
+		}
 	}
-  }
 }
 
-#page-builder .section { padding: 3rem 0; }
-.card-list .card { flex-direction: row; }
-.card-list .card img { width: 300px; height: 250px; }
-.card-list .card + .card { margin-top: 2rem; }
-.card-full .card + .card { margin-top: 2rem; }
+#page-builder .section {
+	padding: 3rem 0;
+}
 
-.hr-transparent { border: none; margin: 2rem auto; }
+.card-list .card {
+	flex-direction: row;
+}
+
+.card-list .card img {
+	width: 300px;
+	height: 250px;
+}
+
+.card-list .card + .card {
+	margin-top: 2rem;
+}
+
+.card-full .card + .card {
+	margin-top: 2rem;
+}
+
+.hr-transparent {
+	border: none;
+	margin: 2rem auto;
+}
+
+[aria-label="Letter navigation"] .pagination {
+	flex-wrap: wrap;
+}

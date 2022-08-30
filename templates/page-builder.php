@@ -764,7 +764,7 @@ get_header(); ?>
                                     if ( ! $filtered ) {
                                         // output of a-z nav
                                         ?>
-                                        <nav aria-label="Letter navigation" role="navigation">
+                                        <nav class="table-responsive" aria-label="Letter navigation" role="navigation">
                                             <ul class="pagination justify-content-center ft-wpbs">
                                                 <?php
                                                 $alphas = range('A', 'Z');

@@ -42,7 +42,8 @@ $has_data                 = false;
 							<?php
 							if ( $video_actor_description ) {
 								if ( $actor_image ) {
-									echo '<img src="' . $actor_image['sizes']['video_thumb'] . '" alt="' . single_term_title( '', false ) . '" title="' . single_term_title( '', false ) . '" class="alignright img-fluid">';
+									$imgUrl = $actor_image['sizes']['video_thumb'] ?: $actor_image['url'];
+									echo '<img src="' . $imgUrl . '" alt="' . single_term_title( '', false ) . '" title="' . single_term_title( '', false ) . '" class="alignright img-fluid">';
 								}
 
 								if ( $actor_description ) {
