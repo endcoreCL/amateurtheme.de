@@ -205,7 +205,18 @@ class AT_Import_Big7_Crawler
 	{
 		global $wpdb;
 
-		$database = new AT_Import_Big7_DB();
+		$Crawler    = new AT_Import_Big7_Crawler();
+		$categories = $Crawler->getCategories();
+		$database   = new AT_Import_Big7_DB();
+
+		// get non fsk18 categories name to match in videos db
+		if ( $categories ) {
+			foreach ( $categories as $term ) {
+				if ( $term['name'] == $category ) {
+					$category = $term['name_softcore'];
+				}
+			}
+		}
 
 		$data = $wpdb->get_results(
 			"
@@ -218,9 +229,7 @@ class AT_Import_Big7_Crawler
 
 		if ( $data ) {
 			// sanitize categories
-			$Crawler    = new AT_Import_Big7_Crawler();
-			$categories = $Crawler->getCategories();
-			$fsk18      = get_option( 'at_big7_fsk18' );
+			$fsk18 = get_option( 'at_big7_fsk18' );
 
 			if ( $categories && $fsk18 ) {
 				foreach ( $data as $k => $v ) {

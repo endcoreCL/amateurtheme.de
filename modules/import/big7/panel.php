@@ -305,7 +305,7 @@ function at_import_big7_panel()
 									<th scope="col" id="title" class="manage-column column-title" style="">
 										<span><?php _e( 'Titel', 'amateurtheme' ); ?></span>
 									</th>
-									<th scope="col" id="categories" class="manage-column column-categories" style="">
+									<th scope="col" id="category" class="manage-column column-categories" style="">
 										<span><?php _e( 'Kategorien', 'amateurtheme' ); ?></span>
 									</th>
 									<th scope="col" id="duration" class="manage-column column-duration" style="">
@@ -347,7 +347,7 @@ function at_import_big7_panel()
 									<th scope="col" id="title" class="manage-column column-title" style="">
 										<span><?php _e( 'Titel', 'amateurtheme' ); ?></span>
 									</th>
-									<th scope="col" id="categories" class="manage-column column-categories" style="">
+									<th scope="col" id="category" class="manage-column column-categories" style="">
 										<span><?php _e( 'Kategorien', 'amateurtheme' ); ?></span>
 									</th>
 									<th scope="col" id="duration" class="manage-column column-duration" style="">
@@ -417,8 +417,7 @@ function at_import_big7_panel()
 						</p>
 
 						<p>
-							<?php _e( 'Der Kategorie Import ist nur für leistungsstarke Server geeignet! Bitte genieße dieses Feature
-                            mit Vorsicht', 'amateurtheme' ); ?>
+							<?php _e( 'Der Kategorie Import ist nur für leistungsstarke Server geeignet! Bitte genieße dieses Feature mit Vorsicht', 'amateurtheme' ); ?>
 						</p>
 					</div>
 
@@ -468,7 +467,7 @@ function at_import_big7_panel()
 													<?php echo at_import_big7_get_category_video_count( $item->name ); ?>
 												</td>
 												<td class="cron-video-imported">
-													<?php echo at_import_big7_get_category_imported_video_count( $item->name ); ?>
+													<?php echo $item->created; ?>
 												</td>
 												<td class="cron-last-update">
 													<?php echo $last_update; ?>
