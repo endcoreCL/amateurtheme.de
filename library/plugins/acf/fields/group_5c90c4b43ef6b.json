@@ -315,7 +315,7 @@
             "label": "Überschrift",
             "name": "video_search_headline",
             "type": "text",
-            "instructions": "%s ist ein Platzhalter für den Suchterm.",
+            "instructions": "%1$s ist ein Platzhalter für den Suchterm.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -454,7 +454,7 @@
             "label": "Überschrift",
             "name": "video_actor_headline",
             "type": "text",
-            "instructions": "%s ist ein Platzhalter für den Namen des Darstellers.",
+            "instructions": "%1$s ist ein Platzhalter für den Namen des Darstellers.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -649,7 +649,7 @@
             "label": "Überschrift",
             "name": "video_category_headline",
             "type": "text",
-            "instructions": "%s ist ein Platzhalter für den Namen der Kategorie.",
+            "instructions": "%1$s ist ein Platzhalter für den Namen der Kategorie.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -806,7 +806,7 @@
             "label": "Überschrift",
             "name": "video_tags_headline",
             "type": "text",
-            "instructions": "%s ist ein Platzhalter für den Namen der Kategorie.",
+            "instructions": "%1$s ist ein Platzhalter für den Namen der Kategorie.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
